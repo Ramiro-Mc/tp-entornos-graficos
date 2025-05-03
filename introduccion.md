@@ -72,15 +72,3 @@ Podran:
 
 
 
-El objetivo principal del sitio web es gestionar y facilitar el acceso a las promociones y descuentos vigentes en los distintos locales de un reconocido shopping de la ciudad de Rosario, mediante una plataforma responsiva accesible desde distintos dispositivos.
-A traves del sitio, se busca:
-
-Brindar un sistema eficiente para la creacion, aprobacion y seguimiento de promociones por parte de administradores y dueños de locales.
-
-Permitir a los clientes registrarse, consultar y utilizar promociones, mejorando su experiencia de compra.
-
-Garantizar un sistema de control y autorización de cuentas, protegiendo la integridad del servicio.
-
-Proveer reportes gerenciales para el análisis del uso de promociones tanto para administradores como para dueños de locales.
-
-Permitir la publicación de novedades relevantes según categorías de clientes, fomentando la fidelización y el interés.
