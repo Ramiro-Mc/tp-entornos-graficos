@@ -24,7 +24,7 @@ A traves del sitio, se busca:
 
 - Permitir la publicacion de novedades relevantes segun las distintas categorias de clientes.
 
-### Descripcipn del Sitio
+### Descripcion del Sitio
 El trabajo practico consiste en el desarrollo de un sitio web que permita gestionar los descuentos y promociones en los locales de un reconocido shopping de la ciudad de Rosario. En este contexto, los terminos ofertas, descuentos y promociones seran sinonimos.
 
 El sitio web sera una Web APP totalmente responsiva, disenada para ser utilizada en diferentes dispositivos. Habra cuatro niveles de usuarios distintos: Administrador, Duenos de locales, Clientes y Usuarios no registrados.
