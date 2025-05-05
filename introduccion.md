@@ -7,7 +7,11 @@ Ramiro Martinez Castro <br>
 
 ## Introducción
 
-La carrera de Ingeniería en Sistemas de Información busca conformar un espacio de aprendizaje interdisciplinario e integrador, compuesto por diversas asignaturas que, a lo largo de la formación, tienen como objetivo consolidar los fundamentos propios de la profesión. Esto permite a los estudiantes comprender las particularidades del trabajo del ingeniero en sistemas, abordando desde los problemas esenciales relacionados con los Sistemas de Información. En este contexto, el desarrollo de este sitio web tiene como propósito establecer un espacio de articulación vertical dentro del área de Desarrollo de Software, área en la que se enmarca esta asignatura. El trabajo práctico que se propone toma como base el proyecto elaborado por los estudiantes de la cátedra de Algoritmos y Estructuras de Datos durante el ciclo lectivo 2023 en su primer año.
+El trabajo práctico consiste en desarrollar un sitio web teniendo en cuenta las metodologías descritas dentro de la Arquitectura de la Información usando HTML, CSS, Bootstrap y PHP. El sitio web está diseñado para facilitar la gestión de ofertas y promociones tanto para los propietarios de locales como para los clientes de un shopping en Rosario.
+
+La idea es garantizar la accesibilidad y funcionalidad en todo tipo de dispositivos implementando, a su vez, medidas de seguridad con el fin de proteger la información sensible de todos los usuarios del mismo, y mejorando la experiencia de usuarios, proporcionando un sitio accesible y usable.
+
+Para esto, tuvimos en cuenta conceptos como el de perceptibilidad, de modo que las componentes e información de la interfaz es muy clara y perceptible para los usuarios, con textos concisos que permiten al usuario saber dónde están y cómo moverse; operabilidad, pues las operaciones son muy sencillas de realizar y muy intuitivas, al mismo tiempo que pueden manejarse las componentes de la interfaz y los sistemas de navegación; comprensibilidad, pues todas las operaciones y la información que se presenta es muy clara, concisa y comprensible; y robusta, pues el contenido puede ser bien interpretado por una gran variedad de agentes de usuario, además de permitir el uso de dispositivos de distintos tamaños. Sumado a esto, se proporcionan sistemas de navegación, búsquedas y filtros necesarios para la accesibilidad del usuario, mejorando su experiencia al usar la página.
 
 ## Definición del Sitio Web
 ### Objetivos del Sitio 
