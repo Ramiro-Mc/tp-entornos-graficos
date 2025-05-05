@@ -11,8 +11,6 @@ El trabajo práctico consiste en desarrollar un sitio web teniendo en cuenta las
 
 La idea es garantizar la accesibilidad y funcionalidad en todo tipo de dispositivos implementando, a su vez, medidas de seguridad con el fin de proteger la información sensible de todos los usuarios del mismo, y mejorando la experiencia de usuarios, proporcionando un sitio accesible y usable.
 
-Para esto, tuvimos en cuenta conceptos como el de perceptibilidad, de modo que las componentes e información de la interfaz es muy clara y perceptible para los usuarios, con textos concisos que permiten al usuario saber dónde están y cómo moverse; operabilidad, pues las operaciones son muy sencillas de realizar y muy intuitivas, al mismo tiempo que pueden manejarse las componentes de la interfaz y los sistemas de navegación; comprensibilidad, pues todas las operaciones y la información que se presenta es muy clara, concisa y comprensible; y robusta, pues el contenido puede ser bien interpretado por una gran variedad de agentes de usuario, además de permitir el uso de dispositivos de distintos tamaños. Sumado a esto, se proporcionan sistemas de navegación, búsquedas y filtros necesarios para la accesibilidad del usuario, mejorando su experiencia al usar la página.
-
 ## Definición del Sitio Web
 ### Objetivos del Sitio 
 El objetivo del sitio web es gestionar promociones y/o descuentos en los distintos locales de un reconocido shopping de la ciudad de Rosario, a traves de sitio responsivo accesible desde cualquier dispositivo.
