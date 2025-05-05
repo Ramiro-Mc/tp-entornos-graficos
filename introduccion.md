@@ -26,6 +26,18 @@ A traves del sitio, se busca:
 
 - Permitir la publicacion de novedades relevantes segun las distintas categorias de clientes.
 
+
+Objetivo General
+Proporcionar una plataforma integral y eficiente que facilite la promoción, gestión y publicidad de ofertas y descuentos tanto para propietarios de locales como para potenciales clientes.
+Atraer las ventas al público local.
+
+Objetivos específicos
+Capturar información de contacto de los visitantes interesados, con el fin de seguir interactuando con ellos en el futuro.
+Optimizar gestión y accesibilidad a ofertas y descuentos.
+Crear oportunidades para que los visitantes interactúen  
+Facilitar y agilizar la experiencia y accesibilidad de los usuarios.
+
+
 ### Descripción del Sitio
 El trabajo practico consiste en el desarrollo de un sitio web que permita gestionar los descuentos y promociones en los locales de un reconocido shopping de la ciudad de Rosario. En este contexto, los terminos ofertas, descuentos y promociones seran sinonimos.
 
