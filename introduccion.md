@@ -13,8 +13,7 @@ La idea es garantizar la accesibilidad y funcionalidad en todo tipo de dispositi
 
 ## Definición del Sitio Web
 ### Objetivos del Sitio 
-Objetivo General
-Proporcionar una plataforma integral y eficiente que facilite la promoción, gestión y publicidad de ofertas y descuentos tanto para propietarios de locales como para potenciales clientes.
+El objetivo general es proporcionar una plataforma integral y eficiente que facilite la promoción, gestión y publicidad de ofertas y descuentos tanto para propietarios de locales como para potenciales clientes.
 A traves del sitio, se busca:
 
 - Brindar un sistema para la creacion, gestion, aprobacion y seguimiento de las distintas promociones, por parte de un administrador y un duemo del local.
@@ -24,17 +23,6 @@ A traves del sitio, se busca:
 - Proveer reportes para el analisis del uso de promociones, tanto para administradores como para duenos de locales.
 
 - Permitir la publicacion de novedades relevantes segun las distintas categorias de clientes.
-
-
-Objetivo General
-Proporcionar una plataforma integral y eficiente que facilite la promoción, gestión y publicidad de ofertas y descuentos tanto para propietarios de locales como para potenciales clientes.
-Atraer las ventas al público local.
-
-Objetivos específicos
-Capturar información de contacto de los visitantes interesados, con el fin de seguir interactuando con ellos en el futuro.
-Optimizar gestión y accesibilidad a ofertas y descuentos.
-Crear oportunidades para que los visitantes interactúen  
-Facilitar y agilizar la experiencia y accesibilidad de los usuarios.
 
 
 ### Descripción del Sitio
