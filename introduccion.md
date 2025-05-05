@@ -71,7 +71,7 @@ Podran:
 
 > Usuarios no Registrados
 
-Podran:
+Podran:<br>
 • Visualizar todas las promociones de todos los locales del shopping para todas las categorias de clientes.<br>
 • Poder acceder al email de contacto para poder comunicarse con el administrador del sitio web
 
