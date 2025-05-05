@@ -66,9 +66,13 @@ Personas registradas, potenciales compradores que pueden buscar descuentos, loca
 Personas no registradas, con un acceso limitado a las funciones disponibles incluyendo la capacidad de visualizar las promociones y acceder al correo electrónico de contacto con el administrador del sitio web.
 
 
-El sitio web está dirigido a un público diverso, que incluye tanto a los propietarios de los locales como a los clientes que frecuentan shoppings en busca de ofertas y oportunidades de compra o venta. A su vez, se tendrán en cuenta factores como:<br>
+El sitio web está dirigido a un público diverso, que incluye tanto a los propietarios de los locales como a los clientes que frecuentan shoppings en busca de ofertas y oportunidades de compra o venta. A su vez, se tendrán en cuenta factores como: <br>
+
 Capacidad Física: Se asegurará que el sitio web sea accesible para personas con capacidades físicas limitadas, como lo son personas con discapacidades visuales. Para esto, se implementarán contrastes de color adecuado, descripciones de imágenes, etc. <br>
+
 Capacidades técnicas: El sitio web estará desarrollado con la intención de que sea amigable para aquellas personas con conocimientos muy básicos sobre el uso de tecnologías. A su vez, el diseño será responsivo y ligero.<br>
+
 Conocimiento de la institución: Se ofrecerá información clara acerca de la ubicación, horarios, o novedades para personas que no conozcan la institución. Al mismo tiempo, se proveerán actualizaciones constantes sobre nuevas ofertas o novedades específicas.<br>
+
 Novedades de información: Una de las prioridades del sitio web es facilitar el acceso a las promociones y novedades, para lo que habrá barras de navegación y filtros que permitirán mayor eficiencia a la hora de buscarlas.
 
