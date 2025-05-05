@@ -41,30 +41,33 @@ Los Clientes podran registrarse, buscar descuentos, ingresar codigos de locales 
 
 ## Definicion de la Audiencia
 
+
 > Administrador
 
-Debera poder:
-• Crear, editar y eliminar locales. <br>
-• Validar cuentas de duenos de locales.<br>
-• Aprobar o denegar una solicitud de descuento de un local.<br>
-• Crear, editar y eliminar novedades del shopping.<br>
-• Ver reportes acerca de la utilizacion de los descuentos.
+•Es quien gestiona las promociones de todos los locales del shopping, aceptando o denegando las peticiones de las mismas que son propuestas por los dueños de los locales
+•Puede crear, editar, eliminar locales y validar  las cuentas de los dueños de los locales
+•También puede crear, editar y eliminar novedades, las cuales estarán destinadas a las distintas categorías de clientes, y aparecerán en el inicio del sitio web.
+•Por último va a tener acceso a una sección de reportes la cual donde se podrá monitorizar la utilización de los descuentos en los locales
 
-> Duenos de los locales
+
+> Dueños de los locales
 
 Podran:
 
 • Crear y eliminar descuentos en su propio local. No se permite la edicion para evitar consideraciones de publicidad enganosa. En caso de cometer errores en la carga, debera eliminar la promocion. <br>
 • Aceptar o rechazar una solicitud de descuento de un cliente.<br>
-• Ver la cantidad de clientes que usaron un descuento.
+• Ver la cantidad de clientes que usaron un descuento.<br>
+•Los dueños de locales serán los encargados de aceptar o rechazar las solicitudes de descuento de los clientes que quieran adquirirlas<br>
+
 
 > Clientes
 
-Como cliente, podra:<br>
-• Registrarse en el sistema para acceder a las ofertas del shopping.<br>
-• Buscar descuentos en los locales del shopping.<br>
-• Ingresar el codigo de un local y elegir un descuento disponible.<br>
-• ver las novedades del shopping.
+•Para poder ser clientes deben primero registrarse con un email y contraseña<br>
+•También van a tener que realizar solicitudes para que las nuevas promociones que quieran realizar sean aceptadas por el administrador en el caso de querer crear una nueva promoción.<br>
+•Cada usuario podrá ver las novedades publicadas por el administrador, las cuales están vigentes y estén dirigidas a su categoría, aplicando la misma lógica de las promociones (médium puede ver inicial y medium, premium todas)<br>
+•Cada cliente tiene una categoría, las cuales son inicial, medium y premium, al principio todos los usuarios estarán en la categoría inicial, la cual va a aumentar automáticamente a medida de que vaya adquiriendo promociones en los locales. El usuario Medium va a poder acceder a las promociones destinadas a su categoría y a la inicial y el premium va a poder tener acceso a todas las promociones de los locales, ya que cuenta con la categoría más alta.
+
+
 
 > Usuarios no Registrados
 
