@@ -13,14 +13,13 @@ La idea es garantizar la accesibilidad y funcionalidad en todo tipo de dispositi
 
 ## Definición del Sitio Web
 ### Objetivos del Sitio 
-El objetivo del sitio web es gestionar promociones y/o descuentos en los distintos locales de un reconocido shopping de la ciudad de Rosario, a traves de sitio responsivo accesible desde cualquier dispositivo.
+Objetivo General
+Proporcionar una plataforma integral y eficiente que facilite la promoción, gestión y publicidad de ofertas y descuentos tanto para propietarios de locales como para potenciales clientes.
 A traves del sitio, se busca:
 
 - Brindar un sistema para la creacion, gestion, aprobacion y seguimiento de las distintas promociones, por parte de un administrador y un duemo del local.
 
 -  Permitir a los clientes registrarse y consultar promociones.
-
-- Garantizar un sistema de seguridad en las cuentas, protegiendo la integridad del servicio.
 
 - Proveer reportes para el analisis del uso de promociones, tanto para administradores como para duenos de locales.
 
