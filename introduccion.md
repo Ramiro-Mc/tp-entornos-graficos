@@ -26,7 +26,7 @@ A traves del sitio, se busca:
 
 - Permitir la publicacion de novedades relevantes segun las distintas categorias de clientes.
 
-### Descripcion del Sitio
+### Descripción del Sitio
 El trabajo practico consiste en el desarrollo de un sitio web que permita gestionar los descuentos y promociones en los locales de un reconocido shopping de la ciudad de Rosario. En este contexto, los terminos ofertas, descuentos y promociones seran sinonimos.
 
 El sitio web sera una Web APP totalmente responsiva, disenada para ser utilizada en diferentes dispositivos. Habra cuatro niveles de usuarios distintos: Administrador, Duenos de locales, Clientes y Usuarios no registrados.
@@ -35,13 +35,13 @@ Cada usuario, excepto el administrador, debera poder registrarse en el sitio web
 
 El administrador gestionara las ofertas de todos los locales del shopping, aprobando o denegando las propuestas segun la politica comercial del centro. Ademas, podra crear locales, aprobar cuentas de duenos de locales, crear novedades y monitorear el uso de los descuentos mediante reportes gerenciales.
 
-Los Duenos de locales ingresaran las promociones de sus locales, que seran aprobadas o denegadas por el Administrador. Tambien podran aceptar o rechazar solicitudes de descuento de los clientes y monitorear el uso de sus promociones.
+Los Dueños de locales ingresaran las promociones de sus locales, que seran aprobadas o denegadas por el Administrador. Tambien podran aceptar o rechazar solicitudes de descuento de los clientes y monitorear el uso de sus promociones.
 
 Los Clientes podran registrarse, buscar descuentos, ingresar codigos de locales y elegir promociones disponibles segun su categoria (Inicial, Medium, Premium). Los Usuarios no registrados podran visualizar todas las promociones y acceder al email de contacto del administrador.
 
-## Definicion de la Audiencia
+## Definición de la Audiencia
 
-La audiencia del sitio web Total Store son usuarios que interactúan con la plataforma para diferentes propósitos y con diferentes niveles de acceso y privilegios. En este sistema, la audiencia puede estar definida por:
+La audiencia del sitio web son usuarios que interactúan con la plataforma para diferentes propósitos y con diferentes niveles de acceso y privilegios. En este sistema, la audiencia puede estar definida por:
 
 
 
@@ -59,7 +59,6 @@ Dueños de los locales, encargados de su local y solicitantes de promociones. Po
 > Clientes
 
 Personas registradas, potenciales compradores que pueden buscar descuentos, locales y ver las novedades del shopping.
-
 
 
 
