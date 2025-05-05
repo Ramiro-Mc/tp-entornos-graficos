@@ -41,39 +41,32 @@ Los Clientes podran registrarse, buscar descuentos, ingresar codigos de locales 
 
 ## Definicion de la Audiencia
 
+La audiencia del sitio web Total Store son usuarios que interactúan con la plataforma para diferentes propósitos y con diferentes niveles de acceso y privilegios. En este sistema, la audiencia puede estar definida por:
 
-> Administrador
 
-•Es quien gestiona las promociones de todos los locales del shopping, aceptando o denegando las peticiones de las mismas que son propuestas por los dueños de los locales<br>
-•Puede crear, editar, eliminar locales y validar  las cuentas de los dueños de los locales<br>
-•También puede crear, editar y eliminar novedades, las cuales estarán destinadas a las distintas categorías de clientes, y aparecerán en el inicio del sitio web.<br>
-•Por último va a tener acceso a una sección de reportes la cual donde se podrá monitorizar la utilización de los descuentos en los locales
+
+> Administradores
+
+Encargados de gestionar el sistema y los locales. Tiene privilegios para gestionar globalmente todas las actividades del sistema, incluyendo la creación y administración de locales, validación de cuentas de los dueños de los locales, entre otras.
+
 
 
 > Dueños de los locales
 
-Podran:
-
-• Crear y eliminar descuentos en su propio local. No se permite la edicion para evitar consideraciones de publicidad enganosa. En caso de cometer errores en la carga, debera eliminar la promocion. <br>
-• Aceptar o rechazar una solicitud de descuento de un cliente.<br>
-• Ver la cantidad de clientes que usaron un descuento.<br>
-•Los dueños de locales serán los encargados de aceptar o rechazar las solicitudes de descuento de los clientes que quieran adquirirlas<br>
+Dueños de los locales, encargados de su local y solicitantes de promociones. Poseen la capacidad de crear o eliminar promociones para su propio local, aceptar o rechazar solicitudes de descuento de un cliente o ver la cantidad de clientes que han utilizado una promoción.
 
 
 > Clientes
 
-•Para poder ser clientes deben primero registrarse con un email y contraseña<br>
-•También van a tener que realizar solicitudes para que las nuevas promociones que quieran realizar sean aceptadas por el administrador en el caso de querer crear una nueva promoción.<br>
-•Cada usuario podrá ver las novedades publicadas por el administrador, las cuales están vigentes y estén dirigidas a su categoría, aplicando la misma lógica de las promociones (médium puede ver inicial y medium, premium todas)<br>
-•Cada cliente tiene una categoría, las cuales son inicial, medium y premium, al principio todos los usuarios estarán en la categoría inicial, la cual va a aumentar automáticamente a medida de que vaya adquiriendo promociones en los locales. El usuario Medium va a poder acceder a las promociones destinadas a su categoría y a la inicial y el premium va a poder tener acceso a todas las promociones de los locales, ya que cuenta con la categoría más alta.
+Personas registradas, potenciales compradores que pueden buscar descuentos, locales y ver las novedades del shopping.
+
 
 
 
 > Usuarios no Registrados
 
-Podran:<br>
-• Visualizar todas las promociones de todos los locales del shopping para todas las categorias de clientes.<br>
-• Poder acceder al email de contacto para poder comunicarse con el administrador del sitio web
+Personas no registradas, con un acceso limitado a las funciones disponibles incluyendo la capacidad de visualizar las promociones y acceder al correo electrónico de contacto con el administrador del sitio web.
+
 
 
 
