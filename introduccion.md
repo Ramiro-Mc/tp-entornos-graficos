@@ -44,9 +44,9 @@ Los Clientes podran registrarse, buscar descuentos, ingresar codigos de locales 
 
 > Administrador
 
-•Es quien gestiona las promociones de todos los locales del shopping, aceptando o denegando las peticiones de las mismas que son propuestas por los dueños de los locales
-•Puede crear, editar, eliminar locales y validar  las cuentas de los dueños de los locales
-•También puede crear, editar y eliminar novedades, las cuales estarán destinadas a las distintas categorías de clientes, y aparecerán en el inicio del sitio web.
+•Es quien gestiona las promociones de todos los locales del shopping, aceptando o denegando las peticiones de las mismas que son propuestas por los dueños de los locales<br>
+•Puede crear, editar, eliminar locales y validar  las cuentas de los dueños de los locales<br>
+•También puede crear, editar y eliminar novedades, las cuales estarán destinadas a las distintas categorías de clientes, y aparecerán en el inicio del sitio web.<br>
 •Por último va a tener acceso a una sección de reportes la cual donde se podrá monitorizar la utilización de los descuentos en los locales
 
 
