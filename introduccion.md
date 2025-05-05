@@ -64,7 +64,8 @@ Personas registradas, potenciales compradores que pueden buscar descuentos, loca
 > Usuarios no Registrados
 
 Personas no registradas, con un acceso limitado a las funciones disponibles incluyendo la capacidad de visualizar las promociones y acceder al correo electrónico de contacto con el administrador del sitio web.
-
+<br>
+<br>
 
 El sitio web está dirigido a un público diverso, que incluye tanto a los propietarios de los locales como a los clientes que frecuentan shoppings en busca de ofertas y oportunidades de compra o venta. A su vez, se tendrán en cuenta factores como: <br>
 
