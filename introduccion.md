@@ -75,7 +75,5 @@ Capacidades técnicas: El sitio web estará desarrollado con la intención de qu
 
 Conocimiento de la institución: Se ofrecerá información clara acerca de la ubicación, horarios, o novedades para personas que no conozcan la institución. Al mismo tiempo, se proveerán actualizaciones constantes sobre nuevas ofertas o novedades específicas.<br>
 
-Novedades de información: Una de las prioridades del sitio web es facilitar el acceso a las promociones y novedades, para lo que habrá barras de navegación y filtros que permitirán mayor eficiencia a la hora de buscarlas.<br>
-
 Ubicación geográfica: El sitio web está destinado a residentes locales de Rosario, aunque será sencillo e intuitivo para cualquier persona que domine el idioma local.
 
