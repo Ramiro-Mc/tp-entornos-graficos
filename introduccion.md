@@ -28,7 +28,7 @@ A traves del sitio, se busca:
 ### Descripción del Sitio
 El trabajo practico consiste en el desarrollo de un sitio web que permita gestionar los descuentos y promociones en los locales de un reconocido shopping de la ciudad de Rosario. 
 
-El sitio web sera una Web APP totalmente responsiva, diseñada para ser utilizada en diferentes dispositivos. Habra cuatro niveles de usuarios distintos: Administrador, Duenos de locales, Clientes y Usuarios no registrados.
+El sitio web sera totalmente responsivo, diseñada para ser utilizado en diferentes dispositivos. Habra cuatro niveles de usuarios distintos: Administrador, Duenos de locales, Clientes y Usuarios no registrados.
 
 Cada usuario, excepto el administrador, debera poder registrarse en el sitio web. Los registros de los Dueños de Locales deberan ser autorizados por el Administrador, mientras que los Clientes recibiran un enlace de validacion en su correo electronico.
 
