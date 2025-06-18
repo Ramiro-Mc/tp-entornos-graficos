@@ -5,6 +5,14 @@ body {
   background-color: #F5F1EA;
 }
 
+main {
+  min-height: calc(50vh - 100px); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
 .seccion-oscura {
     background-color: #B8B8AA;
     color: #2F2F2F;
@@ -76,12 +84,19 @@ nav a:hover {
 .presentacion h2 {
   margin-top: 20px;
   font-family: 'Poppins', sans-serif;
+  text-align: center;
 }
 
 
 .presentacion p{
   font-size: 15px;
+  text-align: center;
+  color: #999999;
 } 
+.nosotros p{
+  font-size: 15px;
+  text-align: center;
+  color: rgb(72, 71, 71);}
 
 .presentacion {
   padding: 15px 15px 15px 15px;
