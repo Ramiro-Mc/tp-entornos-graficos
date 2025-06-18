@@ -74,7 +74,7 @@ nav a:hover {
   height: 800px;
 }
 
-.carousel-item img {
+.carousel-item-presentacion img {
   height: 100%;
   width: 100%;
   object-fit: cover;
@@ -153,53 +153,130 @@ nav a:hover {
 
 
 
-/* Footer */
-.seccion-footer{
-    background-color: #2F2F2F;
-    color: #f5f6f7;
-
+  /* Footer */
+  .seccion-footer{
+  background-color: #2F2F2F;
+  color: #f5f6f7;
   }
 
-.iconos-redes-sociales a{
-    margin: 10px;
-    margin-bottom: 30px;
-    transition: all 0.2s ease-in;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%; 
-    padding: 2px;
-    border: 2px solid rgb(0, 0, 0);
-    
-}
+  .iconos-redes-sociales a{
+  margin: 10px;
+  margin-bottom: 30px;
+  transition: all 0.2s ease-in;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%; 
+  padding: 2px;
+  border: 2px solid rgb(0, 0, 0);
+  }
 
   .iconos-redes-sociales i{
 
-    color: rgb(0, 0, 0);
-    font-size: 1.5rem;
-    transition: all 0.2s ease-in;
+  color: rgb(0, 0, 0);
+  font-size: 1.5rem;
+  transition: all 0.2s ease-in;
+  }
 
-}
+  .iconos-redes-sociales a:hover{
+  background-color: #ffffff;
+  color: #000000;
+  cursor: pointer;
+  border: 2px solid #000000;
+  transform: translateY(-2px); 
+  }
 
-.iconos-redes-sociales a:hover{
-    background-color: #ffffff;
-    color: #000000;
-    cursor: pointer;
-    border: 2px solid #000000;
-    transform: translateY(-2px); 
-}
+  .iconos-redes-sociales a:hover i{
+  color: rgb(0, 0, 0);
+  transform: translateY(-2px); 
+  }
 
-.iconos-redes-sociales a:hover i{
-    color: rgb(0, 0, 0);
-    transform: translateY(-2px); 
-}
-
-.texto-footer{
+  .texto-footer{
   color: white;
   text-decoration: none;
   list-style: none; 
   padding: 0;
   text-align: left
-}
+  }
+
+
+  /* Login-Register */
+  .fondo-login {
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  text-shadow: 1px 1px 5px black;
+  padding: 20px;
+  filter: brightness(85%);
+  }
+
+
+  .loginRegister-box {
+  width: 440px;
+  height: 540px;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  padding: 70px 30px;
+  }
+
+  .loginRegister-box h1{
+  margin: 0;
+  padding: 0 0 20px;
+  text-align: center;
+  font-size: 22px;
+  }
+
+  .loginRegister-box p{
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+  }
+
+  .loginRegister-box input{
+  width: 100%;
+  margin-bottom: 20px;
+  }
+
+  .loginRegister-box input[type="email"], input[type="password"]{
+  border: none;
+  border-bottom: 1px solid #fff;
+  background: transparent;
+  outline: none;
+  height: 40px;
+  color: #fff;
+  font-size: 16px;
+  }
+
+  .loginRegister-box input[name="Login"]{
+  border: none;
+  outline: none;
+  height: 40px;
+  background: #1399cfff;
+  font-size: 16px;
+  border-radius: 20px;
+  color: #fff;
+  }
+
+  .loginRegister-box a{
+  text-decoration: none;
+  font-size: 14px;
+  color: #fff;
+  }
+
+  .loginRegister-box button{
+  width: 100%;
+  margin-bottom: 20px;
+  border: none;
+  outline: none;
+  height: 40px;
+  background: #fff;
+  font-size: 16px;
+  border-radius: 20px;
+  }

@@ -32,7 +32,9 @@
 
     <header>
       <div class="top-bar">
-        <img class="logo" src="Image/logo.png" alt="FotoShopping" />
+        <a href="index.html">
+          <img class="logo" src="Image/logo.png" alt="FotoShopping" />
+        </a>
         <nav>
           <a href="Contacto.html">Contacto</a>
           <a href="SobreNosotros.html">Sobre Nosotros</a>
@@ -42,265 +44,266 @@
     </header>
 
     <!-- Seccion Presentacion -->
+    <main>
+      <section class="presentacion">
+        <div
+          id="carouselExampleAutoplaying"
+          class="carousel slide presentacion-carrousel"
+          data-bs-ride="carousel"
+          data-bs-pause="false"
+        >
+          <div class="carousel-inner">
+            <div class="carousel-item carousel-item-presentacion active">
+              <img src="Image/Carrusel1.png" class="d-block w-100" alt="..." />
+            </div>
+            <div class="carousel-item carousel-item-presentacion">
+              <img src="Image/Carrusel2.png" class="d-block w-100" alt="..." />
+            </div>
+            <div class="carousel-item carousel-item-presentacion">
+              <img src="Image/Carrusel3.png" class="d-block w-100" alt="..." />
+            </div>
+          </div>
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#carouselExampleAutoplaying"
+            data-bs-slide="prev"
+          >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#carouselExampleAutoplaying"
+            data-bs-slide="next"
+          >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+        <div class="container">
+          <h2 class="mb-4"><strong>Viventa Store</strong></h2>
+          <p class="mb-3">
+            ¡El lugar donde la moda, la tecnología y la innovación se encuentran
+            para transformar tu experiencia de compra en algo único!
+          </p>
+          <p class="mb-3">
+            En Viventa Store no solo reunimos las mejores marcas nacionales e
+            internacionales, sino que también creamos un espacio pensado para
+            toda la familia: gastronomía, entretenimiento, servicios y ofertas
+            exclusivas que hacen de cada visita una vivencia inolvidable.
+            Descubrí nuestros locales con las últimas tendencias.
+          </p>
+          <p class="mb-3">
+            Aprovechá las promociones que renovamos cada semana. Porque en
+            Viventa Store, tu estilo de vida se convierte en unaexperiencia
+            completa.
+          </p>
+        </div>
+      </section>
 
-    <section class="presentacion">
-      <div
-        id="carouselExampleAutoplaying"
-        class="carousel slide presentacion-carrousel"
-        data-bs-ride="carousel"
-        data-bs-pause="false"
-      >
-        <div class="carousel-inner">
-          <div class="carousel-item carousel-item-presentacion active">
-            <img src="Image/Carrusel1.png" class="d-block w-100" alt="..." />
-          </div>
-          <div class="carousel-item carousel-item-presentacion">
-            <img src="Image/Carrusel2.png" class="d-block w-100" alt="..." />
-          </div>
-          <div class="carousel-item carousel-item-presentacion">
-            <img src="Image/Carrusel3.png" class="d-block w-100" alt="..." />
+      <!-- Seccion locales -->
+
+      <section id="locales" class="locales seccion-oscura">
+        <h2><strong>Nuestros Locales</strong></h2>
+
+        <div class="container categoria-botones text-center">
+          <form method="GET" class="d-inline">
+            <button
+              type="submit"
+              name="categoria"
+              value=""
+              class="btn btn-secondary"
+            >
+              Todos
+            </button>
+            <button
+              type="submit"
+              name="categoria"
+              value="Accesorios"
+              class="btn btn-secondary"
+            >
+              Accesorios
+            </button>
+            <button
+              type="submit"
+              name="categoria"
+              value="Deportes"
+              class="btn btn-secondary"
+            >
+              Deportes
+            </button>
+            <button
+              type="submit"
+              name="categoria"
+              value="Electro"
+              class="btn btn-secondary"
+            >
+              Electro
+            </button>
+            <button
+              type="submit"
+              name="categoria"
+              value="Estetica"
+              class="btn btn-secondary"
+            >
+              Estetica
+            </button>
+            <button
+              type="submit"
+              name="categoria"
+              value="Gastronomía"
+              class="btn btn-secondary"
+            >
+              Gastronomía
+            </button>
+            <button
+              type="submit"
+              name="categoria"
+              value="Calzado"
+              class="btn btn-secondary"
+            >
+              Calzado
+            </button>
+            <button
+              type="submit"
+              name="categoria"
+              value="Indumentaria"
+              class="btn btn-secondary"
+            >
+              Indumentaria
+            </button>
+            <button
+              type="submit"
+              name="categoria"
+              value="Varios"
+              class="btn btn-secondary"
+            >
+              Varios
+            </button>
+          </form>
+        </div>
+
+        <div class="container">
+          <!-- aca vamos a tener que hacer un php para poder filtrar los locales por value-->
+          <div class="row">
+            <div class="columna col-12 col-md-3 col-sm-6">
+              <div class="card">
+                <img src="Image/shopping.png" class="card-img-top" alt="..." />
+                <div class="card-body">
+                  <p class="card-text">
+                    Some quick example text to build on the card title and make
+                    up the bulk of the card’s content.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="columna col-12 col-md-3 col-sm-6">
+              <div class="card">
+                <img src="Image/shopping.png" class="card-img-top" alt="..." />
+                <div class="card-body">
+                  <p class="card-text">
+                    Some quick example text to build on the card title and make
+                    up the bulk of the card’s content.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="columna col-12 col-md-3 col-sm-6">
+              <div class="card">
+                <img src="Image/shopping.png" class="card-img-top" alt="..." />
+                <div class="card-body">
+                  <p class="card-text">
+                    Some quick example text to build on the card title and make
+                    up the bulk of the card’s content.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="columna col-12 col-md-3 col-sm-6">
+              <div class="card">
+                <img src="Image/shopping.png" class="card-img-top" alt="..." />
+                <div class="card-body">
+                  <p class="card-text">
+                    Some quick example text to build on the card title and make
+                    up the bulk of the card’s content.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <button
-          class="carousel-control-prev"
-          type="button"
-          data-bs-target="#carouselExampleAutoplaying"
-          data-bs-slide="prev"
+      </section>
+
+      <!-- Seccion novedades -->
+
+      <section id="novedades" class="novedades">
+        <h2 class="seccion-titulo">¡Enterate de nuestras novedades!</h2>
+
+        <div
+          id="carouselExampleIndicators"
+          class="novedades-carousel carousel slide novedades-carrousel"
         >
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button
-          class="carousel-control-next"
-          type="button"
-          data-bs-target="#carouselExampleAutoplaying"
-          data-bs-slide="next"
-        >
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
-      <div class="container">
-        <h2 class="mb-4"><strong>Viventa Store</strong></h2>
-        <p class="mb-3">
-          ¡El lugar donde la moda, la tecnología y la innovación se encuentran
-          para transformar tu experiencia de compra en algo único!
-        </p>
-        <p class="mb-3">
-          En Viventa Store no solo reunimos las mejores marcas nacionales e
-          internacionales, sino que también creamos un espacio pensado para toda
-          la familia: gastronomía, entretenimiento, servicios y ofertas
-          exclusivas que hacen de cada visita una vivencia inolvidable. Descubrí
-          nuestros locales con las últimas tendencias.
-        </p>
-        <p class="mb-3">
-          Aprovechá las promociones que renovamos cada semana. Porque en Viventa
-          Store, tu estilo de vida se convierte en unaexperiencia completa.
-        </p>
-      </div>
-    </section>
-
-    <!-- Seccion locales -->
-
-    <section id="locales" class="locales seccion-oscura">
-      <h2><strong>Nuestros Locales</strong></h2>
-
-      <div class="container categoria-botones text-center">
-        <form method="GET" class="d-inline">
-          <button
-            type="submit"
-            name="categoria"
-            value=""
-            class="btn btn-secondary"
-          >
-            Todos
-          </button>
-          <button
-            type="submit"
-            name="categoria"
-            value="Accesorios"
-            class="btn btn-secondary"
-          >
-            Accesorios
-          </button>
-          <button
-            type="submit"
-            name="categoria"
-            value="Deportes"
-            class="btn btn-secondary"
-          >
-            Deportes
-          </button>
-          <button
-            type="submit"
-            name="categoria"
-            value="Electro"
-            class="btn btn-secondary"
-          >
-            Electro
-          </button>
-          <button
-            type="submit"
-            name="categoria"
-            value="Estetica"
-            class="btn btn-secondary"
-          >
-            Estetica
-          </button>
-          <button
-            type="submit"
-            name="categoria"
-            value="Gastronomía"
-            class="btn btn-secondary"
-          >
-            Gastronomía
-          </button>
-          <button
-            type="submit"
-            name="categoria"
-            value="Calzado"
-            class="btn btn-secondary"
-          >
-            Calzado
-          </button>
-          <button
-            type="submit"
-            name="categoria"
-            value="Indumentaria"
-            class="btn btn-secondary"
-          >
-            Indumentaria
-          </button>
-          <button
-            type="submit"
-            name="categoria"
-            value="Varios"
-            class="btn btn-secondary"
-          >
-            Varios
-          </button>
-        </form>
-      </div>
-
-      <div class="container">
-        <!-- aca vamos a tener que hacer un php para poder filtrar los locales por value-->
-        <div class="row">
-          <div class="columna col-12 col-md-3 col-sm-6">
-            <div class="card">
-              <img src="Image/shopping.png" class="card-img-top" alt="..." />
-              <div class="card-body">
-                <p class="card-text">
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card’s content.
-                </p>
-              </div>
+          <div class="carousel-indicators">
+            <button
+              type="button"
+              data-bs-target="#carouselExampleIndicators"
+              data-bs-slide-to="0"
+              class="active"
+              aria-current="true"
+              aria-label="Slide 1"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#carouselExampleIndicators"
+              data-bs-slide-to="1"
+              aria-label="Slide 2"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#carouselExampleIndicators"
+              data-bs-slide-to="2"
+              aria-label="Slide 3"
+            ></button>
+          </div>
+          <div class="carousel-inner">
+            <div class="carousel-item active carousel-item-novedades">
+              <img src="Image/shopping.png" class="d-block w-100" alt="..." />
+            </div>
+            <div class="carousel-item carousel-item-novedades">
+              <img src="Image/shopping_2.jpg" class="d-block w-100" alt="..." />
+              <!--aca tambien hay que hacerlo con php para mostrar las ultimas novedades-->
+            </div>
+            <div class="carousel-item carousel-item-novedades">
+              <img src="Image/shopping_3.jpg" class="d-block w-100" alt="..." />
             </div>
           </div>
-
-          <div class="columna col-12 col-md-3 col-sm-6">
-            <div class="card">
-              <img src="Image/shopping.png" class="card-img-top" alt="..." />
-              <div class="card-body">
-                <p class="card-text">
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card’s content.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="columna col-12 col-md-3 col-sm-6">
-            <div class="card">
-              <img src="Image/shopping.png" class="card-img-top" alt="..." />
-              <div class="card-body">
-                <p class="card-text">
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card’s content.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="columna col-12 col-md-3 col-sm-6">
-            <div class="card">
-              <img src="Image/shopping.png" class="card-img-top" alt="..." />
-              <div class="card-body">
-                <p class="card-text">
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card’s content.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Seccion novedades -->
-
-    <section id="novedades" class="novedades">
-      <h2 class="seccion-titulo">¡Enterate de nuestras novedades!</h2>
-
-      <div
-        id="carouselExampleIndicators"
-        class="novedades-carousel carousel slide novedades-carrousel"
-      >
-        <div class="carousel-indicators">
           <button
+            class="carousel-control-prev"
             type="button"
             data-bs-target="#carouselExampleIndicators"
-            data-bs-slide-to="0"
-            class="active"
-            aria-current="true"
-            aria-label="Slide 1"
-          ></button>
+            data-bs-slide="prev"
+          >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
           <button
+            class="carousel-control-next"
             type="button"
             data-bs-target="#carouselExampleIndicators"
-            data-bs-slide-to="1"
-            aria-label="Slide 2"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#carouselExampleIndicators"
-            data-bs-slide-to="2"
-            aria-label="Slide 3"
-          ></button>
+            data-bs-slide="next"
+          >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
         </div>
-        <div class="carousel-inner">
-          <div class="carousel-item active carousel-item-novedades">
-            <img src="Image/shopping.png" class="d-block w-100" alt="..." />
-          </div>
-          <div class="carousel-item carousel-item-novedades">
-            <img src="Image/shopping_2.jpg" class="d-block w-100" alt="..." />
-            <!--aca tambien hay que hacerlo con php para mostrar las ultimas novedades-->
-          </div>
-          <div class="carousel-item carousel-item-novedades">
-            <img src="Image/shopping_3.jpg" class="d-block w-100" alt="..." />
-          </div>
-        </div>
-        <button
-          class="carousel-control-prev"
-          type="button"
-          data-bs-target="#carouselExampleIndicators"
-          data-bs-slide="prev"
-        >
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button
-          class="carousel-control-next"
-          type="button"
-          data-bs-target="#carouselExampleIndicators"
-          data-bs-slide="next"
-        >
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- seccion promociones -->
+      </section>
+      <!-- seccion promociones -->
+    </main>
 
     <!-- Footer -->
     <footer
