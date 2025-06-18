@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <!-- Importar BootStrap -->
     <link
@@ -11,7 +11,10 @@
 
     <!-- Importar iconos BootStrap -->
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"> 
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
 
     <!-- Metadatos -->
 
@@ -19,85 +22,85 @@
     <meta name="viewport" content="width=, initial-scale=1.0" />
 
     <link rel="stylesheet" href="style.css" />
-   
 
     <title>Viventa Store</title>
     <link rel="icon" type="image/x-icon" href="Image/logo.png" />
   </head>
 
   <body>
-
     <!-- Header -->
 
     <header>
-      <nav class="top-bar navbar-expand-md navbar-light">
-        <div class="container-fluid">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-toggler" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation"> 
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbar-toggler">
-            
-            <a class="navbar-brand" href="#"> 
-                <img  class="logo" src="Image/Logo.png" width="50" alt="Logo de la pagina"> 
-            </a>
-            <ul class="navbar-nav d-flex justify-content-center align-items-center ">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="Contacto.html">Contacto</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="SobreNosotros.html">Sobre Nosotros</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="Login-Register.html" aria-disabled="true">Register / Login</a>
-              </li>
-            </ul>
-          
-          </div>
-        </div>
-      </nav>
+      <div class="top-bar">
+        <img class="logo" src="Image/logo.png" alt="FotoShopping" />
+        <nav>
+          <a href="Contacto.html">Contacto</a>
+          <a href="#">Sobre Nosotros</a>
+          <a href="#">Register / Login</a>
+        </nav>
+      </div>
     </header>
 
     <!-- Seccion Presentacion -->
-						
-
 
     <section class="presentacion">
-      
-      <div id="carouselExampleAutoplaying" class="carousel slide presentacion-carrousel" data-bs-ride="carousel" data-bs-pause="false" >
+      <div
+        id="carouselExampleAutoplaying"
+        class="carousel slide presentacion-carrousel"
+        data-bs-ride="carousel"
+        data-bs-pause="false"
+      >
         <div class="carousel-inner">
           <div class="carousel-item carousel-item-presentacion active">
-            <img src="Image/shopping.png" class="d-block w-100" alt="...">
+            <img src="Image/shopping.png" class="d-block w-100" alt="..." />
           </div>
           <div class="carousel-item carousel-item-presentacion">
-            <img src="Image/shopping_2.jpg" class="d-block w-100" alt="...">
+            <img src="Image/shopping_2.jpg" class="d-block w-100" alt="..." />
           </div>
           <div class="carousel-item carousel-item-presentacion">
-            <img src="Image/shopping_3.jpg" class="d-block w-100" alt="...">
+            <img src="Image/shopping_3.jpg" class="d-block w-100" alt="..." />
           </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselExampleAutoplaying"
+          data-bs-slide="prev"
+        >
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselExampleAutoplaying"
+          data-bs-slide="next"
+        >
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Next</span>
         </button>
       </div>
 
       <h2>Viventa Store</h2>
-      <p>¡El lugar donde la moda, la tecnología y la innovación se encuentran para transformar tu experiencia de compra en algo único!<br /> En Viventa Store no solo reunimos las mejores marcas nacionales e internacionales, sino que también creamos un espacio pensado para toda la familia: gastronomía, entretenimiento, servicios y ofertas exclusivas que hacen de cada visita una vivencia inolvidable. Descubrí nuestros locales con las últimas tendencias. Aprovechá las promociones que renovamos cada semana. Porque en Viventa Store, tu estilo de vida se convierte en unaexperiencia completa.<br /></p>
-        
+      <p>
+        ¡El lugar donde la moda, la tecnología y la innovación se encuentran
+        para transformar tu experiencia de compra en algo único!<br />
+        En Viventa Store no solo reunimos las mejores marcas nacionales e
+        internacionales, sino que también creamos un espacio pensado para toda
+        la familia: gastronomía, entretenimiento, servicios y ofertas exclusivas
+        que hacen de cada visita una vivencia inolvidable. Descubrí nuestros
+        locales con las últimas tendencias. Aprovechá las promociones que
+        renovamos cada semana. Porque en Viventa Store, tu estilo de vida se
+        convierte en unaexperiencia completa.<br />
+      </p>
     </section>
-
 
     <!-- Seccion locales -->
 
     <section id="locales" class="locales seccion-oscura">
-
       <h2>Nuestros Locales</h2>
 
-        <div class="container categoria-botones text-center">
+      <div class="container categoria-botones text-center">
         <button type="button" class="btn btn-secondary">Accesorios</button>
         <button type="button" class="btn btn-secondary">Deportes</button>
         <button type="button" class="btn btn-secondary">Electro</button>
@@ -106,141 +109,193 @@
         <button type="button" class="btn btn-secondary">Calzado</button>
         <button type="button" class="btn btn-secondary">Indumentaria</button>
         <button type="button" class="btn btn-secondary">Varios</button>
-        </div>
-     
+      </div>
 
       <div class="container">
         <div class="row">
-          
-          <div class=" columna col-12 col-md-3 col-sm-6">
+          <div class="columna col-12 col-md-3 col-sm-6">
             <div class="card">
-            <img src="Image/shopping.png" class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
+              <img src="Image/shopping.png" class="card-img-top" alt="..." />
+              <div class="card-body">
+                <p class="card-text">
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card’s content.
+                </p>
+              </div>
             </div>
           </div>
-          </div>
-        
-        
-          <div class=" columna col-12 col-md-3 col-sm-6">
-            <div class="card">
-            <img src="Image/shopping.png" class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-            </div>
-          </div>
-          </div>
-        
-        
-          <div class=" columna col-12 col-md-3 col-sm-6">
-            <div class="card">
-            <img src="Image/shopping.png" class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-            </div>
-          </div>
-          </div>
-        
-        
-          <div class=" columna col-12 col-md-3 col-sm-6">
-            <div class="card">
-            <img src="Image/shopping.png" class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-            </div>
-          </div>
-          </div>
-          
 
+          <div class="columna col-12 col-md-3 col-sm-6">
+            <div class="card">
+              <img src="Image/shopping.png" class="card-img-top" alt="..." />
+              <div class="card-body">
+                <p class="card-text">
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card’s content.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="columna col-12 col-md-3 col-sm-6">
+            <div class="card">
+              <img src="Image/shopping.png" class="card-img-top" alt="..." />
+              <div class="card-body">
+                <p class="card-text">
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card’s content.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="columna col-12 col-md-3 col-sm-6">
+            <div class="card">
+              <img src="Image/shopping.png" class="card-img-top" alt="..." />
+              <div class="card-body">
+                <p class="card-text">
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card’s content.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
     </section>
 
     <!-- Seccion novedades -->
-    
-    <section id="novedades" class="novedades">
 
+    <section id="novedades" class="novedades">
       <h2 class="seccion-titulo">¡Enterate de nuestras novedades!</h2>
 
-      <div id="carouselExampleIndicators" class="novedades-carousel carousel slide novedades-carrousel">
+      <div
+        id="carouselExampleIndicators"
+        class="novedades-carousel carousel slide novedades-carrousel"
+      >
         <div class="carousel-indicators">
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          <button
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide-to="0"
+            class="active"
+            aria-current="true"
+            aria-label="Slide 1"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide-to="1"
+            aria-label="Slide 2"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide-to="2"
+            aria-label="Slide 3"
+          ></button>
         </div>
         <div class="carousel-inner">
           <div class="carousel-item active carousel-item-novedades">
-            <img src="Image/shopping.png" class="d-block w-100" alt="...">
+            <img src="Image/shopping.png" class="d-block w-100" alt="..." />
           </div>
           <div class="carousel-item carousel-item-novedades">
-            <img src="Image/shopping_2.jpg" class="d-block w-100" alt="...">
+            <img src="Image/shopping_2.jpg" class="d-block w-100" alt="..." />
           </div>
           <div class="carousel-item carousel-item-novedades">
-            <img src="Image/shopping_3.jpg" class="d-block w-100" alt="...">
+            <img src="Image/shopping_3.jpg" class="d-block w-100" alt="..." />
           </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          data-bs-slide="prev"
+        >
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          data-bs-slide="next"
+        >
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Next</span>
         </button>
-    </div>
-
+      </div>
     </section>
 
     <!-- seccion promociones -->
 
-    
-
-
-
     <!-- Footer -->
-<footer class="seccion-footer d-flex flex-column justify-content-center align-items-center py-4">
-  <div class="d-flex w-100 justify-content-center gap-5 px-5">
-    <div class="iconos-redes-sociales d-flex flex-column gap-2 texto-footer">
-      <h5 class="text-center">Redes Sociales</h5>
-      <div class="d-flex gap-3">
-        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
-          <i class="bi bi-instagram fs-4"></i>
-        </a>
-        <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
-          <i class="bi bi-facebook fs-4"></i>
-        </a>
-        <a href="https://www.whatsapp.com/" target="_blank" rel="noopener noreferrer">
-          <i class="bi bi-whatsapp fs-4"></i>
-        </a>
-        <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">
-          <i class="bi bi-youtube fs-4"></i>
-        </a>
+    <footer
+      class="seccion-footer d-flex flex-column justify-content-center align-items-center py-4"
+    >
+      <div class="d-flex w-100 justify-content-center gap-5 px-5">
+        <div
+          class="iconos-redes-sociales d-flex flex-column gap-2 texto-footer"
+        >
+          <h5 class="text-center">Redes Sociales</h5>
+          <div class="d-flex gap-3">
+            <a
+              href="https://www.instagram.com/miakhalifa/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="bi bi-instagram fs-4"></i>
+            </a>
+            <a
+              href="https://www.facebook.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="bi bi-facebook fs-4"></i>
+            </a>
+            <a
+              href="https://www.whatsapp.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="bi bi-whatsapp fs-4"></i>
+            </a>
+            <a
+              href="https://www.youtube.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="bi bi-youtube fs-4"></i>
+            </a>
+          </div>
+        </div>
+
+        <nav class="texto-footer">
+          <h5>Mapa del sitio</h5>
+          <div class="mb-3"><a href="#">Mapa de sitio 1</a></div>
+          <div class="mb-3"><a href="#">Mapa de sitio 2</a></div>
+          <div class="mb-3"><a href="#">Mapa de sitio 3</a></div>
+          <div class="mb-3"><a href="#">Mapa de sitio 4</a></div>
+          <div class="mb-3"><a href="#">Mapa de sitio ...</a></div>
+        </nav>
+
+        <section class="texto-footer">
+          <h5>Contacto</h5>
+          <p>Email: <a href="#">contacto@viventastore.com</a></p>
+          <p>Teléfono: <a href="#">+54 9 11 2345-6789</a></p>
+          <p>Dirección: Calle 123, Ciudad</p>
+        </section>
       </div>
-    </div>
-  
-    <nav class="texto-footer">
-      <h5>Mapa del sitio</h5>
-      <div class="mb-3"><a href="#">Mapa de sitio 1</a></div>
-      <div class="mb-3"><a href="#">Mapa de sitio 2</a></div>
-      <div class="mb-3"><a href="#">Mapa de sitio 3</a></div>
-      <div class="mb-3"><a href="#">Mapa de sitio 4</a></div>
-      <div class="mb-3"><a href="#">Mapa de sitio ...</a></div>
-    </nav>
 
-    <section class="texto-footer">
-      <h5>Contacto</h5>
-      <p>Email: <a href="#">contacto@viventastore.com</a></p>
-      <p>Teléfono: <a href="#">+54 9 11 2345-6789</a></p>
-      <p>Dirección: Calle 123, Ciudad</p>
-    </section>
-  </div>
+      <p class="texto-footer text-center mt-2">
+        © 2025 Viventa Store. Todos los derechos reservados.
+      </p>
+    </footer>
 
-  <p class="texto-footer text-center mt-2">© 2025 Viventa Store. Todos los derechos reservados.</p>
-
-</footer>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>    
-  
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>

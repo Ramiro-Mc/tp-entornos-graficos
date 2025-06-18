@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <!-- Importar BootStrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7"
+      crossorigin="anonymous"
+    />
+
+    <!-- Importar iconos BootStrap -->
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+
+    <!-- Metadatos -->
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="style.css" />
+
+    <title>Contacto</title>
+    <link rel="icon" type="image/x-icon" href="Image/logo.png" />
+  </head>
+
+  <body>
+   
+
+    <header>
+      <div class="top-bar">
+        <img class="logo" src="Image/logo.png" alt="FotoShopping" />
+        <nav>
+          <a href="#">Usuario</a>
+          <a href="#">Cerrar sesion</a>
+        </nav>
+      </div>
+    </header>
+
+
+     <h2>Escribinos</h2><br><br>
+
+    <form action="mailto:x@x.com" method="post" enctype="text/plain">
+      <table>
+        <tr>
+          <td>
+            <label for="nombre"><b>Nombre:</b></label>
+          </td>
+          <td>
+            <input
+              id="nombre"
+              name="nombre"
+              required
+              style="width: 200px"
+            
+            ></input>
+          </td>
+
+          <td>
+            <label for="apellido"><b>Apellido:</b></label>
+          </td>
+          <td>
+            <input
+              id="apellido"
+              name="apellido"
+              required
+              style="width: 200px"
+             
+            >
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="email"><b>E-mail:</b></label>
+          </td>
+          <td>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              style="width: 200px"
+             
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="consulta"><b>Consulta:</b></label>
+          </td>
+          <td>
+            <textarea
+              id="consulta"
+              name="consulta"
+              rows="6"
+              required
+              style="width: 200px"
+            ></textarea>
+          </td> 
+        </tr>
+
+        <tr>
+          <td colspan="2" align="center">
+            <input type="submit" value="ENVIAR" />
+            <input type="reset" value="BORRAR" />
+          </td>
+        </tr>
+      </table>
+    </form>
+
+     <footer
+      class="seccion-footer d-flex flex-column justify-content-center align-items-center py-4"
+    >
+      <div class="d-flex w-100 justify-content-center gap-5 px-5">
+        <div
+          class="iconos-redes-sociales d-flex flex-column gap-2 texto-footer"
+        >
+          <h5 class="text-center">Redes Sociales</h5>
+          <div class="d-flex gap-3">
+            <a
+              href="https://www.instagram.com/miakhalifa/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="bi bi-instagram fs-4"></i>
+            </a>
+            <a
+              href="https://www.facebook.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="bi bi-facebook fs-4"></i>
+            </a>
+            <a
+              href="https://www.whatsapp.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="bi bi-whatsapp fs-4"></i>
+            </a>
+            <a
+              href="https://www.youtube.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="bi bi-youtube fs-4"></i>
+            </a>
+          </div>
+        </div>
+
+        <nav class="texto-footer">
+          <h5>Mapa del sitio</h5>
+          <div class="mb-3"><a href="#">Mapa de sitio 1</a></div>
+          <div class="mb-3"><a href="#">Mapa de sitio 2</a></div>
+          <div class="mb-3"><a href="#">Mapa de sitio 3</a></div>
+          <div class="mb-3"><a href="#">Mapa de sitio 4</a></div>
+          <div class="mb-3"><a href="#">Mapa de sitio ...</a></div>
+        </nav>
+
+        <section class="texto-footer">
+          <h5>Contacto</h5>
+          <p>Email: <a href="#">contacto@viventastore.com</a></p>
+          <p>Teléfono: <a href="#">+54 9 11 2345-6789</a></p>
+          <p>Dirección: Calle 123, Ciudad</p>
+        </section>
+      </div>
+
+      <p class="texto-footer text-center mt-2">
+        © 2025 Viventa Store. Todos los derechos reservados.
+      </p>
+    </footer>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
+
+
