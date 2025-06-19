@@ -413,7 +413,7 @@ input[type="radio"]:checked + .btn-radio {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('Image/LogoFondo.JPG');
+    background-image: url('Image/LogoFondo.png');
     background-size: contain; /* <- Cambia esto */
     background-repeat: no-repeat; /* <- Evita que se repita */
     background-position: center;
