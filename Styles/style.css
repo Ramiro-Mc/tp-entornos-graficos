@@ -1,0 +1,399 @@
+/* Estilos generales */
+
+.seccion-oscura {
+  background-color: #d6d4c6;
+  color: #2F2F2F;
+}
+
+.seccion-titulo{
+  font-size: 2rem;
+  padding: 15px 0px; 
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+}
+
+
+/* seccion presentacion */
+
+
+.presentacion-carrousel{
+  align-items: center;
+}
+
+.carousel-item-presentacion {
+  height: 800px;
+}
+
+.carousel-item-presentacion img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+
+.presentacion h2 {
+  margin-top: 24px;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+}
+
+
+.presentacion p{
+  font-size: 17px;
+  text-align: center;
+  color: #999999;
+} 
+
+
+.presentacion {
+  padding: 15px;
+  font-family: 'Raleway', sans-serif; 
+  word-spacing: 3px;
+}
+
+/* Seccion locales */
+
+.locales {
+  margin: 20px 0;
+  padding: 2rem 3rem;
+}
+
+.locales h2 {
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  margin-bottom: 20px;
+}
+
+.categoria-botones{
+  padding: 15px 0px;
+}
+
+/* Seccion novedades */
+
+
+
+.novedades {
+  padding: 0 1rem 40px 1rem;
+}
+@media (min-width: 768px) {
+  .novedades {
+    padding: 0 3rem 40px 3rem;
+  }
+}
+@media (min-width: 1200px) {
+  .novedades {
+    padding: 0 5rem 40px 5rem;
+  }
+}
+
+.novedades .carrousel{
+  max-width: 600px;
+}
+
+
+.carousel-item-novedades{
+  height: 550px;
+}
+
+.carousel-item-novedades img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+/* Seccion promociones */
+
+.promociones{
+  margin: 20px 0;
+  padding: 2rem 3rem;
+}
+
+
+.promocion img {
+  width: 100%;
+  height: 100%; 
+  object-fit: cover;
+  padding: 10px;
+  border-radius: 10px;
+  display: block;
+  transition: all 0.2s ease;
+}
+
+
+.promociones-contenedor{
+    padding-top: 60px;
+    margin-bottom: 40px;
+}
+
+
+.overlay{
+    transition: all 0.2 ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.overlay p{
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.promocion:hover img{
+    opacity: 0.2;
+}
+
+.promocion{
+    position: relative;
+}
+
+.promocion:hover .overlay{
+    opacity: 1;
+}
+
+.overlay .iconos-contenedor{
+    display: flex;
+
+}
+
+.overlay i{
+    color: black;
+    font-size: 60px;
+    margin: 10px;
+}
+
+.boton-vermas{
+  margin: 1.5rem 0 2rem 0;
+}
+
+
+/* Login */
+
+.fondo-loginRegister {
+background-size: cover;
+background-position: center;
+height: 100vh;
+display: flex;
+text-shadow: 1px 1px 5px black;
+padding: 20px;
+filter: brightness(85%);
+}
+
+
+.loginRegister-box {
+width: 440px;
+height: 540px;
+background: rgba(0, 0, 0, 0.5);
+color: #fff;
+top: 50%;
+left: 50%;
+position: absolute;
+transform: translate(-50%, -50%);
+padding: 70px 30px;
+}
+
+.loginRegister-box h1{
+margin: 0;
+padding: 0 0 20px;
+text-align: center;
+font-size: 22px;
+}
+
+.loginRegister-box h2{
+margin: 0;
+padding: 0 0 20px;
+text-align: center;
+font-size: 18px;
+}
+
+.loginRegister-box p{
+margin: 0;
+padding: 0;
+font-weight: bold;
+}
+
+.loginRegister-box input{
+width: 100%;
+margin-bottom: 20px;
+}
+
+.loginRegister-box input[type="email"], input[type="password"]{
+border: none;
+border-bottom: 1px solid #fff;
+background: transparent;
+outline: none;
+height: 40px;
+color: #fff;
+font-size: 16px;
+}
+
+.loginRegister-box input[name="Login"]{
+border: none;
+outline: none;
+height: 40px;
+background: #1399cfff;
+cursor: pointer;
+transition: background 0.3s;
+font-size: 16px;
+border-radius: 20px;
+color: #fff;
+}
+
+.loginRegister-box input[name="Login"]:hover{
+background: rgb(16, 124, 167);
+}
+
+.loginRegister-box a{
+text-decoration: none;
+font-size: 14px;
+color: #fff;
+}
+
+.loginRegister-box button{
+width: 100%;
+margin-bottom: 20px;
+border: none;
+outline: none;
+height: 40px;
+background: #fff;
+color: #999999;;
+font-size: 16px;
+border-radius: 20px;
+transition: background 0.3s;
+}
+
+.loginRegister-box button:hover{
+background: #c7c7c7;
+}
+
+/* Register */
+
+.btn-radio {
+width: 100%;
+margin-bottom: 20px;
+height: 40px;
+background: #1ed65e;
+color: #fff;
+font-size: 16px;
+border-radius: 20px;
+cursor: pointer;
+transition: background 0.3s;
+display: flex;
+justify-content: center; 
+align-items: center;  
+}
+
+input[type="radio"]:checked + .btn-radio {
+  background: #17a44b;
+}
+
+.btn-radio:hover {
+  background: #19b453; 
+}
+
+/* Sobre nosotros */
+
+.fondo-sobreNosotros{
+  filter: brightness(70%);
+}
+
+.sobreNosotros p{
+  font-size: 18px;
+  text-align: center;
+  color: #fff;
+  text-shadow: 1px 1px 5px black;
+}
+
+.sobreNosotros h2 {
+  color: #fff;
+  text-align: center;
+}
+
+.contenedor {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.fondoSobreNosotros {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.fondoSobreNosotros img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(40%);
+}
+
+.contenido {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  padding: 20px;
+}
+
+
+/* Dueño Local / Administrador */
+
+.botonesDueñoAdministrador {
+display: flex;
+flex-direction: column; 
+align-items: center;
+gap: 20px;
+}
+
+.botonesDueñoAdministrador button {
+padding: 15px 30px;
+border: 1px solid #000;
+border-radius: 10px;
+color: #000;
+cursor: pointer;
+font-size: 16px;
+width: 250px;
+transition: background 0.3s;
+}
+
+.botonesDueñoAdministrador button:hover {
+background-color: #ddd;}
+
+
+/* Dueño Local */
+
+.FondoDueñoAdministrador {
+position: relative;
+z-index: 0;
+overflow: hidden;
+height: 100vh;
+margin: 0;
+padding: 0;
+}
+
+.FondoDueñoAdministrador::before {
+content: "";
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-image: url('Image/LogoFondo.png');
+background-size: contain;
+background-repeat: no-repeat;
+background-position: center;
+opacity: 0.3;
+z-index: -1;
+}
