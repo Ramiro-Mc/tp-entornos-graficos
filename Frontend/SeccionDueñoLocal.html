@@ -10,113 +10,56 @@
     />
 
     <!-- Importar iconos BootStrap -->
-
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
 
     <!-- Metadatos -->
-
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=, initial-scale=1.0" />
 
     <link rel="stylesheet" href="style.css" />
 
-    <title>Contacto</title>
+    <title>Dueño Local</title>
     <link rel="icon" type="image/x-icon" href="Image/logo.png" />
   </head>
 
   <body>
-   
 
     <header>
       <div class="top-bar">
-        <img class="logo" src="Image/logo.png" alt="FotoShopping" />
+        <a href="index.html">
+          <img class="logo" src="Image/logo.png" alt="FotoShopping" />
+        </a>
         <nav>
-          <a href="#">Usuario</a>
-          <a href="#">Cerrar sesion</a>
+          <a href="*">Usuario</a>
+          <a href="*">Cerrar sesion</a>
         </nav>
       </div>
     </header>
+<main>
+    <div class="botonesDueño">
+        <nav>
+            <button>Crear nueva promocion</button>
+            <button>Mis promociones</button>
+            <button>Generar reporte</button>
+        </nav>
 
-    <main>
-       
-     <h2>Escribinos</h2><br><br>
+    </div>
 
-    <form action="mailto:x@x.com" method="post" enctype="text/plain">
-      <table>
-        <tr>
-          <td>
-            <label for="nombre"><b>Nombre:</b></label>
-          </td>
-          <td>
-            <input
-              id="nombre"
-              name="nombre"
-              required
-              style="width: 200px"
-            
-            ></input>
-          </td>
-
-          <td>
-            <label for="apellido"><b>Apellido:</b></label>
-          </td>
-          <td>
-            <input
-              id="apellido"
-              name="apellido"
-              required
-              style="width: 200px"
-             
-            >
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <label for="email"><b>E-mail:</b></label>
-          </td>
-          <td>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              required
-              style="width: 200px"
-             
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <label for="consulta"><b>Consulta:</b></label>
-          </td>
-          <td>
-            <textarea
-              id="consulta"
-              name="consulta"
-              rows="6"
-              required
-              style="width: 200px"
-            ></textarea>
-          </td> 
-        </tr>
-
-        <tr>
-          <td colspan="2" style="text-align: center;">
-            <input type="submit" value="ENVIAR" />
-            <input type="reset" value="BORRAR" />
-          </td>
-        </tr>
-      </table>
-    </form>
-    
 </main>
-    <br><br><br><br><br>
 
-     <footer
-      class="seccion-footer d-flex flex-column justify-content-center align-items-center py-4"
+
+
+
+
+
+
+
+
+        <footer
+      class="seccion-footer d-flex flex-column justify-content-center align-items-center pt-3"
     >
       <div class="d-flex w-100 justify-content-center gap-5 px-5">
         <div
@@ -125,7 +68,7 @@
           <h5 class="text-center">Redes Sociales</h5>
           <div class="d-flex gap-3">
             <a
-              href="https://www.instagram.com/"
+              href="https://www.instagram.com"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -157,11 +100,13 @@
 
         <nav class="texto-footer">
           <h5>Mapa del sitio</h5>
-          <div class="mb-3"><a href="#">Mapa de sitio 1</a></div>
-          <div class="mb-3"><a href="#">Mapa de sitio 2</a></div>
-          <div class="mb-3"><a href="#">Mapa de sitio 3</a></div>
-          <div class="mb-3"><a href="#">Mapa de sitio 4</a></div>
-          <div class="mb-3"><a href="#">Mapa de sitio ...</a></div>
+          <div class="mb-2"><a href="Index.html">Inicio</a></div>
+          <div class="mb-2"><a href="#">Locales</a></div>
+          <div class="mb-2"><a href="#">Novedades</a></div>
+          <div class="mb-2"><a href="Contacto.html">Contacto</a></div>
+          <div class="mb-2">
+            <a href="SobreNosotros.html">Sobre Nosotros</a>
+          </div>
         </nav>
 
         <section class="texto-footer">
@@ -172,11 +117,12 @@
         </section>
       </div>
 
-      <p class="texto-footer text-center mt-2">
+      <p class="texto-footer text-center">
         © 2025 Viventa Store. Todos los derechos reservados.
       </p>
     </footer>
-        <script
+
+    <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
       crossorigin="anonymous"
