@@ -428,6 +428,12 @@ z-index: -1;
   width: 100%;
 }
 
+.promocion-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
 .promocion {
   background-color: #fff;
   color: #000;
@@ -435,6 +441,7 @@ z-index: -1;
   border: 1px solid #ccc;
   display: flex;
   justify-content: space-between;
+  flex-grow: 1;
 }
 
 .acciones {
@@ -503,3 +510,20 @@ z-index: -1;
   border-color: #e90000;
     transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
+
+.estado {
+  width: 100px;
+  height: 100px;
+  background-color: #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+
+
+
+
+
