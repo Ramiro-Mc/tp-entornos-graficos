@@ -49,6 +49,7 @@
   padding: 15px;
   font-family: 'Raleway', sans-serif; 
   word-spacing: 3px;
+  width: 100%;
 }
 
 /* Seccion locales */
@@ -73,7 +74,8 @@
 
 
 .novedades {
-  padding: 0 1rem 40px 1rem;
+  padding: 15px;
+  width: 70%;
 }
 @media (min-width: 768px) {
   .novedades {
@@ -87,7 +89,7 @@
 }
 
 .novedades .carrousel{
-  max-width: 600px;
+  width: 100%;
 }
 
 
@@ -390,10 +392,114 @@ top: 0;
 left: 0;
 width: 100%;
 height: 100%;
-background-image: url('Image/LogoFondo.png');
+background-image: url('../Images/LogoFondo.png');
 background-size: contain;
 background-repeat: no-repeat;
 background-position: center;
 opacity: 0.3;
 z-index: -1;
+}
+
+/* Administrar Promociones */
+
+.filtraderos{
+    display: flex;
+    gap: 40px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 30px 45px;
+}
+
+.filtraderos button {
+    padding: 10px 20px;
+}
+
+.filtraderos button:hover {
+    background-color: #b3b3b3;
+    color: black;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.promociones {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 100%;
+}
+
+.promocion {
+  background-color: #fff;
+  color: #000;
+  padding: 20px;
+  border: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between;
+}
+
+.acciones {
+  flex-direction: column;
+  display: flex;
+  gap: 10px;
+  top: 20px;
+  right: 20px;
+}
+
+.info{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.info h3 {
+  margin: 0;
+}
+
+.info p {
+  margin: 0;
+  font-size: 18px;
+}
+
+.page-link {
+  color: black;
+}
+
+.page-link:hover {
+  background-color: #163b57ff;
+  color: white;           
+  border-color: #163b57ff;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.page-link:focus,
+.page-link:active {
+  background-color: #163b57ff;
+  color: white;
+  border-color: #163b57ff;
+}
+
+.page-link:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.Detalle:hover {
+  background-color: #1399cfff;
+  color: white;
+  border-color: #1399cfff;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.Aceptar:hover {
+  background-color: #17a44b;
+  color: white;
+  border-color: #17a44b;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.Rechazar:hover {
+  background-color: #e90000;
+  color: white;
+  border-color: #e90000;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
