@@ -400,7 +400,7 @@ opacity: 0.3;
 z-index: -1;
 }
 
-/* Administrar Promociones */
+/* Administrar Promociones/ Novedades / Locales / Reporte Promociones / Solicitud Registro / Mis promociones  */
 
 .filtraderos{
     display: flex;
@@ -522,6 +522,63 @@ z-index: -1;
   font-weight: bold;
 }
 
+/* Crear Promocion*/
+
+.form-register {
+  width: 400px;
+  background: #0e3757ff;
+  padding: 30px;
+  margin: auto;
+  margin-top: 100px;
+  border-radius: 4px;
+  font-family: 'calibri';
+  color: white;
+  box-shadow: 7px 13px 37px #000;
+}
+
+.form-register h4 {
+  font-size: 22px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.controls {
+  width: 100%;
+  background: #0e3757ff;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  border: 1px solid #1f53c5;
+  font-family: 'calibri';
+  font-size: 18px;
+  color: white;
+}
+
+.form-register p {
+  height: 40px;
+  font-size: 18px;
+  line-height: 40px;
+}
+
+.form-register a {
+  color: white;
+  text-decoration: none;
+}
+
+.form-register a:hover {
+  color: white;
+  text-decoration: underline;
+}
+
+.form-register .botons {
+  width: 100%;
+  background: #1f53c5;
+  border: none;
+  padding: 12px;
+  color: white;
+  margin: 16px 0;
+  font-size: 16px;
+}
 
 
 
