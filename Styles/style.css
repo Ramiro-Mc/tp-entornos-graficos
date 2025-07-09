@@ -525,7 +525,7 @@ z-index: -1;
 /* Crear Promocion*/
 
 .form-register {
-  width: 400px;
+  height: auto; 
   background: #0e3757ff;
   padding: 30px;
   margin: auto;

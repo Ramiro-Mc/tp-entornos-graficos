@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es ">
+<html lang="es">
   <head>
     <!-- Importar BootStrap -->
     <link
@@ -46,6 +46,47 @@
           placeholder="Ingre el titulo de la nueva promocion"
           required
         />
+        <p>Descripcion</p>
+        <textarea
+          class="form-control controls"
+          id="descripcion"
+          rows="3"
+          required
+        ></textarea>
+        <p>Vigencia de la promocion</p>
+        <label for="fechaini">Fecha de inicio</label>
+        <input
+          class="controls"
+          type="date"
+          id="fechaini"
+          name="fechaini"
+          required
+        />
+        <label for="fechafin">Fecha de fin</label>
+        <input
+          class="controls"
+          type="date"
+          id="fechafin"
+          name="fechafin"
+          required
+        />
+        <p>Categoria</p>
+        <select
+          class="form-control controls"
+          id="exampleFormControlSelect1"
+          required
+        >
+          <option>Categoria 1</option>
+          <option>Categoria 2</option>
+          <option>Categoria 3</option>
+          <option>Categoria 4</option>
+          <option>Categoria 5</option>
+        </select>
+        <p>Archivo Multimedia</p>
+        <div class="mb-3">
+          <input class="form-control controls" type="file" id="formFile" />
+        </div>
+        <button class="controls" type="submit">Enviar</button>
       </section>
     </main>
 
