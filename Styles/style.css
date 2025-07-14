@@ -7,11 +7,16 @@
 
 .seccion-titulo{
   font-size: 2rem;
-  padding: 15px 0px; 
+  
   font-family: 'Poppins', sans-serif;
   text-align: center;
 }
 
+@media (max-width: 600px) {
+  .seccion-titulo {
+    font-size: 1.5rem;
+  }
+}
 
 /* seccion presentacion */
 
@@ -41,7 +46,7 @@
 .presentacion p{
   font-size: 17px;
   text-align: center;
-  color: #999999;
+  color: #2c3e50;
 } 
 
 
@@ -51,6 +56,37 @@
   word-spacing: 3px;
   width: 100%;
 }
+
+
+@media (max-width: 767px) {
+
+  .carousel-item-presentacion {
+    height: 300px !important;
+  }
+
+  .carousel-item-presentacion img {
+    height: 100% !important;
+    width: 100% !important;
+    object-fit: cover; 
+  }
+  .presentacion {
+    width: 95%;
+  }
+}
+
+@media (max-width: 450px) {
+
+ .presentacion p{
+  font-size: 14px;
+  
+ }
+ .presentacion{
+  padding-bottom: 0px;
+ }
+}
+
+
+
 
 /* Seccion locales */
 
@@ -69,56 +105,53 @@
   padding: 15px 0px;
 }
 
-
-  .card-hover-msg {
-    opacity: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: contrast(200%)  blur(2px); 
-    transition: opacity 0.4s ease;
-     padding: 10px;
-  }
-
-
-  .card:hover .card-hover-msg {
-    opacity: 1;
-  }
-  .card-hover-msg p{
-    font-size: 25px;
-    font-weight: bold;
-    margin-bottom: 0;
+.categoria-botones button {
+  margin: 3px 0px;
 }
+
+
+.card-hover-msg {
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: contrast(200%)  blur(2px); 
+  transition: opacity 0.4s ease;
+    padding: 10px;
+}
+
+.card:hover .card-hover-msg {
+  opacity: 1;
+}
+
+.card-hover-msg p{
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
 
 
 /* Seccion novedades */
 
-
-
 .novedades {
   padding: 15px;
-  width: 70%;
+  width: 100%;
+  max-width: 1800px;
 }
-@media (min-width: 768px) {
-  .novedades {
-    padding: 0 3rem 40px 3rem;
-  }
-}
-@media (min-width: 1200px) {
-  .novedades {
-    padding: 0 5rem 40px 5rem;
-  }
+
+.novedades h2 {
+  margin: 10px 0 25px 0;
 }
 
 .novedades .carrousel{
   width: 100%;
 }
-
 
 .carousel-item-novedades{
   height: 550px;
@@ -129,6 +162,36 @@
   width: 100%;
   object-fit: cover;
 }
+
+@media (min-width: 768px) {
+  .novedades {
+    padding: 0 3rem 40px 3rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .novedades {
+    padding: 0 5rem 40px 5rem;
+  }
+
+}
+
+@media (max-width: 900px) {
+
+  .carousel-item-novedades {
+    height: 300px !important;
+  }
+
+  .carousel-item-novedades img {
+    height: 100% !important;
+    width: 100% !important;
+    object-fit: cover; 
+  }
+  .novedades {
+    width: 90%;
+  }
+}
+
 
 /* Seccion promociones */
 
@@ -196,6 +259,12 @@
 
 .boton-vermas{
   margin: 1.5rem 0 2rem 0;
+}
+
+/* Seccion mapa */
+
+.mapa-google h2 {
+  margin: -5px 0 25px 0;
 }
 
 
@@ -613,12 +682,16 @@ z-index: -1;
 
 .filtros{
   padding-bottom: 2rem;
-  border-right: #000 solid 1px;
+  box-shadow: #777 0px 0px 5px;
+  flex: 1;
+  height: calc(100vh - 80px);    /* ← Resta la altura del header */
+  overflow-y: auto;              /* ← Scroll si es necesario */
+  position: sticky;              /* ← Se mantiene fijo */
+  top: 0; 
 }
 
-.filtros h3{
-  margin: 1rem 2.3rem 0 2rem;
-  font-size: 1.5rem;
+.filtros h3 {
+  margin: 1rem 0rem 0rem 1.6rem;
 }
 
 .filtros p{
@@ -651,6 +724,99 @@ z-index: -1;
   margin: 0 1.6rem;
 }
 
+@media (max-width: 991px) {
+  .boton-codigo{
+    display: none;
+  }
+
+  .descripcion-promocion{
+    display: none;
+  }
+
+
+
+}
+
+@media (max-width: 550px){
+ .info p{
+    display: none;
+  }
+  .info h3{
+    display: none;
+  }
+  .promocion-cli img{
+  object-fit: cover;
+  height: 100px;
+  min-width: 200px;
+  }
+  .info p{
+  margin-left: 10px;
+  }
+}
+
+.boton-codigo-chico{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  height: 5rem;
+  width: 5rem;
+  font-size: 1.8rem;
+}
+
+@media (min-width: 991px){
+  .boton-codigo-chico{
+    display: none;
+  }
+}
+
+/* @media (max-width: 768px) {
+  .boton-codigo-chico{
+    height: 3.4rem;
+    width: 3.4rem;
+    font-size: 1rem;
+  }
+} */
+
+/* Menu desplegable de filtros */
+
+.filtros-desp {
+  margin-top: -2rem;
+}
+
+.offcanvas{
+  background-color: #F5F1EA;
+}
+
+.filtros-desp p{
+  padding-top: 1rem;
+  font-size: 1.2rem;
+  margin-left: 0.5rem;
+}
+
+.filtros-desp a:link{
+  text-decoration: none;
+  color: #000;
+}
+
+.filtros-desp a:visited {
+  color: rgb(151, 158, 158);
+  text-decoration: underline;
+}
+
+.filtros-desp a:hover{
+  color: rgb(18, 46, 206);
+}
+
+.filtros-desp a:active {
+  color: rgb(18, 46, 206);
+}
+
+.filtros-desp ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0 1.6rem;
+}
 
 .promocion-cli{
   background-color: #fff;
@@ -696,9 +862,25 @@ z-index: -1;
   height: 18px;
 }
 
+@media (max-width: 991px) {
+  .filtros{
+  display: none;
+  }
+}
 
-/* Buscar Locales */
+@media (min-width: 991px) {
+  .boton-filtros{
+  display: none;
+  }
+}
 
+.boton-filtros {
+  border: 1px solid #ccc;
+  margin-top: 0.6rem;
+}
+
+
+/* Estilo para la paginacion */
 .paginacion{
   display: flex;
   justify-content: center;

@@ -32,15 +32,17 @@
     <header>
       <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid top-bar">
+
           <a class="navbar-brand" href="Index.html">
             <img
               class="logo"
-              src="../Images/logo.png"
+              src="../Images/Carrusel1.png"
               alt="Logo de la pagina web"
             />
           </a>
+
           <button
-            class="navbar-toggler"
+            class="navbar-toggler boton-menu"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarNav"
@@ -50,21 +52,36 @@
           >
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div
-            class="collapse navbar-collapse flex-direction-row justify-content-end"
-            id="navbarNav"
-          >
+
+          <div class="collapse navbar-collapse flex-direction-row justify-content-end colapsado" id="navbarNav">
+            
             <ul class="navbar-nav">
               <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="#locales">
+                  <p>Locales</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="#novedades">
+                  <p>Novedades</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="#promociones">
+                  <p>Promociones</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link" aria-current="page" href="Contacto.html">
-                  <p style="color: white">Contacto</p>
+                  <p>Contacto</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="SobreNosotros.html">
-                  <p style="color: white">Sobre Nosotros</p>
+                  <p>Sobre Nosotros</p>
                 </a>
               </li>
+
               <li class="nav-item">
                 <a href="Login.html">
                   <button type="button" class="boton-nav btn btn-light">
@@ -79,6 +96,7 @@
                   </button>
                 </a>
               </li>
+
             </ul>
           </div>
         </div>
@@ -137,8 +155,8 @@
             <span class="visually-hidden">Next</span>
           </button>
         </div>
-        <div class="container">
-          <h2 class="mb-4"><strong>Viventa Store</strong></h2>
+        <div class="container descripcion-presentacion">
+          <h2 class="mb-4 seccion-titulo"><strong>Viventa Store</strong></h2>
           <p class="mb-3">
             ¡El lugar donde la moda, la tecnología y la innovación se encuentran
             para transformar tu experiencia de compra en algo único!
@@ -152,7 +170,7 @@
           </p>
           <p class="mb-3">
             Aprovechá las promociones que renovamos cada semana. Porque en
-            Viventa Store, tu estilo de vida se convierte en unaexperiencia
+            Viventa Store, tu estilo de vida se convierte en una experiencia
             completa.
           </p>
         </div>
@@ -161,7 +179,7 @@
       <!-- Seccion locales -->
 
       <section id="locales" class="locales seccion-oscura">
-        <h2><strong>Nuestros Locales</strong></h2>
+        <h2 class="seccion-titulo"><strong>Nuestros Locales</strong></h2>
 
         <div class="container categoria-botones text-center">
           <form method="GET" action="#locales" class="d-inline">
@@ -288,13 +306,13 @@
 
       <!-- Seccion novedades -->
 
-      <section class="novedades">
-        <h2 class="seccion-titulo">¡Enterate de nuestras novedades!</h2>
+      <section id="novedades" class="novedades">
+        <h2 class="seccion-titulo"><strong>¡Enterate de nuestras novedades!</strong></h2>
         <div
           id="carouselExampleIndicators"
-          class="carousel slide novedades-carrousel"
+          class="carousel slide "
         >
-          <div class="carousel-indicators">
+          <div class="carousel-indicators ">
             <button
               type="button"
               data-bs-target="#carouselExampleIndicators"
@@ -363,8 +381,8 @@
 
       <!-- seccion promociones -->
 
-      <section class="promociones seccion-oscura">
-        <h2 class="seccion-titulo">¡Promociones para morirse!</h2>
+      <section id="promociones" class="promociones seccion-oscura">
+        <h2 class="seccion-titulo"><strong>¡Promociones para morirse!</strong></h2>
         <div class="container text-center proyectos-contenedor">
           <div class="row">
             <div class="col-12 col-md-6 col-lg-4">
@@ -440,7 +458,7 @@
 
     <!-- Seccion Mapa Google Maps -->
     <section class="mapa-google">
-      <h2 class="seccion-titulo">Encontranos</h2>
+      <h2 class="seccion-titulo"><strong>Encontranos</strong></h2>
       <div class="mapa-container">
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3593.617347374075!2d-80.263616524057!3d25.750164909080794!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88d9ba2ed5cfe615%3A0xad638083c8eb0c89!2sViventa%20Miami!5e0!3m2!1ses-419!2sar!4v1750373072030!5m2!1ses-419!2sar"
@@ -499,8 +517,9 @@
         <nav class="texto-footer">
           <h5>Mapa del sitio</h5>
           <div class="mb-2"><a href="Index.html">Inicio</a></div>
-          <div class="mb-2"><a href="#">Locales</a></div>
-          <div class="mb-2"><a href="#">Novedades</a></div>
+          <div class="mb-2"><a href="#locales">Locales</a></div>
+          <div class="mb-2"><a href="#promociones">Promociones</a></div>
+          <div class="mb-2"><a href="#novedades">Novedades</a></div>
           <div class="mb-2"><a href="Contacto.html">Contacto</a></div>
           <div class="mb-2">
             <a href="SobreNosotros.html">Sobre Nosotros</a>

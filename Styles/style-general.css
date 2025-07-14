@@ -3,24 +3,33 @@
 body {
   margin: 0;
   background-color: #F5F1EA;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 main {
-  min-height: calc(50vh - 100px);
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
 
+
+.main-no-center {
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
 /* Barra de nav */
 
 .top-bar {
-  height: 80px;
+  min-height: 80px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 20px 10px 20px;
+  padding: 0px 20px;
   margin: 0px;
   background-color: #204070;
 }
@@ -37,7 +46,7 @@ main {
 
 nav a {
   text-decoration: none;
-  margin-right: 40px;
+  margin-right: 15px;
   font-size: 16px;
   transition: filter 0.3s ease;
 }
@@ -47,13 +56,44 @@ nav a:hover {
   cursor: pointer;
 }
 
-
-@media screen and (max-width: 768px) {
-    .logo {
-        display: none;
-    }
+.colapsado ul{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
+.colapsado p{
+  color: white;
+  margin: auto;
+}
+
+@media screen and (max-width: 991px) {
+  /*   .logo {
+    display: none;
+  } */
+
+  .colapsado{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .colapsado a {
+    margin: 10px 0;
+    font-size: 18px;
+    padding: 00;
+  }
+
+  .colapsado button{
+    margin: 10px;
+  }
+
+}
+
+
+
 /* Mapa Google Maps */
+
 .mapa-google {
  padding: 40px 20px;
   background-color: #f5f1ea;
