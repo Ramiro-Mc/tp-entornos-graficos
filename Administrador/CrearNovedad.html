@@ -43,7 +43,7 @@
         <input
           class="controls"
           type="text"
-          placeholder="Ingre el titulo de la nueva novedad"
+          placeholder="Ingrese el titulo de la novedad"
           required
         />
         <p>Descripcion</p>
@@ -73,22 +73,25 @@
           required
         />
         <p>Categoria</p>
-        <select
-          class="form-control controls"
-          id="exampleFormControlSelect1"
-          required
-        >
-          <option>Categoria 1</option>
-          <option>Categoria 2</option>
-          <option>Categoria 3</option>
-          <option>Categoria 4</option>
-          <option>Categoria 5</option>
-        </select>
+        <div class="position-relative">
+          <select
+            class="form-control controls"
+            id="exampleFormControlSelect1"
+            required
+          >
+            <option>Categoria 1</option>
+            <option>Categoria 2</option>
+            <option>Categoria 3</option>
+            <option>Categoria 4</option>
+            <option>Categoria 5</option>
+          </select>
+          <i class="bi bi-chevron-down position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; color: white;"></i>
+        </div>
         <p>Archivo Multimedia</p>
         <div class="mb-3">
           <input class="form-control controls" type="file" id="formFile" />
         </div>
-        <button class="controls" type="submit">Enviar</button>
+        <button class="btn btn-success boton-enviar" type="submit">Enviar</button>
       </section>
     </main>
 

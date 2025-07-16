@@ -1,3 +1,7 @@
+<!-- 
+  Consideramos eliminar la seccion y simplemente poner un boton que genere el reporte
+-->
+
 <!DOCTYPE html>
 <html lang="es ">
   <head>
@@ -37,39 +41,39 @@
     </header>
 
     <main class="FondoDueñoAdministrador">
-      <div class="filtraderos">
-        <button>GENERAR REPORTE</button>
-        <button>ORDENAR POR</button>
-        <button>FILTRAR</button>
+      <div class="container-fluid filtraderos justify-content-end">
+        <button class="btn btn-success"><i class="bi bi-plus-circle"></i> Crear </button>
+        <button class="btn btn-info"><i class="bi bi-arrow-down-up"></i>Ordenar</button>
+        <!-- <button>FILTRAR</button> -->
       </div>
       <div class="promociones">
         <div class="promocion">
-          <div class="info">
+          <div class="infoTarjeta">
             <h3>Reporte 1</h3>
             <p>#ID</p>
           </div>
-          <div class="acciones">
-            <button class="Detalle" style="height: 100px">VER DETALLES</button>
+          <div class="acciones-reporte align-items-center d-flex justify-content-center">
+             <button class="btn btn-primary ">VER DETALLES</button>
           </div>
         </div>
 
         <div class="promocion">
-          <div class="info">
+          <div class="infoTarjeta">
             <h3>Reporte 2</h3>
             <p>#ID</p>
           </div>
-          <div class="acciones">
-            <button class="Detalle" style="height: 100px">VER DETALLES</button>
+          <div class="acciones-reporte align-items-center d-flex justify-content-center">
+             <button class="btn btn-primary">VER DETALLES</button>
           </div>
         </div>
 
         <div class="promocion">
-          <div class="info">
+          <div class="infoTarjeta">
             <h3>Reporte 3</h3>
             <p>#ID</p>
           </div>
-          <div class="acciones">
-            <button class="Detalle" style="height: 100px">VER DETALLES</button>
+          <div class="acciones-reporte align-items-center d-flex justify-content-center">
+             <button class="btn btn-primary">VER DETALLES</button>
           </div>
         </div>
       </div>

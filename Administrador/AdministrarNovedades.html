@@ -37,48 +37,68 @@
     </header>
 
     <main class="FondoDueñoAdministrador">
-      <div class="filtraderos">
-        <a href="CrearNovedad.html"><button>AGREGAR NUEVA</button></a>
-        <button>ORDENAR POR</button>
-        <button>FILTRAR</button>
+      <div class="container-fluid filtraderos justify-content-end">
+        <button class="btn btn-success"><i class="bi bi-plus-circle"></i> Crear </button>
+        <button class="btn btn-info"><i class="bi bi-arrow-down-up"></i>Ordenar</button>
+        <!-- <button>FILTRAR</button> -->
       </div>
       <div class="promociones">
         <div class="promocion">
-          <div class="info">
+          <div class="infoTarjeta">
             <h3>Novedad 1</h3>
             <p>#ID</p>
           </div>
           <div class="acciones">
-            <button class="Detalle">VER DETALLES</button>
-            <button class="Aceptar">EDITAR</button>
-            <button class="Rechazar">RECHAZAR</button>
+            <button class="btn btn-primary">VER DETALLES</button>
+            <button class="btn btn-secondary">EDITAR</button>
+            <button class="btn btn-danger ">ELIMINAR</button>
           </div>
         </div>
 
         <div class="promocion">
-          <div class="info">
+          <div class="infoTarjeta">
             <h3>Novedad 2</h3>
             <p>#ID</p>
           </div>
           <div class="acciones">
-            <button class="Detalle">VER DETALLES</button>
-            <button class="Aceptar">ACEPTAR</button>
-            <button class="Rechazar">RECHAZAR</button>
+            <button class="btn btn-primary">VER DETALLES</button>
+            <button class="btn btn-secondary">EDITAR</button>
+            <button class="btn btn-danger ">ELIMINAR</button>
           </div>
         </div>
 
         <div class="promocion">
-          <div class="info">
+          <div class="infoTarjeta">
             <h3>Novedad 3</h3>
             <p>#ID</p>
           </div>
           <div class="acciones">
-            <button class="Detalle">VER DETALLES</button>
-            <button class="Aceptar">ACEPTAR</button>
-            <button class="Rechazar">RECHAZAR</button>
+            <button class="btn btn-primary">VER DETALLES</button>
+            <button class="btn btn-secondary">EDITAR</button>
+            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarModal">ELIMINAR</button>
           </div>
         </div>
       </div>
+
+      <!-- Modal para el POP-UP -->
+      <div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="eliminarModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="eliminarModalLabel">Confirmar eliminación</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              ¿Estás seguro de que deseas eliminar esta novedad?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-danger">Eliminar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div aria-label="Page navigation example">
         <ul class="pagination">
           <li class="page-item"><a class="page-link" href="#">Previous</a></li>

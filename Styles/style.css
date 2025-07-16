@@ -291,6 +291,7 @@ left: 50%;
 position: absolute;
 transform: translate(-50%, -50%);
 padding: 70px 30px;
+
 }
 
 .loginRegister-box h1{
@@ -392,6 +393,21 @@ input[type="radio"]:checked + .btn-radio {
   background: #19b453; 
 }
 
+.loginRegister-box input[type="email"]::placeholder, 
+.loginRegister-box input[type="password"]::placeholder {
+  color: #e0e0e0; 
+  opacity: 1; 
+}
+
+@media (max-width: 900px) {
+  .loginRegister-box {
+    width: 90%;
+    height: auto;
+    padding: 32px 20px;
+    
+  }
+}
+
 /* Sobre nosotros */
 
 .fondo-sobreNosotros{
@@ -413,7 +429,7 @@ input[type="radio"]:checked + .btn-radio {
 .contenedor {
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   overflow: hidden;
 }
 
@@ -434,101 +450,165 @@ input[type="radio"]:checked + .btn-radio {
 }
 
 .contenido {
-  position: absolute;
+  position: relative; 
   width: 100%;
-  height: 100%;
-  z-index: 2;
+  height: 100%; 
+  z-index: 2; 
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
-  padding: 20px;
+  padding: 0px;
+  margin: 1rem;
 }
 
+/* contacto */
+
+
+.fondo-formulario-contacto{
+  color: white;
+  background-image: url('../Images/Fondo Sobrio.jfif');
+  background-size: cover;
+}
+
+.fondo-formulario-contacto h2{
+  margin-bottom: 1.5rem;
+}
+
+textarea{
+  resize: none;
+}
+
+
+.formulario-contacto{
+  margin: 3rem 0;
+  background-color: #0006;
+  padding: 3rem;
+  box-sizing: border-box;
+  box-shadow: #000 0px 0px 5px;
+}
+.boton-enviar{
+  background-color: #28a745; 
+}
+
+
+@media (max-width: 900px) {
+  .formulario-contacto{
+    width: 95%;
+  }
+
+}
 
 /* Dueño Local / Administrador */
 
+
+
 .botonesDueñoAdministrador {
-display: flex;
-flex-direction: column; 
-align-items: center;
-gap: 20px;
+  display: flex;
+  flex-direction: column; 
+  /* align-items: center;
+  justify-content: center; */
+  gap: 20px;
+  padding: 3rem;
+  width: 100%;
 }
 
 .botonesDueñoAdministrador button {
-padding: 15px 30px;
-border: 1px solid #000;
-border-radius: 10px;
-color: #000;
-cursor: pointer;
-font-size: 16px;
-width: 250px;
-transition: background 0.3s;
+  padding: 15px 30px;
+  border: 1px solid #000;
+  border-radius: 10px;
+  color: #000;
+  cursor: pointer;
+  font-size: 16px;
+  width: 300px;
+  transition: background 0.3s;
 }
 
+.botonesDueñoAdministrador a{
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  justify-content: center; 
+  text-decoration: none;
+}
+
+@media (max-width: 450px) {
+  .botonesDueñoAdministrador button {
+    width: 80%;
+  }
+}
+
+
 .botonesDueñoAdministrador button:hover {
-background-color: #ddd;}
+  background-color: #ddd;
+}
 
 
 /* Dueño Local */
 
 .FondoDueñoAdministrador {
-position: relative;
-z-index: 0;
-overflow: hidden;
-min-height: 100vh;
-margin: 0;
-padding: 0;
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  background-size: cover;
 }
 
 .FondoDueñoAdministrador::before {
-content: "";
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background-image: url('../Images/LogoFondo.png');
-background-size: contain;
-background-repeat: no-repeat;
-background-position: center;
-opacity: 0.3;
-z-index: -1;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../Images/LogoFondo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.3;
+  z-index: -1;
 }
 
 /* Administrar Promociones/ Novedades / Locales / Reporte Promociones / Solicitud Registro / Mis promociones  */
 
-.filtraderos{
-    display: flex;
-    gap: 40px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 30px 45px;
+.filtraderos {
+  display: flex;
+  justify-content: end;
+  gap: 20px;
+  padding: 1rem 2rem 0rem 2rem;
+}
+
+.filtraderos i{
+  font-size: 1.2rem;
+  margin-right: .2rem;
 }
 
 .filtraderos button {
-    padding: 10px 20px;
+  padding: 10px 20px;
+  text-align: center;
 }
 
-.filtraderos button:hover {
-    background-color: #b3b3b3;
-    color: black;
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-}
 
 .promociones {
   display: flex;
   flex-direction: column;
   gap: 30px;
   width: 100%;
+  padding: 1rem 2rem;
+  margin: 0;
 }
 
-.promocion-container {
+/* No vi que se use */
+/* .promocion-container {
   display: flex;
   align-items: center;
   gap: 20px;
-}
+} */
 
 .promocion {
   background-color: #fff;
@@ -546,9 +626,13 @@ z-index: -1;
   gap: 10px;
   top: 20px;
   right: 20px;
+} 
+
+.acciones-reporte button{
+  height: 70%;
 }
 
-.info{
+.infoTarjeta{
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -586,26 +670,6 @@ z-index: -1;
   box-shadow: none;
 }
 
-.Detalle:hover {
-  background-color: #1399cfff;
-  color: white;
-  border-color: #1399cfff;
-  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-}
-
-.Aceptar:hover {
-  background-color: #17a44b;
-  color: white;
-  border-color: #17a44b;
-  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-}
-
-.Rechazar:hover {
-  background-color: #e90000;
-  color: white;
-  border-color: #e90000;
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-}
 
 .estado {
   width: 100px;
@@ -616,6 +680,28 @@ z-index: -1;
   align-items: center;
   border-radius: 4px;
   font-weight: bold;
+}
+
+
+@media (max-width: 450px) {
+
+  .filtraderos button{
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .promocion h3{
+    font-size: 18px;
+  }
+
+  .acciones button{
+    width: 90px;
+    height: 50px;
+    font-size: 14px;
+    align-items: center;
+    justify-content: center;
+  }
+  
 }
 
 /* Crear Promocion*/
@@ -650,6 +736,10 @@ z-index: -1;
   color: white;
 }
 
+.boton-enviar{
+  width: 100%;
+}
+
 .form-register p {
   height: 40px;
   font-size: 18px;
@@ -676,7 +766,13 @@ z-index: -1;
   font-size: 16px;
 }
 
-
+@media (max-width: 700px) {
+  .form-register {
+    width: 90%;
+   margin-top: 15px;
+   margin-bottom: 20px;
+  }
+}
 
 /* Buscar promociones */
 
