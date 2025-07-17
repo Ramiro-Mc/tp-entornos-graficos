@@ -18,6 +18,7 @@
     <!-- Metadatos -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
     <link rel="stylesheet" href="../Styles/style.css" />
     <link rel="stylesheet" href="../Styles/style-general.css" />
     <link rel="icon" type="image/x-icon" href="../Images/logo.png" />
@@ -38,50 +39,69 @@
 
     <main class="FondoDueñoAdministrador">
       <div class="form-register">
-        <h4>Formulario Local</h4>
-        <p>Nombre Local</p>
-        <input
-          class="controls"
-          type="text"
-          placeholder="Ingrese el nombre del local"
-          required
-        />
-        <p>Ubicacion </p>
-        <div class="position-relative">
-          <select
-            class="form-control controls"
-            id="exampleFormControlSelect1"
+        <form action="CrearLocal.php" method="POST" name="FormAltaLocal">
+          <h4>Formulario Local</h4>
+          <p>Nombre Local</p>
+          <input
+            class="controls"
+            type="text"
+            name="nombreLocal"
+            placeholder="Ingrese el nombre del local"
             required
-          >
-            <option>Ala A</option>
-            <option>Ala B</option>
-            <option>Ala C</option>
-            <option>Ala D</option>
-            <option>Ala E</option>
-          </select>
-          <i class="bi bi-chevron-down position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; color: white;"></i>
+          />
+          <p>Ubicacion</p>
+          <div class="position-relative">
+            <select class="form-control controls" name="ubicacion" required>
+              <option>Ala A</option>
+              <option>Ala B</option>
+              <option>Ala C</option>
+              <option>Ala D</option>
+              <option>Ala E</option>
+            </select>
+            <i
+              class="bi bi-chevron-down position-absolute"
+              style="
+                right: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                pointer-events: none;
+                color: white;
+              "
+            ></i>
+          </div>
+          <p>Rubro del local</p>
+          <div class="position-relative">
+            <select class="form-control controls" name="rubro" required>
+              <option>Categoria 1</option>
+              <option>Categoria 2</option>
+              <option>Categoria 3</option>
+              <option>Categoria 4</option>
+              <option>Categoria 5</option>
+            </select>
+            <i
+              class="bi bi-chevron-down position-absolute"
+              style="
+                right: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                pointer-events: none;
+                color: white;
+              "
+            ></i>
+          </div>
+          <p>Archivo Multimedia</p>
+          <div class="mb-3">
+            <input
+              class="form-control controls"
+              type="file"
+              name="archivoMultimedia"
+            />
+          </div>
+          <button class="btn btn-success boton-enviar" type="submit">
+            Enviar
+          </button>
+        </form>
       </div>
-        <p>Rubro del local</p>
-        <div class="position-relative">
-          <select
-            class="form-control controls"
-            id="exampleFormControlSelect1"
-            required
-          >
-            <option>Categoria 1</option>
-            <option>Categoria 2</option>
-            <option>Categoria 3</option>
-            <option>Categoria 4</option>
-            <option>Categoria 5</option>
-          </select>
-          <i class="bi bi-chevron-down position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; color: white;"></i>
-        </div>
-        <p>Archivo Multimedia</p>
-        <div class="mb-3">
-          <input class="form-control controls" type="file" id="formFile" />
-        </div>
-        <button class="btn btn-success boton-enviar" type="submit">Enviar</button>
-      </section>
     </main>
 
     <footer
