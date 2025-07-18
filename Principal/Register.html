@@ -45,11 +45,28 @@
       <section class="loginRegister-box">
         <h1>Crear una nueva cuenta</h1>
         <h2>Es rápido y fácil.</h2>
-        <form class="formulario-transparente">
+        <form
+          class="formulario-transparente"
+          action="Register.php"
+          method="POST"
+          name="formRegister"
+        >
           <p>Mail</p>
-          <input type="email" placeholder="Correo electrónico" required />
+          <input
+            type="email"
+            name="email"
+            size="100"
+            placeholder="Correo electrónico"
+            required
+          />
           <p>Contraseña</p>
-          <input type="password" placeholder="Contraseña" required />
+          <input
+            type="password"
+            name="password"
+            size="8"
+            placeholder="Contraseña"
+            required
+          />
           <p style="text-align: center" class="mb-2">Tipo de usuario</p>
           <div class="d-flex justify-content-center gap-3">
             <input
@@ -73,7 +90,6 @@
             />
             <label class="btn-radio" for="duenio">Dueño</label>
           </div>
-
           <input type="submit" name="Login" value="Únete" />
           <a href="Login.html">¿Ya tienes una cuenta?</a>
         </form>
