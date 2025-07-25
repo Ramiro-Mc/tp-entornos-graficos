@@ -9,7 +9,7 @@
     $vSql = "SELECT COUNT(*) as cantidad FROM Local WHERE Id='$vId'";
     $vResultado = mysqli_query($link, $vSql) or die(mysqli_error($link));
     $vCantLocales = mysqli_fetch_assoc($vResultado);
-    if ($vCantLocales['cantitad'] != 0) {
+    if ($vCantLocales['cantidad'] != 0) {
         echo ("El local ya Existe<br>");
         // hacer html
     } else {
