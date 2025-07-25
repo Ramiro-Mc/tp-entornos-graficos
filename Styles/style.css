@@ -998,3 +998,10 @@ textarea{
   width: 100%;
   height: 100%;
 }
+
+.panel-estilo {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+}

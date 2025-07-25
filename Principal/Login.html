@@ -45,11 +45,28 @@
     >
       <section class="loginRegister-box">
         <h1>Inicio Sesión</h1>
-        <form class="formulario-transparente">
+        <form
+          class="formulario-transparente"
+          action="Login.php"
+          method="POST"
+          name="FormLogin"
+        >
           <p>Mail</p>
-          <input type="email" placeholder="Correo electrónico" required />
+          <input
+            type="email"
+            name="email"
+            size="100"
+            placeholder="Correo electrónico"
+            required
+          />
           <p>Contraseña</p>
-          <input type="password" placeholder="Contraseña" required />
+          <input
+            type="password"
+            name="password"
+            size="8"
+            placeholder="Contraseña"
+            required
+          />
           <input type="submit" name="Login" value="Login" />
           <a href="Register.html">
             <button type="button">Registrarse</button>
