@@ -1,8 +1,6 @@
 <?php
 include("../conexion.inc");
 $mensaje = "";
-$vId = uniqid();
-
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $vNombre = $_POST['nombreLocal'];
@@ -11,15 +9,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $vCodUsuario = "1";
     $vMultimedia = $_FILES['archivoMultimedia'] ?? "";
 
-    $vSql = "SELECT COUNT(*) as cantidad FROM Local WHERE Id='$vId'";
+    $vSql = "SELECT COUNT(*) as cantidad FROM Local WHERE nombreLocal='$vNombre'";
     $vResultado = mysqli_query($link, $vSql) or die(mysqli_error($link));
     $vCantLocales = mysqli_fetch_assoc($vResultado);
 
     if ($vCantLocales['cantidad'] != 0) {
         $mensaje = "El local ya existe.";
     } else {
-        $vSql = "INSERT INTO Local (Id, NombreLocal, UbicacionLocal, RubroLocal, CodUsuario, Multimedia)  
-        VALUES ('$vId', '$vNombre', '$vUbicacion', '$vRubro', '$vCodUsuario', '$vMultimedia')";
+        $vSql = "INSERT INTO Local (NombreLocal, UbicacionLocal, RubroLocal, CodUsuario, Multimedia)  
+        VALUES ('$vNombre', '$vUbicacion', '$vRubro', '$vCodUsuario', '$vMultimedia')";
         mysqli_query($link, $vSql) or die(mysqli_error($link));
         $mensaje = "El local fue registrado correctamente.";
     }
@@ -110,11 +108,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <p>Rubro del local</p>
           <div class="position-relative">
             <select class="form-control controls" name="rubro" required>
-                <option <?= (isset($_POST['rubro']) && $_POST['rubro'] == 'Categoria 1') ? 'selected' : '' ?>>Categoria 1</option>
-                <option <?= (isset($_POST['rubro']) && $_POST['rubro'] == 'Categoria 2') ? 'selected' : '' ?>>Categoria 2</option>
-                <option <?= (isset($_POST['rubro']) && $_POST['rubro'] == 'Categoria 3') ? 'selected' : '' ?>>Categoria 3</option>
-                <option <?= (isset($_POST['rubro']) && $_POST['rubro'] == 'Categoria 4') ? 'selected' : '' ?>>Categoria 4</option>
-                <option <?= (isset($_POST['rubro']) && $_POST['rubro'] == 'Categoria 5') ? 'selected' : '' ?>>Categoria 5</option>
+                <option <?= (isset($_POST['rubro']) && $_POST['rubro'] == 'Accesorios') ? 'selected' : '' ?>>Accesorios</option>
+                <option <?= (isset($_POST['rubro']) && $_POST['rubro'] == 'Deportes') ? 'selected' : '' ?>>Deportes</option>
+                <option <?= (isset($_POST['rubro']) && $_POST['rubro'] == 'Electro') ? 'selected' : '' ?>>Electro</option>
+                <option <?= (isset($_POST['rubro']) && $_POST['rubro'] == 'Estetica') ? 'selected' : '' ?>>Estetica</option>
+                <option <?= (isset($_POST['rubro']) && $_POST['rubro'] == 'Gastronomia') ? 'selected' : '' ?>>Gastronomia</option>
+                <option <?= (isset($_POST['rubro']) && $_POST['rubro'] == 'Calzado') ? 'selected' : '' ?>>Calzado</option>
+                <option <?= (isset($_POST['rubro']) && $_POST['rubro'] == 'Indumentaria') ? 'selected' : '' ?>>Indumentaria</option>
+                <option <?= (isset($_POST['rubro']) && $_POST['rubro'] == 'Varios') ? 'selected' : '' ?>>Varios</option>
             </select>
             <i
               class="bi bi-chevron-down position-absolute"
@@ -135,9 +136,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               name="archivoMultimedia"
             />
           </div>
+        <div class="text-center mt-3">
           <button class="btn btn-success boton-enviar" type="submit">
             Enviar
           </button>
+        </div>
+        <div class="text-center mt-2">
+          <a style="background: #0767f7"class="btn btn-success" href="AdministrarLocales.html">Volver</a>
+        </div>
         </form>
       </div>
     </main>
