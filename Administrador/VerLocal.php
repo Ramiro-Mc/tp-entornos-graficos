@@ -26,26 +26,34 @@ $stmt->close();
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8" />
     <title>Detalle del Local</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
+
 <body>
-<div class="container mt-4">
-    <h1>Detalle del Local</h1>
+    <div class="container mt-4">
+        <h1>Detalle del Local</h1>
 
-    <div class="card">
-        <div class="card-body">
-            <h3 class="card-title"><?php echo htmlspecialchars($local['NombreLocal']); ?></h3>
-            <p><strong>Rubro:</strong> <?php echo htmlspecialchars($local['RubroLocal']); ?></p>
-            <p><strong>Ubicación:</strong> <?php echo htmlspecialchars($local['UbicacionLocal']); ?></p>
-            <p><strong>Codigo Dueño:</strong> <?php echo htmlspecialchars($local['CodUsuario']); ?></p>
-            <p><strong>Multimedia:</strong> <?php echo htmlspecialchars($local['Multimedia']); ?></p>
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title"><?php echo htmlspecialchars($local['NombreLocal']); ?></h3>
+                <p><strong>Rubro:</strong> <?php echo htmlspecialchars($local['RubroLocal']); ?></p>
+                <p><strong>Ubicación:</strong> <?php echo htmlspecialchars($local['UbicacionLocal']); ?></p>
+                <p><strong>Codigo Dueño:</strong> <?php echo htmlspecialchars($local['CodUsuario']); ?></p>
+                <?php if (!empty($local['Multimedia'])): ?>
+                    <p><strong>Multimedia:</strong></p>
+                    <img src="<?php echo htmlspecialchars($local['Multimedia']); ?>" alt="Imagen del local" style="max-width: 300px; height: auto;">
+                <?php else: ?>
+                    <p><strong>Multimedia:</strong> No hay imagen disponible</p>
+                <?php endif; ?>
+            </div>
         </div>
-    </div>
 
-    <a href="AdministrarLocales.php" class="btn btn-secondary mt-3">Volver</a>
-</div>
+        <a href="AdministrarLocales.php" class="btn btn-secondary mt-3">Volver</a>
+    </div>
 </body>
+
 </html>
