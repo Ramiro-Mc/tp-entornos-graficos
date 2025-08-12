@@ -1,5 +1,12 @@
+<?php
+require '../conexion.inc';
+
+// Consulta para obtener todos los locales
+$sql = "SELECT Id, NombreLocal FROM local";
+$result = $link->query($sql);
+?>
 <!DOCTYPE html>
-<html lang="es ">
+<html lang="es">
   <head>
     <!-- Importar BootStrap -->
     <link
@@ -30,7 +37,6 @@
           <img class="logo" src="../Images/Logo.png" alt="FotoShopping" />
         </a>
         <nav>
-          <!-- <a href="MiPerfil.html">Usuario</a> -->
           <a href="CerrarSesion.html">Cerrar Sesion</a>
         </nav>
       </div>
@@ -40,50 +46,34 @@
       <div class="container-fluid filtraderos justify-content-end">
         <a href="CrearLocal.php">
           <button class="btn btn-success">
-            <i class="bi bi-plus-circle"></i>Crear
+            <i class="bi bi-plus-circle"></i> Crear
           </button>
+        </a>
         <button class="btn btn-info">
-          <i class="bi bi-arrow-down-up"></i>Ordenar
-        </button></a>
-        <!-- <button>FILTRAR</button> -->
+          <i class="bi bi-arrow-down-up"></i> Ordenar
+        </button>
       </div>
+
       <div class="promociones">
-        <div class="promocion">
-          <div class="infoTarjeta">
-            <h3>Local 1</h3>
-            <p>#ID</p>
-          </div>
-          <div class="acciones">
-            <button class="btn btn-primary">VER DETALLES</button>
-            <button class="btn btn-secondary">EDITAR</button>
-            <button class="btn btn-danger">ELIMINAR</button>
-          </div>
-        </div>
-
-        <div class="promocion">
-          <div class="infoTarjeta">
-            <h3>Local 2</h3>
-            <p>#ID</p>
-          </div>
-          <div class="acciones">
-            <button class="btn btn-primary">VER DETALLES</button>
-            <button class="btn btn-secondary">EDITAR</button>
-            <button class="btn btn-danger">ELIMINAR</button>
-          </div>
-        </div>
-
-        <div class="promocion">
-          <div class="infoTarjeta">
-            <h3>Local 3</h3>
-            <p>#ID</p>
-          </div>
-          <div class="acciones">
-            <button class="btn btn-primary">VER DETALLES</button>
-            <button class="btn btn-secondary">EDITAR</button>
-            <button class="btn btn-danger">ELIMINAR</button>
-          </div>
-        </div>
+        <?php if ($result->num_rows > 0): ?>
+          <?php while($row = $result->fetch_assoc()): ?>
+            <div class="promocion">
+              <div class="infoTarjeta">
+                <h3><?php echo htmlspecialchars($row['NombreLocal']); ?></h3>
+                <p>#<?php echo $row['Id']; ?></p>
+              </div>
+              <div class="acciones">
+                <a href="VerLocal.php?id=<?php echo $row['Id']; ?>" class="btn btn-primary">VER DETALLES</a>
+                <a href="EditarLocal.php?id=<?php echo $row['Id']; ?>" class="btn btn-secondary">EDITAR</a>
+                <a href="EliminarLocal.php?id=<?php echo $row['Id']; ?>" class="btn btn-danger" onclick="return confirm('¿Seguro que quieres eliminar este local?');">ELIMINAR</a>
+              </div>
+            </div>
+          <?php endwhile; ?>
+        <?php else: ?>
+          <p>No hay locales registrados.</p>
+        <?php endif; ?>
       </div>
+
       <div aria-label="Page navigation example">
         <ul class="pagination">
           <li class="page-item"><a class="page-link" href="#">Previous</a></li>
@@ -123,6 +113,7 @@
         © 2025 Viventa Store. Todos los derechos reservados.
       </p>
     </footer>
+
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
@@ -130,3 +121,7 @@
     ></script>
   </body>
 </html>
+<?php
+$link->close();
+?>
+
