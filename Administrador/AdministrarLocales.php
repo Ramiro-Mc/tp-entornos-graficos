@@ -1,32 +1,27 @@
 <?php
 require '../conexion.inc';
 // Orden por defecto
-$order = 'Id ASC';
+$order = 'cod_local ASC';
 
 // Chequeo parámetro GET para ordenar
 if (isset($_GET['order'])) {
   switch ($_GET['order']) {
     case 'nombre_asc':
-      $order = 'NombreLocal ASC';
+      $order = 'nombre_local ASC';
       break;
     case 'nombre_desc':
-      $order = 'NombreLocal DESC';
+      $order = 'nombre_local DESC';
       break;
-    case 'id_desc':
-      $order = 'Id DESC';
+    case 'cod_local_desc':
+      $order = 'cod_local DESC';
       break;
-    case 'id_asc':
+    case 'cod_local_asc':
     default:
-      $order = 'Id ASC';
+      $order = 'cod_local ASC';
       break;
   }
 }
-
-$sql = "SELECT Id, NombreLocal FROM local ORDER BY $order";
-$result = $link->query($sql);
-
-// Consulta para obtener todos los locales
-$sql = "SELECT Id, NombreLocal FROM local";
+$sql = "SELECT cod_local, nombre_local FROM locales ORDER BY $order";
 $result = $link->query($sql);
 ?>
 <!DOCTYPE html>
@@ -80,8 +75,8 @@ $result = $link->query($sql);
         <ul class="dropdown-menu">
           <li><a class="dropdown-item" href="AdministrarLocales.php?order=nombre_asc">Nombre ↑</a></li>
           <li><a class="dropdown-item" href="AdministrarLocales.php?order=nombre_desc">Nombre ↓</a></li>
-          <li><a class="dropdown-item" href="AdministrarLocales.php?order=id_asc">ID ↑</a></li>
-          <li><a class="dropdown-item" href="AdministrarLocales.php?order=id_desc">ID ↓</a></li>
+          <li><a class="dropdown-item" href="AdministrarLocales.php?order=cod_local_asc">ID ↑</a></li>
+          <li><a class="dropdown-item" href="AdministrarLocales.php?order=cod_local_desc">ID ↓</a></li>
         </ul>
       </div>
     </div>
@@ -91,13 +86,13 @@ $result = $link->query($sql);
         <?php while ($row = $result->fetch_assoc()): ?>
           <div class="promocion">
             <div class="infoTarjeta">
-              <h3><?php echo htmlspecialchars($row['NombreLocal']); ?></h3>
-              <p>#<?php echo $row['Id']; ?></p>
+              <h3><?php echo htmlspecialchars($row['nombre_local']); ?></h3>
+              <p>#<?php echo $row['cod_local']; ?></p>
             </div>
             <div class="acciones">
-              <a href="VerLocal.php?id=<?php echo $row['Id']; ?>" class="btn btn-primary">VER DETALLES</a>
-              <a href="EditarLocal.php?id=<?php echo $row['Id']; ?>" class="btn btn-secondary">EDITAR</a>
-              <a href="EliminarLocal.php?id=<?php echo $row['Id']; ?>" class="btn btn-danger" onclick="return confirm('¿Seguro que quieres eliminar este local?');">ELIMINAR</a>
+              <a href="VerLocal.php?cod_local=<?php echo $row['cod_local']; ?>" class="btn btn-primary">VER DETALLES</a>
+              <a href="EditarLocal.php?cod_local=<?php echo $row['cod_local']; ?>" class="btn btn-secondary">EDITAR</a>
+              <a href="EliminarLocal.php?cod_local=<?php echo $row['cod_local']; ?>" class="btn btn-danger" onclick="return confirm('¿Seguro que quieres eliminar este local?');">ELIMINAR</a>
             </div>
           </div>
         <?php endwhile; ?>

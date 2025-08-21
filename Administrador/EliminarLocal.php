@@ -3,11 +3,11 @@
 require "../conexion.inc"; // Asegúrate de que la ruta sea correcta
 
 // Validar ID recibido
-if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-    $id = intval($_GET['id']);
+if (isset($_GET['cod_local']) && is_numeric($_GET['cod_local'])) {
+    $id = intval($_GET['cod_local']);
 
     // Preparar DELETE seguro
-    $stmt = $link->prepare("DELETE FROM local WHERE Id = ?");
+    $stmt = $link->prepare("DELETE FROM locales WHERE cod_local= ?");
     $stmt->bind_param("i", $id);
 
     if ($stmt->execute()) {

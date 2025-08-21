@@ -3,11 +3,14 @@ include("../conexion.inc");
 $mensaje = "";
 $rutaMultimedia = "";
 
+$sqlUsuarios = "SELECT cod_usuario,nombre_usuario FROM usuarios WHERE tipo_usuario='dueño'";
+$resUsuarios = mysqli_query($link, $sqlUsuarios) or die(mysqli_error($link));
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $vNombre = $_POST['nombreLocal'];
   $vUbicacion = $_POST['ubicacion'];
   $vRubro = $_POST['rubro'];
-  $vCodUsuario = "1";
+  $vCodUsuario = $_POST['codUsuario'];
 
   if (isset($_FILES['archivoMultimedia']) && $_FILES['archivoMultimedia']['error'] === UPLOAD_ERR_OK) {
     $vMultimedia = basename($_FILES['archivoMultimedia']['name']);
@@ -20,14 +23,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
   }
 
-  $vSql = "SELECT COUNT(*) as cantidad FROM Local WHERE NombreLocal='$vNombre'";
+  $vSql = "SELECT COUNT(*) as cantidad FROM locales WHERE nombre_local='$vNombre'";
   $vResultado = mysqli_query($link, $vSql) or die(mysqli_error($link));
   $vCantLocales = mysqli_fetch_assoc($vResultado);
 
   if ($vCantLocales['cantidad'] != 0) {
     $mensaje = "El local ya existe.";
   } else {
-    $vSql = "INSERT INTO Local (NombreLocal, UbicacionLocal, RubroLocal, CodUsuario, Multimedia)  
+    $vSql = "INSERT INTO locales (nombre_local, ubicacion_local, rubro_local, cod_usuario, multimedia)
         VALUES ('$vNombre', '$vUbicacion', '$vRubro', '$vCodUsuario', '$rutaDestino')";
     mysqli_query($link, $vSql) or die(mysqli_error($link));
     $mensaje = "El local fue registrado correctamente.";
@@ -57,7 +60,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <!-- Metadatos -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../Styles/style.css" />
   <link rel="stylesheet" href="../Styles/style-general.css" />
   <link rel="icon" type="image/x-icon" href="../Images/logo.png" />
@@ -135,6 +137,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 pointer-events: none;
                 color: white;
               "></i>
+        </div>
+         <p>Dueño del Local</p>
+        <div class="position-relative">
+          <select class="form-control controls" name="codUsuario" required>
+            <option value="">Seleccione un dueño</option>
+            <?php while ($duenio = mysqli_fetch_assoc($resUsuarios)) : ?>
+            <option value="<?= $duenio['cod_usuario'] ?>"
+              <?= (isset($_POST['codUsuario']) && $_POST['codUsuario'] == $duenio['cod_usuario']) ? 'selected' : '' ?>>
+              <?= htmlspecialchars($duenio['nombre_usuario']) ?>
+            </option>
+            <?php endwhile; ?>
+          </select>
+          <i class="bi bi-chevron-down position-absolute"
+             style="right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; color: white;"></i>
         </div>
         <p>Archivo Multimedia</p>
         <div class="mb-3">
