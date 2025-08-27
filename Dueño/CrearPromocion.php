@@ -1,3 +1,25 @@
+<?php
+session_start();
+if (isset($_SESSION['cod_usuario'])) {
+    $cod_usuario = $_SESSION['cod_usuario'];
+  
+}
+include("../conexion.inc");
+include("../functions/funciones.php");
+$mensaje = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $vTitulo = $_POST['Titulo'];
+    $vDescripcion = $_POST['Descripcion'];
+    $vFechaInicio = $_POST['fechaini'];
+    $vFechaFin = $_POST['fechafin'];
+    $vCategoria = $_POST['Categoria'];
+    // $vArchivo = $_FILES['formFile'];
+}
+   
+?>
+
+
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -43,6 +65,7 @@
         <input
           class="controls"
           type="text"
+          name="Titulo"
           placeholder="Ingrese el titulo de la nueva promocion"
           required
         />
@@ -50,6 +73,7 @@
         <textarea
           class="controls"
           id="descripcion"
+          name="Descripcion"
           rows="3"
           maxlength="200"
           required
@@ -60,8 +84,8 @@
         <input
           class="controls"
           type="date"
-          id="fechaini"
           name="fechaini"
+          id="fechaini"
           required
         />
         <label for="fechafin">Fecha de fin</label>

@@ -3,7 +3,7 @@ include("../conexion.inc");
 $mensaje = "";
 $rutaMultimedia = "";
 
-$sqlUsuarios = "SELECT cod_usuario,nombre_usuario FROM usuarios WHERE tipo_usuario='dueño'";
+$sqlUsuarios = "SELECT cod_usuario,nombre FROM usuario WHERE tipo_usuario='dueño'";
 $resUsuarios = mysqli_query($link, $sqlUsuarios) or die(mysqli_error($link));
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

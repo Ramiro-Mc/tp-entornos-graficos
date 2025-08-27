@@ -1,14 +1,14 @@
 <?php
 session_start();
 include("../conexion.inc");
+include("../functions/funciones.php");
 $mensaje = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $vEmail = $_POST['email'];
     $vPassword = $_POST['password'];
 
-    $vSql = "SELECT cod_usuario, clave FROM USUARIO WHERE nombre='$vEmail'";
-    $vResultado = mysqli_query($link, $vSql);
+    $vResultado = consultaSQL("SELECT cod_usuario, clave FROM USUARIO WHERE nombre='$vEmail'");
 
     if ($vResultado && mysqli_num_rows($vResultado) > 0) {
         $usuario = mysqli_fetch_assoc($vResultado);
@@ -17,18 +17,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['cod_usuario'] = $cod_usuario; 
 
             $tipo = "desconocido";
-            $sqlAdmin = "SELECT cod_usuario FROM administrador WHERE cod_usuario=$cod_usuario";
-            $resAdmin = mysqli_query($link, $sqlAdmin);
+
+            $resAdmin = consultaSQL("SELECT cod_usuario FROM administrador WHERE cod_usuario=$cod_usuario");
+
             if ($resAdmin && mysqli_num_rows($resAdmin) > 0) {
                 $tipo = "administrador";
             }
-            $sqlDueno = "SELECT cod_usuario FROM dueño_local WHERE cod_usuario=$cod_usuario";
-            $resDueno = mysqli_query($link, $sqlDueno);
+            $resDueno = consultaSQL("SELECT cod_usuario FROM dueño_local WHERE cod_usuario=$cod_usuario");
             if ($resDueno && mysqli_num_rows($resDueno) > 0) {
                 $tipo = "dueño";
             }
-            $sqlCliente = "SELECT cod_usuario FROM cliente WHERE cod_usuario=$cod_usuario";
-            $resCliente = mysqli_query($link, $sqlCliente);
+            $resCliente = consultaSQL("SELECT cod_usuario FROM cliente WHERE cod_usuario=$cod_usuario");
             if ($resCliente && mysqli_num_rows($resCliente) > 0) {
                 $tipo = "cliente";
             }
@@ -36,13 +35,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['tipo_usuario'] = $tipo; 
 
             if ($tipo == "administrador") {
-                header("Location: ../Administrador/SeccionAdministrador.hmtl");
+                header("Location: ../Administrador/SeccionAdministrador.html");
                 exit();
             } elseif ($tipo == "dueño") {
-                header("Location: ../Dueño/SeccionDueñoLocal.hmtl");
+                header("Location: ../Dueño/SeccionDueñoLocal.html");
                 exit();
             } elseif ($tipo == "cliente") {
-                header("Location: ../Cliente/SeccionCliente.hmtl");
+                header("Location: ../Cliente/SeccionCliente.html");
                 exit();
             } else {
                 $mensaje = "<div class='alert alert-warning'>Tipo de usuario no reconocido.</div>";
