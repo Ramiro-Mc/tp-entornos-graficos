@@ -1,42 +1,40 @@
 <?php
-include("../conexion.inc");
-$vEmail = $_POST['email'];
-$vPassword = $_POST['password'];
-$vTipoUsuario = $_POST['tipoUsuario'];
-if ($vTipoUsuario == 'cliente') {
-  $vCategoriaCliente = "Inicial";
-}
-
-// Verificar si el usuario ya existe
-$vSql = "SELECT COUNT(*) as cantidad FROM usuario WHERE nombre='$vEmail'";
-$vResultado = mysqli_query($link, $vSql) or die(mysqli_error($link));
-$vCantUsuario = mysqli_fetch_assoc($vResultado);
-
-if ($vCantUsuario['cantidad'] != 0) {
-  echo ("El usuario ya Existe<br>");
-  // hacer html
-} else {
-  // Insertar usuario en la tabla usuarios
-  $vSql = "INSERT INTO usuario (nombre, clave) VALUES ('$vEmail', '$vPassword')";
-  mysqli_query($link, $vSql) or die(mysqli_error($link));
-
-  // Obtener el id del usuario recién insertado
-  $vCodUsuario = mysqli_insert_id($link);
-
-  // Insertar en la tabla correspondiente según el tipo de usuario
+include("../functions/funciones.php");
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+  $vEmail = $_POST['email'];
+  $vPassword = $_POST['password'];
+  $vTipoUsuario = $_POST['tipoUsuario'];
   if ($vTipoUsuario == 'cliente') {
     $vCategoriaCliente = "Inicial";
-    $vSqlCliente = "INSERT INTO cliente (cod_usuario, categoriaCliente) VALUES ('$vCodUsuario', '$vCategoriaCliente')";
-    mysqli_query($link, $vSqlCliente) or die(mysqli_error($link));
-  } elseif ($vTipoUsuario == 'dueño_local') {
-    $vSqlDueno = "INSERT INTO dueño_local (cod_usuario) VALUES ('$vCodUsuario')";
-    mysqli_query($link, $vSqlDueno) or die(mysqli_error($link));
   }
-  echo ("El usuario fue Registrado<br>");
-  // hacer html
-}
-mysqli_free_result($vResultado);
-mysqli_close($link);
+
+    include("../conexion.inc");
+    $vResultado = mysqli_query($link, "SELECT COUNT(*) as cantidad FROM usuario WHERE nombre='$vEmail'");
+    $vCantUsuario = mysqli_fetch_assoc($vResultado);
+    if ($vCantUsuario['cantidad'] != 0) {
+      echo ("El usuario ya Existe<br>");
+      // hacer html
+    } else {
+      // Insertar usuario en la tabla usuarios y luego en la tabla correspondiente
+      $insertUsuario = mysqli_query($link, "INSERT INTO usuario (nombre, clave) VALUES ('$vEmail', '$vPassword')");
+      if ($insertUsuario) {
+        $vCodUsuario = mysqli_insert_id($link);
+        if ($vTipoUsuario == 'cliente') {
+          $vCategoriaCliente = "Inicial";
+          mysqli_query($link, "INSERT INTO cliente (cod_usuario, categoria_cliente) VALUES ('$vCodUsuario', '$vCategoriaCliente')");
+        } elseif ($vTipoUsuario == 'dueño_local') {
+          mysqli_query($link, "INSERT INTO dueño_local (cod_usuario) VALUES ('$vCodUsuario')");
+        }
+        echo ("El usuario fue Registrado<br>");
+      } else {
+        echo ("Error al registrar usuario.<br>");
+      }
+    }
+    if ($vResultado) {
+      mysqli_free_result($vResultado);
+    }
+    mysqli_close($link);
+  }
 ?>
 
 <!DOCTYPE html>
@@ -132,7 +130,7 @@ mysqli_close($link);
             <label class="btn-radio" for="duenio">Dueño</label>
           </div>
           <input type="submit" name="Login" value="Únete" />
-          <a href="Login.html">¿Ya tienes una cuenta?</a>
+          <a href="Login.php">¿Ya tienes una cuenta?</a>
         </form>
       </section>
     </main>
