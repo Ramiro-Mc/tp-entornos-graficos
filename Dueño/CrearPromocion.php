@@ -31,16 +31,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($vCodLocal === '') $errores[] = "Debe seleccionar un local";
 
 
-    if ($vTitulo === '') $errores[] = "Título requerido";
-      if ($vFechaInicio === '' || $vFechaFin === '') $errores[] = "Fechas requeridas";
-      if ($vFechaInicio && $vFechaFin && $vFechaFin < $vFechaInicio) $errores[] = "Rango de fechas inválido";
-    
 
       if (!$errores) {
 
         $vTituloEscaped = mysqli_real_escape_string($link, $vTitulo);
         $vCategoriaEscaped = mysqli_real_escape_string($link, $vCategoria);
-        
+
       $sql = "INSERT INTO promociones ( texto_promocion, fecha_desde_promocion, fecha_hasta_promocion, categoria_cliente, estado_promo, cod_local )
               VALUES ('$vTitulo', '$vFechaInicio', '$vFechaFin', '$vCategoria','$estado', '$vCodLocal' )";
       if (consultaSQL($sql)) {
