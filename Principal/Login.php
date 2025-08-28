@@ -8,11 +8,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $vEmail = $_POST['email'];
     $vPassword = $_POST['password'];
 
-    $vResultado = consultaSQL("SELECT cod_usuario, clave FROM USUARIO WHERE nombre='$vEmail'");
+    if ($vEmail === '' || $vPassword === '') {
+        $mensaje = "<div class='alert alert-danger'>Completa todos los campos.</div>";
+    } elseif (!filter_var($vEmail, FILTER_VALIDATE_EMAIL)) {
+        $mensaje = "<div class='alert alert-danger'>Email inválido.</div>";
+    } else {
+        $vResultado = consultaSQL("SELECT cod_usuario, clave FROM usuario WHERE nombre='$vEmail'");
+    }
 
     if ($vResultado && mysqli_num_rows($vResultado) > 0) {
         $usuario = mysqli_fetch_assoc($vResultado);
         if ($usuario['clave'] === $vPassword) {
+          // if (password_verify($vPassword, $usuario['clave'])) { IMPLEMENTARLO DESPUES (ES PARA HASHEAR LAS CONTRASEÑAS)
             $cod_usuario = $usuario['cod_usuario'];
             $_SESSION['cod_usuario'] = $cod_usuario; 
 
@@ -107,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         >
           <p>Mail</p>
           <input
-            type="email"
+            type="text"
             name="email"
             size="100"
             placeholder="Correo electrónico"

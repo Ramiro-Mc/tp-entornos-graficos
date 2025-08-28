@@ -17,13 +17,18 @@ $locales = consultaSQL($sqlLocales);
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $vTitulo = $_POST['texto_promocion'] ?? '';
+    $vTitulo = trim($_POST['texto_promocion'] ?? '');
     $vFechaInicio = $_POST['fechaini'] ?? '';
     $vFechaFin = $_POST['fechafin'] ?? '';
     $vCategoria = $_POST['Categoria'] ?? '';
     $vCodLocal = $_POST['cod_local'] ?? '';
     $vArchivo = "";
 
+ if ($vTitulo === '') $errores[] = "Título requerido";
+    if ($vFechaInicio === '' || $vFechaFin === '') $errores[] = "Fechas requeridas";
+    if ($vFechaInicio && $vFechaFin && $vFechaFin < $vFechaInicio) $errores[] = "Rango de fechas inválido";
+    if ($vCategoria === '') $errores[] = "Categoría requerida";
+    if ($vCodLocal === '') $errores[] = "Debe seleccionar un local";
 
 
     if ($vTitulo === '') $errores[] = "Título requerido";
@@ -32,6 +37,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
 
       if (!$errores) {
+
+        $vTituloEscaped = mysqli_real_escape_string($link, $vTitulo);
+        $vCategoriaEscaped = mysqli_real_escape_string($link, $vCategoria);
+        
       $sql = "INSERT INTO promociones ( texto_promocion, fecha_desde_promocion, fecha_hasta_promocion, categoria_cliente, estado_promo, cod_local )
               VALUES ('$vTitulo', '$vFechaInicio', '$vFechaFin', '$vCategoria','$estado', '$vCodLocal' )";
       if (consultaSQL($sql)) {

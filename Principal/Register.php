@@ -8,33 +8,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $vCategoriaCliente = "Inicial";
   }
 
-    include("../conexion.inc");
-    $vResultado = mysqli_query($link, "SELECT COUNT(*) as cantidad FROM usuario WHERE nombre='$vEmail'");
-    $vCantUsuario = mysqli_fetch_assoc($vResultado);
-    if ($vCantUsuario['cantidad'] != 0) {
-      echo ("El usuario ya Existe<br>");
-      // hacer html
-    } else {
-      // Insertar usuario en la tabla usuarios y luego en la tabla correspondiente
-      $insertUsuario = mysqli_query($link, "INSERT INTO usuario (nombre, clave) VALUES ('$vEmail', '$vPassword')");
-      if ($insertUsuario) {
-        $vCodUsuario = mysqli_insert_id($link);
-        if ($vTipoUsuario == 'cliente') {
-          $vCategoriaCliente = "Inicial";
-          mysqli_query($link, "INSERT INTO cliente (cod_usuario, categoria_cliente) VALUES ('$vCodUsuario', '$vCategoriaCliente')");
-        } elseif ($vTipoUsuario == 'dueño_local') {
-          mysqli_query($link, "INSERT INTO dueño_local (cod_usuario) VALUES ('$vCodUsuario')");
+  if ($vEmail === '' || $vPassword === '' || $vTipoUsuario === '') {
+        $errores[] = "Completa todos los campos.";
+    }
+    if (!filter_var($vEmail, FILTER_VALIDATE_EMAIL)) {
+        $errores[] = "Email inválido.";
+    }
+    if (strlen($vPassword) < 8) {
+        $errores[] = "La contraseña debe tener al menos 8 caracteres.";
+    }
+    if (!in_array($vTipoUsuario, ['cliente', 'duenio'])) {
+        $errores[] = "Tipo de usuario inválido.";
+    }
+
+    if (!$errores) {
+        include("../conexion.inc");
+        // Verificar si el usuario ya existe
+        $vResultado = mysqli_query($link, "SELECT COUNT(*) as cantidad FROM usuario WHERE nombre='$vEmail'");
+        $vCantUsuario = mysqli_fetch_assoc($vResultado);
+        if ($vCantUsuario['cantidad'] != 0) {
+            $errores[] = "El usuario ya existe.";
+        } else {
+            // Hashear la contraseña antes de guardar
+            $hashedPassword = password_hash($vPassword, PASSWORD_DEFAULT);
+
+            // Insertar usuario en la tabla usuario
+            $insertUsuario = mysqli_query($link, "INSERT INTO usuario (nombre, clave) VALUES ('$vEmail', '$hashedPassword')");
+            if ($insertUsuario) {
+                $vCodUsuario = mysqli_insert_id($link);
+                if ($vTipoUsuario == 'cliente') {
+                    $vCategoriaCliente = "Inicial";
+                    mysqli_query($link, "INSERT INTO cliente (cod_usuario, categoria_cliente) VALUES ('$vCodUsuario', '$vCategoriaCliente')");
+                } elseif ($vTipoUsuario == 'duenio') {
+                    mysqli_query($link, "INSERT INTO dueño_local (cod_usuario) VALUES ('$vCodUsuario')");
+                }
+                $mensaje = "<div class='alert alert-success'>El usuario fue registrado.</div>";
+            } else {
+                $errores[] = "Error al registrar usuario.";
+            }
         }
-        echo ("El usuario fue Registrado<br>");
-      } else {
-        echo ("Error al registrar usuario.<br>");
-      }
+        if ($vResultado) {
+            mysqli_free_result($vResultado);
+        }
+        mysqli_close($link);
     }
-    if ($vResultado) {
-      mysqli_free_result($vResultado);
-    }
-    mysqli_close($link);
-  }
+}
 ?>
 
 <!DOCTYPE html>
