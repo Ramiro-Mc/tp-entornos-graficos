@@ -1,3 +1,19 @@
+<?php
+session_start();
+if (!isset($_SESSION['cod_usuario'])) {
+    header("Location: ../login.php");
+    exit;
+}
+
+include("../conexion.inc"); 
+include("../functions/funciones.php");
+$cod_usuario = $_SESSION['cod_usuario'];
+
+$res = consultaSQL("SELECT nombre FROM usuario WHERE cod_usuario = '$cod_usuario'");
+$row = mysqli_fetch_assoc($res); //Para pasarlo a valor, no recurso
+$vnombre_usuario = $row['nombre'] ?? ''; 
+?>
+
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -33,8 +49,8 @@
           <img class="logo" src="../Images/logo.png" alt="FotoShopping" />
         </a>
         <nav>
-          <!-- <a href="*">Usuario</a> -->
-          <a href="*">Cerrar sesion</a>
+          <p style="color:white">Bienvenido! <?php echo $vnombre_usuario ?></p> 
+          <a href="../Principal/CerrarSesion.php">Cerrar sesion</a>
         </nav>
       </div>
     </header>
@@ -42,7 +58,7 @@
     <main class="FondoDueñoAdministrador align-items-center ">
       
       <div class="botonesDueñoAdministrador container-fluid">
-        <a href="CrearPromocion.html"><button>Crear nueva promocion</button></a>
+        <a href="CrearPromocion.php"><button>Crear nueva promocion</button></a>
         <a href="MisPromociones.html"><button>Mis promociones</button></a>
         <a href="ReportePromocionesDue.html"
           ><button>Generar reporte</button></a

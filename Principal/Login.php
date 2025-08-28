@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 header("Location: ../Administrador/SeccionAdministrador.html");
                 exit();
             } elseif ($tipo == "dueño") {
-                header("Location: ../Dueño/SeccionDueñoLocal.html");
+                header("Location: ../Dueño/SeccionDueñoLocal.php");
                 exit();
             } elseif ($tipo == "cliente") {
                 header("Location: ../Cliente/SeccionCliente.html");
@@ -72,7 +72,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
-    <link rel="stylesheet" href="../styles/style-general.css" />
     <!-- Metadatos -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=, initial-scale=1.0" />
@@ -108,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         >
           <p>Mail</p>
           <input
-            type="text"
+            type="email"
             name="email"
             size="100"
             placeholder="Correo electrónico"

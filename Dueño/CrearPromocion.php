@@ -1,22 +1,48 @@
 <?php
 session_start();
-if (isset($_SESSION['cod_usuario'])) {
-    $cod_usuario = $_SESSION['cod_usuario'];
-  
+if (!isset($_SESSION['cod_usuario'])) {
+    header("Location: ../login.php");
+    exit;
 }
+$cod_usuario = $_SESSION['cod_usuario'];
 include("../conexion.inc");
 include("../functions/funciones.php");
 $mensaje = "";
+$errores = [];
+$estado = "pendiente";
+
+$sqlLocales = "SELECT cod_local, nombre_local FROM locales WHERE cod_usuario = '$cod_usuario'";
+$locales = consultaSQL($sqlLocales);
+
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $vTitulo = $_POST['Titulo'];
-    $vDescripcion = $_POST['Descripcion'];
-    $vFechaInicio = $_POST['fechaini'];
-    $vFechaFin = $_POST['fechafin'];
-    $vCategoria = $_POST['Categoria'];
-    // $vArchivo = $_FILES['formFile'];
+    $vTitulo = $_POST['texto_promocion'] ?? '';
+    $vFechaInicio = $_POST['fechaini'] ?? '';
+    $vFechaFin = $_POST['fechafin'] ?? '';
+    $vCategoria = $_POST['Categoria'] ?? '';
+    $vCodLocal = $_POST['cod_local'] ?? '';
+    $vArchivo = "";
+
+
+
+    if ($vTitulo === '') $errores[] = "Título requerido";
+      if ($vFechaInicio === '' || $vFechaFin === '') $errores[] = "Fechas requeridas";
+      if ($vFechaInicio && $vFechaFin && $vFechaFin < $vFechaInicio) $errores[] = "Rango de fechas inválido";
+    
+
+      if (!$errores) {
+      $sql = "INSERT INTO promociones ( texto_promocion, fecha_desde_promocion, fecha_hasta_promocion, categoria_cliente, estado_promo, cod_local )
+              VALUES ('$vTitulo', '$vFechaInicio', '$vFechaFin', '$vCategoria','$estado', '$vCodLocal' )";
+      if (consultaSQL($sql)) {
+          $mensaje = "Promoción creada";
+          $vTitulo = $vDescripcion = $vCategoria = "";
+          $vFechaInicio = $vFechaFin = "";
+      } else {
+          $errores[] = "Error BD: " . mysqli_error($link);
+      }
+  }
 }
-   
 ?>
 
 
@@ -61,60 +87,69 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <main class="FondoDueñoAdministrador">
       <section class="form-register">
         <h4>Formulario Promoción</h4>
-        <p>Titulo</p>
-        <input
-          class="controls"
-          type="text"
-          name="Titulo"
-          placeholder="Ingrese el titulo de la nueva promocion"
-          required
-        />
-        <p>Descripcion</p>
-        <textarea
-          class="controls"
-          id="descripcion"
-          name="Descripcion"
-          rows="3"
-          maxlength="200"
-          required
-          style="resize: none; overflow-y: hidden"
-        ></textarea>
-        <p>Vigencia de la promocion</p>
-        <label for="fechaini">Fecha de inicio</label>
-        <input
-          class="controls"
-          type="date"
-          name="fechaini"
-          id="fechaini"
-          required
-        />
-        <label for="fechafin">Fecha de fin</label>
-        <input
-          class="controls"
-          type="date"
-          id="fechafin"
-          name="fechafin"
-          required
-        />
-        <p>Categoria</p>
-        <div class="position-relative">
-          <select
-            class="form-control controls"
-            id="exampleFormControlSelect1"
-            required
-          >
-            <option>Inicial</option>
-            <option>Medium</option>
-            <option>Premium</option>
-          
-          </select>
-          <i class="bi bi-chevron-down position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; color: white;"></i>
-        </div>
-        <p>Archivo Multimedia</p>
-        <div class="mb-3">
-          <input class="form-control controls" type="file" id="formFile" />
-        </div>
-        <button class="btn btn-success boton-enviar" type="submit">Enviar</button>
+          <form method="POST" name="FormPromocion" action="CrearPromocion.php">
+            <p>Titulo</p>
+            <input
+              class="controls"
+              type="text"
+              name="texto_promocion"
+              placeholder="Ingrese el titulo de la nueva promocion"
+              required
+            />
+            <p>Vigencia de la promocion</p>
+            <label for="fechaini">Fecha de inicio</label>
+            <input
+              class="controls"
+              type="date"
+              name="fechaini"
+              id="fechaini"
+              required
+            />
+            <label for="fechafin">Fecha de fin</label>
+            <input
+              class="controls"
+              type="date"
+              id="fechafin"
+              name="fechafin"
+              required
+            />
+            <p>Categoria</p>
+            <div class="position-relative">
+              <select
+                class="form-control controls"
+                id="exampleFormControlSelect1"
+                required
+                name="Categoria"
+              >
+                <option>Inicial</option>
+                <option>Medium</option>
+                <option>Premium</option>
+              
+              </select>
+                <p>Local asignado</p>
+            <div class="position-relative">
+              <select
+                class="form-control controls"
+                id="exampleFormControlSelect1"
+                required
+                name="cod_local"
+              >
+                  <option value="">Seleccione un local</option>
+                    <?php while ($row = mysqli_fetch_assoc($locales)): ?>
+                  <option value="<?php echo $row['cod_local']; ?>">
+                  <?php echo htmlspecialchars($row['nombre_local']); ?>
+                    </option>
+                  <?php endwhile; ?>
+              </select>
+              <i class="bi bi-chevron-down position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; color: white;"></i>
+            </div>
+            
+            <!-- <p>Archivo Multimedia</p>
+            <div class="mb-3">
+              <input class="form-control controls" type="file" id="formFile" />
+            </div> -->
+            <button class="btn btn-success boton-enviar" type="submit">Enviar</button>
+          </form>
       </section>
     </main>
 
