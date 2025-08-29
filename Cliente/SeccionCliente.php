@@ -1,3 +1,8 @@
+<?php 
+  include_once("../Includes/session.php")
+?>
+
+
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -27,15 +32,17 @@
   
   <body>
     <header>
-      <div class="top-bar">
-        <a href="SeccionCliente.html">
-          <img class="logo" src="../Images/Logo.png" alt="FotoShopping" />
-        </a>
-        <nav>
-          <a href="MiPerfil.html">Usuario</a>
-          <a href="CerrarSesion.html">Cerrar Sesion</a>
-        </nav>
-      </div>
+
+      <?php
+
+      $folder = "Cliente";
+      $pestaña = "SeccionCliente";
+      include("../Includes/header.php");
+
+      /* Ver como hacer para que aca no aparezca el menu desplegable (porque no tiene ninguna opcion) */
+
+      ?>
+
     </header>
 
     <main class="FondoDueñoAdministrador">

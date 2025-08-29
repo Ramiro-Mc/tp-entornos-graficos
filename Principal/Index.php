@@ -1,3 +1,8 @@
+<?php 
+include_once("../Includes/session.php");
+?>
+
+
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -27,80 +32,17 @@
   </head>
 
   <body>
-    <!-- Header -->
 
     <header>
-      <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid top-bar">
 
-          <a class="navbar-brand" href="Index.html">
-            <img
-              class="logo"
-              src="../Images/Logo.png"
-              alt="Logo de la pagina web"
-            />
-          </a>
+      <?php
+      
+      $folder = "Principal";
+      $pestaña = "homepage";
+      include("../Includes/header.php");
+      
+      ?>
 
-          <button
-            class="navbar-toggler boton-menu"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-
-          <div class="collapse navbar-collapse flex-direction-row justify-content-end colapsado" id="navbarNav">
-            
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="#locales">
-                  <p>Locales</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="#novedades">
-                  <p>Novedades</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="#promociones">
-                  <p>Promociones</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="Contacto.html">
-                  <p>Contacto</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="SobreNosotros.html">
-                  <p>Sobre Nosotros</p>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="Login.html">
-                  <button type="button" class="boton-nav btn btn-light">
-                    Iniciar sesion
-                  </button>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="Register.html">
-                  <button type="button" class="boton-nav btn btn-light">
-                    Registrar
-                  </button>
-                </a>
-              </li>
-
-            </ul>
-          </div>
-        </div>
-      </nav>
     </header>
 
     <!-- Seccion Presentacion -->

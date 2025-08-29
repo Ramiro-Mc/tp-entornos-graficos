@@ -1,5 +1,5 @@
 <?php
-session_start();
+include_once("../Includes/session.php");
 include("../conexion.inc");
 include("../functions/funciones.php");
 $mensaje = "";
@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 header("Location: ../Dueño/SeccionDueñoLocal.php");
                 exit();
             } elseif ($tipo == "cliente") {
-                header("Location: ../Cliente/SeccionCliente.html");
+                header("Location: ../Cliente/SeccionCliente.php");
                 exit();
             } else {
                 $mensaje = "<div class='alert alert-warning'>Tipo de usuario no reconocido.</div>";
@@ -64,6 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     mysqli_close($link);
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -88,17 +89,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Login</title>
   </head>
   <body>
+
     <header>
-      <div class="top-bar">
-        <a href="index.html">
-          <img class="logo" src="../Images/logo.png" alt="FotoShopping" />
-        </a>
-        <nav>
-          <a href="Contacto.html">Contacto</a>
-          <a href="SobreNosotros.html">Sobre Nosotros</a>
-        </nav>
-      </div>
+
+      <?php
+
+      $folder = "Principal";
+      $pestaña = "Login";
+      include("../Includes/header.php");
+
+      /* Ver como hacer para que aca no aparezca el menu desplegable (porque no tiene ninguna opcion) */
+
+      ?>
+
     </header>
+
     <main
       style="background-image: url('../Images/Login-Register.jpg')"
       class="fondo-loginRegister"

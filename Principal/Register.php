@@ -1,4 +1,5 @@
 <?php
+include_once("../Includes/session.php");
 include("../functions/funciones.php");
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
   $vEmail = $_POST['email'];
@@ -9,17 +10,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
   }
 
   if ($vEmail === '' || $vPassword === '' || $vTipoUsuario === '') {
-        $errores[] = "Completa todos los campos.";
-    }
-    if (!filter_var($vEmail, FILTER_VALIDATE_EMAIL)) {
-        $errores[] = "Email inválido.";
-    }
-    if (strlen($vPassword) < 8) {
-        $errores[] = "La contraseña debe tener al menos 8 caracteres.";
-    }
-    if (!in_array($vTipoUsuario, ['cliente', 'duenio'])) {
-        $errores[] = "Tipo de usuario inválido.";
-    }
+    $errores[] = "Completa todos los campos.";
+  }
+  if (!filter_var($vEmail, FILTER_VALIDATE_EMAIL)) {
+    $errores[] = "Email inválido.";
+  }
+  if (strlen($vPassword) < 8) {
+    $errores[] = "La contraseña debe tener al menos 8 caracteres.";
+  }
+  if (!in_array($vTipoUsuario, ['cliente', 'duenio'])) {
+    $errores[] = "Tipo de usuario inválido.";
+  }
 
     if (!$errores) {
         include("../conexion.inc");
@@ -83,16 +84,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     <title>Register</title>
   </head>
   <body>
+
     <header>
-      <div class="top-bar">
-        <a href="index.html">
-          <img class="logo" src="../Images/logo.png" alt="FotoShopping" />
-        </a>
-        <nav>
-          <a href="Contacto.html">Contacto</a>
-          <a href="SobreNosotros.html">Sobre Nosotros</a>
-        </nav>
-      </div>
+
+      <?php
+
+      $folder = "Principal";
+      $pestaña = "Register";
+      include("../Includes/header.php");
+
+      /* Ver como hacer para que aca no aparezca el menu desplegable (porque no tiene ninguna opcion) */
+
+      ?>
+      
+
     </header>
 
     <main

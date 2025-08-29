@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['cod_usuario'])) {
-    header("Location: ../login.php");
+    header("Location: ../principal/login.php");
     exit;
 }
 

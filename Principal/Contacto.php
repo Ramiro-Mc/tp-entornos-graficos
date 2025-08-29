@@ -1,3 +1,8 @@
+<?php
+  include_once("../Includes/session.php");
+?>
+
+
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -32,15 +37,17 @@
    
 
     <header>
-      <div class="top-bar">
-        <a href="index.html">
-          <img class="logo" src="../Images/logo.png" alt="FotoShopping" />
-        </a>
-        <nav>
-          <a href="#">Usuario</a>
-          <a href="#">Cerrar sesion</a>
-        </nav>
-      </div>
+
+      <?php
+
+      $folder = "Principal";
+      $pestaña = "contacto";
+      include("../Includes/header.php");
+
+      /* Ver como hacer para que aca no aparezca el menu desplegable (porque no tiene ninguna opcion) */
+
+      ?>
+
     </header>
 
     <main class="fondo-formulario-contacto">
