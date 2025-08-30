@@ -25,7 +25,7 @@ include_once("../Includes/session.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="stylesheet" href="../styles/style.css" />
-    <link rel="stylesheet" href="../styles/style-general.css" />
+    <link rel="stylesheet" href="../Styles/style-general.css" />
 
     <title>Viventa Store</title>
     <link rel="icon" type="image/x-icon" href="../Images/logo.png" />
@@ -38,7 +38,7 @@ include_once("../Includes/session.php");
       <?php
       
       $folder = "Principal";
-      $pestaña = "homepage";
+      $pestaña = "Index";
       include("../Includes/header.php");
       
       ?>
@@ -384,11 +384,7 @@ include_once("../Includes/session.php");
         </div>
 
         <div class="d-flex justify-content-center boton-vermas">
-          <a
-            href="../Cliente/BuscarPromociones.html"
-            
-            rel="noopener noreferer"
-          >
+          <a href="../Cliente/BuscarPromociones.php" rel="noopener noreferer">
             <button type="button" class="btn btn-dark">
               Ver mas promociones
               <i class="bi bi-arrow-right-circle"></i>
@@ -419,7 +415,10 @@ include_once("../Includes/session.php");
     <footer
       class="seccion-footer d-flex flex-column justify-content-center align-items-center pt-3"
     >
-      <div class="container d-flex flex-wrap justify-content-center gap-5 px-0">
+      <?php
+      include("../Includes/footer.php")
+      ?>
+     <!--  <div class="container d-flex flex-wrap justify-content-center gap-5 px-0">
         <div
           class="iconos-redes-sociales d-flex flex-column gap-2 texto-footer"
         >
@@ -478,7 +477,7 @@ include_once("../Includes/session.php");
 
       <p class="texto-footer text-center">
         © 2025 Viventa Store. Todos los derechos reservados.
-      </p>
+      </p> -->
     </footer>
 
     <script

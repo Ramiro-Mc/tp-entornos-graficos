@@ -6,7 +6,7 @@ if (!isset($_SESSION['cod_usuario'])) {
 }
 $cod_usuario = $_SESSION['cod_usuario'];
 include("../conexion.inc");
-include("../functions/funciones.php");
+include("../Includes/funciones.php");
 $mensaje = "";
 $errores = [];
 $estado = "pendiente";
@@ -78,15 +78,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   </head>
   <body>
     <header>
-      <div class="top-bar">
-        <a href="SeccionDueñoLocal.html">
-          <img class="logo" src="../Images/Logo.png" alt="FotoShopping" />
-        </a>
-        <nav>
-          <!-- <a href="MiPerfil.html">Usuario</a> -->
-          <a href="CerrarSesion.html">Cerrar Sesion</a>
-        </nav>
-      </div>
+
+      <?php
+
+      $folder = "Dueño";
+      $pestaña = "CrearPromocion";
+      include("../Includes/header.php");
+
+      /* Ver como hacer para que aca no aparezca el menu desplegable (porque no tiene ninguna opcion) */
+
+      ?>
+
     </header>
 
     <main class="FondoDueñoAdministrador">

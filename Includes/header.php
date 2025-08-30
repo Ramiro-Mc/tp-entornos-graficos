@@ -1,6 +1,6 @@
 <?php 
 include_once("session.php");
-include_once("../functions/funciones.php");
+include_once("../Includes/funciones.php");
 
 if(isset($_SESSION['tipo_usuario'])){
   $tipo_usuario = $_SESSION['tipo_usuario'];
@@ -10,6 +10,12 @@ if(isset($_SESSION['tipo_usuario'])){
   $res = consultaSQL("SELECT nombre FROM usuario WHERE cod_usuario = '$cod_usuario'");
   $row = mysqli_fetch_assoc($res); 
   $vnombre_usuario = $row['nombre'] ?? ''; 
+
+  if($_SESSION['tipo_usuario'] == "cliente"){
+    $res = consultaSQL("SELECT categoria_cliente FROM cliente WHERE cod_usuario = '$cod_usuario'");
+    $row = mysqli_fetch_assoc($res); 
+    $categoria_cliente = $row['categoria_cliente'] ?? ''; 
+  }
 
 }else{
   $estaLogueado = "noLogueado";
@@ -102,6 +108,16 @@ if ( $folder == "Admin" or $folder == "Cliente" or $folder == "DueñoLocal" or $
             <li class="nav-item">
               <p style="color:white">Bienvenido! <?= $vnombre_usuario ?></p> 
             </li>
+
+            <!-- Categoria de cliente -->
+
+            <li class="nav-item">
+              <img style="" class="imagen_categoria_cliente" src="<?= $rutaSalirCarpeta ?>/Images/categoria-<?= $categoria_cliente ?>.png" alt="Categoria cliente">
+            </li>
+
+            <!-- Fin de Categoria de cliente  -->
+
+
             <li class="nav-item">
               <a href="<?= $rutaSalirCarpeta ?>/Principal/CerrarSesion.php">Cerrar sesion</a>
             </li>

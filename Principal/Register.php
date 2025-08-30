@@ -1,6 +1,6 @@
 <?php
 include_once("../Includes/session.php");
-include("../functions/funciones.php");
+include("../Includes/funciones.php");
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
   $vEmail = $_POST['email'];
   $vPassword = $_POST['password'];

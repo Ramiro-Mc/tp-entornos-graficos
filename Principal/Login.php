@@ -1,7 +1,7 @@
 <?php
 include_once("../Includes/session.php");
 include("../conexion.inc");
-include("../functions/funciones.php");
+include("../Includes/funciones.php");
 $mensaje = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

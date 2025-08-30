@@ -47,13 +47,13 @@
 
     <main class="FondoDueñoAdministrador">
       <div class="botonesDueñoAdministrador">
-        <a href="MiPerfil.html">
+        <a href="MiPerfil.php">
           <button>Mi Perfil</button>
         </a>
-        <a href="BuscarPromociones.html">
+        <a href="BuscarPromociones.php">
           <button>Buscar Promociones</button>
         </a>
-        <a href="BucarLocales.html">
+        <a href="BucarLocales.php">
           <button>Buscar Locales</button>
         </a>
       </div>
