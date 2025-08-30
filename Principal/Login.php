@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($vResultado && mysqli_num_rows($vResultado) > 0) {
         $usuario = mysqli_fetch_assoc($vResultado);
-        if ($usuario['clave'] === $vPassword) {
+        if ($usuario['clave'] === $vPassword ) {
           // if (password_verify($vPassword, $usuario['clave'])) { IMPLEMENTARLO DESPUES (ES PARA HASHEAR LAS CONTRASEÑAS)
             $cod_usuario = $usuario['cod_usuario'];
             $_SESSION['cod_usuario'] = $cod_usuario; 
@@ -134,7 +134,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             required
           />
           <input type="submit" name="Login" value="Login" />
-          <a href="Register.html">
+          <a href="Register.php">
             <button type="button">Registrarse</button>
           </a>
           <a href="#">¿Olvido su contraseña?</a>

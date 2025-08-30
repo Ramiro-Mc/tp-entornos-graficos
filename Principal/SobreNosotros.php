@@ -39,7 +39,7 @@
       <?php
 
       $folder = "Principal";
-      $pestaña = "SobreNosotros";
+      $pestaña = "Sobre Nosotros";
       include("../Includes/header.php");
 
       /* Ver como hacer para que aca no aparezca el menu desplegable (porque no tiene ninguna opcion) */
@@ -115,68 +115,10 @@
       </div>
     </main>
 
-    <footer
-      class="seccion-footer d-flex flex-column justify-content-center align-items-center pt-3"
-    >
-      <div class="d-flex w-100 justify-content-center gap-5 px-5">
-        <div
-          class="iconos-redes-sociales d-flex flex-column gap-2 texto-footer"
-        >
-          <h5 class="text-center">Redes Sociales</h5>
-          <div class="d-flex gap-3">
-            <a
-              href="https://www.instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <i class="bi bi-instagram fs-4"></i>
-            </a>
-            <a
-              href="https://www.facebook.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <i class="bi bi-facebook fs-4"></i>
-            </a>
-            <a
-              href="https://www.whatsapp.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <i class="bi bi-whatsapp fs-4"></i>
-            </a>
-            <a
-              href="https://www.youtube.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <i class="bi bi-youtube fs-4"></i>
-            </a>
-          </div>
-        </div>
+    <footer class="seccion-footer d-flex flex-column justify-content-center align-items-center pt-4">
 
-        <nav class="texto-footer">
-          <h5>Mapa del sitio</h5>
-          <div class="mb-2"><a href="Index.html">Inicio</a></div>
-          <div class="mb-2"><a href="#">Locales</a></div>
-          <div class="mb-2"><a href="#">Novedades</a></div>
-          <div class="mb-2"><a href="Contacto.html">Contacto</a></div>
-          <div class="mb-2">
-            <a href="SobreNosotros.html">Sobre Nosotros</a>
-          </div>
-        </nav>
-
-        <section class="texto-footer">
-          <h5>Contacto</h5>
-          <p>Email: <a href="#">contacto@viventastore.com</a></p>
-          <p>Teléfono: <a href="#">+54 9 11 2345-6789</a></p>
-          <p>Dirección: Calle 123, Ciudad</p>
-        </section>
-      </div>
-
-      <p class="texto-footer text-center">
-        © 2025 Viventa Store. Todos los derechos reservados.
-      </p>
+      <?php include("../Includes/footer.php") ?>
+    
     </footer>
 
     <script

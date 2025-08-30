@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $errores[] = "Tipo de usuario inválido.";
   }
 
-    if (!$errores) {
+    if (!isset($errores)) {
         include("../conexion.inc");
         // Verificar si el usuario ya existe
         $vResultado = mysqli_query($link, "SELECT COUNT(*) as cantidad FROM usuario WHERE nombre='$vEmail'");
@@ -31,10 +31,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             $errores[] = "El usuario ya existe.";
         } else {
             // Hashear la contraseña antes de guardar
-            $hashedPassword = password_hash($vPassword, PASSWORD_DEFAULT);
+            //$hashedPassword = password_hash($vPassword, PASSWORD_DEFAULT);
 
             // Insertar usuario en la tabla usuario
-            $insertUsuario = mysqli_query($link, "INSERT INTO usuario (nombre, clave) VALUES ('$vEmail', '$hashedPassword')");
+            $insertUsuario = mysqli_query($link, "INSERT INTO usuario (nombre, clave) VALUES ('$vEmail', '$vPassword')");
             if ($insertUsuario) {
                 $vCodUsuario = mysqli_insert_id($link);
                 if ($vTipoUsuario == 'cliente') {
@@ -52,7 +52,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             mysqli_free_result($vResultado);
         }
         mysqli_close($link);
+    }else{
+    foreach ($errores as $error) {
+    echo "<div class='alert alert-danger'>$error</div>";
     }
+  }
 }
 ?>
 

@@ -4,7 +4,7 @@ include_once("session.php");
 if($folder == "Administrador"){
   $opciones = ["Inicio", "Administrar Promociones", "Administrar Novedades", "Administrar Locales", "Solicitudes De Registro", "Reportes De Uso Promociones", "Sobre Nosotros"];
 }elseif($folder == "Dueño"){
-  $opciones = ["Mis Promociones", "Crear Promocion", "Reporte Promociones"];
+  $opciones = ["Seccion Dueño Local", "Crear Promocion", "Mis Promociones", "Reporte Promociones"];
 }elseif($folder == "Principal"){
   $opciones = ["Index","Contacto","Sobre Nosotros"];
 }

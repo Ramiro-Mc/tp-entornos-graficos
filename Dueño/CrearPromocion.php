@@ -1,9 +1,10 @@
 <?php
-session_start();
+include_once("../Includes/session.php");
 if (!isset($_SESSION['cod_usuario'])) {
-    header("Location: ../login.php");
-    exit;
+  header("Location: ../principal/login.php");
+  exit;
 }
+
 $cod_usuario = $_SESSION['cod_usuario'];
 include("../conexion.inc");
 include("../Includes/funciones.php");
@@ -82,7 +83,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <?php
 
       $folder = "Dueño";
-      $pestaña = "CrearPromocion";
+      $pestaña = "Crear Promocion";
       include("../Includes/header.php");
 
       /* Ver como hacer para que aca no aparezca el menu desplegable (porque no tiene ninguna opcion) */
@@ -160,32 +161,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </section>
     </main>
 
-    <footer
-      class="seccion-footer d-flex flex-column justify-content-center align-items-center pt-4"
-    >
-      <div class="d-flex w-100 justify-content-center gap-5 px-5">
-        <nav class="texto-footer">
-          <h5>Mapa del sitio</h5>
-          <div class="mb-2"><a href="SeccionDueñoLocal.html">Inicio</a></div>
-          <div class="mb-2">
-            <a href="CrearPromocion.html">crear Nueva Promocion</a>
-          </div>
-          <div class="mb-2">
-            <a href="MisPromociones.html">Mis Promociones</a>
-          </div>
-          <div class="mb-2"><a href="#">Generar Reporte</a></div>
-        </nav>
+    <footer class="seccion-footer d-flex flex-column justify-content-center align-items-center pt-4">
 
-          <section class="texto-footer">
-          <h5>Contacto</h5>
-          <p>Email: <a href="#">contacto@viventastore.com</a></p>
-          <p>Teléfono: <a href="#">+54 9 11 2345-6789</a></p>
-          <p>Dirección: Calle 123, Ciudad</p>
-        </section>
-      </div>
-      <p class="texto-footer text-center">
-        © 2025 Viventa Store. Todos los derechos reservados.
-      </p>
+      <?php include("../Includes/footer.php") ?>
+    
     </footer>
 
     <script

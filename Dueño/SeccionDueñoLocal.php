@@ -1,17 +1,9 @@
 <?php
-session_start();
-// if (!isset($_SESSION['cod_usuario'])) {
-//     header("Location: ../principal/login.php");
-//     exit;
-// }
-
-include("../conexion.inc"); 
-include("../Includes/funciones.php");
-$cod_usuario = $_SESSION['cod_usuario'];
-
-$res = consultaSQL("SELECT nombre FROM usuario WHERE cod_usuario = '$cod_usuario'");
-$row = mysqli_fetch_assoc($res); //Para pasarlo a valor, no recurso
-$vnombre_usuario = $row['nombre'] ?? ''; 
+include_once("../Includes/session.php");
+if (!isset($_SESSION['cod_usuario'])) {
+  header("Location: ../principal/login.php");
+  exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -48,7 +40,7 @@ $vnombre_usuario = $row['nombre'] ?? '';
       <?php
 
       $folder = "Dueño";
-      $pestaña = "SeccionDueñoLocal";
+      $pestaña = "Seccion Dueño Local";
       include("../Includes/header.php");
 
       /* Ver como hacer para que aca no aparezca el menu desplegable (porque no tiene ninguna opcion) */
@@ -70,9 +62,7 @@ $vnombre_usuario = $row['nombre'] ?? '';
 
     <footer class="seccion-footer d-flex flex-column justify-content-center align-items-center pt-4">
 
-      <?php
-      include("../Includes/footer.php")
-      ?>
+      <?php include("../Includes/footer.php") ?>
     
     </footer>
 

@@ -25,7 +25,7 @@ if($pestaña == "Login" or $pestaña == "Register"){
   $estaLogueado = "logueandose";
 }
 
-if ( $folder == "Admin" or $folder == "Cliente" or $folder == "DueñoLocal" or $folder == "Principal"){
+if ( $folder == "Admin" or $folder == "Cliente" or $folder == "Dueño" or $folder == "Principal"){
   $rutaSalirCarpeta = "..";
 } else {
   $rutaSalirCarpeta = ".";
@@ -67,9 +67,9 @@ if ( $folder == "Admin" or $folder == "Cliente" or $folder == "DueñoLocal" or $
 
       <ul class="navbar-nav">
 
-        <!-- Opciones para homepage -->
+        <!-- Opciones para Index -->
 
-          <?php if($pestaña == "homepage"): ?>
+          <?php if($pestaña == "Index"): ?>
 
             <li class="nav-item">
               <a class="nav-link" aria-current="page" href="#locales">
@@ -111,9 +111,13 @@ if ( $folder == "Admin" or $folder == "Cliente" or $folder == "DueñoLocal" or $
 
             <!-- Categoria de cliente -->
 
-            <li class="nav-item">
-              <img style="" class="imagen_categoria_cliente" src="<?= $rutaSalirCarpeta ?>/Images/categoria-<?= $categoria_cliente ?>.png" alt="Categoria cliente">
-            </li>
+              <?php if($tipo_usuario == "cliente"): ?>
+
+                <li class="nav-item">
+                  <img style="" class="imagen_categoria_cliente" src="<?= $rutaSalirCarpeta ?>/Images/categoria-<?= $categoria_cliente ?>.png" alt="Categoria cliente">
+                </li>
+
+              <?php endif; ?>
 
             <!-- Fin de Categoria de cliente  -->
 
