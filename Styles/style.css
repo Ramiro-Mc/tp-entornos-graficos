@@ -319,7 +319,7 @@ width: 100%;
 margin-bottom: 20px;
 }
 
-.loginRegister-box input[type="email"], input[type="password"]{
+.loginRegister-box input[type="email"], input[type="password"], input[type="text"]{
 border: none;
 border-bottom: 1px solid #fff;
 background: transparent;
@@ -343,6 +343,11 @@ color: #fff;
 
 .loginRegister-box input[name="Login"]:hover{
 background: rgb(16, 124, 167);
+}
+
+.loginRegister-box input::placeholder {
+  color: #ccc; 
+  opacity: 1;  
 }
 
 .loginRegister-box a{
