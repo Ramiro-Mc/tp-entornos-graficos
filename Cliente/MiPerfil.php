@@ -13,10 +13,10 @@ $pestaña = "Mi Perfil";
 
 $cod_usuario = $_SESSION['cod_usuario'];
 
-$res = consultaSQL("SELECT nombre_usuario, nombre FROM usuario WHERE cod_usuario = '$cod_usuario'");
+$res = consultaSQL("SELECT nombre_usuario, email FROM usuario WHERE cod_usuario = '$cod_usuario'");
 $row = mysqli_fetch_assoc($res); 
 $vnombre_usuario = $row['nombre_usuario'] ?? ''; 
-$vemail = $row['nombre'] ?? '';
+$vemail = $row['email'] ?? '';
 
 $res = consultaSQL("SELECT categoria_cliente FROM cliente WHERE cod_usuario = '$cod_usuario'");
 $row = mysqli_fetch_assoc($res); 

@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             //$hashedPassword = password_hash($vPassword, PASSWORD_DEFAULT);
 
             // Insertar usuario en la tabla usuario
-            $insertUsuario = mysqli_query($link, "INSERT INTO usuario (nombre, clave, nombre_usuario) VALUES ('$vEmail', '$vPassword', '$vNombreUsuario')");
+            $insertUsuario = mysqli_query($link, "INSERT INTO usuario (email, clave, nombre_usuario) VALUES ('$vEmail', '$vPassword', '$vNombreUsuario')");
             if ($insertUsuario) {
                 $vCodUsuario = mysqli_insert_id($link);
                 if ($vTipoUsuario == 'cliente') {

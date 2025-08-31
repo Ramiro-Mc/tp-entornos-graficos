@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // } elseif (!filter_var($vEmail, FILTER_VALIDATE_EMAIL)) {
   //   $mensaje = "<div class='alert alert-danger'>Email inválido.</div>";
   } else {
-    $vResultado = consultaSQL("SELECT cod_usuario, clave FROM usuario WHERE nombre='$vEmail'");
+    $vResultado = consultaSQL("SELECT cod_usuario, clave FROM usuario WHERE email='$vEmail'");
     if ($vResultado && mysqli_num_rows($vResultado) > 0) {
         $usuario = mysqli_fetch_assoc($vResultado);
         if ($usuario['clave'] === $vPassword ) {
@@ -107,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </form>
 
     </section>
-    
+
   </main>
 
   <footer class="seccion-footer d-flex flex-column justify-content-center align-items-center pt-3">
