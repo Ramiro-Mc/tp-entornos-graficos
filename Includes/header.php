@@ -81,30 +81,11 @@ if($folder == "Admin"){
                 <p>Novedades</p>
               </a>
             </li>
-
-            <?php if($estaLogueado == "noLogueado"): ?>
               <li class="nav-item">
                 <a class="nav-link" aria-current="page" href="#locales">
                   <p>Locales</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="#promociones">
-                  <p>Promociones</p>
-                </a>
-              </li>
-            <?php else: ?>
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="<?= $rutaSalirCarpeta ?>/Cliente/BuscarLocales.php">
-                  <p>¡Buscar Locales!</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="<?= $rutaSalirCarpeta ?>/Cliente/BuscarPromociones.php">
-                  <p>¡Usar Promociones!</p>
-                </a>
-              </li>
-            <?php endif; ?>
 
             <li class="nav-item">
               <a class="nav-link" aria-current="page" href="<?= $rutaSalirCarpeta ?>/Principal/Contacto.php">
@@ -116,6 +97,20 @@ if($folder == "Admin"){
                 <p>Sobre Nosotros</p>
               </a>
             </li>
+
+            <?php if($estaLogueado == "noLogueado"): ?>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="#promociones">
+                  <p>Promociones</p>
+                </a>
+              </li>
+            <?php else: ?>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="<?= $rutaSalirCarpeta ?>/Cliente/BuscarPromociones.php">
+                  <p>¡Usar Promociones!</p>
+                </a>
+              </li>
+            <?php endif; ?>
 
           <?php endif; ?>
 

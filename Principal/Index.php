@@ -1,8 +1,10 @@
 <?php
 include_once("../Includes/session.php");
+include_once("../Includes/funciones.php");
 
 $folder = "Principal";
 $pestaña = "Index";
+
 ?>
 
 
@@ -72,8 +74,8 @@ $pestaña = "Index";
       <h2 class="seccion-titulo"><strong>Nuestros Locales</strong></h2>
 
       <div class="container categoria-botones text-center">
-        <form method="GET" action="#locales" class="d-inline">
-          <button type="submit" name="categoria" value="" class="btn btn-secondary">Todos</button>
+        <form id="categorias" method="POST" action="filtrar_locales.php" class="d-inline">
+          <button type="submit" name="categoria" value="Todos" class="btn btn-secondary">Todos</button>
           <button type="submit" name="categoria" value="Accesorios" class="btn btn-secondary">Accesorios</button>
           <button type="submit" name="categoria" value="Deportes" class="btn btn-secondary">Deportes</button>
           <button type="submit" name="categoria" value="Electro" class="btn btn-secondary">Electro</button>
@@ -85,46 +87,68 @@ $pestaña = "Index";
         </form>
       </div>
 
-      <div class="container">
-        <!-- aca vamos a tener que hacer un php para poder filtrar los locales por value-->
-        <div class="row">
+      <script>
+        let categoriaSeleccionada = null;
+        document.querySelectorAll('#categorias button').forEach(btn => {
+          btn.addEventListener('click', function(e) {
+            categoriaSeleccionada = this.value;
+          });
+        });
 
-          <div class="col-12 col-md-6 col-lg-3">
-            <div class="promocion-index"><img src="../Images/Local1.jpg" alt="Proyecto 2" />
+        document.getElementById('categorias').addEventListener('submit', function(e) {
+          e.preventDefault();
+          const formData = new FormData();
+          formData.append('categoria', categoriaSeleccionada);
+
+
+          fetch(this.action, {
+            method: 'POST',
+            body: formData
+          })
+          .then(response => response.text())
+          .then(data => {
+            document.getElementById("respuesta").innerHTML = data;
+            document.getElementById("locales-iniciales").style.display = "none";
+          });
+        });
+      </script>
+
+      <div class="container-fluid">
+        <div id="locales-iniciales">
+          <?php  
+          $result =  consultaSQL("SELECT foto_local, nombre_local, rubro_local, ubicacion_local FROM locales");
+
+          if ($result->num_rows > 0): 
+            while ($row = $result->fetch_assoc()): 
+            $imagenLocal = $row['foto_local']; 
+            $nombre_local = $row['nombre_local']; ?>
+
+          <div class="container-fluid">
+            <div class="col-12 col-md-6 col-lg-4 ">
+            <div class="promocion-index">
+              <img src="data:image/jpeg;base64<?= $imagenLocal ?>" alt="<?= $nombre_local ?>" />
               <div class="overlay">
-                <p>Haz clic para ver las promociones de ...</p>
+              <p><?= $nombre_local ?></p>
               </div>
+
+            </div>
             </div>
           </div>
 
+            <?php endwhile; ?>
 
-          <div class="col-12 col-md-6 col-lg-3">
-            <div class="promocion-index"><img src="../Images/Local2.jpg" alt="Proyecto 2" />
-              <div class="overlay">
-                <p>Haz clic para ver las promociones de ...</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-12 col-md-6 col-lg-3">
-            <div class="promocion-index"><img src="../Images/Local3.jpg" alt="Proyecto 2" />
-              <div class="overlay">
-                <p>Haz clic para ver las promociones de ...</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-12 col-md-6 col-lg-3">
-            <div class="promocion-index"><img src="../Images/Local4.jpg" alt="Proyecto 2" />
-              <div class="overlay">
-                <p>Haz clic para ver las promociones de ...</p>
-              </div>
-            </div>
-          </div>
-
+          <?php else: ?>
+            <p>No hay locales registrados.</p>
+          <?php endif; ?> 
 
         </div>
+        
+        
+        <div id="respuesta"></div>
+        
+        
       </div>
+
     </section>
 
     <!-- Seccion novedades -->
