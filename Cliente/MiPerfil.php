@@ -1,42 +1,43 @@
+<?php
+
+include_once("../Includes/session.php");
+include_once("../Includes/funciones.php");
+
+if (!isset($_SESSION['cod_usuario'])) {
+  header("Location: ../principal/login.php");
+  exit;
+}
+
+$folder = "Cliente";
+$pestaña = "Mi Perfil";
+
+$cod_usuario = $_SESSION['cod_usuario'];
+
+$res = consultaSQL("SELECT nombre_usuario, nombre FROM usuario WHERE cod_usuario = '$cod_usuario'");
+$row = mysqli_fetch_assoc($res); 
+$vnombre_usuario = $row['nombre_usuario'] ?? ''; 
+$vemail = $row['nombre'] ?? '';
+
+$res = consultaSQL("SELECT categoria_cliente FROM cliente WHERE cod_usuario = '$cod_usuario'");
+$row = mysqli_fetch_assoc($res); 
+$vcategoria_cliente = $row['categoria_cliente'] ?? '';
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <!-- Importar BootStrap -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7"
-      crossorigin="anonymous"
-    />
 
-    <!-- Importar iconos BootStrap -->
+    <?php include("../Includes/head.php"); ?>
 
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-    />
-
-    <!-- Metadatos -->
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../Styles/style.css" />
-    <link rel="stylesheet" href="../Styles/style-general.css" />
-    <link rel="icon" type="image/x-icon" href="../Images/logo.png" />
     <title>Mi Perfil</title>
+
   </head>
   
   <body>
     <header>
 
-      <?php
-
-      $folder = "Cliente";
-      $pestaña = "Perfil";
-      include("../Includes/header.php");
-
-      /* Ver como hacer para que aca no aparezca el menu desplegable (porque no tiene ninguna opcion) */
-
-      ?>
+      <?php include("../Includes/header.php");?>
 
     </header>
 
@@ -45,10 +46,9 @@
       <section class="mb-5">
         <h2 class="seccion-titulo">Datos del Usuario</h2>
         <div class="datos-usuario text-start mx-auto panel-estilo" style="max-width: 600px;">
-          <p><strong>Nombre:</strong> Juan Pérez</p>
-          <p><strong>Email:</strong> juanperez@email.com</p>
-          <p><strong>Teléfono:</strong> +54 9 11 3401645374</p>
-          <p><strong>Tipo de Cliente:</strong> Premium</p>
+          <p><strong>Nombre:</strong> <?= $vnombre_usuario ?></p>
+          <p><strong>Email:</strong> <?= $vemail ?></p>
+          <p><strong>Tipo de Cliente:</strong> <?= $vcategoria_cliente ?></p>
           <button class="btn btn-success me-2 boton-enviar">Editar Perfil</button>
         </div></div>
       </section>
@@ -89,38 +89,12 @@
     </main>
 
 
-    <footer
-      class="seccion-footer d-flex flex-column justify-content-center align-items-center pt-4"
-    >
-      <div>
-        <nav class="texto-footer">
-          <h5>Mapa del sitio</h5>
-          <div class="mb-2"><a href="SeccionAdministrador.html">Inicio</a></div>
-          <div class="mb-2">
-            <a href="AdministrarPromociones.html">Administrar Promociones</a>
-          </div>
-          <div class="mb-2">
-            <a href="AdministrarNovedades.html">Administrar Novedades </a>
-          </div>
-          <div class="mb-2">
-            <a href="AdministrarLocales.html">Administrar Locales</a>
-          </div>
-          <div class="mb-2">
-            <a href="SolicitudRegistro.html">Solicitudes De Registro</a>
-          </div>
-          <div class="mb-2">
-            <a href="ReportePromocionesAdm.html">Reportes De Uso Promociones</a>
-          </div>
-        </nav>
-      </div>
-      <p class="texto-footer text-center">
-        © 2025 Viventa Store. Todos los derechos reservados.
-      </p>
+    <footer class="seccion-footer d-flex flex-column justify-content-center align-items-center pt-3">
+
+      <?php include("../Includes/footer.php") ?>
+
     </footer>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
-      crossorigin="anonymous"
-    ></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
   </body>
 </html>

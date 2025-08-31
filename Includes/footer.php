@@ -5,10 +5,9 @@ if($folder == "Administrador"){
   $opciones = ["Inicio", "Administrar Promociones", "Administrar Novedades", "Administrar Locales", "Solicitudes De Registro", "Reportes De Uso Promociones", "Sobre Nosotros"];
 }elseif($folder == "Dueño"){
   $opciones = ["Seccion Dueño Local", "Crear Promocion", "Mis Promociones", "Reporte Promociones"];
-}elseif($folder == "Principal"){
-  $opciones = ["Index","Contacto","Sobre Nosotros"];
+}elseif($folder == "Principal" || $folder == "Cliente"){
+  $opciones = ["Index", "Contacto", "Sobre Nosotros"];
 }
-
 
 $opciones_filtradas = array_filter($opciones, function($item) use ($pestaña) {
   return $item !== $pestaña;
@@ -18,6 +17,21 @@ $opciones_filtradas = array_values($opciones_filtradas); // Reindexa el array
 $opciones_sin_espacios = array_map(function($item) {
   return str_replace(' ', '', $item);
 }, $opciones_filtradas); //Saca los espacios
+
+if(isset($_SESSION['tipo_usuario'])){
+  if($_SESSION['tipo_usuario'] == "cliente"){
+    $opciones_extra = ["Mi Perfil", "Buscar Promociones", "Buscar Locales"];
+    
+    $opciones_extra_filtradas = array_filter($opciones_extra, function($item) use ($pestaña) {
+      return $item !== $pestaña;
+    });
+    $opciones_extra_filtradas = array_values($opciones_extra_filtradas); // Reindexa el array
+
+    $opciones_extra_sin_espacios = array_map(function($item) {
+      return str_replace(' ', '', $item);
+    }, $opciones_extra_filtradas);
+  }
+}
 
 
 ?>
@@ -51,9 +65,14 @@ $opciones_sin_espacios = array_map(function($item) {
         <?php 
         
         foreach ($opciones_filtradas as $key => $item) {
-          echo "<li><a href='./" . $opciones_sin_espacios[$key] .".php'>". $item ."</a></li>";
+          echo "<li><a href='../Principal/" . $opciones_sin_espacios[$key] .".php'>". $item ."</a></li>";
         }
 
+        if(isset($opciones_extra)){
+          foreach ($opciones_extra_filtradas as $key => $item) {
+            echo "<li><a href='../Cliente/" . $opciones_extra_sin_espacios[$key] .".php'>". $item ."</a></li>";
+          }
+        }
         ?>
       </ul>
 

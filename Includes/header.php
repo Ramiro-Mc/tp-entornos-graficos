@@ -7,9 +7,9 @@ if(isset($_SESSION['tipo_usuario'])){
   $estaLogueado = "logueado";
 
   $cod_usuario = $_SESSION['cod_usuario'];
-  $res = consultaSQL("SELECT nombre FROM usuario WHERE cod_usuario = '$cod_usuario'");
+  $res = consultaSQL("SELECT nombre_usuario FROM usuario WHERE cod_usuario = '$cod_usuario'");
   $row = mysqli_fetch_assoc($res); 
-  $vnombre_usuario = $row['nombre'] ?? ''; 
+  $vnombre_usuario = $row['nombre_usuario'] ?? ''; 
 
   if($_SESSION['tipo_usuario'] == "cliente"){
     $res = consultaSQL("SELECT categoria_cliente FROM cliente WHERE cod_usuario = '$cod_usuario'");
@@ -72,20 +72,35 @@ if ( $folder == "Admin" or $folder == "Cliente" or $folder == "Dueño" or $folde
           <?php if($pestaña == "Index"): ?>
 
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="#locales">
-                <p>Locales</p>
-              </a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link" aria-current="page" href="#novedades">
                 <p>Novedades</p>
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="#promociones">
-                <p>Promociones</p>
-              </a>
-            </li>
+
+            <?php if($estaLogueado == "noLogueado"): ?>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="#locales">
+                  <p>Locales</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="#promociones">
+                  <p>Promociones</p>
+                </a>
+              </li>
+            <?php else: ?>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="<?= $rutaSalirCarpeta ?>/Cliente/BuscarLocales.php">
+                  <p>¡Buscar Locales!</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="<?= $rutaSalirCarpeta ?>/Cliente/BuscarPromociones.php">
+                  <p>¡Usar Promociones!</p>
+                </a>
+              </li>
+            <?php endif; ?>
+
             <li class="nav-item">
               <a class="nav-link" aria-current="page" href="<?= $rutaSalirCarpeta ?>/Principal/Contacto.php">
                 <p>Contacto</p>
@@ -106,7 +121,11 @@ if ( $folder == "Admin" or $folder == "Cliente" or $folder == "Dueño" or $folde
           <?php if($estaLogueado == "logueado"): ?>
 
             <li class="nav-item">
+<<<<<<< HEAD
               <p style="color:white">Bienvenido! <?= $vnombre_usuario ?>   </p> 
+=======
+              <p style="color:white">Bienvenido! <a href="<?= $rutaSalirCarpeta ?>/Cliente/MiPerfil.php"><?= $vnombre_usuario ?></a></p> 
+>>>>>>> 60b0b08e97df9bf7c7d68635fe28e653c8e5f6d9
             </li>
 
             <!-- Categoria de cliente -->
