@@ -1,40 +1,24 @@
-<?php 
+<?php
 $folder = "Cliente";
 $pestaña = "Buscar Promociones";
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
+
   <head>
-    <!-- Importar BootStrap -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7"
-      crossorigin="anonymous"
-    />
 
-    <!-- Importar iconos BootStrap -->
+    <?php include("../Includes/head.php"); ?>
 
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-    />
-
-    <!-- Metadatos -->
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../Styles/style.css" />
-    <link rel="stylesheet" href="../Styles/style-general.css" />
-    <link rel="icon" type="image/x-icon" href="../Images/logo.png" />
     <title>Buscar Promociones</title>
+
   </head>
 
   <body>
 
     <header>
 
-      <?php include("../Includes/header.php");?>
+      <?php include("../Includes/header.php"); ?>
 
     </header>
 
@@ -46,30 +30,14 @@ $pestaña = "Buscar Promociones";
 
             <p>Local</p>
 
-            <select class="filtros-categoria" name="local" id="">
-              local
-            </select>
+            <select class="filtros-categoria" name="local" id="">local</select>
 
             <p>Tipo cliente</p>
 
             <div class="filtros-categoria">
-              <label>
-                <input type="checkbox" name="filtro" value="oficial" checked />
-                <span>Premium</span>
-              </label>
-              <label>
-                <input type="checkbox" name="filtro" value="workshop" />
-                <span>Medium</span>
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  name="filtro"
-                  value="mis-fondos"
-                  checked
-                />
-                <span>Inicial</span>
-              </label>
+              <label><input type="checkbox" name="filtro" value="oficial" checked /><span>Premium</span></label>
+              <label><input type="checkbox" name="filtro" value="workshop" /><span>Medium</span></label>
+              <label><input type="checkbox" name="filtro" value="mis-fondos" checked /><span>Inicial</span></label>
             </div>
 
             <p>Filtrar por categoria</p>
@@ -87,11 +55,11 @@ $pestaña = "Buscar Promociones";
             <form>
               <div>
                 <p>Fecha Desde</p>
-                <input type="date" class="form-control id="fechaDesde" required>
+                <input type="date" class="form-control id=" fechaDesde" required>
               </div>
               <div>
                 <p>Fecha Hasta</p>
-                <input type="date" class="form-control id="fechaHasta" required>
+                <input type="date" class="form-control id=" fechaHasta" required>
               </div>
             </form>
           </div>
@@ -102,8 +70,7 @@ $pestaña = "Buscar Promociones";
               type="button"
               data-bs-toggle="offcanvas"
               data-bs-target="#staticBackdrop"
-              aria-controls="staticBackdrop"
-            >
+              aria-controls="staticBackdrop">
               <i class="bi bi-funnel"></i> Filtros
             </button>
 
@@ -112,8 +79,7 @@ $pestaña = "Buscar Promociones";
               data-bs-backdrop="static"
               tabindex="-1"
               id="staticBackdrop"
-              aria-labelledby="staticBackdropLabel"
-            >
+              aria-labelledby="staticBackdropLabel">
               <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="staticBackdropLabel">
                   Filtros
@@ -122,8 +88,7 @@ $pestaña = "Buscar Promociones";
                   type="button"
                   class="btn-close"
                   data-bs-dismiss="offcanvas"
-                  aria-label="Close"
-                ></button>
+                  aria-label="Close"></button>
               </div>
               <div class="offcanvas-body filtros-desp">
                 <div>
@@ -134,33 +99,14 @@ $pestaña = "Buscar Promociones";
                     <option value="">Seleccionar local</option>
                     <option value="nike">Nike Store</option>
                     <option value="adidas">Adidas Originals</option>
-                </select>
+                  </select>
 
                   <p>Tipo cliente</p>
 
                   <div class="filtros-categoria">
-                    <label>
-                      <input
-                        type="checkbox"
-                        name="filtro"
-                        value="oficial"
-                        checked
-                      />
-                      <span>Premium</span>
-                    </label>
-                    <label>
-                      <input type="checkbox" name="filtro" value="workshop" />
-                      <span>Medium</span>
-                    </label>
-                    <label>
-                      <input
-                        type="checkbox"
-                        name="filtro"
-                        value="mis-fondos"
-                        checked
-                      />
-                      <span>Inicial</span>
-                    </label>
+                    <label><input type="checkbox" name="filtro" value="oficial" checked /><span>Premium</span></label>
+                    <label><input type="checkbox" name="filtro" value="workshop" /><span>Medium</span></label>
+                    <label><input type="checkbox" name="filtro" value="mis-fondos" checked /><span>Inicial</span></label>
                   </div>
 
                   <p>Filtrar por categoria</p>
@@ -177,14 +123,10 @@ $pestaña = "Buscar Promociones";
 
                   <form>
                     <div>
-                      <p>Fecha Desde</p>
-                      <input type="date" class="form-control id="fechaDesde"
-                      required>
+                      <p>Fecha Desde</p><input type="date" class="form-control id=" fechaDesde" required>
                     </div>
                     <div>
-                      <p>Fecha Hasta</p>
-                      <input type="date" class="form-control id="fechaHasta"
-                      required>
+                      <p>Fecha Hasta</p><input type="date" class="form-control id=" fechaHasta" required>
                     </div>
                   </form>
                 </div>
@@ -194,43 +136,25 @@ $pestaña = "Buscar Promociones";
             <!-- Esto hay que printearlo dentro de una iteracion -->
             <div class="promocion-cli container-fluid">
               <div class="row">
-                <div class="col-4 col-md-3 col-lg-4 col-xl-3">
-                  <img src="../Images/Carrusel1.png" />
-                </div>
-
-                <div
-                  class="col-8 col-md-9 col-lg-8 col-xl-9 d-flex justify-content-between align-items-center"
-                >
+                <div class="col-4 col-md-3 col-lg-4 col-xl-3"><img src="../Images/Carrusel1.png" /></div>
+                <div class="col-8 col-md-9 col-lg-8 col-xl-9 d-flex justify-content-between align-items-center">
                   <div class="info">
                     <h3>Promoción 1</h3>
                     <p>Local:</p>
                     <p>Tipo de Cliente:</p>
                     <p class="descripcion-promocion">Descripción breve de la promoción 1</p>
-                  </div>
-
-                  <button type="button " class="boton-codigo btn btn-secondary btn-lg">
-                    Generar <br />
-                    Código
-                  </button>
-
-                  <button type="button" class="boton-codigo-chico">
-                    <i class="bi bi-qr-code"></i>
-                  </button>
+                  </div><button type="button " class="boton-codigo btn btn-secondary btn-lg">Generar <br />Código</button><button type="button" class="boton-codigo-chico"><i class="bi bi-qr-code"></i></button>
                 </div>
               </div>
             </div>
 
             <div class="paginacion" aria-label="Page navigation example">
               <ul class="pagination">
-                <li class="page-item">
-                  <a class="page-link" href="#">Previous</a>
-                </li>
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
                 <li class="page-item"><a class="page-link" href="#">1</a></li>
                 <li class="page-item"><a class="page-link" href="#">2</a></li>
                 <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#">Next</a>
-                </li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
               </ul>
             </div>
           </div>
@@ -244,10 +168,7 @@ $pestaña = "Buscar Promociones";
 
     </footer>
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
   </body>
+
 </html>
