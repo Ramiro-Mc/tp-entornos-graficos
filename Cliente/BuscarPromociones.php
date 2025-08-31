@@ -1,6 +1,11 @@
 <?php
+include_once("../Includes/session.php");
+include_once("../Includes/funciones.php");
+
 $folder = "Cliente";
 $pestaña = "Buscar Promociones";
+
+$result =  consultaSQL("SELECT texto_promocion, categoria_cliente, foto_promocion, cod_local FROM promociones")
 ?>
 
 <!DOCTYPE html>
@@ -65,30 +70,14 @@ $pestaña = "Buscar Promociones";
           </div>
 
           <div class="col-lg-9 col-12 listado-promociones">
-            <button
-              class="btn btn-light boton-filtros d-lg-none"
-              type="button"
-              data-bs-toggle="offcanvas"
-              data-bs-target="#staticBackdrop"
-              aria-controls="staticBackdrop">
-              <i class="bi bi-funnel"></i> Filtros
-            </button>
+            <button class="btn btn-light boton-filtros d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop"><i class="bi bi-funnel"></i> Filtros</button>
 
-            <div
-              class="offcanvas offcanvas-start"
-              data-bs-backdrop="static"
-              tabindex="-1"
-              id="staticBackdrop"
-              aria-labelledby="staticBackdropLabel">
+            <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
               <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="staticBackdropLabel">
                   Filtros
                 </h5>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="offcanvas"
-                  aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
               </div>
               <div class="offcanvas-body filtros-desp">
                 <div>
@@ -133,20 +122,38 @@ $pestaña = "Buscar Promociones";
               </div>
             </div>
 
-            <!-- Esto hay que printearlo dentro de una iteracion -->
-            <div class="promocion-cli container-fluid">
-              <div class="row">
-                <div class="col-4 col-md-3 col-lg-4 col-xl-3"><img src="../Images/Carrusel1.png" /></div>
-                <div class="col-8 col-md-9 col-lg-8 col-xl-9 d-flex justify-content-between align-items-center">
-                  <div class="info">
-                    <h3>Promoción 1</h3>
-                    <p>Local:</p>
-                    <p>Tipo de Cliente:</p>
-                    <p class="descripcion-promocion">Descripción breve de la promoción 1</p>
-                  </div><button type="button " class="boton-codigo btn btn-secondary btn-lg">Generar <br />Código</button><button type="button" class="boton-codigo-chico"><i class="bi bi-qr-code"></i></button>
+
+            <?php if ($result->num_rows > 0): ?>
+              <?php 
+                while ($row = $result->fetch_assoc()):  
+                $texto_promocion = $row['texto_promocion'];
+                $categoria_cliente = $row['categoria_cliente']; 
+                $foto_promocion = $row['foto_promocion']; 
+                $codigo_local = $row['cod_local']; 
+                $result2 = consultaSQL("SELECT nombre_local, foto_local FROM locales where cod_local=$codigo_local");
+                $row2 = mysqli_fetch_assoc($result2); 
+                $nombre_local = $row2['nombre_local'];
+              ?>
+                <div class="promocion-cli container-fluid">
+                  <div class="row">
+                    <div class="col-4 col-md-3 col-lg-4 col-xl-3"><img src="data:image/jpeg;base64,<?= $foto_promocion ?>" /></div>
+                    <div class="col-8 col-md-9 col-lg-8 col-xl-9 d-flex justify-content-between align-items-center">
+                      <div class="info">
+                        <h3><?= $texto_promocion ?></h3>
+                        <p>Local: <?= $nombre_local ?></p>
+                        <p>Categoria cliente:<?= $categoria_cliente ?></p>
+                        <!-- <p class="descripcion-promocion">Descripción breve de la promoción 1</p> -->
+                      </div><button type="button " class="boton-codigo btn btn-secondary btn-lg">Generar <br />Código</button><button type="button" class="boton-codigo-chico"><i class="bi bi-qr-code"></i></button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+
+              <?php endwhile; ?>
+
+            <?php else: ?>
+              <p>No hay locales registrados.</p>
+            <?php endif; ?>
+
 
             <div class="paginacion" aria-label="Page navigation example">
               <ul class="pagination">

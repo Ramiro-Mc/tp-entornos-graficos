@@ -66,7 +66,7 @@ if(isset($_SESSION['tipo_usuario'])){
       <ul>
         <?php 
 
-        if($_SESSION['tipo_usuario'] == "cliente"){
+        if(isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == "cliente"){
           foreach ($opciones_extra_filtradas as $key => $item) {
             echo "<li><a href='../Cliente/" . $opciones_extra_sin_espacios[$key] .".php'>". $item ."</a></li>";
           }

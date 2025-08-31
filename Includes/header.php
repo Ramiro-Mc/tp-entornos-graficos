@@ -31,6 +31,11 @@ if ( $folder == "Admin" or $folder == "Cliente" or $folder == "Dueño" or $folde
   $rutaSalirCarpeta = ".";
 }
 
+if($folder == "Admin"){
+  $rutaLogo = "/Admin/SeccionAdministrador.php";
+}elseif($folder == "Dueño"){
+  $rutaLogo = "/Dueño/SeccionDueñoLocal.php";
+}
 
 ?>
 
@@ -120,16 +125,22 @@ if ( $folder == "Admin" or $folder == "Cliente" or $folder == "Dueño" or $folde
 
           <?php if($estaLogueado == "logueado"): ?>
 
-            <li class="nav-item">
-              <p style="color:white">Bienvenido! <a href="<?= $rutaSalirCarpeta ?>/Cliente/MiPerfil.php"><?= $vnombre_usuario ?></a></p> 
-            </li>
-
             <!-- Categoria de cliente -->
 
               <?php if($tipo_usuario == "cliente"): ?>
 
                 <li class="nav-item">
+                  <p style="color:white">Bienvenido! <a href="<?= $rutaSalirCarpeta ?>/Cliente/MiPerfil.php"><?= $vnombre_usuario ?></a></p> 
+                </li>
+
+                <li class="nav-item">
                   <img style="" class="imagen_categoria_cliente" src="<?= $rutaSalirCarpeta ?>/Images/categoria-<?= $categoria_cliente ?>.png" alt="Categoria cliente">
+                </li>
+
+              <?php else: ?>
+
+                <li class="nav-item">
+                  <p style="color:white">Bienvenido! <?= $vnombre_usuario ?></a></p> 
                 </li>
 
               <?php endif; ?>
