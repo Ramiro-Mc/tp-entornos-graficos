@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     if (!isset($errores)) {
         include("../conexion.inc");
         // Verificar si el usuario ya existe
-        $vResultado = mysqli_query($link, "SELECT COUNT(*) as cantidad FROM usuario WHERE nombre='$vEmail'");
+        $vResultado = mysqli_query($link, "SELECT COUNT(*) as cantidad FROM usuario WHERE email='$vEmail'");
         $vCantUsuario = mysqli_fetch_assoc($vResultado);
         if ($vCantUsuario['cantidad'] != 0) {
             $errores[] = "El usuario ya existe.";

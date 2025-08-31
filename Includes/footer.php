@@ -30,6 +30,8 @@ if(isset($_SESSION['tipo_usuario'])){
     $opciones_extra_sin_espacios = array_map(function($item) {
       return str_replace(' ', '', $item);
     }, $opciones_extra_filtradas);
+
+
   }
 }
 
@@ -63,14 +65,17 @@ if(isset($_SESSION['tipo_usuario'])){
 
       <ul>
         <?php 
-        
-        foreach ($opciones_filtradas as $key => $item) {
-          echo "<li><a href='../Principal/" . $opciones_sin_espacios[$key] .".php'>". $item ."</a></li>";
-        }
 
-        if(isset($opciones_extra)){
+        if($_SESSION['tipo_usuario'] == "cliente"){
           foreach ($opciones_extra_filtradas as $key => $item) {
             echo "<li><a href='../Cliente/" . $opciones_extra_sin_espacios[$key] .".php'>". $item ."</a></li>";
+          }
+          foreach ($opciones_filtradas as $key => $item) {
+            echo "<li><a href='../Principal/" . $opciones_sin_espacios[$key] .".php'>". $item ."</a></li>";
+          }
+        }else{
+          foreach ($opciones_filtradas as $key => $item) {
+          echo "<li><a href='./" . $opciones_sin_espacios[$key] .".php'>". $item ."</a></li>";
           }
         }
         ?>
