@@ -106,7 +106,7 @@ if ( $folder == "Admin" or $folder == "Cliente" or $folder == "Dueño" or $folde
           <?php if($estaLogueado == "logueado"): ?>
 
             <li class="nav-item">
-              <p style="color:white">Bienvenido! <?= $vnombre_usuario ?></p> 
+              <p style="color:white">Bienvenido! <?= $vnombre_usuario ?>   </p> 
             </li>
 
             <!-- Categoria de cliente -->
@@ -123,7 +123,7 @@ if ( $folder == "Admin" or $folder == "Cliente" or $folder == "Dueño" or $folde
 
 
             <li class="nav-item">
-              <a href="<?= $rutaSalirCarpeta ?>/Principal/CerrarSesion.php">Cerrar sesion</a>
+              <a  style="margin-left: 5px;" href="<?= $rutaSalirCarpeta ?>/Principal/CerrarSesion.php"> Cerrar sesion</a>
             </li>
 
           <?php endif; ?>

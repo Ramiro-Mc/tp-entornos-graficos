@@ -8,14 +8,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $vEmail = $_POST['email'];
     $vPassword = $_POST['password'];
 
-    if ($vEmail === '' || $vPassword === '') {
-        $mensaje = "<div class='alert alert-danger'>Completa todos los campos.</div>";
-    } elseif (!filter_var($vEmail, FILTER_VALIDATE_EMAIL)) {
-        $mensaje = "<div class='alert alert-danger'>Email inválido.</div>";
-    } else {
-        $vResultado = consultaSQL("SELECT cod_usuario, clave FROM usuario WHERE nombre='$vEmail'");
-    }
-
+  $vResultado = null;
+  if ($vEmail === '' || $vPassword === '') {
+    $mensaje = "<div class='alert alert-danger'>Completa todos los campos.</div>";
+  // } elseif (!filter_var($vEmail, FILTER_VALIDATE_EMAIL)) {
+  //   $mensaje = "<div class='alert alert-danger'>Email inválido.</div>";
+  } else {
+    $vResultado = consultaSQL("SELECT cod_usuario, clave FROM usuario WHERE nombre='$vEmail'");
     if ($vResultado && mysqli_num_rows($vResultado) > 0) {
         $usuario = mysqli_fetch_assoc($vResultado);
         if ($usuario['clave'] === $vPassword ) {
@@ -23,45 +22,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $cod_usuario = $usuario['cod_usuario'];
             $_SESSION['cod_usuario'] = $cod_usuario; 
 
-            $tipo = "desconocido";
+        $tipo = "desconocido";
 
-            $resAdmin = consultaSQL("SELECT cod_usuario FROM administrador WHERE cod_usuario=$cod_usuario");
-
-            if ($resAdmin && mysqli_num_rows($resAdmin) > 0) {
-                $tipo = "administrador";
-            }
-            $resDueno = consultaSQL("SELECT cod_usuario FROM dueño_local WHERE cod_usuario=$cod_usuario");
-            if ($resDueno && mysqli_num_rows($resDueno) > 0) {
-                $tipo = "dueño";
-            }
-            $resCliente = consultaSQL("SELECT cod_usuario FROM cliente WHERE cod_usuario=$cod_usuario");
-            if ($resCliente && mysqli_num_rows($resCliente) > 0) {
-                $tipo = "cliente";
-            }
-
-            $_SESSION['tipo_usuario'] = $tipo; 
-
-            if ($tipo == "administrador") {
-                header("Location: ../Administrador/SeccionAdministrador.html");
-                exit();
-            } elseif ($tipo == "dueño") {
-                header("Location: ../Dueño/SeccionDueñoLocal.php");
-                exit();
-            } elseif ($tipo == "cliente") {
-                header("Location: ../Cliente/SeccionCliente.php");
-                exit();
-            } else {
-                $mensaje = "<div class='alert alert-warning'>Tipo de usuario no reconocido.</div>";
-            }
-        } else {
-            $mensaje = "<div class='alert alert-danger'>Contraseña incorrecta.</div>";
+        $resAdmin = consultaSQL("SELECT cod_usuario FROM administrador WHERE cod_usuario=$cod_usuario");
+        if ($resAdmin && mysqli_num_rows($resAdmin) > 0) {
+          $tipo = "administrador";
         }
-    } else {
-        $mensaje = "<div class='alert alert-danger'>Usuario no encontrado.</div>";
-    }
+        $resDueno = consultaSQL("SELECT cod_usuario FROM dueño_local WHERE cod_usuario=$cod_usuario");
+        if ($resDueno && mysqli_num_rows($resDueno) > 0) {
+          $tipo = "dueño";
+        }
+        $resCliente = consultaSQL("SELECT cod_usuario FROM cliente WHERE cod_usuario=$cod_usuario");
+        if ($resCliente && mysqli_num_rows($resCliente) > 0) {
+          $tipo = "cliente";
+        }
 
-    mysqli_free_result($vResultado);
-    mysqli_close($link);
+        $_SESSION['tipo_usuario'] = $tipo; 
+
+        if ($tipo == "administrador") {
+          header("Location: ../Administrador/SeccionAdministrador.html");
+          exit();
+        } elseif ($tipo == "dueño") {
+          header("Location: ../Dueño/SeccionDueñoLocal.php");
+          exit();
+        } elseif ($tipo == "cliente") {
+          header("Location: ../Cliente/SeccionCliente.php");
+          exit();
+        } else {
+          $mensaje = "<div class='alert alert-warning'>Tipo de usuario no reconocido.</div>";
+        }
+      } else {
+        $mensaje = "<div class='alert alert-danger'>Contraseña incorrecta.</div>";
+      }
+      mysqli_free_result($vResultado);
+    } else {
+      $mensaje = "<div class='alert alert-danger'>Usuario no encontrado.</div>";
+      if ($vResultado) mysqli_free_result($vResultado);
+    }
+  }
+  mysqli_close($link);
 }
 ?>
 

@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $headers = "From: $email";
 
     if (mail($to, $subject, $message, $headers)) {
-        echo "<script>alert('¡Consulta enviada!'); window.location.href='Contacto.html';</script>";
+        echo "<script>alert('Consulta enviada'); window.location.href='Contacto.html';</script>";
     } else {
         echo "<script>alert('Error al enviar la consulta.'); window.location.href='Contacto.html';</script>";
     }

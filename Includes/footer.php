@@ -17,7 +17,7 @@ $opciones_filtradas = array_values($opciones_filtradas); // Reindexa el array
 
 $opciones_sin_espacios = array_map(function($item) {
   return str_replace(' ', '', $item);
-}, $opciones_filtradas);
+}, $opciones_filtradas); //Saca los espacios
 
 
 ?>
