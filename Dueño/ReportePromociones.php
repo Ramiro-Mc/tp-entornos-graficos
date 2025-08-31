@@ -25,8 +25,6 @@ if (!isset($_SESSION['cod_usuario'])) {
       $pestaña = "Reporte Promociones";
       include("../Includes/header.php");
 
-      /* Ver como hacer para que aca no aparezca el menu desplegable (porque no tiene ninguna opcion) */
-
       ?>
 
     </header>

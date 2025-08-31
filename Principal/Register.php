@@ -3,6 +3,8 @@ include_once("../Includes/session.php");
 include("../Includes/funciones.php");
 $folder = "Principal";
 $pestaña = "Register";
+$token = bin2hex(random_bytes(32));
+$mensaje = "";
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -15,25 +17,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
   }
 
   if ($vEmail === '' || $vPassword === '' || $vTipoUsuario === '' || $vNombreUsuario === '') {
-    $errores[] = "Completa todos los campos.";
+    $mensaje = "<div class='alert alert-danger'>Completa todos los campos.</div>";
   }
   if (!filter_var($vEmail, FILTER_VALIDATE_EMAIL)) {
-    $errores[] = "Email inválido.";
+    $mensaje = "<div class='alert alert-danger'>Email inválido.</div>";
   }
   if (strlen($vPassword) < 8) {
-    $errores[] = "La contraseña debe tener al menos 8 caracteres.";
+    $mensaje = "<div class='alert alert-danger'>La contraseña debe tener al menos 8 caracteres.</div>";
   }
   if (!in_array($vTipoUsuario, ['cliente', 'duenio'])) {
-    $errores[] = "Tipo de usuario inválido.";
+    $mensaje = "<div class='alert alert-danger'>Tipo de usuario inválido.</div>";
   }
 
-    if (!isset($errores)) {
+    if ($mensaje === "") {
         include("../conexion.inc");
         // Verificar si el usuario ya existe
         $vResultado = mysqli_query($link, "SELECT COUNT(*) as cantidad FROM usuario WHERE email='$vEmail'");
         $vCantUsuario = mysqli_fetch_assoc($vResultado);
         if ($vCantUsuario['cantidad'] != 0) {
-            $errores[] = "El usuario ya existe.";
+            $mensaje = "<div class='alert alert-danger'>El usuario ya existe.</div>";
         } else {
             // Hashear la contraseña antes de guardar
             //$hashedPassword = password_hash($vPassword, PASSWORD_DEFAULT);
@@ -44,25 +46,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                 $vCodUsuario = mysqli_insert_id($link);
                 if ($vTipoUsuario == 'cliente') {
                     $vCategoriaCliente = "Inicial";
-                    mysqli_query($link, "INSERT INTO cliente (cod_usuario, categoria_cliente) VALUES ('$vCodUsuario', '$vCategoriaCliente')");
+                    mysqli_query($link, "INSERT INTO cliente (cod_usuario, categoria_cliente, confirmado, token_confirmacion) VALUES ('$vCodUsuario', '$vCategoriaCliente', 0, '$token')");
+                  //Mandamos mail de confirmacion (HACERLO ANDAR)
+                  $enlace = "http://viventastore.com/Principal/Confirmar.php?token=$token";
+                  $asunto = "Confirma tu cuenta";
+                  $mensajeMail = "Hola $vNombreUsuario,\n\nPor favor confirma tu cuenta haciendo clic en el siguiente enlace:\n$enlace";
+                  mail($vEmail, $asunto, $mensajeMail);
                 } elseif ($vTipoUsuario == 'duenio') {
                     mysqli_query($link, "INSERT INTO dueño_local (cod_usuario) VALUES ('$vCodUsuario')");
                 }
-                $mensaje = "<div class='alert alert-success'>El usuario fue registrado.</div>";
+                $mensaje = "<div class='alert alert-success'>El usuario fue registrado. Esperando confirmacion</div>";
             } else {
-                $errores[] = "Error al registrar usuario.";
+                $mensaje = "<div class='alert alert-danger'>Error al registrar usuario.</div>";
             }
         }
         if ($vResultado) {
             mysqli_free_result($vResultado);
         }
         mysqli_close($link);
-    }else{
-    foreach ($errores as $error) {
-    echo "<div class='alert alert-danger'>$error</div>";
     }
-  }
 }
+
 
 ?>
 
@@ -89,6 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
       <section class="loginRegister-box">
         <h1>Crear una nueva cuenta</h1>
         <h2>Es rápido y fácil.</h2>
+        <?php echo $mensaje; ?>
         <form class="formulario-transparente" action="Register.php" method="POST" name="formRegister">
 
           <p>Nombre</p>
@@ -98,7 +103,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
           <input type="email" name="email" size="100" placeholder="Correo electrónico" required />
 
           <p>Contraseña</p>
-          <input type="password" name="password" size="8" placeholder="Contraseña" required />
+        <div style="position:relative;">
+          <input type="password" name="password" id="password" size="8" placeholder="Contraseña" required />
+          <span id="togglePassword" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer;">
+            <i class="bi bi-eye" id="iconEye"></i>
+          </span>
+        </div>
 
           <p style="text-align: center" class="mb-2">Tipo de usuario</p>
           <div class="d-flex justify-content-center gap-3">
@@ -121,6 +131,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+
+  <script>
+  document.getElementById('togglePassword').addEventListener('click', function () {
+  const passwordInput = document.getElementById('password');
+  const icon = document.getElementById('iconEye');
+  if (passwordInput.type === 'password') {
+    passwordInput.type = 'text'; //La pasa a texto y se ve
+    icon.classList.remove('bi-eye');
+    icon.classList.add('bi-eye-slash');
+  } else {
+    passwordInput.type = 'password'; //La pasa a password y no se ve
+    icon.classList.remove('bi-eye-slash');
+    icon.classList.add('bi-eye');
+  }
+});
+</script>
+
 
   </body>
 

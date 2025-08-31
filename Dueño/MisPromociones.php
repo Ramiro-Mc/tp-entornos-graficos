@@ -10,7 +10,7 @@ $cod_usuario = $_SESSION['cod_usuario'];
 include("../conexion.inc");
 include("../Includes/funciones.php");
 $mensaje = "";
-$errores = [];
+
 $orden = ($_GET['orden'] ?? 'asc') === 'desc' ? 'DESC' : 'ASC';
 
 
@@ -20,13 +20,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar'])) {
     if (consultaSQL($sqlEliminar)) {
         $mensaje = "<div class='alert alert-success'>Promoción eliminada correctamente.</div>";
     } else {
-        $errores[] = "Error al eliminar la promoción.";
+         $mensaje = "<div class='alert alert-danger'>Error al eliminar la promoción.</div>";
     }
 }
 
 $sqlLocal = "SELECT cod_local, nombre_local FROM locales WHERE cod_usuario = '$cod_usuario'";
 $localResult = consultaSQL($sqlLocal);
-$local = mysqli_fetch_assoc($localResult);
+$local = mysqli_fetch_assoc($localResult);//Para pasarlo a array
 $codLoc = $local['cod_local'];
 
 $sqlPromociones = "SELECT * FROM promociones INNER JOIN locales ON promociones.cod_local = locales.cod_local WHERE promociones.cod_local = '$codLoc' ORDER BY promociones.cod_promocion $orden";
@@ -69,7 +69,6 @@ $promociones = consultaSQL($sqlPromociones);
 
     <?php
       if ($mensaje) echo $mensaje;
-      if ($errores) foreach($errores as $e) echo "<div class='alert alert-danger'>$e</div>";
     ?>
       <div class="promociones">
   <?php if ($promociones && mysqli_num_rows($promociones) > 0): ?>
