@@ -9,26 +9,7 @@ if (!isset($_SESSION['cod_usuario'])) {
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <!-- Importar BootStrap -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7"
-      crossorigin="anonymous"
-    />
-
-    <!-- Importar iconos BootStrap -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-    />
-
-    <!-- Metadatos -->
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <link rel="stylesheet" href="../styles/style.css" />
-    <link rel="stylesheet" href="../styles/style-general.css" />
+    <?php include("../Includes/head.php"); ?>
 
     <title>Dueño Local</title>
     <link rel="icon" type="image/x-icon" href="../Images/Logo.png" />
@@ -53,8 +34,8 @@ if (!isset($_SESSION['cod_usuario'])) {
       
       <div class="botonesDueñoAdministrador container-fluid">
         <a href="CrearPromocion.php"><button>Crear nueva promocion</button></a>
-        <a href="MisPromociones.html"><button>Mis promociones</button></a>
-        <a href="ReportePromocionesDue.html"
+        <a href="MisPromociones.php"><button>Mis promociones</button></a>
+        <a href="ReportePromociones.php"
           ><button>Generar reporte</button></a
         >
       </div>

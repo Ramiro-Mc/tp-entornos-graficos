@@ -4,31 +4,40 @@ if (!isset($_SESSION['cod_usuario'])) {
   header("Location: ../principal/login.php");
   exit;
 }
+
+
+$cod_usuario = $_SESSION['cod_usuario'];
+include("../conexion.inc");
+include("../Includes/funciones.php");
+$mensaje = "";
+$errores = [];
+$orden = ($_GET['orden'] ?? 'asc') === 'desc' ? 'DESC' : 'ASC';
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar'])) {
+    $codPromoEliminar = intval($_POST['eliminar']);
+    $sqlEliminar = "DELETE FROM promociones WHERE cod_promocion = $codPromoEliminar AND cod_local IN (SELECT cod_local FROM locales WHERE cod_usuario = '$cod_usuario')";
+    if (consultaSQL($sqlEliminar)) {
+        $mensaje = "<div class='alert alert-success'>Promoción eliminada correctamente.</div>";
+    } else {
+        $errores[] = "Error al eliminar la promoción.";
+    }
+}
+
+$sqlLocal = "SELECT cod_local, nombre_local FROM locales WHERE cod_usuario = '$cod_usuario'";
+$localResult = consultaSQL($sqlLocal);
+$local = mysqli_fetch_assoc($localResult);
+$codLoc = $local['cod_local'];
+
+$sqlPromociones = "SELECT * FROM promociones INNER JOIN locales ON promociones.cod_local = locales.cod_local WHERE promociones.cod_local = '$codLoc' ORDER BY promociones.cod_promocion $orden";
+$promociones = consultaSQL($sqlPromociones);
+
 ?>
 
 <!DOCTYPE html>
 <html lang="es ">
   <head>
-    <!-- Importar BootStrap -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7"
-      crossorigin="anonymous"
-    />
-
-    <!-- Importar iconos BootStrap -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-    />
-
-    <!-- Metadatos -->
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../Styles/style.css" />
-    <link rel="stylesheet" href="../Styles/style-general.css" />
-    <link rel="icon" type="image/x-icon" href="../Images/logo.png" />
+    <?php include("../Includes/head.php"); ?>
     <title>Mis Promociones</title>
   </head>
   <body>
@@ -40,8 +49,6 @@ if (!isset($_SESSION['cod_usuario'])) {
       $pestaña = "Mis Promociones";
       include("../Includes/header.php");
 
-      /* Ver como hacer para que aca no aparezca el menu desplegable (porque no tiene ninguna opcion) */
-
       ?>
 
     </header>
@@ -49,44 +56,49 @@ if (!isset($_SESSION['cod_usuario'])) {
     <main class="FondoDueñoAdministrador">
 
       <div class="container-fluid filtraderos justify-content-end">
-        <button class="btn btn-success"><i class="bi bi-plus-circle"></i> Crear </button>
-        <button class="btn btn-info"><i class="bi bi-arrow-down-up"></i>Ordenar</button>
-        <!-- <button>FILTRAR</button> -->
+        <a href="CrearPromocion.php"><button class="btn btn-success"><i class="bi bi-plus-circle"></i> Crear </button></a>
+          <form method="GET" class="d-inline">
+            <select name="orden" class="form-select d-inline w-auto mx-2" onchange="this.form.submit()">
+              <option value="" disabled <?php if(!isset($_GET['orden'])) echo 'selected'; ?>>Ordenar por</option>
+              <option value="asc" <?php if(($_GET['orden'] ?? '') == 'asc') echo 'selected'; ?>>Código Ascendente</option>
+              <option value="desc" <?php if(($_GET['orden'] ?? '') == 'desc') echo 'selected'; ?>>Código Descendente</option>
+            </select>
+          </form>
       </div>
 
+
+    <?php
+      if ($mensaje) echo $mensaje;
+      if ($errores) foreach($errores as $e) echo "<div class='alert alert-danger'>$e</div>";
+    ?>
       <div class="promociones">
-        <div class="promocion">
-          <div class="infoTarjeta">
-            <h3>Promocion 1</h3>
-            <p>#ID</p>
-          </div>
-          <div class="acciones">
-            <button class="btn btn-primary Detalle">VER DETALLES</button>
-            <button class="btn btn-danger Eliminar">ELIMINAR</button>
-          </div>
+  <?php if ($promociones && mysqli_num_rows($promociones) > 0): ?>
+    <?php while ($promo = mysqli_fetch_assoc($promociones)): ?>
+      <div class="promocion">
+        <div class="infoTarjeta">
+          <h3><?php echo htmlspecialchars($promo['texto_promocion']); ?></h3>
+          <?php if (!empty($promo['foto_promocion'])): ?>
+            <img src="data:image/png;base64,<?php echo $promo['foto_promocion']; ?>" alt="Imagen promoción" style="max-width:150px;max-height:150px;">
+          <?php endif; ?>
+          <p><b>Codigo:</b> <?php echo $promo['cod_promocion']; ?></p>
+          <p><b>Vigencia:</b> <?php echo htmlspecialchars($promo['fecha_desde_promocion']); ?> al <?php echo htmlspecialchars($promo['fecha_hasta_promocion']); ?></p>
+          <p><b>Categoria Cliente:</b> <?php echo htmlspecialchars($promo['categoria_cliente']); ?></p>
+          <p><b>Estado Promocion:</b> <?php echo htmlspecialchars($promo['estado_promo']); ?></p>
+          <p><b>Nombre Local:</b> <?php echo htmlspecialchars($promo['nombre_local']); ?></p>
         </div>
+          <div class="acciones">
+            <form method="POST" style="display:inline;">
+              <input type="hidden" name="eliminar" value="<?php echo $promo['cod_promocion']; ?>">
+              <button type="submit" class="btn btn-danger Eliminar" onclick="return confirm('¿Seguro que quieres eliminar esta promoción?');">ELIMINAR</button>
+          </form>
+          </div>
+      </div>
+    <?php endwhile; ?>
+  <?php else: ?>
+    <p>No hay promociones registradas.</p>
+  <?php endif; ?>
+</div>
 
-        <div class="promocion">
-          <div class="infoTarjeta">
-            <h3>Promocion 2</h3>
-            <p>#ID</p>
-          </div>
-          <div class="acciones">
-            <button class="btn btn-primary">VER DETALLES</button>
-            <button class="btn btn-danger">ELIMINAR</button>
-          </div>
-        </div>
-
-        <div class="promocion">
-          <div class="infoTarjeta">
-            <h3>Promocion 3</h3>
-            <p>#ID</p>
-          </div>
-          <div class="acciones">
-            <button class="btn btn-primary">VER DETALLES</button>
-            <button class="btn btn-danger ">ELIMINAR</button>
-          </div>
-        </div>
       </div>
       <div aria-label="Page navigation example">
         <ul class="pagination">

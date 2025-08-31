@@ -9,7 +9,7 @@ $cod_usuario = $_SESSION['cod_usuario'];
 include("../conexion.inc");
 include("../Includes/funciones.php");
 $mensaje = "";
-$errores = [];
+
 $estado = "pendiente";
 
 $sqlLocales = "SELECT cod_local, nombre_local FROM locales WHERE cod_usuario = '$cod_usuario'";
@@ -23,29 +23,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $vFechaFin = $_POST['fechafin'] ?? '';
     $vCategoria = $_POST['Categoria'] ?? '';
     $vCodLocal = $_POST['cod_local'] ?? '';
-    $vArchivo = "";
+    $imagenBase64 = "";
+    if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+        $contenidoImagen = file_get_contents($_FILES['imagen']['tmp_name']);
+        if ($contenidoImagen !== false && strlen($contenidoImagen) > 0) {
+            $imagenBase64 = base64_encode($contenidoImagen);
+        } else {
+            $mensaje = "<div class='alert alert-success'>Imagen cargada correctamente.</div>";
+        }
+    } else {
+        $mensaje = "<div class='alert alert-danger'>No se subió ninguna imagen.</div>";
+    }
 
- if ($vTitulo === '') $errores[] = "Título requerido";
-    if ($vFechaInicio === '' || $vFechaFin === '') $errores[] = "Fechas requeridas";
-    if ($vFechaInicio && $vFechaFin && $vFechaFin < $vFechaInicio) $errores[] = "Rango de fechas inválido";
-    if ($vCategoria === '') $errores[] = "Categoría requerida";
-    if ($vCodLocal === '') $errores[] = "Debe seleccionar un local";
+ if ($vTitulo === '') $mensaje = "<div class='alert alert-danger'>Título requerido</div>";
+    if ($vFechaInicio === '' || $vFechaFin === '') $mensaje = "<div class='alert alert-danger'>Fechas requeridas</div>";
+    if ($vFechaInicio && $vFechaFin && $vFechaFin < $vFechaInicio) $mensaje = "<div class='alert alert-danger'>Rango de fechas inválido</div>";
+    if ($vCategoria === '') $mensaje = "<div class='alert alert-danger'>Categoría requerida</div>";
+    if ($vCodLocal === '') $mensaje = "<div class='alert alert-danger'>Debe seleccionar un local</div>";
 
 
 
-      if (!$errores) {
+      if (!$mensaje) {
 
         $vTituloEscaped = mysqli_real_escape_string($link, $vTitulo);
         $vCategoriaEscaped = mysqli_real_escape_string($link, $vCategoria);
 
-      $sql = "INSERT INTO promociones ( texto_promocion, fecha_desde_promocion, fecha_hasta_promocion, categoria_cliente, estado_promo, cod_local )
-              VALUES ('$vTitulo', '$vFechaInicio', '$vFechaFin', '$vCategoria','$estado', '$vCodLocal' )";
+      $sql = "INSERT INTO promociones ( texto_promocion, fecha_desde_promocion, fecha_hasta_promocion, categoria_cliente, estado_promo, cod_local, foto_promocion )
+              VALUES ('$vTitulo', '$vFechaInicio', '$vFechaFin', '$vCategoria','$estado', '$vCodLocal', '$imagenBase64')";
       if (consultaSQL($sql)) {
-          $mensaje = "Promoción creada";
+          $mensaje = "<div class='alert alert-success'>La promoción fue creada.</div>";
           $vTitulo = $vDescripcion = $vCategoria = "";
           $vFechaInicio = $vFechaFin = "";
       } else {
-          $errores[] = "Error BD: " . mysqli_error($link);
+          $mensaje = "<div class='alert alert-danger'>Error BD: " . mysqli_error($link) . "</div>";
       }
   }
 }
@@ -55,25 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <!-- Importar BootStrap -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7"
-      crossorigin="anonymous"
-    />
-
-    <!-- Importar iconos BootStrap -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-    />
-
-    <!-- Metadatos -->
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../Styles/style.css" />
-    <link rel="stylesheet" href="../Styles/style-general.css" />
+     <?php include("../Includes/head.php"); ?>
     <link rel="icon" type="image/x-icon" href="../Images/logo.png" />
     <title>Crear Nueva Promocion</title>
   </head>
@@ -86,8 +78,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $pestaña = "Crear Promocion";
       include("../Includes/header.php");
 
-      /* Ver como hacer para que aca no aparezca el menu desplegable (porque no tiene ninguna opcion) */
-
       ?>
 
     </header>
@@ -95,7 +85,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <main class="FondoDueñoAdministrador">
       <section class="form-register">
         <h4>Formulario Promoción</h4>
-          <form method="POST" name="FormPromocion" action="CrearPromocion.php">
+          <?php echo $mensaje; ?>
+          <form method="POST" enctype="multipart/form-data" name="FormPromocion" action="CrearPromocion.php">
             <p>Titulo</p>
             <input
               class="controls"
@@ -152,10 +143,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <i class="bi bi-chevron-down position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; color: white;"></i>
             </div>
             
-            <!-- <p>Archivo Multimedia</p>
+             <p>Archivo Multimedia</p>
             <div class="mb-3">
-              <input class="form-control controls" type="file" id="formFile" />
-            </div> -->
+              <input class="form-control controls" type="file" id="formFile" name="imagen" accept="image/*"/>
+            </div> 
             <button class="btn btn-success boton-enviar" type="submit">Enviar</button>
           </form>
       </section>
