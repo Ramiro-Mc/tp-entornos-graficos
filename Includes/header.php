@@ -121,11 +121,7 @@ if ( $folder == "Admin" or $folder == "Cliente" or $folder == "Dueño" or $folde
           <?php if($estaLogueado == "logueado"): ?>
 
             <li class="nav-item">
-<<<<<<< HEAD
-              <p style="color:white">Bienvenido! <?= $vnombre_usuario ?>   </p> 
-=======
               <p style="color:white">Bienvenido! <a href="<?= $rutaSalirCarpeta ?>/Cliente/MiPerfil.php"><?= $vnombre_usuario ?></a></p> 
->>>>>>> 60b0b08e97df9bf7c7d68635fe28e653c8e5f6d9
             </li>
 
             <!-- Categoria de cliente -->
