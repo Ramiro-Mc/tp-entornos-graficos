@@ -787,9 +787,9 @@ textarea{
   padding-bottom: 2rem;
   box-shadow: #777 0px 0px 5px;
   flex: 1;
-  height: calc(100vh - 80px);    /* ← Resta la altura del header */
+  height: 100%;    /* ← Resta la altura del header */
   overflow-y: auto;              /* ← Scroll si es necesario */
-  position: sticky;              /* ← Se mantiene fijo */
+  /* position: sticky;              ← Se mantiene fijo */
   top: 0; 
 }
 
@@ -1013,3 +1013,22 @@ textarea{
 }
 
 
+.select-filtros{
+  width: 100%;
+  background: #eee;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  border: 1px solid #1f53c5;
+  font-family: 'calibri';
+  font-size: 18px;
+  color: black;
+}
+
+.rubro_seleccionado{
+  background-color: #17a44b;
+}
+
+.rubro_seleccionado:hover{
+  background-color: #19b453;
+}
