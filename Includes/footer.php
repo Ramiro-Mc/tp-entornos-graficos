@@ -4,7 +4,7 @@ include_once("session.php");
 if($folder == "Administrador"){
   $opciones = ["Seccion Administrador", "Administrar Promociones", "Administrar Novedades", "Administrar Locales", "Solicitudes De Registro", "Reporte Promociones"];
 }elseif($folder == "Dueño"){
-  $opciones = ["Seccion Dueño Local", "Crear Promocion", "Mis Promociones", "Reporte Promociones"];
+  $opciones = ["Seccion Dueño Local", "Crear Promocion", "Mis Promociones", "Administrar Solicitudes"];
 }elseif($folder == "Principal" || $folder == "Cliente"){
   $opciones = ["Index", "Contacto", "Sobre Nosotros"];
 }
@@ -44,7 +44,7 @@ if(isset($_SESSION['tipo_usuario'])){
 
     <!-- Redes sociales -->
 
-      <?php if($folder != "Administrador"): ?>
+      <?php if($folder != "Administrador" && $folder != "Dueño"): ?>
 
         <div class="iconos-redes-sociales d-flex flex-column gap-2 texto-footer">
           <h5 class="text-center">Redes Sociales</h5>

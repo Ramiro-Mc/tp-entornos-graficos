@@ -37,19 +37,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar'])) {
     $mensaje = "<div class='alert alert-danger'>Error al eliminar la promoción.</div>";
   }
 }
-
+ //Me traigo los codigos de locales del dueño
+$codigoslocales = [];
 $sqlLocal = "SELECT cod_local, nombre_local FROM locales WHERE cod_usuario = '$cod_usuario'";
 $localResult = consultaSQL($sqlLocal);
-$local = mysqli_fetch_assoc($localResult);//Para pasarlo a array
-$codLoc = $local['cod_local'];
+if ($localResult && mysqli_num_rows($localResult) > 0) {
+    while ($row = mysqli_fetch_assoc($localResult)) {
+        $codigoslocales[] = $row['cod_local'];
+    }
+}
 
+//Me traigo las promociones de esos locales
 $sqlPromociones = "SELECT * FROM promociones INNER JOIN locales ON promociones.cod_local = locales.cod_local
- WHERE promociones.cod_local = '$codLoc' ORDER BY promociones.cod_promocion $orden";
+ WHERE promociones.cod_local IN (" . implode(',', $codigoslocales) . ") ORDER BY promociones.cod_promocion $orden";
 $promociones = consultaSQL($sqlPromociones);
 
-
+//Los dias de la semana para cada promocion de los locales
 $sqlDias = "SELECT * FROM promociones INNER JOIN promocion_dia ON promociones.cod_promocion = promocion_dia.cod_promocion
- WHERE promociones.cod_local = $codLoc";
+ WHERE promociones.cod_local IN (" . implode(',', $codigoslocales) . ")";
  $dias = consultaSQL($sqlDias);
 
 $diasPorPromo = [];
@@ -62,12 +67,13 @@ if ($dias && mysqli_num_rows($dias) > 0) {
     }
 }
 
-
-$sqlUsoPromociones = "SELECT uso.cod_promocion, COUNT(*) AS uso_count FROM uso_promociones uso
-INNER JOIN promociones ON uso.cod_promocion = promociones.cod_promocion
-WHERE promociones.cod_local = $codLoc and estado = 'aceptada'
-GROUP BY uso.cod_promocion";
+//El uso de promociones aceptadas de los locales 
+$sqlUsoPromociones = "SELECT uso.cod_promocion, uso.cod_usuario, uso.estado, prom.texto_promocion, COUNT(*) AS uso_count FROM uso_promociones uso
+INNER JOIN promociones prom ON uso.cod_promocion = prom.cod_promocion
+WHERE prom.cod_local IN (" . implode(',', $codigoslocales) . ") and uso.estado = 'aceptada'
+GROUP BY uso.cod_promocion, uso.cod_usuario, uso.estado, prom.texto_promocion";
 $usoPromociones = consultaSQL($sqlUsoPromociones);
+
 
 ?>
 

@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           header("Location: ../Dueño/SeccionDueñoLocal.php");
           exit();
         } elseif ($tipo == "cliente") {
-          header("Location: ../Cliente/SeccionCliente.php");
+          header("Location: ../Principal/Index.php");
           exit();
         } else {
           $mensaje = "<div class='alert alert-warning'>Tipo de usuario no reconocido.</div>";
