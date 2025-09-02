@@ -1,6 +1,3 @@
-<!-- 
-  Consideramos eliminar la seccion y simplemente poner un boton que genere el reporte
--->
 
 <?php
 include_once("../Includes/session.php");
@@ -33,12 +30,12 @@ if (!isset($_SESSION['cod_usuario'])) {
       <div class="container-fluid filtraderos justify-content-end">
         <button class="btn btn-success"><i class="bi bi-plus-circle"></i> Crear </button>
         <button class="btn btn-info"><i class="bi bi-arrow-down-up"></i>Ordenar</button>
-        <!-- <button>FILTRAR</button> -->
+        
       </div>
       <div class="promociones">
         <div class="promocion">
           <div class="infoTarjeta">
-            <h3>Reporte 1</h3>
+            <h3>Solicitud 1</h3>
             <p>#ID</p>
           </div>
           <div class="acciones-reporte align-items-center d-flex justify-content-center">
@@ -48,7 +45,7 @@ if (!isset($_SESSION['cod_usuario'])) {
 
         <div class="promocion">
           <div class="infoTarjeta">
-            <h3>Reporte 2</h3>
+            <h3>Solicitud 2</h3>
             <p>#ID</p>
           </div>
           <div class="acciones-reporte align-items-center d-flex justify-content-center">
@@ -58,7 +55,7 @@ if (!isset($_SESSION['cod_usuario'])) {
 
         <div class="promocion">
           <div class="infoTarjeta">
-            <h3>Reporte 3</h3>
+            <h3>Solicitud 3</h3>
             <p>#ID</p>
           </div>
           <div class="acciones-reporte align-items-center d-flex justify-content-center">

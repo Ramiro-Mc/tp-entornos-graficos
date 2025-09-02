@@ -35,8 +35,8 @@ if (!isset($_SESSION['cod_usuario'])) {
       <div class="botonesDueñoAdministrador container-fluid">
         <a href="CrearPromocion.php"><button>Crear nueva promocion</button></a>
         <a href="MisPromociones.php"><button>Mis promociones</button></a>
-        <a href="ReportePromociones.php"
-          ><button>Generar reporte</button></a
+        <a href="AdministrarSolicitudes.php"
+          ><button>Administrar solicitudes de promociones</button></a
         >
       </div>
     </main>

@@ -31,24 +31,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($resAdmin && mysqli_num_rows($resAdmin) > 0) {
           $tipo = "administrador";
         }
-        $resDueno = consultaSQL("SELECT cod_usuario, confirmado FROM dueño_local WHERE cod_usuario=$cod_usuario");
+        $resDueno = consultaSQL("SELECT cod_usuario FROM dueño_local WHERE cod_usuario=$cod_usuario");
         if ($resDueno && mysqli_num_rows($resDueno) > 0) {
-          $estadoDueno = mysqli_fetch_assoc($resDueno)['confirmado'];
-          if($estadoDueno == 1){
-            $tipo = "dueño";
-          } else {
-            $mensaje = "<div class='alert alert-warning'>El Administrador aun no confirmo su cuenta</div>";
-          }
+          $tipo = "dueño";
         }
-        $resCliente = consultaSQL("SELECT cod_usuario, confirmado FROM cliente WHERE cod_usuario=$cod_usuario");
+              $resCliente = consultaSQL("SELECT cod_usuario, confirmado FROM cliente WHERE cod_usuario=$cod_usuario");
         if ($resCliente && mysqli_num_rows($resCliente) > 0) {
           $estadoCliente = mysqli_fetch_assoc($resCliente)['confirmado'];
-          if($estadoCliente == 1){
+          if ($estadoCliente == 1) {
             $tipo = "cliente";
-            } else {
-              $mensaje = "<div class='alert alert-warning'>Por favor confirma tu cuenta.</div>";  
+          } else {
+            $mensaje = "<div class='alert alert-warning'>Por favor confirma tu cuenta.</div>";
+            mysqli_free_result($vResultado);
+            mysqli_close($link);
+            echo $mensaje;
+            exit;
           }
-          
         }
 
         $_SESSION['tipo_usuario'] = $tipo; 
@@ -60,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           header("Location: ../Dueño/SeccionDueñoLocal.php");
           exit();
         } elseif ($tipo == "cliente") {
-          header("Location: ../Principal/Index.php");
+          header("Location: ../Cliente/SeccionCliente.php");
           exit();
         } else {
           $mensaje = "<div class='alert alert-warning'>Tipo de usuario no reconocido.</div>";
@@ -73,8 +71,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $mensaje = "<div class='alert alert-danger'>Usuario no encontrado.</div>";
       if ($vResultado) mysqli_free_result($vResultado);
     }
-  }
+  
   mysqli_close($link);
+}
 }
 ?>
 
@@ -82,14 +81,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="en">
 
 <head>
-
   <?php include("../Includes/head.php"); ?>
-
-  <title>Login</title>
-
-
+  <title>Iniciar sesión</title>
 </head>
-
 
 <body>
 
@@ -111,12 +105,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="text" name="email" size="100" placeholder="Correo electrónico" required />
 
         <p>Contraseña</p>
-        <div style="position:relative;">
-          <input type="password" name="password" id="password" size="8" placeholder="Contraseña" required />
-          <span id="togglePassword" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer;">
-            <i class="bi bi-eye" id="iconEye"></i>
-          </span>
-        </div>
+      <div style="position:relative;">
+        <input type="password" name="password" id="password" size="8" placeholder="Contraseña" required />
+        <span id="togglePassword" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer;">
+          <i class="bi bi-eye" id="iconEye"></i>
+        </span>
+      </div>
+
         <input type="submit" name="Login" value="Login" />
         <a href="Register.php"><button type="button">Registrarse</button></a>
 
@@ -124,7 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </form>
 
     </section>
-
+    
   </main>
 
   <footer class="seccion-footer d-flex flex-column justify-content-center align-items-center pt-3">
@@ -135,22 +130,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
 
-  <script>
-  document.getElementById('togglePassword').addEventListener('click', function () {
-  const passwordInput = document.getElementById('password');
-  const icon = document.getElementById('iconEye');
-  if (passwordInput.type === 'password') {
-    passwordInput.type = 'text'; //La pasa a texto y se ve
-    icon.classList.remove('bi-eye');
-    icon.classList.add('bi-eye-slash');
-  } else {
-    passwordInput.type = 'password'; //La pasa a password y no se ve
-    icon.classList.remove('bi-eye-slash');
-    icon.classList.add('bi-eye');
-  }
-});
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('togglePassword').addEventListener('click', function () {
+      const passwordInput = document.getElementById('password');
+      const icon = document.getElementById('iconEye');
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        icon.classList.remove('bi-eye');
+        icon.classList.add('bi-eye-slash');
+      } else {
+        passwordInput.type = 'password';
+        icon.classList.remove('bi-eye-slash');
+        icon.classList.add('bi-eye');
+      }
+    });
+  });
 </script>
-
 </body>
 
 </html>

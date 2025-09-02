@@ -5,6 +5,16 @@ if (!isset($_SESSION['cod_usuario'])) {
   exit;
 }
 
+$diasSemanaNombre = [
+    1 => "Lunes",
+    2 => "Martes",
+    3 => "Miércoles",
+    4 => "Jueves",
+    5 => "Viernes",
+    6 => "Sábado",
+    7 => "Domingo"
+];
+
 
 $cod_usuario = $_SESSION['cod_usuario'];
 include("../conexion.inc");
@@ -29,8 +39,31 @@ $localResult = consultaSQL($sqlLocal);
 $local = mysqli_fetch_assoc($localResult);//Para pasarlo a array
 $codLoc = $local['cod_local'];
 
-$sqlPromociones = "SELECT * FROM promociones INNER JOIN locales ON promociones.cod_local = locales.cod_local WHERE promociones.cod_local = '$codLoc' ORDER BY promociones.cod_promocion $orden";
+$sqlPromociones = "SELECT * FROM promociones INNER JOIN locales ON promociones.cod_local = locales.cod_local
+ WHERE promociones.cod_local = '$codLoc' ORDER BY promociones.cod_promocion $orden";
 $promociones = consultaSQL($sqlPromociones);
+
+
+$sqlDias = "SELECT * FROM promociones INNER JOIN promocion_dia ON promociones.cod_promocion = promocion_dia.cod_promocion
+ WHERE promociones.cod_local = $codLoc";
+ $dias = consultaSQL($sqlDias);
+
+$diasPorPromo = [];
+if ($dias && mysqli_num_rows($dias) > 0) {
+    while ($row = mysqli_fetch_assoc($dias)) {
+        $codPromo = $row['cod_promocion'];
+        $diaCodigo = $row['cod_dia']; 
+        if (!isset($diasPorPromo[$codPromo])) $diasPorPromo[$codPromo] = [];
+        $diasPorPromo[$codPromo][] = $diaCodigo;
+    }
+}
+
+
+$sqlUsoPromociones = "SELECT uso.cod_promocion, COUNT(*) AS uso_count FROM uso_promociones uso
+INNER JOIN promociones ON uso.cod_promocion = promociones.cod_promocion
+WHERE promociones.cod_local = $codLoc and estado = 'aceptada'
+GROUP BY uso.cod_promocion";
+$usoPromociones = consultaSQL($sqlUsoPromociones);
 
 ?>
 
@@ -56,14 +89,16 @@ $promociones = consultaSQL($sqlPromociones);
     <main class="FondoDueñoAdministrador">
 
       <div class="container-fluid filtraderos justify-content-end">
-        <a href="CrearPromocion.php"><button class="btn btn-success"><i class="bi bi-plus-circle"></i> Crear </button></a>
+        <a href="CrearPromocion.php"><button class="btn btn-success "><i class="bi bi-plus-circle"></i> Crear </button></a>
+       
           <form method="GET" class="d-inline">
-            <select name="orden" class="form-select d-inline w-auto mx-2" onchange="this.form.submit()">
-              <option value="" disabled <?php if(!isset($_GET['orden'])) echo 'selected'; ?>>Ordenar por</option>
-              <option value="asc" <?php if(($_GET['orden'] ?? '') == 'asc') echo 'selected'; ?>>Código Ascendente</option>
-              <option value="desc" <?php if(($_GET['orden'] ?? '') == 'desc') echo 'selected'; ?>>Código Descendente</option>
-            </select>
-          </form>
+              <select name="orden" class="form-select bg-primary text-white d-inline w-auto mx-2" onchange="this.form.submit()">
+                <option  class="text_white" value="" disabled <?php if(!isset($_GET['orden'])) echo 'selected'; ?>>Ordenar por</option>
+                <option value="asc" <?php if(($_GET['orden'] ?? '') == 'asc') echo 'selected'; ?>>Código Ascendente</option>
+                <option value="desc" <?php if(($_GET['orden'] ?? '') == 'desc') echo 'selected'; ?>>Código Descendente</option>
+              </select>
+            </form>
+      
       </div>
 
 
@@ -84,6 +119,23 @@ $promociones = consultaSQL($sqlPromociones);
           <p><b>Categoria Cliente:</b> <?php echo htmlspecialchars($promo['categoria_cliente']); ?></p>
           <p><b>Estado Promocion:</b> <?php echo htmlspecialchars($promo['estado_promo']); ?></p>
           <p><b>Nombre Local:</b> <?php echo htmlspecialchars($promo['nombre_local']); ?></p>
+          
+          <p><b>Dias de la semana disponible: </b> <?php  $diasPromo = $diasPorPromo[$promo['cod_promocion']] ?? [];
+          if ($diasPromo) {
+              $nombres = array_map(function($codigo) use ($diasSemanaNombre) {
+                  return $diasSemanaNombre[$codigo] ?? $codigo;
+              }, $diasPromo);
+              echo implode(', ', $nombres);
+          } else {
+              echo "No tiene días asignados";
+          } ?></p>
+
+          <p><b>Usos: </b> <?php if($usoPromociones && mysqli_num_rows($usoPromociones) > 0){ 
+            $uso = mysqli_fetch_assoc($usoPromociones);
+            echo $uso['uso_count'];
+          } else {
+            echo 0;
+          } ?></p>
         </div>
           <div class="acciones">
             <form method="POST" style="display:inline;">
@@ -98,8 +150,7 @@ $promociones = consultaSQL($sqlPromociones);
   <?php endif; ?>
 </div>
 
-      </div>
-      <div aria-label="Page navigation example">
+      <!-- <div aria-label="Page navigation example">
         <ul class="pagination">
           <li class="page-item"><a class="page-link" href="#">Previous</a></li>
           <li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -107,7 +158,7 @@ $promociones = consultaSQL($sqlPromociones);
           <li class="page-item"><a class="page-link" href="#">3</a></li>
           <li class="page-item"><a class="page-link" href="#">Next</a></li>
         </ul>
-      </div>
+      </div> -->
     </main>
 
     <footer class="seccion-footer d-flex flex-column justify-content-center align-items-center pt-4">
