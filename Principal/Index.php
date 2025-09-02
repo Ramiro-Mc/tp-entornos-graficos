@@ -1,8 +1,10 @@
 <?php
 include_once("../Includes/session.php");
+include_once("../Includes/funciones.php");
 
 $folder = "Principal";
 $pestaña = "Index";
+
 ?>
 
 
@@ -72,8 +74,8 @@ $pestaña = "Index";
       <h2 class="seccion-titulo"><strong>Nuestros Locales</strong></h2>
 
       <div class="container categoria-botones text-center">
-        <form method="GET" action="#locales" class="d-inline">
-          <button type="submit" name="categoria" value="" class="btn btn-secondary">Todos</button>
+        <form id="categorias" method="POST" action="filtrar_locales.php" class="d-inline">
+          <button type="submit" name="categoria" value="Todos" class="btn btn-secondary">Todos</button>
           <button type="submit" name="categoria" value="Accesorios" class="btn btn-secondary">Accesorios</button>
           <button type="submit" name="categoria" value="Deportes" class="btn btn-secondary">Deportes</button>
           <button type="submit" name="categoria" value="Electro" class="btn btn-secondary">Electro</button>
@@ -85,46 +87,68 @@ $pestaña = "Index";
         </form>
       </div>
 
-      <div class="container">
-        <!-- aca vamos a tener que hacer un php para poder filtrar los locales por value-->
-        <div class="row">
+      <script>
+        let categoriaSeleccionada = null;
+        document.querySelectorAll('#categorias button').forEach(btn => {
+          btn.addEventListener('click', function(e) {
+            categoriaSeleccionada = this.value;
+          });
+        });
 
-          <div class="col-12 col-md-6 col-lg-3">
-            <div class="promocion-index"><img src="../Images/Local1.jpg" alt="Proyecto 2" />
+        document.getElementById('categorias').addEventListener('submit', function(e) {
+          e.preventDefault();
+          const formData = new FormData();
+          formData.append('categoria', categoriaSeleccionada);
+
+
+          fetch(this.action, {
+            method: 'POST',
+            body: formData
+          })
+          .then(response => response.text())
+          .then(data => {
+            document.getElementById("respuesta").innerHTML = data;
+            document.getElementById("locales-iniciales").style.display = "none";
+          });
+        });
+      </script>
+
+      <div class="container-fluid">
+        <div id="locales-iniciales">
+          <?php  
+          $result =  consultaSQL("SELECT foto_local, nombre_local, rubro_local, ubicacion_local FROM locales");
+
+          if ($result->num_rows > 0): 
+            while ($row = $result->fetch_assoc()): 
+            $imagenLocal = $row['foto_local']; 
+            $nombre_local = $row['nombre_local']; ?>
+
+          <div class="container-fluid">
+            <div class="col-12 col-md-6 col-lg-4 ">
+            <div class="promocion-index">
+              <img src="data:image/jpeg;base64<?= $imagenLocal ?>" alt="<?= $nombre_local ?>" />
               <div class="overlay">
-                <p>Haz clic para ver las promociones de ...</p>
+              <p><?= $nombre_local ?></p>
               </div>
+
+            </div>
             </div>
           </div>
 
+            <?php endwhile; ?>
 
-          <div class="col-12 col-md-6 col-lg-3">
-            <div class="promocion-index"><img src="../Images/Local2.jpg" alt="Proyecto 2" />
-              <div class="overlay">
-                <p>Haz clic para ver las promociones de ...</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-12 col-md-6 col-lg-3">
-            <div class="promocion-index"><img src="../Images/Local3.jpg" alt="Proyecto 2" />
-              <div class="overlay">
-                <p>Haz clic para ver las promociones de ...</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-12 col-md-6 col-lg-3">
-            <div class="promocion-index"><img src="../Images/Local4.jpg" alt="Proyecto 2" />
-              <div class="overlay">
-                <p>Haz clic para ver las promociones de ...</p>
-              </div>
-            </div>
-          </div>
-
+          <?php else: ?>
+            <p>No hay locales registrados.</p>
+          <?php endif; ?> 
 
         </div>
+        
+        
+        <div id="respuesta"></div>
+        
+        
       </div>
+
     </section>
 
     <!-- Seccion novedades -->
@@ -160,53 +184,41 @@ $pestaña = "Index";
       <h2 class="seccion-titulo"><strong>¡Promociones para morirse!</strong></h2>
       <div class="container text-center proyectos-contenedor">
         <div class="row">
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="promocion-index"><img src="../Images/Promocion1.jpg" />
-              <div class="overlay">
-                <p>Nombre promocion</p>
-              </div>
-            </div>
-          </div>
 
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="promocion-index"><img src="../Images/Promocion2.jpg" alt="Proyecto 2" />
-              <div class="overlay">
-                <p>Nombre promocion</p>
-              </div>
-            </div>
-          </div>
+            <?php
+              if(isset($_SESSION['categoria_cliente'])){
+                $result =  consultaSQL("SELECT texto_promocion, foto_promocion, cod_local FROM promociones where categoria_cliente='{$_SESSION['categoria_cliente']}'");
+              }else{
+                $result =  consultaSQL("SELECT texto_promocion, foto_promocion, cod_local FROM promociones ");
+              }
+              
+              $cantidad = 0;?>
 
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="promocion-index"><img src="../Images/Promocion3.jpg" alt="Proyecto 3" />
-              <div class="overlay">
-                <p>Nombre promocion</p>
-              </div>
-            </div>
-          </div>
+              <?php if ($result->num_rows > 0 ): ?>
+                
+                <?php while ($row = $result->fetch_assoc()):  ?>
 
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="promocion-index"><img src="../Images/Promocion4.jpg" alt="Proyecto 3" />
-              <div class="overlay">
-                <p>Nombre promocion</p>
-              </div>
-            </div>
-          </div>
+                  <?php if($cantidad < 6): ?>
 
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="promocion-index"><img src="../Images/Promocion5.jpg" alt="Proyecto 3" />
-              <div class="overlay">
-                <p>Nombre promocion</p>
-              </div>
-            </div>
-          </div>
+                    <?php $texto_promocion = $row['texto_promocion'];
+                    $foto_promocion = $row['foto_promocion']; 
+                    $cantidad = $cantidad + 1;?>
+                    <div class="col-12 col-md-6 col-lg-4">
+                      <div class="promocion-index"><img src="data:image/jpeg;base64<?= $foto_promocion ?>" />
+                        <div class="overlay">
+                          <p><?= $texto_promocion ?></p>
+                        </div>
+                      </div>
+                    </div>
 
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="promocion-index"><img src="../Images/Promocion6.jpg" alt="Proyecto 3" />
-              <div class="overlay">
-                <p>Nombre promocion</p>
-              </div>
-            </div>
-          </div>
+                  <?php endif; ?>
+
+                <?php endwhile; ?>
+
+              <?php else: ?>
+                <p>No hay promociones registradas.</p>
+              <?php endif; ?>
+
         </div>
       </div>
 
@@ -217,7 +229,7 @@ $pestaña = "Index";
   <!-- Seccion Mapa Google Maps -->
 
   <section class="mapa-google">
-    <h2 class="seccion-titulo"><strong>Encontranos</strong></h2>
+    <h2 class="seccion-titulo"><strong>Encontranos </strong></h2>
     <div class="mapa-container"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3593.617347374075!2d-80.263616524057!3d25.750164909080794!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88d9ba2ed5cfe615%3A0xad638083c8eb0c89!2sViventa%20Miami!5e0!3m2!1ses-419!2sar!4v1750373072030!5m2!1ses-419!2sar" width="100%" height="100%" style="border: 0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
   </section>
 

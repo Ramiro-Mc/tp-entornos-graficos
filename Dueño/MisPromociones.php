@@ -16,6 +16,10 @@ $diasSemanaNombre = [
 ];
 
 
+
+$folder = "Dueño";
+$pestaña = "Mis Promociones";
+
 $cod_usuario = $_SESSION['cod_usuario'];
 include("../conexion.inc");
 include("../Includes/funciones.php");
@@ -25,13 +29,13 @@ $orden = ($_GET['orden'] ?? 'asc') === 'desc' ? 'DESC' : 'ASC';
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar'])) {
-    $codPromoEliminar = intval($_POST['eliminar']);
-    $sqlEliminar = "DELETE FROM promociones WHERE cod_promocion = $codPromoEliminar AND cod_local IN (SELECT cod_local FROM locales WHERE cod_usuario = '$cod_usuario')";
-    if (consultaSQL($sqlEliminar)) {
-        $mensaje = "<div class='alert alert-success'>Promoción eliminada correctamente.</div>";
-    } else {
-         $mensaje = "<div class='alert alert-danger'>Error al eliminar la promoción.</div>";
-    }
+  $codPromoEliminar = intval($_POST['eliminar']);
+  $sqlEliminar = "DELETE FROM promociones WHERE cod_promocion = $codPromoEliminar AND cod_local IN (SELECT cod_local FROM locales WHERE cod_usuario = '$cod_usuario')";
+  if (consultaSQL($sqlEliminar)) {
+    $mensaje = "<div class='alert alert-success'>Promoción eliminada correctamente.</div>";
+  } else {
+    $mensaje = "<div class='alert alert-danger'>Error al eliminar la promoción.</div>";
+  }
 }
 
 $sqlLocal = "SELECT cod_local, nombre_local FROM locales WHERE cod_usuario = '$cod_usuario'";
@@ -70,19 +74,16 @@ $usoPromociones = consultaSQL($sqlUsoPromociones);
 <!DOCTYPE html>
 <html lang="es ">
   <head>
+
     <?php include("../Includes/head.php"); ?>
+
     <title>Mis Promociones</title>
+
   </head>
   <body>
     <header>
 
-      <?php
-
-      $folder = "Dueño";
-      $pestaña = "Mis Promociones";
-      include("../Includes/header.php");
-
-      ?>
+      <?php include("../Includes/header.php"); ?>
 
     </header>
 
@@ -167,10 +168,6 @@ $usoPromociones = consultaSQL($sqlUsoPromociones);
     
     </footer>
     
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
   </body>
 </html>

@@ -25,16 +25,18 @@ if($pestaña == "Login" or $pestaña == "Register"){
   $estaLogueado = "logueandose";
 }
 
-if ( $folder == "Admin" or $folder == "Cliente" or $folder == "Dueño" or $folder == "Principal"){
+if ( $folder == "Administrador" or $folder == "Cliente" or $folder == "Dueño" or $folder == "Principal"){
   $rutaSalirCarpeta = "..";
 } else {
   $rutaSalirCarpeta = ".";
 }
 
-if($folder == "Admin"){
-  $rutaLogo = "/Admin/SeccionAdministrador.php";
+if($folder == "Administrador"){
+  $rutaLogo = "/Administrador/SeccionAdministrador.php";
 }elseif($folder == "Dueño"){
   $rutaLogo = "/Dueño/SeccionDueñoLocal.php";
+}else{
+  $rutaLogo = "/Principal/Index.php";
 }
 
 ?>
@@ -46,22 +48,11 @@ if($folder == "Admin"){
 
     <!-- Logo y boton de desplegado de menu (igual para todas las pestañas) -->
 
-      <a class="navbar-brand" href="<?= $rutaSalirCarpeta ?>/Principal/Index.php">
-        <img
-          class="logo"
-          src="<?= $rutaSalirCarpeta ?>/Images/Logo.png"
-          alt="Logo de la pagina web"
-        />
+      <a class="navbar-brand" href="<?= $rutaSalirCarpeta ?><?= $rutaLogo ?>">
+        <img class="logo" src="<?= $rutaSalirCarpeta ?>/Images/Logo.png" alt="Logo de la pagina web" />
       </a>
 
-      <button class="navbar-toggler boton-menu"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
+      <button class="navbar-toggler boton-menu" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
     
@@ -81,30 +72,11 @@ if($folder == "Admin"){
                 <p>Novedades</p>
               </a>
             </li>
-
-            <?php if($estaLogueado == "noLogueado"): ?>
               <li class="nav-item">
                 <a class="nav-link" aria-current="page" href="#locales">
                   <p>Locales</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="#promociones">
-                  <p>Promociones</p>
-                </a>
-              </li>
-            <?php else: ?>
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="<?= $rutaSalirCarpeta ?>/Cliente/BuscarLocales.php">
-                  <p>¡Buscar Locales!</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="<?= $rutaSalirCarpeta ?>/Cliente/BuscarPromociones.php">
-                  <p>¡Usar Promociones!</p>
-                </a>
-              </li>
-            <?php endif; ?>
 
             <li class="nav-item">
               <a class="nav-link" aria-current="page" href="<?= $rutaSalirCarpeta ?>/Principal/Contacto.php">
@@ -116,6 +88,20 @@ if($folder == "Admin"){
                 <p>Sobre Nosotros</p>
               </a>
             </li>
+
+            <?php if($estaLogueado == "noLogueado"): ?>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="#promociones">
+                  <p>Promociones</p>
+                </a>
+              </li>
+            <?php else: ?>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="<?= $rutaSalirCarpeta ?>/Cliente/BuscarPromociones.php">
+                  <p>¡Usar Promociones!</p>
+                </a>
+              </li>
+            <?php endif; ?>
 
           <?php endif; ?>
 

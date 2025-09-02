@@ -2,7 +2,7 @@
 include_once("session.php");
 
 if($folder == "Administrador"){
-  $opciones = ["Inicio", "Administrar Promociones", "Administrar Novedades", "Administrar Locales", "Solicitudes De Registro", "Reportes De Uso Promociones", "Sobre Nosotros"];
+  $opciones = ["Seccion Administrador", "Administrar Promociones", "Administrar Novedades", "Administrar Locales", "Solicitudes De Registro", "Reporte Promociones"];
 }elseif($folder == "Dueño"){
   $opciones = ["Seccion Dueño Local", "Crear Promocion", "Mis Promociones", "Reporte Promociones"];
 }elseif($folder == "Principal" || $folder == "Cliente"){
@@ -41,23 +41,32 @@ if(isset($_SESSION['tipo_usuario'])){
 
 <footer class="seccion-footer d-flex flex-column justify-content-center align-items-center pt-3">
   <div class="container d-flex flex-wrap justify-content-center gap-5 px-0">
-    <div class="iconos-redes-sociales d-flex flex-column gap-2 texto-footer">
-      <h5 class="text-center">Redes Sociales</h5>
-      <div class="d-flex gap-3">
-        <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
-          <i class="bi bi-instagram fs-4"></i>
-        </a>
-        <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
-          <i class="bi bi-facebook fs-4"></i>
-        </a>
-        <a href="https://www.whatsapp.com/" target="_blank" rel="noopener noreferrer">
-          <i class="bi bi-whatsapp fs-4"></i>
-        </a>
-        <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">
-          <i class="bi bi-youtube fs-4"></i>
-        </a>
-      </div>
-    </div>
+
+    <!-- Redes sociales -->
+
+      <?php if($folder != "Administrador"): ?>
+
+        <div class="iconos-redes-sociales d-flex flex-column gap-2 texto-footer">
+          <h5 class="text-center">Redes Sociales</h5>
+          <div class="d-flex gap-3">
+            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+              <i class="bi bi-instagram fs-4"></i>
+            </a>
+            <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
+              <i class="bi bi-facebook fs-4"></i>
+            </a>
+            <a href="https://www.whatsapp.com/" target="_blank" rel="noopener noreferrer">
+              <i class="bi bi-whatsapp fs-4"></i>
+            </a>
+            <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">
+              <i class="bi bi-youtube fs-4"></i>
+            </a>
+          </div>
+        </div>
+
+      <?php endif; ?>
+
+    <!-- Fin redes sociales -->
 
     <nav class="texto-footer">
 
@@ -82,18 +91,28 @@ if(isset($_SESSION['tipo_usuario'])){
       </ul>
 
     </nav>
-    <section class="texto-footer">
-      <h5>Contacto</h5>
-      <p>
-        Email:
-        <a href="#">contacto@viventastore.com</a>
-      </p>
-      <p>
-        Teléfono:
-        <a href="#">+54 9 11 2345-6789</a>
-      </p>
-      <p>Dirección: Calle 123, Ciudad</p>
-    </section>
+
+    <!-- Contacto -->
+
+      <?php if($folder != "Administrador"): ?>
+
+        <section class="texto-footer">
+          <h5>Contacto</h5>
+          <p>
+            Email:
+            <a href="#">contacto@viventastore.com</a>
+          </p>
+          <p>
+            Teléfono:
+            <a href="#">+54 9 11 2345-6789</a>
+          </p>
+          <p>Dirección: Calle 123, Ciudad</p>
+        </section>
+
+      <?php endif; ?>
+
+    <!-- Fin contacto -->
+
   </div>
 
   <p class="texto-footer text-center">© 2025 Viventa Store. Todos los derechos reservados.</p>

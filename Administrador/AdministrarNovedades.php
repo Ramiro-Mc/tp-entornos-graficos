@@ -1,4 +1,8 @@
 <?php
+
+$folder = "Administrador";
+$pestaña = "Administrar Novedades";
+
 include("../conexion.inc");
 
 // Traer todas las novedades
@@ -8,35 +12,17 @@ $result = $link->query("SELECT * FROM novedades ORDER BY fecha_desde_novedad DES
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <?php include("../Includes/head.php"); ?>
+
     <title>Administrar Novedades</title>
 
-    <!-- Bootstrap CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <!-- Bootstrap Icons -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-    />
-    <!-- Estilos propios -->
-    <link rel="stylesheet" href="../Styles/style.css" />
-    <link rel="stylesheet" href="../Styles/style-general.css" />
-    <link rel="icon" type="image/x-icon" href="../Images/logo.png" />
   </head>
   <body>
     <header>
-      <div class="top-bar">
-        <a href="SeccionAdministrador.html">
-          <img class="logo" src="../Images/Logo.png" alt="FotoShopping" />
-        </a>
-        <nav>
-          <a href="CerrarSesion.html">Cerrar Sesión</a>
-        </nav>
-      </div>
+
+      <?php include("../Includes/header.php"); ?>
+      
     </header>
 
     <main class="FondoDueñoAdministrador">
@@ -107,18 +93,9 @@ $result = $link->query("SELECT * FROM novedades ORDER BY fecha_desde_novedad DES
     </main>
 
     <footer class="seccion-footer d-flex flex-column justify-content-center align-items-center pt-4">
-      <div>
-        <nav class="texto-footer">
-          <h5>Mapa del sitio</h5>
-          <div class="mb-2"><a href="SeccionAdministrador.html">Inicio</a></div>
-          <div class="mb-2"><a href="AdministrarPromociones.html">Administrar Promociones</a></div>
-          <div class="mb-2"><a href="AdministrarNovedades.html">Administrar Novedades </a></div>
-          <div class="mb-2"><a href="AdministrarLocales.html">Administrar Locales</a></div>
-          <div class="mb-2"><a href="SolicitudRegistro.html">Solicitudes De Registro</a></div>
-          <div class="mb-2"><a href="ReportePromocionesAdm.html">Reportes De Uso Promociones</a></div>
-        </nav>
-      </div>
-      <p class="texto-footer text-center">© 2025 Viventa Store. Todos los derechos reservados.</p>
+
+      <?php include("../Includes/footer.php") ?>
+
     </footer>
 
     <script

@@ -4,29 +4,25 @@ if (!isset($_SESSION['cod_usuario'])) {
   header("Location: ../principal/login.php");
   exit;
 }
+
+$folder = "Dueño";
+$pestaña = "Seccion Dueño Local";
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
   <head>
+
     <?php include("../Includes/head.php"); ?>
 
     <title>Dueño Local</title>
-    <link rel="icon" type="image/x-icon" href="../Images/Logo.png" />
+
   </head>
 
   <body>
     <header>
 
-      <?php
-
-      $folder = "Dueño";
-      $pestaña = "Seccion Dueño Local";
-      include("../Includes/header.php");
-
-      /* Ver como hacer para que aca no aparezca el menu desplegable (porque no tiene ninguna opcion) */
-
-      ?>
+      <?php include("../Includes/header.php"); ?>
 
     </header>
 
@@ -39,6 +35,7 @@ if (!isset($_SESSION['cod_usuario'])) {
           ><button>Administrar solicitudes de promociones</button></a
         >
       </div>
+      
     </main>
 
     <footer class="seccion-footer d-flex flex-column justify-content-center align-items-center pt-4">

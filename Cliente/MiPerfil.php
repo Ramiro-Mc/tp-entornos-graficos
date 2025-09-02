@@ -22,6 +22,8 @@ $res = consultaSQL("SELECT categoria_cliente FROM cliente WHERE cod_usuario = '$
 $row = mysqli_fetch_assoc($res); 
 $vcategoria_cliente = $row['categoria_cliente'] ?? '';
 
+
+$result = consultaSQL("SELECT cod_promocion, fecha_uso_promocion FROM uso_promociones WHERE cod_usuario = '$cod_usuario'");
 ?>
 
 <!DOCTYPE html>
@@ -42,47 +44,61 @@ $vcategoria_cliente = $row['categoria_cliente'] ?? '';
     </header>
 
     <main class="fondo-formulario-contacto">
+
       <div class="formulario-contacto text-center">
-      <section class="mb-5">
         <h2 class="seccion-titulo">Datos del Usuario</h2>
-        <div class="datos-usuario text-start mx-auto panel-estilo" style="max-width: 600px;">
+        <div class="datos-usuario text-start mx-auto panel-estilo">
           <p><strong>Nombre:</strong> <?= $vnombre_usuario ?></p>
           <p><strong>Email:</strong> <?= $vemail ?></p>
           <p><strong>Tipo de Cliente:</strong> <?= $vcategoria_cliente ?></p>
           <button class="btn btn-success me-2 boton-enviar">Editar Perfil</button>
-        </div></div>
-      </section>
+        </div>
+      </div>
 
       <section>
-        <h2 class="seccion-titulo">Historial de Compras</h2>
-        <div class="datos-usuario text-start mx-auto panel-estilo" style="max-width: 600px; ">
-            <table class="table table-striped table-dark">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Fecha</th>
-                <th>Local</th>
-                <th>Producto</th>
-                <th>Monto</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>10/07/2025</td>
-                <td>Musimundo</td>
-                <td>Lavarropas </td>
-                <td>$12.000</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>22/06/2025</td>
-                <td>Adidas</td>
-                <td>Zapatillas </td>
-                <td>$25.000</td>
-              </tr>
+        <h2 class="seccion-titulo">Historial de Promociones Usadas</h2>
+        <div class="datos-usuario text-start mx-auto panel-estilo mb-5">
+          <table class="table table-striped table-dark">
+          
+            <?php if ($result->num_rows > 0): ?>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Promocion</th>
+                  <th>Local</th>
+                  <th>Fecha</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <?php while ($row = $result->fetch_assoc()): ?>
+
+                  <?php
+                  $row = mysqli_fetch_assoc($result); 
+                  $vfecha_uso_promocion = $row['fecha_uso_promocion'] ?? '';
+                  $vcod_promocion = $row['cod_promocion'] ?? '';
+                  $res = consultaSQL("SELECT cod_local, texto_promocion FROM promociones WHERE cod_promocion = '$cod_promocion'");
+                  $row = mysqli_fetch_assoc($res); 
+                  $vtexto_promocion = $row['texto_promocion'] ?? '';
+                  $vcod_local = $row['cod_local'] ?? '';
+                  $res = consultaSQL("SELECT nombre_local FROM locales WHERE cod_local = '$cod_local'");
+                  $row = mysqli_fetch_assoc($res); 
+                  $vnombre_local = $row['nombre_local'] ?? '';?>
+
+                  <tr>
+                    <td>1</td>
+                    <td><?= $vtexto_promocion ?></td>
+                    <td><?= $vnombre_local ?></td>
+                    <td><?= $vfecha_uso_promocion ?></td>
+                  </tr>
+
+                <?php endwhile; ?>
+              </tbody>
+
+            <?php else: ?>
+              <p>No hay usos de promociones registrados.</p>
+            <?php endif; ?>
            
-            </tbody>
           </table>
         </div>
       </section>
