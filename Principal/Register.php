@@ -89,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
     </header>
 
-    <main style="background-image: url('../Images/Login-Register.jpg')" class="fondo-loginRegister">
+    <main style="background-image: url('../Images/Fondo Sobrio.jfif')" class="fondo-loginRegister">
       <section class="loginRegister-box">
         <h1>Crear una nueva cuenta</h1>
         <h2>Es rápido y fácil.</h2>

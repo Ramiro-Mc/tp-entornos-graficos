@@ -31,30 +31,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($resAdmin && mysqli_num_rows($resAdmin) > 0) {
           $tipo = "administrador";
         }
-        $resDueno = consultaSQL("SELECT cod_usuario, confirmado FROM dueño_local WHERE cod_usuario=$cod_usuario");
+        $resDueno = consultaSQL("SELECT cod_usuario FROM dueño_local WHERE cod_usuario=$cod_usuario");
         if ($resDueno && mysqli_num_rows($resDueno) > 0) {
-          $estadoDueno = mysqli_fetch_assoc($resDueno)['confirmado'];
+            $tipo = "dueño";
+          /* $estadoDueno = mysqli_fetch_assoc($resDueno)['confirmado'];
           if($estadoDueno == 1){
             $tipo = "dueño";
           } else {
             $mensaje = "<div class='alert alert-warning'>El Administrador aun no confirmo su cuenta</div>";
-          }
+          } */
         }
-        $resCliente = consultaSQL("SELECT cod_usuario, confirmado FROM cliente WHERE cod_usuario=$cod_usuario");
+        $resCliente = consultaSQL("SELECT cod_usuario FROM cliente WHERE cod_usuario=$cod_usuario");
         if ($resCliente && mysqli_num_rows($resCliente) > 0) {
+            $tipo = "cliente";/* 
           $estadoCliente = mysqli_fetch_assoc($resCliente)['confirmado'];
           if($estadoCliente == 1){
             $tipo = "cliente";
-            } else {
-              $mensaje = "<div class='alert alert-warning'>Por favor confirma tu cuenta.</div>";  
-          }
+          } else {
+            $mensaje = "<div class='alert alert-warning'>Por favor confirma tu cuenta.</div>";  
+          } */
           
         }
 
         $_SESSION['tipo_usuario'] = $tipo; 
 
         if ($tipo == "administrador") {
-          header("Location: ../Administrador/SeccionAdministrador.html");
+          header("Location: ../Administrador/SeccionAdministrador.php");
           exit();
         } elseif ($tipo == "dueño") {
           header("Location: ../Dueño/SeccionDueñoLocal.php");
@@ -87,7 +89,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   <title>Login</title>
 
-
 </head>
 
 
@@ -99,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   </header>
 
-  <main style="background-image: url('../Images/Login-Register.jpg')" class="fondo-loginRegister">
+  <main style="background-image: url('../Images/Fondo Sobrio.jfif')" class="fondo-loginRegister pb-5 pt-5">
 
     <section class="loginRegister-box">
       <h1>Inicio Sesión </h1>
@@ -118,7 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </span>
         </div>
         <input type="submit" name="Login" value="Login" />
-        <a href="Register.php"><button type="button">Registrarse</button></a>
+        <a href="Register.php"><button type="button" style="color: black">Registrarse</button></a>
 
         <a href="#">¿Olvido su contraseña?</a>
       </form>

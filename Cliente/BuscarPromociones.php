@@ -63,8 +63,10 @@ $result = consultaSQL($sql);
           <div class="col-3 filtros d-none d-lg-block">
             <h3>Filtros</h3>
 
+            <hr/>
+
             <form id="filtros-promociones" method="POST" action="">
-              <p>Local </p>
+              <p style="padding-top: 0;">Local </p>
 
               <select class="select-filtros" name="local">
 
@@ -85,7 +87,7 @@ $result = consultaSQL($sql);
                 <?php endif; ?>
               </select>
 
-              <p>Tipo cliente</p>
+              <p style="padding-top: 0;">Tipo cliente</p>
 
               <select class="select-filtros" name="categoria" id="">
                 <option name="categoria" value="Cualquiera">Cualquiera</option>
@@ -93,9 +95,12 @@ $result = consultaSQL($sql);
                 <option name="categoria" value="Medium" <?= (isset($_POST['categoria']) && $_POST['categoria'] == "Medium") ? "selected" : ""?>>Medium</option>
                 <option name="categoria" value="Inicial" <?= (isset($_POST['categoria']) && $_POST['categoria'] == "Inicial") ? "selected" : ""?>>Inicial</option>
               </select>
-
-              <input type="submit" >
-
+              
+              <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-outline-success" >Filtrar</button>
+              </div>
+              
+              <hr/>
 
               <p>Filtrar por categoria</p>
 
@@ -138,7 +143,7 @@ $result = consultaSQL($sql);
 
           </div>
 
-          <div class="col-lg-9 col-12 listado-promociones">
+          <div class="col-lg-9 col-12 listado-promociones ">
             <button class="btn btn-light boton-filtros d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop"><i class="bi bi-funnel"></i> Filtros</button>
 
             <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
@@ -200,7 +205,8 @@ $result = consultaSQL($sql);
                 <?php $texto_promocion = $row['texto_promocion'];
                 $categoria_cliente = $row['categoria_cliente']; 
                 $foto_promocion = $row['foto_promocion']; 
-                $nombre_local = $row['nombre_local'];?> 
+                $nombre_local = $row['nombre_local'];
+                $modalId = 'modal_' . md5($texto_promocion . $nombre_local); ?> 
 
                 <div class="promocion-cli container-fluid">
                   <div class="row">
@@ -214,18 +220,45 @@ $result = consultaSQL($sql);
                         <h3><?= $texto_promocion ?></h3>
                         <p>Local: <?= $nombre_local ?></p>
                         <p>Categoria cliente: <?= $categoria_cliente ?></p>
-                        <!-- <p class="descripcion-promocion">Descripción breve de la promoción 1</p> -->
                       </div>
-                      <button type="button " class="boton-codigo btn btn-secondary btn-lg">Generar <br />Código</button>
+                      <button type="button " class="boton-codigo btn btn-secondary btn-lg" data-bs-toggle="modal" data-bs-target="#<?= $modalId ?>">Generar <br />Código</button>
                       <button type="button" class="boton-codigo-chico"><i class="bi bi-qr-code"></i></button>
+                    
+                    
+                      <!-- Modal -->
+
+                      <div class="modal fade " id="<?= $modalId ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header ">
+                              <h1 class="modal-title fs-5" id="staticBackdropLabel" style="margin: auto;">¡Codigo Generado!</h1>
+                            </div>
+                            <div class="modal-body">
+                              <?php $codigo = "PROMO-" . strtoupper(bin2hex(random_bytes(4))); ?>
+                              <div class="campo-codigo">
+                                <p id="codigo-<?= $modalId ?>"><?= $codigo ?></p>
+                                <button type="button" class="btn boton-copiado" onclick="copiarCodigo('codigo-<?= $modalId ?>')"><i id="boton-no-apretado" class="bi bi-clipboard"></i><i id="boton-apretado" style="display: none;" class="bi bi-clipboard-check"></i></button>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button style="margin: auto;" type="button" class="btn btn-secondary" data-bs-dismiss="modal">¡Listo!</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    
                     </div>
+                    
                   </div>
                 </div>
 
               <?php endwhile; ?>
 
             <?php else: ?>
-              <p>No hay promociones registradas.</p>
+              <div class="notificacion-no-promociones">
+                <h3>¡Lo sentimos!</h3>
+                <p>No hay promociones registradas para los filtros ingresados</p>
+              </div>
             <?php endif; ?>
 
 
@@ -250,6 +283,21 @@ $result = consultaSQL($sql);
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+  
+    <script>
+      function copiarCodigo(elementId) {
+        const texto = document.getElementById(elementId).innerText;
+        navigator.clipboard.writeText(texto)
+          .then(data => {
+            document.getElementById("boton-no-apretado").style.display = "none";
+            document.getElementById("boton-apretado").style.display = "block";
+          })
+          .catch(() => {
+            alert('No se pudo copiar el código.');
+          });
+      }
+    </script>
+  
   </body>
 
 </html>
