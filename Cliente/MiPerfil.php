@@ -23,7 +23,14 @@ $row = mysqli_fetch_assoc($res);
 $vcategoria_cliente = $row['categoria_cliente'] ?? '';
 
 
-$result = consultaSQL("SELECT cod_promocion, fecha_uso_promocion FROM uso_promociones WHERE cod_usuario = '$cod_usuario'");
+$result = consultaSQL("
+  SELECT 
+  pro.texto_promocion, sol.fecha_uso_promocion, loc.nombre_local 
+  FROM uso_promociones sol
+  INNER JOIN promociones pro ON sol.cod_promocion = pro.cod_promocion
+  INNER JOIN locales loc ON pro.cod_local = loc.cod_local
+  WHERE sol.cod_usuario = {$cod_usuario} AND estado ='aceptada'"
+);
 ?>
 
 <!DOCTYPE html>
@@ -57,7 +64,7 @@ $result = consultaSQL("SELECT cod_promocion, fecha_uso_promocion FROM uso_promoc
 
       <section>
         <h2 class="seccion-titulo">Historial de Promociones Usadas</h2>
-        <div class="datos-usuario text-start mx-auto panel-estilo mb-5">
+        <div class="datos-usuario text-center mx-auto panel-estilo mb-5">
           <table class="table table-striped table-dark">
           
             <?php if ($result->num_rows > 0): ?>
@@ -74,15 +81,8 @@ $result = consultaSQL("SELECT cod_promocion, fecha_uso_promocion FROM uso_promoc
                 <?php while ($row = $result->fetch_assoc()): ?>
 
                   <?php
-                  $row = mysqli_fetch_assoc($result); 
                   $vfecha_uso_promocion = $row['fecha_uso_promocion'] ?? '';
-                  $vcod_promocion = $row['cod_promocion'] ?? '';
-                  $res = consultaSQL("SELECT cod_local, texto_promocion FROM promociones WHERE cod_promocion = '$cod_promocion'");
-                  $row = mysqli_fetch_assoc($res); 
                   $vtexto_promocion = $row['texto_promocion'] ?? '';
-                  $vcod_local = $row['cod_local'] ?? '';
-                  $res = consultaSQL("SELECT nombre_local FROM locales WHERE cod_local = '$cod_local'");
-                  $row = mysqli_fetch_assoc($res); 
                   $vnombre_local = $row['nombre_local'] ?? '';?>
 
                   <tr>
@@ -96,7 +96,8 @@ $result = consultaSQL("SELECT cod_promocion, fecha_uso_promocion FROM uso_promoc
               </tbody>
 
             <?php else: ?>
-              <p>No hay usos de promociones registrados.</p>
+              <p style="margin: 0;" class="pt-2">Aun no has usado ninguna promocion</p>
+              <a href="../Cliente/BuscarPromociones.php">Usar una promocion</a>
             <?php endif; ?>
            
           </table>

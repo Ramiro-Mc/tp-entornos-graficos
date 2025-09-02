@@ -1068,3 +1068,9 @@ textarea{
   font-size: 1.2rem;
   color: rgba(0, 0, 0, 0.7);
 }
+
+.contenedor_solicitudes{
+  width: 80%;
+  height: auto;
+  margin: 10px;
+}

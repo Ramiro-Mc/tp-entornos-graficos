@@ -20,7 +20,7 @@ $opciones_sin_espacios = array_map(function($item) {
 
 if(isset($_SESSION['tipo_usuario'])){
   if($_SESSION['tipo_usuario'] == "cliente"){
-    $opciones_extra = ["Mi Perfil", "Buscar Promociones", "Buscar Locales"];
+    $opciones_extra = ["Mi Perfil", "Buscar Promociones", "Buscar Locales","Mis Solicitudes De Promociones"];
     
     $opciones_extra_filtradas = array_filter($opciones_extra, function($item) use ($pestaña) {
       return $item !== $pestaña;

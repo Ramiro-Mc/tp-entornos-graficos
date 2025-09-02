@@ -5,6 +5,8 @@ include_once("../Includes/funciones.php");
 $folder = "Cliente";
 $pestaña = "Buscar Promociones";
 
+$cod_usuario = $_SESSION['cod_usuario'];
+
 if(!isset($_POST['rubro']) and isset($_POST['rubroAnterior'])){
   $rubro = $_POST['rubroAnterior'];
 }elseif(isset($_POST['rubro'])){
@@ -27,6 +29,7 @@ if (isset($_POST['local']) && $_POST['local'] != "Cualquiera") {
 $where_sql = count($where) ? "WHERE " . implode(" AND ", $where) : "";
 
 $sql = "SELECT 
+    p.cod_promocion,
     p.texto_promocion, 
     p.categoria_cliente, 
     p.foto_promocion, 
@@ -206,6 +209,8 @@ $result = consultaSQL($sql);
                 $categoria_cliente = $row['categoria_cliente']; 
                 $foto_promocion = $row['foto_promocion']; 
                 $nombre_local = $row['nombre_local'];
+                $cod_promocion = $row['cod_promocion'];
+                             
                 $modalId = 'modal_' . md5($texto_promocion . $nombre_local); ?> 
 
                 <div class="promocion-cli container-fluid">
@@ -221,7 +226,12 @@ $result = consultaSQL($sql);
                         <p>Local: <?= $nombre_local ?></p>
                         <p>Categoria cliente: <?= $categoria_cliente ?></p>
                       </div>
-                      <button type="button " class="boton-codigo btn btn-secondary btn-lg" data-bs-toggle="modal" data-bs-target="#<?= $modalId ?>">Generar <br />Código</button>
+
+                      <button type="button " class="boton-codigo btn btn-secondary btn-lg" 
+                      onclick="solicitarPromocion('<?= $cod_promocion ?>', '<?= $cod_usuario ?>', '<?= $modalId ?>')"
+                      data-bs-toggle="modal" data-bs-target="#<?= $modalId ?>">
+                      Solicitar <br />Descuento</button>
+
                       <button type="button" class="boton-codigo-chico"><i class="bi bi-qr-code"></i></button>
                     
                     
@@ -229,21 +239,20 @@ $result = consultaSQL($sql);
 
                       <div class="modal fade " id="<?= $modalId ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
-                          <div class="modal-content">
-                            <div class="modal-header ">
-                              <h1 class="modal-title fs-5" id="staticBackdropLabel" style="margin: auto;">¡Codigo Generado!</h1>
-                            </div>
-                            <div class="modal-body">
-                              <?php $codigo = "PROMO-" . strtoupper(bin2hex(random_bytes(4))); ?>
-                              <div class="campo-codigo">
-                                <p id="codigo-<?= $modalId ?>"><?= $codigo ?></p>
-                                <button type="button" class="btn boton-copiado" onclick="copiarCodigo('codigo-<?= $modalId ?>')"><i id="boton-no-apretado" class="bi bi-clipboard"></i><i id="boton-apretado" style="display: none;" class="bi bi-clipboard-check"></i></button>
+                                            
+                            <div class="modal-content">
+                              <div class="modal-header ">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel" style="margin: auto;">¡Promocion Solicitada!</h1>
+                              </div>
+                              <div class="modal-body text-center">
+                                <p style="font-size: 1.2rem;">Le notificaremos a su direccion de correo electronico cuando el estado de su solicitud se actualice</p>
+                                <p style="margin: 0;">Puede ver el estado de sus solicitudes aqui:</p>
+                                <a href="../Cliente/MisSolicitudesDePromociones.php">Mis solicitudes</a>
+                              </div>
+                              <div class="modal-footer">
+                                <button style="margin: auto;" type="button" class="btn btn-secondary" data-bs-dismiss="modal">¡De acuerdo!</button>
                               </div>
                             </div>
-                            <div class="modal-footer">
-                              <button style="margin: auto;" type="button" class="btn btn-secondary" data-bs-dismiss="modal">¡Listo!</button>
-                            </div>
-                          </div>
                         </div>
                       </div>
                     
@@ -283,21 +292,20 @@ $result = consultaSQL($sql);
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
-  
+
     <script>
-      function copiarCodigo(elementId) {
-        const texto = document.getElementById(elementId).innerText;
-        navigator.clipboard.writeText(texto)
-          .then(data => {
-            document.getElementById("boton-no-apretado").style.display = "none";
-            document.getElementById("boton-apretado").style.display = "block";
+      function solicitarPromocion(codigoPromocion, codigoUsuario, modalId){
+        fetch('solicitarPromocion.php', {
+          method: 'POST',
+          body: new URLSearchParams({
+            cod_promocion: codigoPromocion,
+            cod_usuario: codigoUsuario
           })
-          .catch(() => {
-            alert('No se pudo copiar el código.');
-          });
+        })
+        .then(response => response.json())
       }
     </script>
-  
+
   </body>
 
 </html>

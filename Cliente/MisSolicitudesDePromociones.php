@@ -1,0 +1,148 @@
+<?php
+
+$folder = "Cliente";
+$pestaña = "Mis Solicitudes De Promociones";
+
+include_once("../Includes/session.php");
+include_once("../Includes/funciones.php");
+
+if (!isset($_SESSION['cod_usuario'])) {
+  header("Location: ../principal/login.php");
+  exit;
+}
+
+$cod_usuario = $_SESSION['cod_usuario'];
+
+$result = consultaSQL("
+  SELECT 
+  pro.texto_promocion, pro.foto_promocion, sol.estado, loc.nombre_local 
+  FROM uso_promociones sol
+  INNER JOIN promociones pro ON sol.cod_promocion = pro.cod_promocion
+  INNER JOIN locales loc ON pro.cod_local = loc.cod_local
+  WHERE sol.cod_usuario = '{$cod_usuario}'"
+);
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+
+    <?php include("../Includes/head.php"); ?>
+
+    <title>Mis Solicitudes De Promociones</title>
+
+  </head>
+  
+  <body>
+    <header>
+
+      <?php include("../Includes/header.php");?>
+
+    </header>
+
+    <main style="min-height: 60vh;" class="fondo-formulario-contacto">
+
+      <div class="contenedor_solicitudes">
+        <?php if ($result->num_rows > 0): ?>
+          <?php while ($row = $result->fetch_assoc()): ?> 
+
+            <?php $texto_promocion = $row['texto_promocion'];
+            $foto_promocion = $row['foto_promocion']; 
+            $nombre_local = $row['nombre_local'];
+            $estado = $row['estado'];
+            $modalId = 'modal_' . md5($texto_promocion . $nombre_local); ?> 
+
+            <div class="promocion-cli container-fluid">
+              <div class="row">
+                  
+                <div class="col-4 col-md-3 col-lg-4 col-xl-3">
+                  <img src="data:image/jpeg;base64<?= $foto_promocion ?>" />
+                </div>
+                <div class="col-8 col-md-9 col-lg-8 col-xl-9 d-flex justify-content-between align-items-center">
+
+                  <div class="info">
+                    <h3><?= $texto_promocion ?></h3>
+                    <p>Local: <?= $nombre_local ?></p>
+                  </div>
+                  <div class="info">
+                    <p>Estado:</p><br><p><?= $estado ?></p>
+                  </div>
+                  <?php if($estado == "aceptada"):?>
+                    <button type="button " class="boton-codigo btn btn-secondary btn-lg" data-bs-toggle="modal" data-bs-target="#<?= $modalId ?>" onclick="generarCodigo('<?= $modalId ?>')">Generar <br />Código</button>
+                    <button type="button" class="boton-codigo-chico"><i class="bi bi-qr-code"></i></button>
+                  <?php endif; ?>
+                
+                  <!-- Modal -->
+
+                  <div class="modal fade " id="<?= $modalId ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header ">
+                          <h1 class="modal-title fs-5" id="staticBackdropLabel" style="margin: auto;">¡Codigo Generado!</h1>
+                        </div>
+                        <div class="modal-body">
+                          <div class="campo-codigo">
+                            <p id="codigo-<?= $modalId ?>"></p>
+                            <button type="button" class="btn boton-copiado" onclick="copiarCodigo('codigo-<?= $modalId ?>')">
+                              <i id="boton-no-apretado-codigo-<?= $modalId ?>" class="bi bi-clipboard"></i>
+                              <i id="boton-apretado-codigo-<?= $modalId ?>" style="display: none;" class="bi bi-clipboard-check"></i></button>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button style="margin: auto;" type="button" class="btn btn-secondary" data-bs-dismiss="modal">¡Listo!</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                
+                </div>
+                
+              </div>
+            </div>
+
+          <?php endwhile; ?>
+
+        <?php else: ?>
+          <div class="notificacion-no-promociones">
+            <h3>¡Genial!</h3>
+            <p style="margin: 0;">No tienes solicitudes de promocion pendientes</p>
+            <a href="../Cliente/BuscarPromociones.php" >Usar una promocion</a>
+          </div>
+        <?php endif; ?>   
+      </div>
+         
+
+    </main>
+
+
+    <footer class="seccion-footer d-flex flex-column justify-content-center align-items-center pt-3">
+
+      <?php include("../Includes/footer.php") ?>
+
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+    
+    <script>
+      function copiarCodigo(elementId) {
+        const texto = document.getElementById(elementId).innerText;
+        navigator.clipboard.writeText(texto)
+          .then(data => {
+            document.getElementById("boton-no-apretado-" + elementId).style.display = "none";
+            document.getElementById("boton-apretado-" + elementId).style.display = "block";
+          })
+          .catch(() => {
+            alert('No se pudo copiar el código.');
+          });
+      }
+
+      function generarCodigo(modalId) {
+        const random = Math.random().toString(16).substr(2, 8).toUpperCase();
+        const codigo = "PROMO-" + random;
+        document.getElementById("codigo-" + modalId).innerText = codigo;
+      
+      }
+    </script>
+  
+  </body>
+</html>
