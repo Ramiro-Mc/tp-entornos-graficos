@@ -26,6 +26,10 @@ $cod_usuario = $_SESSION['cod_usuario'];
 include("../conexion.inc");
 
 $mensaje = "";
+$cantPagina = 8;
+$pagina = isset($_GET["pagina"]) ?  max(1, intval($_GET["pagina"])): 1;
+$principio = ($pagina-1) * $cantPagina;
+
 
 $orden = ($_GET['orden'] ?? 'asc') === 'desc' ? 'DESC' : 'ASC';
 
@@ -50,9 +54,22 @@ if ($localResult && mysqli_num_rows($localResult) > 0) {
 }
 
 //Me traigo las promociones de esos locales
-$sqlPromociones = "SELECT * FROM promociones INNER JOIN locales ON promociones.cod_local = locales.cod_local
- WHERE promociones.cod_local IN (" . implode(',', $codigoslocales) . ") ORDER BY promociones.cod_promocion $orden";
+$sqlPromociones = "SELECT * FROM promociones p INNER JOIN locales l ON p.cod_local = l.cod_local
+ WHERE p.cod_local IN (" . implode(',', $codigoslocales) . ") ORDER BY p.cod_promocion $orden
+ LIMIT $cantPagina OFFSET $principio";
 $promociones = consultaSQL($sqlPromociones);
+
+
+//Total promociones
+
+$sqlTotal = "SELECT COUNT(DISTINCT p.cod_promocion) as total
+FROM promociones p
+INNER JOIN locales l ON p.cod_local = l.cod_local
+WHERE p.cod_local IN (" . implode(',', $codigoslocales) . ")";
+
+$total = consultaSQL($sqlTotal);
+$totalPromos = mysqli_fetch_assoc($total)['total'];
+$totalPaginas = ceil($totalPromos / $cantPagina); 
 
 //Los dias de la semana para cada promocion de los locales
 $sqlDias = "SELECT * FROM promociones INNER JOIN promocion_dia ON promociones.cod_promocion = promocion_dia.cod_promocion
@@ -141,7 +158,7 @@ $usoPromociones = consultaSQL($sqlUsoPromociones);
 
           <p><b>Usos: </b> <?php if($usoPromociones && mysqli_num_rows($usoPromociones) > 0){ 
             $uso = mysqli_fetch_assoc($usoPromociones);
-            echo $uso['uso_count'];
+            echo isset($uso['uso_count']) ? $uso['uso_count'] : 0;
           } else {
             echo 0;
           } ?></p>
@@ -159,15 +176,35 @@ $usoPromociones = consultaSQL($sqlUsoPromociones);
   <?php endif; ?>
 </div>
 
-      <!-- <div aria-label="Page navigation example">
-        <ul class="pagination">
-          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link" href="#">Next</a></li>
-        </ul>
-      </div> -->
+      <div class="row">
+          <div class="col-3"></div>
+          <div class="col-9">
+                        <?php
+              $ordenParam = isset($_GET['orden']) ? '&orden=' . $_GET['orden'] : '';
+            ?>
+            <div class="paginacion" aria-label="Page navigation example">
+              <ul class="pagination">
+                <?php if ($pagina > 1): ?>
+                  <li class="page-item">
+                    <a class="page-link" href="?pagina=<?= $pagina-1 . $ordenParam ?>"><i class="bi bi-arrow-left-short"></i></a>
+                  </li>
+                <?php endif; ?>
+
+                <?php for($i = 1; $i <= $totalPaginas; $i++): ?>
+                  <li class="page-item <?= $i == $pagina ? 'active' : ''?>">
+                    <a class="page-link" href="?pagina=<?= $i . $ordenParam ?>"><?= $i ?></a>
+                  </li>
+                <?php endfor; ?>
+
+                <?php if ($pagina < $totalPaginas): ?>
+                  <li class="page-item">
+                    <a class="page-link" href="?pagina=<?= $pagina + 1 . $ordenParam ?>"><i class="bi bi-arrow-right-short"></i></a>
+                  </li>
+                <?php endif; ?>
+              </ul>
+            </div>
+          </div>
+        </div>
     </main>
 
     <footer class="seccion-footer d-flex flex-column justify-content-center align-items-center pt-4">

@@ -2,6 +2,7 @@
 include_once("session.php");
 include_once("../Includes/funciones.php");
 sesionIniciada();
+$rutaExtra = "";
 
 if(isset($_SESSION['tipo_usuario']) && isset($_SESSION['cod_usuario'])){
   $tipo_usuario = $_SESSION['tipo_usuario'];
@@ -75,12 +76,13 @@ if($_SESSION['tipo_usuario'] == "dueño"){
 
         <!-- Opciones para Index -->
 
-          <?php if($pestaña == "Index"): ?>
+          <?php if($pestaña == "Index" && $rutaExtra!= ""): ?>
             <li class="nav-item">
               <a class="nav-link" aria-current="page" href="<?= $rutaSalirCarpeta ?><?= $rutaExtra ?>">
                 <p><?= $LinkExtra ?></p>
               </a>
             </li>
+            <?php endif; ?>
             <li class="nav-item">
               <a class="nav-link" aria-current="page" href="#novedades">
                 <p>Novedades</p>
@@ -111,7 +113,7 @@ if($_SESSION['tipo_usuario'] == "dueño"){
               </li>
             <?php endif; ?>
 
-          <?php endif; ?>
+          
 
         <!-- Fin de opciones para la homepage -->
 
@@ -145,7 +147,7 @@ if($_SESSION['tipo_usuario'] == "dueño"){
               <?php else: ?>
 
                 <li class="nav-item">
-                  <p style="color:white">Bienvenido! <?= $vnombre_usuario ?></a></p> 
+                  <p style="color:white">Bienvenido! <b><?= $vnombre_usuario ?></b></p> 
                 </li>
 
               <?php endif; ?>

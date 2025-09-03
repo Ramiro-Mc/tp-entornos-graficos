@@ -19,10 +19,10 @@ if(isset($_SESSION['cod_usuario'])){
   $categoria_cliente_log = $row['categoria_cliente'] ?? ''; 
 }
 
-if(!isset($_POST['rubro']) and isset($_POST['rubroAnterior'])){
-  $rubro = $_POST['rubroAnterior'];
-}elseif(isset($_POST['rubro'])){
-  $rubro = $_POST['rubro'];
+if(!isset($_GET['rubro']) and isset($_GET['rubroAnterior'])){
+  $rubro = $_GET['rubroAnterior'];
+}elseif(isset($_GET['rubro'])){
+  $rubro = $_GET['rubro'];
 }
 
 $vlocales = consultaSQL("SELECT nombre_local FROM locales");
@@ -31,16 +31,16 @@ $where = [];
 if (isset($rubro) && $rubro != "Todos") {
     $where[] = "l.rubro_local = '{$rubro}'";
 }
-if (isset($_POST['categoria']) && $_POST['categoria'] != "Cualquiera") {
-    $where[] = "p.categoria_cliente = '{$_POST['categoria']}'";
+if (isset($_GET['categoria']) && $_GET['categoria'] != "Cualquiera") {
+    $where[] = "p.categoria_cliente = '{$_GET['categoria']}'";
 }
-if (isset($_POST['local']) && $_POST['local'] != "Cualquiera") {
-    $where[] = "l.nombre_local = '{$_POST['local']}'";
+if (isset($_GET['local']) && $_GET['local'] != "Cualquiera") {
+    $where[] = "l.nombre_local = '{$_GET['local']}'";
 }
 
 $where_sql = count($where) ? "WHERE " . implode(" AND ", $where) : "";
 
-$cantPagina = 3;
+$cantPagina = 2;
 $pagina = isset($_GET["pagina"]) ?  max(1, intval($_GET["pagina"])): 1;
 $principio = ($pagina-1) * $cantPagina;
 
@@ -78,6 +78,14 @@ $total = consultaSQL($sqlTotal);
 $totalPromos = mysqli_fetch_assoc($total)['total'];
 $totalPaginas = ceil($totalPromos / $cantPagina); 
 
+
+  // Guardo los filtros activos en variables
+  $rubroParam = isset($rubro) ? '&rubro=' . urlencode($rubro) : '';
+  $categoriaParam = isset($_GET['categoria']) ? '&categoria=' . urlencode($_GET['categoria']) : '';
+  $localParam = isset($_GET['local']) ? '&local=' . urlencode($_GET['local']) : '';
+  $rubroAnteriorParam = isset($rubroAnterior) ? '&rubroAnterior=' . urlencode($rubroAnterior) : '';
+  $filtrosURL = $rubroParam . $categoriaParam . $localParam . $rubroAnteriorParam;
+
 ?>
 
 <!DOCTYPE html>
@@ -107,7 +115,7 @@ $totalPaginas = ceil($totalPromos / $cantPagina);
 
             <hr/>
 
-            <form id="filtros-promociones" method="POST" action="">
+            <form id="filtros-promociones" method="GET" action="">
               <p style="padding-top: 0;">Local </p>
 
               <select class="select-filtros" name="local">
@@ -120,7 +128,7 @@ $totalPaginas = ceil($totalPromos / $cantPagina);
 
                     <?php $nombre_local = $row['nombre_local']; ?>
 
-                    <option name="local" value="<?= $nombre_local ?>" <?= (isset($_POST['local']) && $_POST['local'] == $nombre_local) ? "selected" : ""?>><?= $nombre_local ?></option>
+                    <option name="local" value="<?= $nombre_local ?>" <?= (isset($_GET['local']) && $_GET['local'] == $nombre_local) ? "selected" : ""?>><?= $nombre_local ?></option>
 
                   <?php endwhile; ?>
 
@@ -133,9 +141,9 @@ $totalPaginas = ceil($totalPromos / $cantPagina);
 
               <select class="select-filtros" name="categoria" id="">
                 <option name="categoria" value="Cualquiera">Cualquiera</option>
-                <option name="categoria" value="Premium" <?= (isset($_POST['categoria']) && $_POST['categoria'] == "Premium") ? "selected" : ""?>>Premium</option>
-                <option name="categoria" value="Medium" <?= (isset($_POST['categoria']) && $_POST['categoria'] == "Medium") ? "selected" : ""?>>Medium</option>
-                <option name="categoria" value="Inicial" <?= (isset($_POST['categoria']) && $_POST['categoria'] == "Inicial") ? "selected" : ""?>>Inicial</option>
+                <option name="categoria" value="Premium" <?= (isset($_GET['categoria']) && $_GET['categoria'] == "Premium") ? "selected" : ""?>>Premium</option>
+                <option name="categoria" value="Medium" <?= (isset($_GET['categoria']) && $_GET['categoria'] == "Medium") ? "selected" : ""?>>Medium</option>
+                <option name="categoria" value="Inicial" <?= (isset($_GET['categoria']) && $_GET['categoria'] == "Inicial") ? "selected" : ""?>>Inicial</option>
               </select>
               
               <div class="d-flex justify-content-end">
@@ -160,10 +168,10 @@ $totalPaginas = ceil($totalPromos / $cantPagina);
 
               <?php 
               
-              if(isset($_POST['rubro'])){
-                $rubroAnterior = $_POST['rubro'];
-              }elseif(isset($_POST['rubroAnterior'])){
-                $rubroAnterior = $_POST['rubroAnterior'];
+              if(isset($_GET['rubro'])){
+                $rubroAnterior = $_GET['rubro'];
+              }elseif(isset($_GET['rubroAnterior'])){
+                $rubroAnterior = $_GET['rubroAnterior'];
               }else{
                 $rubroAnterior = "Todos";
               }
@@ -328,23 +336,27 @@ $totalPaginas = ceil($totalPromos / $cantPagina);
         <div class="row">
           <div class="col-3"></div>
           <div class="col-9">
-            <div class="paginacion" aria-label="Page navigation example">
-              <ul class="pagination">
+              <div class="paginacion" aria-label="Page navigation example">
+            <ul class="pagination">
+              <?php if ($pagina > 1): ?>
+                <li class="page-item">
+                  <a class="page-link" href="?pagina=<?= $pagina-1 . $filtrosURL ?>"><i class="bi bi-arrow-left-short"></i></a>
+                </li>
+              <?php endif; ?>
 
-                <?php if ($pagina > 1): ?>
-                  <li class="page-item"><a class="page-link" href="?pagina=<?= $pagina-1 ?>"><i class="bi bi-arrow-left-short"></i></a></li>
-                <?php endif; ?>
+              <?php for($i = 1; $i <= $totalPaginas; $i++): ?>
+                <li class="page-item <?= $i == $pagina ? 'active' : ''?>">
+                  <a class="page-link" href="?pagina=<?= $i . $filtrosURL ?>"><?= $i ?></a>
+                </li>
+              <?php endfor; ?>
 
-                <?php for($i = 1; $i <= $totalPaginas; $i++): ?>
-                  <li class="page-item <?= $i == $pagina ? 'active' : ''?>"> <a class="page-link" href="?pagina=<?= $i ?>"><?= $i ?></a></li>
-                <?php endfor; ?>
-
-                <?php if ($pagina < $totalPaginas): ?>
-                  <li class="page-item"><a class="page-link" href="?pagina=<?= $pagina + 1 ?>"><i class="bi bi-arrow-right-short"></i></a></li>
-                <?php endif; ?>
-
-              </ul>
-            </div>
+              <?php if ($pagina < $totalPaginas): ?>
+                <li class="page-item">
+                  <a class="page-link" href="?pagina=<?= $pagina + 1 . $filtrosURL ?>"><i class="bi bi-arrow-right-short"></i></a>
+                </li>
+              <?php endif; ?>
+            </ul>
+          </div>
           </div>
         </div>
       </div>
@@ -361,7 +373,7 @@ $totalPaginas = ceil($totalPromos / $cantPagina);
     <script>
       function solicitarPromocion(codigoPromocion, codigoUsuario, modalId){
         fetch('solicitarPromocion.php', {
-          method: 'POST',
+          method: 'GET',
           body: new URLSearchParams({
             cod_promocion: codigoPromocion,
             cod_usuario: codigoUsuario
