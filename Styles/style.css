@@ -922,15 +922,23 @@ textarea{
   color: #000;
   padding: 20px;
   border: 1px solid #ccc;
-  justify-content: space-between;
-  flex-grow: 1;
+  max-height: 250px;
   margin-top: .8rem;
   border-radius: 10px;
+  
 }
 
+
+.promocion-cli .col-4 {
+  height: 210px; /* o el alto que desees */
+  display: flex;
+  align-items: stretch;
+}
 .promocion-cli img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
 .promocion-cli col-3{
@@ -1073,4 +1081,52 @@ textarea{
   width: 80%;
   height: auto;
   margin: 10px;
+}
+
+.contenedor-estado{
+  text-align: center;
+  padding: 2rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 2rem;
+  width: 180px;
+}
+
+.contenedor-estado p{
+  margin: 0;
+}
+
+.estado-aceptada {
+  background-color: #8fd19e;
+  color: #155724;
+  border: 1px solid #6bb37d;
+}
+
+.estado-enviada {
+  background-color: #8ab6e2;
+  color: #0c3c78;
+  border: 1px solid #6a9ed1;
+}
+
+.estado-rechazada {
+  background-color: #e8a4a8;
+  color: #721c24;
+  border: 1px solid #d17c82;
+}
+
+.info-promocion{
+  width: 800px;
+}
+
+.cuadrado{
+  height: 5rem;
+  width: 5rem;
+  font-size: 1.8rem;
+}
+
+.advertencia{
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 0.8rem;
+  text-align: center;
 }

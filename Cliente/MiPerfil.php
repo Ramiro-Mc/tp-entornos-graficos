@@ -68,6 +68,7 @@ $result = consultaSQL("
           <table class="table table-striped table-dark">
           
             <?php if ($result->num_rows > 0): ?>
+              <?php $nro_promo = 1; ?>
               <thead>
                 <tr>
                   <th>#</th>
@@ -86,12 +87,13 @@ $result = consultaSQL("
                   $vnombre_local = $row['nombre_local'] ?? '';?>
 
                   <tr>
-                    <td>1</td>
+                    <td><?= $nro_promo ?></td>
                     <td><?= $vtexto_promocion ?></td>
                     <td><?= $vnombre_local ?></td>
                     <td><?= $vfecha_uso_promocion ?></td>
                   </tr>
 
+                  <?php $nro_promo ++; ?>
                 <?php endwhile; ?>
               </tbody>
 

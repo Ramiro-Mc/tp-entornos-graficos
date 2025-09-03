@@ -5,7 +5,12 @@ include_once("../Includes/funciones.php");
 $folder = "Cliente";
 $pestaña = "Buscar Promociones";
 
-$cod_usuario = $_SESSION['cod_usuario'];
+if(isset($_SESSION['cod_usuario'])){
+  $cod_usuario = $_SESSION['cod_usuario'];
+  $res = consultaSQL("SELECT categoria_cliente FROM cliente WHERE cod_usuario = '$cod_usuario'");
+  $row = mysqli_fetch_assoc($res); 
+  $categoria_cliente_log = $row['categoria_cliente'] ?? ''; 
+}
 
 if(!isset($_POST['rubro']) and isset($_POST['rubroAnterior'])){
   $rubro = $_POST['rubroAnterior'];
@@ -39,6 +44,7 @@ INNER JOIN locales l ON p.cod_local = l.cod_local
 {$where_sql}";
 
 $result = consultaSQL($sql);
+
 ?>
 
 <!DOCTYPE html>
@@ -215,9 +221,9 @@ $result = consultaSQL($sql);
 
                 <div class="promocion-cli container-fluid">
                   <div class="row">
-                      
+                    
                     <div class="col-4 col-md-3 col-lg-4 col-xl-3">
-                      <img src="data:image/jpeg;base64<?= $foto_promocion ?>" />
+                      <img src="data:image/jpeg;base64,<?= $foto_promocion ?>" />
                     </div>
                     <div class="col-8 col-md-9 col-lg-8 col-xl-9 d-flex justify-content-between align-items-center">
 
@@ -227,13 +233,34 @@ $result = consultaSQL($sql);
                         <p>Categoria cliente: <?= $categoria_cliente ?></p>
                       </div>
 
-                      <button type="button " class="boton-codigo btn btn-secondary btn-lg" 
-                      onclick="solicitarPromocion('<?= $cod_promocion ?>', '<?= $cod_usuario ?>', '<?= $modalId ?>')"
-                      data-bs-toggle="modal" data-bs-target="#<?= $modalId ?>">
-                      Solicitar <br />Descuento</button>
+                      <?php if(isset($_SESSION['cod_usuario'])): ?>
+                        <?php  
+                          $res = consultaSQL("SELECT * FROM uso_promociones WHERE cod_usuario = '$cod_usuario' AND cod_promocion = '$cod_promocion'");
+                          if ($res->num_rows > 0): ?>
 
-                      <button type="button" class="boton-codigo-chico"><i class="bi bi-qr-code"></i></button>
-                    
+                          <div class="text-center">
+                            <p>Ya utilizaste <br> esta promocion </p>
+                          </div>
+
+                        <?php else: ?>
+                          <?php if(($categoria_cliente_log === "Inicial" && ($categoria_cliente === "medium" || $categoria_cliente === "premium")) || ($categoria_cliente_log === "Medium" && $categoria_cliente === "premium")): ?>
+                            <div class="text-center">
+                              <p>No disponible para <br> su categoria actual </p>
+                            </div>
+                          <?php else: ?>
+                            <button type="button " class="boton-codigo btn btn-secondary btn-lg" 
+                            onclick="solicitarPromocion('<?= $cod_promocion ?>', '<?= $cod_usuario ?>', '<?= $modalId ?>')"
+                            data-bs-toggle="modal" data-bs-target="#<?= $modalId ?>">
+                            Solicitar <br />Descuento</button>
+                            
+                            <button type="button" class="boton-codigo-chico"><i class="bi bi-qr-code"></i></button>
+                          <?php endif ?>
+                        <?php endif; ?>
+                      <?php else: ?>
+                        <div class="text-center">
+                          <p>Inicie sesion para <br> usar promociones </p>
+                        </div>
+                      <?php endif; ?>
                     
                       <!-- Modal -->
 
@@ -249,9 +276,11 @@ $result = consultaSQL($sql);
                                 <p style="margin: 0;">Puede ver el estado de sus solicitudes aqui:</p>
                                 <a href="../Cliente/MisSolicitudesDePromociones.php">Mis solicitudes</a>
                               </div>
+                              
                               <div class="modal-footer">
-                                <button style="margin: auto;" type="button" class="btn btn-secondary" data-bs-dismiss="modal">¡De acuerdo!</button>
+                                <button style="margin: auto;" onclick="location.reload();" class="btn btn-secondary" data-bs-dismiss="modal">¡De acuerdo!</button>
                               </div>
+                              
                             </div>
                         </div>
                       </div>
