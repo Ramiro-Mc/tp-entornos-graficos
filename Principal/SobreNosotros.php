@@ -65,21 +65,21 @@
             <br />
             <h2>Datos de Contacto</h2>
             <p>
-              -- Dirección: Av. Central 456, Ciudad Shopping, Buenos Aires,
+               Dirección: Av. Central 456, Ciudad Shopping, Buenos Aires,
               Argentina
             </p>
-            <p>-- Teléfono: +54 9 11 2345 6789</p>
-            <p>-- Email: contacto@viventashopping.com</p>
-            <p>-- Horarios de atención:</p>
-            <p>-- 🕘 Lunes a Sábado: 10:00 a 21:00 hs</p>
-            <p>-- 🕘 Domingo y feriados: 11:00 a 20:00 hs</p>
+            <p> Teléfono: +54 9 11 2345 6789</p>
+            <p> Email: contacto@viventashopping.com</p>
+            <p> Horarios de atención:</p>
+            <p> 🕘 Lunes a Sábado: 10:00 a 21:00 hs</p>
+            <p> 🕘 Domingo y feriados: 11:00 a 20:00 hs</p>
             <p>
-              -- Estacionamiento: 2 niveles cubiertos y descubiertos gratuitos.
+               Estacionamiento: 2 niveles cubiertos y descubiertos gratuitos.
             </p>
             <br />
-            <p>-- Wi-Fi: Libre y gratuito en todo el predio.</p>
+            <p> Wi-Fi: Libre y gratuito en todo el predio.</p>
             <p>
-              -- Servicios adicionales: Zona de juegos infantiles, patio de
+               Servicios adicionales: Zona de juegos infantiles, patio de
               comidas, salas de cine 4D, cajeros automáticos, atención al
               cliente.
             </p>

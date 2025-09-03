@@ -1,6 +1,7 @@
 <?php
 include_once("../Includes/session.php");
 include_once("../Includes/funciones.php");
+sesionIniciada();
 
 $folder = "Principal";
 $pestaña = "Index";

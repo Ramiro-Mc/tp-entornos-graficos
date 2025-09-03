@@ -2,7 +2,8 @@
 
 $folder = "Administrador";
 $pestaña = "Reporte Promociones";
-
+include_once("../Includes/funciones.php");
+sesionIniciada();
 ?>
 
 

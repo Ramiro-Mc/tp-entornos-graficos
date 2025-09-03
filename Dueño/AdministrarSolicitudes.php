@@ -1,6 +1,8 @@
 
 <?php
 include_once("../Includes/session.php");
+include("../Includes/funciones.php");
+sesionIniciada();
 if (!isset($_SESSION['cod_usuario'])) {
   header("Location: ../principal/login.php");
   exit;
@@ -11,7 +13,6 @@ $pestaña = "Reporte Promociones";
 
 $cod_usuario = $_SESSION['cod_usuario'];
 include("../conexion.inc");
-include("../Includes/funciones.php");
 $mensaje = "";
 
 $orden = ($_GET['orden'] ?? 'asc') === 'desc' ? 'DESC' : 'ASC';

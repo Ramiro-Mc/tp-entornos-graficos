@@ -1,9 +1,13 @@
 <?php
 include_once("../Includes/session.php");
 include_once("../Includes/funciones.php");
+sesionIniciada();
 
 $folder = "Cliente";
 $pestaña = "Buscar Promociones";
+
+
+
 
 date_default_timezone_set('America/Argentina/Buenos_Aires');
 $numeroDiaHoy = date('N');
@@ -36,6 +40,11 @@ if (isset($_POST['local']) && $_POST['local'] != "Cualquiera") {
 
 $where_sql = count($where) ? "WHERE " . implode(" AND ", $where) : "";
 
+$cantPagina = 3;
+$pagina = isset($_GET["pagina"]) ?  max(1, intval($_GET["pagina"])): 1;
+$principio = ($pagina-1) * $cantPagina;
+
+
 $sql = "SELECT 
     p.cod_promocion,
     p.texto_promocion, 
@@ -46,9 +55,28 @@ FROM promociones p
 INNER JOIN locales l ON p.cod_local = l.cod_local
 INNER JOIN promocion_dia pd ON pd.cod_promocion = p.cod_promocion
 {$where_sql}
-AND pd.cod_dia = '$numeroDiaHoy'";
+AND pd.cod_dia = '$numeroDiaHoy'
+LIMIT $cantPagina OFFSET $principio";
 
 $result = consultaSQL($sql);
+
+
+
+?>
+
+
+<?php 
+
+$sqlTotal = "SELECT COUNT(DISTINCT p.cod_promocion) as total
+FROM promociones p
+INNER JOIN locales l ON p.cod_local = l.cod_local
+INNER JOIN promocion_dia pd ON pd.cod_promocion = p.cod_promocion
+{$where_sql}
+AND pd.cod_dia = '$numeroDiaHoy'";
+
+$total = consultaSQL($sqlTotal);
+$totalPromos = mysqli_fetch_assoc($total)['total'];
+$totalPaginas = ceil($totalPromos / $cantPagina); 
 
 ?>
 
@@ -143,16 +171,6 @@ $result = consultaSQL($sql);
               ?>
 
               <input type="hidden" name="rubroAnterior" value="<?= $rubroAnterior ?>">
-
-
-              <!-- <div>
-                <p>Fecha Desde</p>
-                <input type="date" class="form-control id=" fechaDesde" required>
-              </div>
-              <div>
-                <p>Fecha Hasta</p>
-                <input type="date" class="form-control id=" fechaHasta" required>
-              </div> -->
             </form>
 
           </div>
@@ -304,14 +322,27 @@ $result = consultaSQL($sql);
               </div>
             <?php endif; ?>
 
+          </div>
+        </div>
 
+        <div class="row">
+          <div class="col-3"></div>
+          <div class="col-9">
             <div class="paginacion" aria-label="Page navigation example">
               <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+
+                <?php if ($pagina > 1): ?>
+                  <li class="page-item"><a class="page-link" href="?pagina=<?= $pagina-1 ?>"><i class="bi bi-arrow-left-short"></i></a></li>
+                <?php endif; ?>
+
+                <?php for($i = 1; $i <= $totalPaginas; $i++): ?>
+                  <li class="page-item <?= $i == $pagina ? 'active' : ''?>"> <a class="page-link" href="?pagina=<?= $i ?>"><?= $i ?></a></li>
+                <?php endfor; ?>
+
+                <?php if ($pagina < $totalPaginas): ?>
+                  <li class="page-item"><a class="page-link" href="?pagina=<?= $pagina + 1 ?>"><i class="bi bi-arrow-right-short"></i></a></li>
+                <?php endif; ?>
+
               </ul>
             </div>
           </div>

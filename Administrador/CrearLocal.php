@@ -2,8 +2,9 @@
 
 $folder = "Administrador";
 $pestaña = "Crear Local";
-
+include_once("../Includes/funciones.php");
 include("../conexion.inc");
+sesionIniciada();
 $mensaje = "";
 $rutaMultimedia = "";
 

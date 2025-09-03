@@ -2,8 +2,9 @@
 
 $folder = "Administrador";
 $pestaña = "Crear Novedad";
-
+include_once("../Includes/funciones.php");
 include("../conexion.inc");
+sesionIniciada();
 $mensaje = "";
 
 // Traigo usuarios para el combo

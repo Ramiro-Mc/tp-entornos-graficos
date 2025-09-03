@@ -2,9 +2,9 @@
 
 $folder = "Administrador";
 $pestaña = "Ver Local";
-
+include_once("../Includes/funciones.php");
 require "../conexion.inc";
-
+sesionIniciada();
 if (!isset($_GET['cod_local']) || !is_numeric($_GET['cod_local'])) {
   header("Location: AdministrarLocales.php?mensaje=cod_local_invalido");
   exit;

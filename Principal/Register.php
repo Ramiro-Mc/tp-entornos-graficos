@@ -1,6 +1,7 @@
 <?php
 include_once("../Includes/session.php");
 include("../Includes/funciones.php");
+sesionIniciada();
 $folder = "Principal";
 $pestaña = "Register";
 $token = bin2hex(random_bytes(32));

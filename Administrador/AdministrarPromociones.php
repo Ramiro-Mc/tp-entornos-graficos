@@ -2,7 +2,8 @@
 
 $folder = "Administrador";
 $pestaña = "Administrar Promociones";
-
+include_once("../Includes/funciones.php");
+sesionIniciada();
 require '../conexion.inc';
 // Orden por defecto
 $order = 'cod_promocion ASC';

@@ -5,6 +5,7 @@ $pestaña = "Mis Solicitudes De Promociones";
 
 include_once("../Includes/session.php");
 include_once("../Includes/funciones.php");
+sesionIniciada();
 
 if (!isset($_SESSION['cod_usuario'])) {
   header("Location: ../principal/login.php");
@@ -88,6 +89,7 @@ $result = consultaSQL(
                     <button type="submit" name="eliminar" value="<?= $cod_promocion ?>" class="btn btn-danger cuadrado"><i class="bi bi-x-lg"></i></button>
                   </form>
                 <?php endif; ?>
+                
                 <!-- Modal -->
 
                 <div class="modal fade " id="<?= $modalId ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

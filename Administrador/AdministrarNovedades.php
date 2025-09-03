@@ -2,6 +2,8 @@
 
 $folder = "Administrador";
 $pestaña = "Administrar Novedades";
+include_once("../Includes/funciones.php");
+sesionIniciada();
 
 include("../conexion.inc");
 

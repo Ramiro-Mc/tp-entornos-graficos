@@ -2,7 +2,8 @@
 
 $folder = "Administrador";
 $pestaña = "Solicitudes De Registro";
-
+include_once("../Includes/funciones.php");
+sesionIniciada();
 ?>
 
 <!DOCTYPE html>

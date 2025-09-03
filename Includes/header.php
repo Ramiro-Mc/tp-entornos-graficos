@@ -1,8 +1,9 @@
 <?php 
 include_once("session.php");
 include_once("../Includes/funciones.php");
+sesionIniciada();
 
-if(isset($_SESSION['tipo_usuario'])){
+if(isset($_SESSION['tipo_usuario']) && isset($_SESSION['cod_usuario'])){
   $tipo_usuario = $_SESSION['tipo_usuario'];
   $estaLogueado = "logueado";
 
@@ -39,6 +40,15 @@ if($folder == "Administrador"){
   $rutaLogo = "/Principal/Index.php";
 }
 
+if($_SESSION['tipo_usuario'] == "administrador"){
+ $rutaExtra = "/Administrador/SeccionAdministrador.php";
+ $LinkExtra = "Seccion Administrador";
+}
+if($_SESSION['tipo_usuario'] == "dueño"){
+ $rutaExtra = "/Dueño/SeccionDueñoLocal.php";
+ $LinkExtra = "Seccion Dueño";
+}
+
 ?>
 
 
@@ -66,7 +76,11 @@ if($folder == "Administrador"){
         <!-- Opciones para Index -->
 
           <?php if($pestaña == "Index"): ?>
-
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="<?= $rutaSalirCarpeta ?><?= $rutaExtra ?>">
+                <p><?= $LinkExtra ?></p>
+              </a>
+            </li>
             <li class="nav-item">
               <a class="nav-link" aria-current="page" href="#novedades">
                 <p>Novedades</p>

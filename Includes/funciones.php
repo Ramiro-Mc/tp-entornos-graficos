@@ -14,3 +14,13 @@ function consultaSQL($sql_consulta){
 
     return $resultados;
 }
+
+
+function sesionIniciada(){
+    if(!isset($_SESSION['cod_usuario']) && isset($_COOKIE['usuario_recordado'])){
+        $_SESSION['cod_usuario'] = $_COOKIE['usuario_recordado'];
+    }
+    if(!isset($_SESSION['tipo_usuario']) && isset($_COOKIE['tipo_usuario_recordado'])){
+    $_SESSION['tipo_usuario'] = $_COOKIE['tipo_usuario_recordado'];
+    }
+}

@@ -2,7 +2,8 @@
 
 $folder = "Administrador";
 $pestaña = "Seccion Administrador";
-
+include_once("../Includes/funciones.php");
+sesionIniciada();
 ?>
 
 <!DOCTYPE html>

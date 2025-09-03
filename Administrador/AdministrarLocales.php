@@ -2,6 +2,8 @@
 
 $folder = "Administrador";
 $pestaña = "Administrar Locales";
+include_once("../Includes/funciones.php");
+sesionIniciada();
 
 require '../conexion.inc';
 // Orden por defecto

@@ -2,9 +2,9 @@
 
 $folder = "Administrador";
 $pestaña = "Editar Novedad";
-
+include_once("../Includes/funciones.php");
 require "../conexion.inc";
-
+sesionIniciada();
 // Validar ID recibido
 if (!isset($_GET['cod_novedad']) || !is_numeric($_GET['cod_novedad'])) {
   header("Location: AdministrarNovedades.php?mensaje=id_invalido");
