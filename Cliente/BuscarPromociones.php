@@ -5,6 +5,9 @@ include_once("../Includes/funciones.php");
 $folder = "Cliente";
 $pestaña = "Buscar Promociones";
 
+date_default_timezone_set('America/Argentina/Buenos_Aires');
+$numeroDiaHoy = date('N');
+
 if(isset($_SESSION['cod_usuario'])){
   $cod_usuario = $_SESSION['cod_usuario'];
   $res = consultaSQL("SELECT categoria_cliente FROM cliente WHERE cod_usuario = '$cod_usuario'");
@@ -41,7 +44,9 @@ $sql = "SELECT
     l.nombre_local
 FROM promociones p
 INNER JOIN locales l ON p.cod_local = l.cod_local
-{$where_sql}";
+INNER JOIN promocion_dia pd ON pd.cod_promocion = p.cod_promocion
+{$where_sql}
+AND pd.cod_dia = '$numeroDiaHoy'";
 
 $result = consultaSQL($sql);
 

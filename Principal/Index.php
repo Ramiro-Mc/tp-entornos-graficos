@@ -204,7 +204,7 @@ $pestaña = "Index";
                     $foto_promocion = $row['foto_promocion']; 
                     $cantidad = $cantidad + 1;?>
                     <div class="col-12 col-md-6 col-lg-4">
-                      <div class="promocion-index"><img src="data:image/jpeg;base64<?= $foto_promocion ?>" />
+                      <div class="promocion-index"><img src="data:image/jpeg;base64,<?= $foto_promocion ?>" />
                         <div class="overlay">
                           <p><?= $texto_promocion ?></p>
                         </div>
