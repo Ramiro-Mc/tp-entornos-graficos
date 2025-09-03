@@ -52,10 +52,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                   $asunto = "Confirma tu cuenta";
                   $mensajeMail = "Hola $vNombreUsuario,\n\nPor favor confirma tu cuenta haciendo clic en el siguiente enlace:\n$enlace";
                   mail($vEmail, $asunto, $mensajeMail);
+                   $mensaje = "<div class='alert alert-success'>El usuario fue registrado. Esperando confirmacion</div>";
                 } elseif ($vTipoUsuario == 'duenio') {
-                    mysqli_query($link, "INSERT INTO dueño_local (cod_usuario) VALUES ('$vCodUsuario')");
+                    mysqli_query($link, "INSERT INTO dueño_local (cod_usuario, estado) VALUES ('$vCodUsuario', 'pendiente')");
+                    $mensaje = "<div class='alert alert-warning'>Se registro como dueño de local. Pendiente de aprobación.</div>";
                 }
-                $mensaje = "<div class='alert alert-success'>El usuario fue registrado. Esperando confirmacion</div>";
             } else {
                 $mensaje = "<div class='alert alert-danger'>Error al registrar usuario.</div>";
             }

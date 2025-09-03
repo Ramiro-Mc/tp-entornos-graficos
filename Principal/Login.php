@@ -14,8 +14,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $vResultado = null;
   if ($vEmail === '' || $vPassword === '') {
     $mensaje = "<div class='alert alert-danger'>Completa todos los campos.</div>";
-  // } elseif (!filter_var($vEmail, FILTER_VALIDATE_EMAIL)) {
-  //   $mensaje = "<div class='alert alert-danger'>Email inválido.</div>";
   } else {
     $vResultado = consultaSQL("SELECT cod_usuario, clave FROM usuario WHERE email='$vEmail'");
     if ($vResultado && mysqli_num_rows($vResultado) > 0) {
@@ -32,25 +30,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           $tipo = "administrador";
         }
         $resDueno = consultaSQL("SELECT cod_usuario FROM dueño_local WHERE cod_usuario=$cod_usuario");
+        //and estado='aprobado'
+        $estadoDueno = mysqli_fetch_assoc($resDueno)['estado'];
+        if($estadoDueno == 'rechazado'){
+          $mensaje = "<div class='alert alert-warning'>El Administrador rechazó tu solicitud. Porfavor comuniquese con soporte</div>";
+        }
         if ($resDueno && mysqli_num_rows($resDueno) > 0) {
             $tipo = "dueño";
-          /* $estadoDueno = mysqli_fetch_assoc($resDueno)['confirmado'];
-          if($estadoDueno == 1){
-            $tipo = "dueño";
-          } else {
-            $mensaje = "<div class='alert alert-warning'>El Administrador aun no confirmo su cuenta</div>";
-          } */
         }
         $resCliente = consultaSQL("SELECT cod_usuario FROM cliente WHERE cod_usuario=$cod_usuario");
+        //and confirmado= '1'
         if ($resCliente && mysqli_num_rows($resCliente) > 0) {
-            $tipo = "cliente";/* 
-          $estadoCliente = mysqli_fetch_assoc($resCliente)['confirmado'];
-          if ($estadoCliente == 1) {
-            $tipo = "cliente";
-            } else {
-              $mensaje = "<div class='alert alert-warning'>Por favor confirma tu cuenta.</div>";  
-          }*/
-          
+            $tipo = "cliente";  
         }
 
         $_SESSION['tipo_usuario'] = $tipo; 
@@ -65,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           header("Location: ../Principal/Index.php");
           exit();
         } else {
-          $mensaje = "<div class='alert alert-warning'>Tipo de usuario no reconocido.</div>";
+          $mensaje = "<div class='alert alert-warning'>Tipo de usuario no reconocido o pendiente de confirmacion.</div>";
         }
       } else {
         $mensaje = "<div class='alert alert-danger'>Contraseña incorrecta.</div>";
