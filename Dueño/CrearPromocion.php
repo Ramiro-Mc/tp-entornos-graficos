@@ -13,7 +13,18 @@ include("../conexion.inc");
 include("../Includes/funciones.php");
 $mensaje = "";
 
+
+$diasSemanaNombre = [
+    1 => "Lunes",
+    2 => "Martes",
+    3 => "Miércoles",
+    4 => "Jueves",
+    5 => "Viernes",
+    6 => "Sábado",
+    7 => "Domingo"
+];
 $estado = "pendiente";
+
 
 $sqlLocales = "SELECT cod_local, nombre_local FROM locales WHERE cod_usuario = '$cod_usuario'";
 $locales = consultaSQL($sqlLocales);
@@ -26,39 +37,60 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $vFechaFin = $_POST['fechafin'] ?? '';
   $vCategoria = $_POST['Categoria'] ?? '';
   $vCodLocal = $_POST['cod_local'] ?? '';
+  $diasSeleccionados = $_POST['cod_dia'] ?? [];
   $imagenBase64 = "";
+  // if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+  //   $contenidoImagen = file_get_contents($_FILES['imagen']['tmp_name']);
+  //   if ($contenidoImagen !== false && strlen($contenidoImagen) > 0) {
+  //     $imagenBase64 = base64_encode($contenidoImagen);
+  //   } else {
+  //     $mensaje = "<div class='alert alert-success'>Imagen cargada correctamente.</div>";
+  //   }
+  // } else {
+  //   $mensaje = "<div class='alert alert-danger'>No se subió ninguna imagen.</div>";
+  // }
   if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
-    $contenidoImagen = file_get_contents($_FILES['imagen']['tmp_name']);
-    if ($contenidoImagen !== false && strlen($contenidoImagen) > 0) {
-      $imagenBase64 = base64_encode($contenidoImagen);
-    } else {
-      $mensaje = "<div class='alert alert-success'>Imagen cargada correctamente.</div>";
-    }
-  } else {
-    $mensaje = "<div class='alert alert-danger'>No se subió ninguna imagen.</div>";
+  $contenidoImagen = file_get_contents($_FILES['imagen']['tmp_name']);
+  if ($contenidoImagen !== false && strlen($contenidoImagen) > 0) {
+    $imagenBase64 = base64_encode($contenidoImagen);
   }
+}
 
   if ($vTitulo === '') $mensaje = "<div class='alert alert-danger'>Título requerido</div>";
   if ($vFechaInicio === '' || $vFechaFin === '') $mensaje = "<div class='alert alert-danger'>Fechas requeridas</div>";
   if ($vFechaInicio && $vFechaFin && $vFechaFin < $vFechaInicio) $mensaje = "<div class='alert alert-danger'>Rango de fechas inválido</div>";
   if ($vCategoria === '') $mensaje = "<div class='alert alert-danger'>Categoría requerida</div>";
   if ($vCodLocal === '') $mensaje = "<div class='alert alert-danger'>Debe seleccionar un local</div>";
-
+  if (empty($diasSeleccionados)) $mensaje = "<div class='alert alert-danger'>Debe seleccionar al menos un día para la promoción.</div>";
 
 
   if (!$mensaje) {
 
-    $vTituloEscaped = mysqli_real_escape_string($link, $vTitulo);
-    $vCategoriaEscaped = mysqli_real_escape_string($link, $vCategoria);
-
     $sql = "INSERT INTO promociones ( texto_promocion, fecha_desde_promocion, fecha_hasta_promocion, categoria_cliente, estado_promo, cod_local, foto_promocion )
               VALUES ('$vTitulo', '$vFechaInicio', '$vFechaFin', '$vCategoria','$estado', '$vCodLocal', '$imagenBase64')";
-    if (consultaSQL($sql)) {
-      $mensaje = "<div class='alert alert-success'>La promoción fue creada.</div>";
-      $vTitulo = $vDescripcion = $vCategoria = "";
-      $vFechaInicio = $vFechaFin = "";
+    if (mysqli_query($link, $sql)) {
+     
+      $idPromocion = mysqli_insert_id($link); // Obtiene el id generado
+    
+        if($idPromocion > 0){
+                  $sqlDias = "INSERT INTO promocion_dia (cod_promocion, cod_dia) VALUES ";
+              foreach ($diasSeleccionados as $codDia) {
+                $codDia = intval($codDia); //Lo paso a entero
+                $sqlDias .= "($idPromocion, $codDia),"; // Agrega cada día seleccionado (VALUES)
+              }
+              $sqlDias = rtrim($sqlDias, ','); // Elimina la última coma
+              if (!consultaSQL($sqlDias)) {
+                $mensaje = "<div class='alert alert-danger'>Error al guardar los días de la promoción.</div>";
+              } else {
+                $mensaje = "<div class='alert alert-success'>La promoción fue creada.</div>";
+              }
+              $vTitulo = $vDescripcion = $vCategoria = "";
+                $vFechaInicio = $vFechaFin = "";
+            }else{
+              $mensaje = "<div class='alert alert-danger'>Error al obtener el ID de la promoción.</div>";
+            }
     } else {
-      $mensaje = "<div class='alert alert-danger'>Error BD: " . mysqli_error($link) . "</div>";
+     $mensaje = "<div class='alert alert-danger'>Error BD: " . mysqli_error($link) . "</div>";
     }
   }
 }
@@ -112,6 +144,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <?php endwhile; ?>
             </select>
             <i class="bi bi-chevron-down position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; color: white;"></i>
+          </div>
+          <p>Días disponibles para la promocion</p>
+          <div class="position-relative">
+              <?php foreach ($diasSemanaNombre as $codDia => $nombreDia): ?>
+              <div>
+                  <label>
+                    <input type="checkbox" name="cod_dia[]" value="<?php echo $codDia; ?>">
+                    <?php echo htmlspecialchars($nombreDia); ?>
+                  </label>
+                </div>
+              <?php endforeach; ?>
           </div>
           <p>Archivo Multimedia</p>
           <div class="mb-3">
