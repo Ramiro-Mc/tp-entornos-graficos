@@ -33,5 +33,8 @@
   <?php endwhile; ?>
 
 <?php else: ?>
-  <p>No hay locales registrados.</p>
+  <div class="notificacion-no-promociones">
+    <h3>¡Vaya!</h3>
+    <p style="margin: 0;">Aun no hay locales para esta categoria</p>
+  </div>
 <?php endif; ?>

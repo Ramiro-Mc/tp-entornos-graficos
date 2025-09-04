@@ -1155,3 +1155,15 @@ textarea{
   margin-top: 0.8rem;
   text-align: center;
 }
+
+.loginRegister-box input[type="checkbox"] {
+  margin: 2px 0 0 5px;
+  padding: 0;
+  width: auto;
+}
+
+.contenedor-recuerdame{
+  display: flex;
+  margin-bottom: 20px;
+  justify-content: end;
+}

@@ -26,6 +26,7 @@ if(!isset($_GET['rubro']) and isset($_GET['rubroAnterior'])){
 }
 
 $vlocales = consultaSQL("SELECT nombre_local FROM locales");
+$vlocales_responsive = consultaSQL("SELECT nombre_local FROM locales");
 
 $where = [];
 if (isset($rubro) && $rubro != "Todos") {
@@ -193,45 +194,69 @@ $totalPaginas = ceil($totalPromos / $cantPagina);
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
               </div>
+
+              <hr/>
+
               <div class="offcanvas-body filtros-desp">
                 <div>
+
                   <!-- ACA ESTA EL OFFCANVAS DE FILTROS -->
-                  <p>Local</p>
+                  <form id="filtros-promociones" method="GET" action="">
+                    <p>Local</p>
 
-                  <select class="filtros-categoria" name="local" id="">
-                    <option value="">Seleccionar local</option>
-                    <option value="nike">Nike Store</option>
-                    <option value="adidas">Adidas Originals</option>
-                  </select>
+                    <select class="select-filtros" name="local">
 
-                  <p>Tipo cliente</p>
+                      <option name="local" value="Cualquiera">Cualquiera</option>
 
-                  <div class="filtros-categoria">
-                    <label><input type="checkbox" name="filtro" value="oficial" checked /><span>Premium</span></label>
-                    <label><input type="checkbox" name="filtro" value="workshop" /><span>Medium</span></label>
-                    <label><input type="checkbox" name="filtro" value="mis-fondos" checked /><span>Inicial</span></label>
-                  </div>
+                      <?php if ($vlocales_responsive->num_rows > 0): ?>
 
-                  <p>Filtrar por categoria</p>
+                        <?php while ($row = $vlocales_responsive->fetch_assoc()): ?>
 
-                  <ul>
-                    <li><a href="">Accesorios</a></li>
-                    <li><a href="">Deportes</a></li>
-                    <li><a href="">Electrónica</a></li>
-                    <li><a href="">Estética</a></li>
-                    <li><a href="">Gastronomía</a></li>
-                    <li><a href="">Calzado</a></li>
-                    <li><a href="">Indumentaria</a></li>
-                  </ul>
+                          <?php $nombre_local = $row['nombre_local']; ?>
 
-                  <form>
-                    <div>
-                      <p>Fecha Desde</p><input type="date" class="form-control id=" fechaDesde" required>
+                          <option name="local" value="<?= $nombre_local ?>" <?= (isset($_GET['local']) && $_GET['local'] == $nombre_local) ? "selected" : ""?>><?= $nombre_local ?></option>
+
+                        <?php endwhile; ?>
+
+                      <?php else: ?>
+                        No hay locales registrados.
+                      <?php endif; ?>
+                    </select>
+
+                    <p>Tipo cliente</p>
+
+                    <select class="select-filtros" name="categoria" id="">
+                      <option name="categoria" value="Cualquiera">Cualquiera</option>
+                      <option name="categoria" value="Premium" <?= (isset($_GET['categoria']) && $_GET['categoria'] == "Premium") ? "selected" : ""?>>Premium</option>
+                      <option name="categoria" value="Medium" <?= (isset($_GET['categoria']) && $_GET['categoria'] == "Medium") ? "selected" : ""?>>Medium</option>
+                      <option name="categoria" value="Inicial" <?= (isset($_GET['categoria']) && $_GET['categoria'] == "Inicial") ? "selected" : ""?>>Inicial</option>
+                    </select>
+                
+                    <div class="d-flex justify-content-end">
+                      <button type="submit" class="btn btn-outline-success" >Filtrar</button>
                     </div>
-                    <div>
-                      <p>Fecha Hasta</p><input type="date" class="form-control id=" fechaHasta" required>
-                    </div>
+                    
+                    <hr/>
+
+                    <p>Filtrar por categoria</p>
+
+                    <ul>
+                      <li><button type="submit" name="rubro" value="Todos" class="btn <?= (isset($rubro) && $rubro == "Todos") ? "rubro_seleccionado" : ""?><?= (!isset($rubro)) ? "rubro_seleccionado" : ""?>">Todos</button></li>
+                      <li><button type="submit" name="rubro" value="Accesorios" class="btn <?= (isset($rubro) && $rubro == "Accesorios") ? "rubro_seleccionado" : ""?>">Accesorios</button></li>
+                      <li><button type="submit" name="rubro" value="Deportes" class="btn <?= (isset($rubro) && $rubro == "Deportes") ? "rubro_seleccionado" : ""?>">Deportes</button></li>
+                      <li><button type="submit" name="rubro" value="Electro" class="btn <?= (isset($rubro) && $rubro == "Electro") ? "rubro_seleccionado" : ""?>">Electro</button></li>
+                      <li><button type="submit" name="rubro" value="Estetica" class="btn <?= (isset($rubro) && $rubro == "Estetica") ? "rubro_seleccionado" : ""?>">Estetica</button></li>
+                      <li><button type="submit" name="rubro" value="Gastronomía" class="btn <?= (isset($rubro) && $rubro == "Gastronomía") ? "rubro_seleccionado" : ""?>">Gastronomía</button></li>
+                      <li><button type="submit" name="rubro" value="Calzado" class="btn <?= (isset($rubro) && $rubro == "Calzado") ? "rubro_seleccionado" : ""?>">Calzado</button></li>
+                      <li><button type="submit" name="rubro" value="Indumentaria" class="btn <?= (isset($rubro) && $rubro == "Indumentaria") ? "rubro_seleccionado" : ""?>">Indumentaria</button></li>
+                      <li><button type="submit" name="rubro" value="Varios" class="btn <?= (isset($rubro) && $rubro == "Varios") ? "rubro_seleccionado" : ""?>">Varios</button></li>
+                    </ul>
+
+
+                  
                   </form>
+
+                  
                 </div>
               </div>
             </div>

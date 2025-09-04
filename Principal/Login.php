@@ -108,16 +108,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="text" name="email" size="100" placeholder="Correo electrónico" required />
 
         <p>Contraseña</p>
-      <div style="position:relative;">
-        <input type="password" name="password" id="password" size="8" placeholder="Contraseña" required />
-        <span id="togglePassword" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer;">
-          <i class="bi bi-eye" id="iconEye"></i>
-        </span>
-      </div>
-      <div class="container d-flex flex-row justify-content-between">
-        <label class="form-check-label" for="mantenerSesionIniciada">Mantener sesión iniciada</label>
-        <input type="checkbox" class="" id="mantenerSesionIniciada" name="mantenerSesionIniciada" value="si">
-      </div>
+        <div style="position:relative;">
+          <input type="password" name="password" id="password" size="8" placeholder="Contraseña" required />
+          <span id="togglePassword" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer;">
+            <i class="bi bi-eye" id="iconEye"></i>
+          </span>
+        </div>
+
+        <div class="contenedor-recuerdame">
+          <label style="font-size: 0.9rem"  class="form-check-label" for="mantenerSesionIniciada">Recuerdame</label>
+          <input type="checkbox" class="checkbox-recordar" id="mantenerSesionIniciada" name="mantenerSesionIniciada" value="si">
+        </div>
 
         <input type="submit" name="Login" value="Login" />
         <a href="Register.php"><button type="button" style="color: black">Registrarse</button></a>

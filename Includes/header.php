@@ -19,6 +19,15 @@ if(isset($_SESSION['tipo_usuario']) && isset($_SESSION['cod_usuario'])){
     $categoria_cliente = $row['categoria_cliente'] ?? ''; 
   }
 
+  if($_SESSION['tipo_usuario'] == "administrador"){
+  $rutaExtra = "/Administrador/SeccionAdministrador.php";
+  $LinkExtra = "Seccion Administrador";
+  }
+  if($_SESSION['tipo_usuario'] == "dueño"){
+  $rutaExtra = "/Dueño/SeccionDueñoLocal.php";
+  $LinkExtra = "Seccion Dueño";
+  }
+
 }else{
   $estaLogueado = "noLogueado";
 }
@@ -41,14 +50,6 @@ if($folder == "Administrador"){
   $rutaLogo = "/Principal/Index.php";
 }
 
-if($_SESSION['tipo_usuario'] == "administrador"){
- $rutaExtra = "/Administrador/SeccionAdministrador.php";
- $LinkExtra = "Seccion Administrador";
-}
-if($_SESSION['tipo_usuario'] == "dueño"){
- $rutaExtra = "/Dueño/SeccionDueñoLocal.php";
- $LinkExtra = "Seccion Dueño";
-}
 
 ?>
 
@@ -76,29 +77,34 @@ if($_SESSION['tipo_usuario'] == "dueño"){
 
         <!-- Opciones para Index -->
 
-          <?php if($pestaña == "Index" && $rutaExtra!= ""): ?>
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="<?= $rutaSalirCarpeta ?><?= $rutaExtra ?>">
-                <p><?= $LinkExtra ?></p>
-              </a>
-            </li>
+          <?php if($pestaña == "Index"): ?>
+
+            <?php if($rutaExtra!= ""): ?>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="<?= $rutaSalirCarpeta ?><?= $rutaExtra ?>">
+                  <p><?= $LinkExtra ?></p>
+                </a>
+              </li>
             <?php endif; ?>
+
             <li class="nav-item">
               <a class="nav-link" aria-current="page" href="#novedades">
                 <p>Novedades</p>
               </a>
             </li>
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="#locales">
-                  <p>Locales</p>
-                </a>
-              </li>
+
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="#locales">
+                <p>Locales</p>
+              </a>
+            </li>
 
             <li class="nav-item">
               <a class="nav-link" aria-current="page" href="<?= $rutaSalirCarpeta ?>/Principal/Contacto.php">
                 <p>Contacto</p>
               </a>
             </li>
+
             <li class="nav-item">
               <a class="nav-link" href="<?= $rutaSalirCarpeta ?>/Principal/SobreNosotros.php">
                 <p>Sobre Nosotros</p>
@@ -112,6 +118,7 @@ if($_SESSION['tipo_usuario'] == "dueño"){
                 </a>
               </li>
             <?php endif; ?>
+          <?php endif; ?>
 
           
 

@@ -125,7 +125,7 @@ $result = consultaSQL(
 
       <?php else: ?>
         <div class="notificacion-no-promociones">
-          <h3>¡Genial!</h3>
+          <h3>¡Todo en orden!</h3>
           <p style="margin: 0;">No tienes solicitudes de promocion pendientes</p>
           <a href="../Cliente/BuscarPromociones.php">Usar una promocion</a>
         </div>
