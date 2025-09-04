@@ -397,12 +397,9 @@ $totalPaginas = ceil($totalPromos / $cantPagina);
 
     <script>
       function solicitarPromocion(codigoPromocion, codigoUsuario, modalId){
-        fetch('solicitarPromocion.php', {
-          method: 'GET',
-          body: new URLSearchParams({
-            cod_promocion: codigoPromocion,
-            cod_usuario: codigoUsuario
-          })
+        const url = `SolicitarPromocion.php?cod_promocion=${encodeURIComponent(codigoPromocion)}&cod_usuario=${encodeURIComponent(codigoUsuario)}`;
+        fetch(url, {
+          method: 'GET'
         })
         .then(response => response.json())
       }

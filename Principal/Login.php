@@ -105,18 +105,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <form class="formulario-transparente" action="Login.php" method="POST" name="FormLogin">
 
         <p>Mail</p>
-        <input type="text" name="email" size="100" placeholder="Correo electrónico" required />
+        <input type="text" name="email" size="100" placeholder="ejemplo@correo.com" required />
 
         <p>Contraseña</p>
         <div style="position:relative;">
-          <input type="password" name="password" id="password" size="8" placeholder="Contraseña" required />
-          <span id="togglePassword" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer;">
+          <input type="password" name="password" id="password" size="8" placeholder="********" required />
+          <span id="togglePassword" style="position:absolute; right:8px; top:40%; transform:translateY(-50%); cursor:pointer;">
             <i class="bi bi-eye" id="iconEye"></i>
           </span>
         </div>
 
         <div class="contenedor-recuerdame">
-          <label style="font-size: 0.9rem"  class="form-check-label" for="mantenerSesionIniciada">Recuerdame</label>
+          <label style="font-size: 0.9rem; user-select: none;"  class="form-check-label" for="mantenerSesionIniciada">Recuerdame</label>
           <input type="checkbox" class="checkbox-recordar" id="mantenerSesionIniciada" name="mantenerSesionIniciada" value="si">
         </div>
 

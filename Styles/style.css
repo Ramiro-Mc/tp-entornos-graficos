@@ -1167,3 +1167,11 @@ textarea{
   margin-bottom: 20px;
   justify-content: end;
 }
+
+.informacion{
+  color: #3178c6;
+  font-size: 0.8rem;
+  margin-top: 0.8rem;
+  text-align: center;
+}
+

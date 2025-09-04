@@ -85,9 +85,9 @@ $result = consultaSQL(
                   <button type="button " class="boton-codigo btn btn-secondary btn-lg" data-bs-toggle="modal" data-bs-target="#<?= $modalId ?>" onclick="generarCodigo('<?= $modalId ?>')">Generar <br />Código</button>
                   <button type="button" class="boton-codigo-chico"><i class="bi bi-qr-code"></i></button>
                 <?php else: ?>
-                  <form action="MisSolicitudesDePromociones.php" method="POST" name="Eliminar solicitud">
-                    <button type="submit" name="eliminar" value="<?= $cod_promocion ?>" class="btn btn-danger cuadrado"><i class="bi bi-x-lg"></i></button>
-                  </form>
+                  
+                  <button type="button" class="btn btn-danger cuadrado" data-bs-toggle="modal" data-bs-target="#eliminar-<?= $modalId ?>"><i class="bi bi-x-lg"></i></button>
+                  
                 <?php endif; ?>
                 
                 <!-- Modal -->
@@ -115,7 +115,28 @@ $result = consultaSQL(
                     </div>
                   </div>
                 </div>
+                
+                <!-- Modal de eliminacion -->
 
+                <div class="modal fade " id="eliminar-<?= $modalId ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header ">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel" style="margin: auto; font-size: 1.6rem;">Eliminar solicitud</h1>
+                      </div>
+                      <div class="modal-body text-center">
+                        <p style="font-size: 1.2rem;">Seguro que quiere eliminar esta solicitud?</p>
+                        <p class="informacion"><i class="bi bi-info-circle"></i> Eliminar esta solicitud no te permitira gerenar una nueva solicitud para la misma promocion</p>
+                      </div>
+                      <div class="modal-footer d-flex justify-content-around">
+                        <form  action="MisSolicitudesDePromociones.php" method="POST" name="Eliminar solicitud">
+                          <button  type="submit" name="eliminar" value="<?= $cod_promocion ?>" class="btn btn-danger" data-bs-dismiss="modal">Eliminar</button>
+                        </form>
+                          <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
             </div>
