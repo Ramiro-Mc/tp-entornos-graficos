@@ -31,14 +31,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_promocion'],
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['aceptar_promocion'], $_POST['aceptar_usuario'])) {
-    $codPromo = intval($_POST['aceptar_promocion']);
-    $codUsuario = intval($_POST['aceptar_usuario']);
-    $sqlEliminar = "UPDATE uso_promociones SET estado = 'aceptada' WHERE cod_promocion = $codPromo AND cod_usuario = $codUsuario";
-    if (consultaSQL($sqlEliminar)) {
-        $mensaje = "<div class='alert alert-success'>Solicitud aceptada correctamente.</div>";
-    } else {
-        $mensaje = "<div class='alert alert-danger'>Error al aceptar la solicitud.</div>";
-    }
+  $codPromo = intval($_POST['aceptar_promocion']);
+  $codUsuario = intval($_POST['aceptar_usuario']);
+  $sqlEliminar = "UPDATE uso_promociones SET estado = 'aceptada' WHERE cod_promocion = $codPromo AND cod_usuario = $codUsuario";
+  if (consultaSQL($sqlEliminar)) {
+    $mensaje = "<div class='alert alert-success'>Solicitud aceptada correctamente.</div>";
+  } else {
+    $mensaje = "<div class='alert alert-danger'>Error al aceptar la solicitud.</div>";
+  }
+
+  //actualizar categoria cliente
+
+  $res = consultaSQL("SELECT * From uso_promociones up WHERE cod_usuario = $codUsuario AND estado = 'aceptada'");
+  if(mysqli_num_rows($res) >= 3 && mysqli_num_rows($res) < 6){
+    consultaSQL("UPDATE cliente SET categoria_cliente = 'medium' WHERE cod_usuario = $codUsuario");
+  } elseif(mysqli_num_rows($res) >= 6){
+    consultaSQL("UPDATE cliente SET categoria_cliente = 'premium' WHERE cod_usuario = $codUsuario");
+  }
 }
 
 
