@@ -6,6 +6,8 @@ sesionIniciada();
 $folder = "Principal";
 $pestaña = "Index";
 
+$res = consultaSQL("SELECT foto_novedad, texto_novedad FROM novedades");
+
 ?>
 
 
@@ -166,16 +168,24 @@ $pestaña = "Index";
           <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
         </div>
         <div class="carousel-inner">
-          <div class="carousel-item active carousel-item-novedades">
-            <img src="../Images/Novedades1.jpg" class="d-block w-100" alt="..." />
-          </div>
-          <div class="carousel-item carousel-item-novedades">
-            <img src="../Images/Novedades2.jpg" class="d-block w-100" alt="..." />
-            <!--aca tambien hay que hacerlo con php para mostrar las ultimas novedades-->
-          </div>
-          <div class="carousel-item carousel-item-novedades">
-            <img src="../Images/Novedades3.jpg" class="d-block w-100" alt="..." />
-          </div>
+          <?php if ($res->num_rows > 0): ?>
+
+            <?php while ($row = $res->fetch_assoc()): ?>
+
+              <?php 
+                $foto_novedad = $row['foto_novedad']; 
+                $texto_novedad = $row['texto_novedad'];
+              ?>
+
+              <div class="carousel-item active carousel-item-novedades">
+                <img src="data:image/jpeg;base64,<?= $foto_promocion ?>" class="d-block w-100" alt="<?= $texto_novedad ?>"/>
+              </div>
+
+            <?php endwhile; ?>
+
+          <?php else: ?>
+            No hay novedades vigentes.
+          <?php endif; ?>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button>
         <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span></button>
