@@ -164,10 +164,9 @@ $usoPromociones = consultaSQL($sqlUsoPromociones);
           } ?></p>
         </div>
           <div class="acciones">
-            <form method="POST" style="display:inline;">
-              <input type="hidden" name="eliminar" value="<?php echo $promo['cod_promocion']; ?>">
-              <button type="submit" class="btn btn-danger Eliminar" onclick="return confirm('¿Seguro que quieres eliminar esta promoción?');">ELIMINAR</button>
-          </form>
+             <button type="button" class="btn btn-danger Eliminar" data-bs-toggle="modal" data-bs-target="#modalEliminar" data-cod="<?php echo $promo['cod_promocion']; ?>">
+            ELIMINAR
+          </button>
           </div>
       </div>
     <?php endwhile; ?>
@@ -214,5 +213,39 @@ $usoPromociones = consultaSQL($sqlUsoPromociones);
     </footer>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+  
+          <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var modalEliminar = document.getElementById('modalEliminar');
+        modalEliminar.addEventListener('show.bs.modal', function (event) {
+          var button = event.relatedTarget;
+          var codPromo = button.getAttribute('data-cod');
+          document.getElementById('inputEliminar').value = codPromo;
+        });
+      });
+      </script>
+
+
+      <!-- Modal de confirmación de eliminación -->
+      <div class="modal fade" id="modalEliminar" tabindex="-1" aria-labelledby="modalEliminarLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalEliminarLabel">Confirmar eliminación</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+              ¿Seguro que quieres eliminar esta promoción?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <form id="formEliminar" method="POST" style="display:inline;">
+                <input type="hidden" name="eliminar" id="inputEliminar">
+                <button type="submit" class="btn btn-danger">Eliminar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
   </body>
 </html>
