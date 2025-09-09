@@ -8,6 +8,22 @@ $token = bin2hex(random_bytes(32));
 $mensaje = "";
 
 
+
+//Php mailer
+
+require '../PHPMailer-master/src/PHPMailer.php';
+require '../PHPMailer-master/src/SMTP.php';
+require '../PHPMailer-master/src/Exception.php';
+
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
+
+$mail = new PHPMailer(true);
+
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
   $vEmail = $_POST['email'];
   $vPassword = $_POST['password'];
@@ -46,14 +62,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             if ($insertUsuario) {
                 $vCodUsuario = mysqli_insert_id($link);
                 if ($vTipoUsuario == 'cliente') {
-                    $vCategoriaCliente = "Inicial";
-                    mysqli_query($link, "INSERT INTO cliente (cod_usuario, categoria_cliente, confirmado, token_confirmacion) VALUES ('$vCodUsuario', '$vCategoriaCliente', 0, '$token')");
-                  //Mandamos mail de confirmacion (HACERLO ANDAR)
-                  $enlace = "http://viventastore.com/Principal/Confirmar.php?token=$token";
+                  $vCategoriaCliente = "Inicial";
+                  mysqli_query($link, "INSERT INTO cliente (cod_usuario, categoria_cliente, confirmado, token_confirmacion) VALUES ('$vCodUsuario', '$vCategoriaCliente', 0, '$token')");
+                  
+                  //Mandamos mail de confirmacion 
+                  $enlace = "http://localhost/Repositorio/tp-entornos-graficos/Principal/Confirmar.php?token=$token";
                   $asunto = "Confirma tu cuenta";
-                  $mensajeMail = "Hola $vNombreUsuario,\n\nPor favor confirma tu cuenta haciendo clic en el siguiente enlace:\n$enlace";
-                  mail($vEmail, $asunto, $mensajeMail);
-                   $mensaje = "<div class='alert alert-success'>El usuario fue registrado. Esperando confirmacion</div>";
+                  $mensajeMail = "
+                    Hola $vNombreUsuario,\n\nPor favor confirma tu cuenta haciendo clic en el siguiente enlace:\n
+                    <a href='$enlace'>Confirmar cuenta</a>
+                  ";
+
+                  $mail = new PHPMailer(true);
+
+                  try {
+                    //Server settings
+                    $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+                    $mail->isSMTP();                                            //Send using SMTP
+                    $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+                    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+                    $mail->Username   = 'matiasgarcia1577@gmail.com';                     //SMTP username
+                    $mail->Password   = 'epiz buun utcp bgxc';                               //SMTP password
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+                    $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+                    //Recipients
+                    $mail->setFrom('matiasgarcia1577@gmail.com', 'Viventa Store');
+                    $mail->addAddress($vEmail, $vNombreUsuario);     //Add a recipient
+                    $mail->addReplyTo('matiasgarcia1577@gmail.com', 'Information');
+                    
+                    /* 
+                    //Attachments
+                    $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
+                    $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name */
+
+                    //Content
+                    $mail->isHTML(true);                                  //Set email format to HTML
+                    $mail->Subject = $asunto;
+                    $mail->Body    = $mensajeMail;
+                    $mail->AltBody = $mensajeMail;
+
+                    $mail->send();
+                     $mensaje = "<div class='alert alert-success'>Su solicitud de registro fue enviada. Esperando confirmación por correo.</div>";
+                  } catch (Exception $e) {
+                      $mensaje = "<div class='alert alert-danger'>No se pudo enviar el correo de confirmación. Error: {$mail->ErrorInfo}</div>";
+
+                  }
+
                 } elseif ($vTipoUsuario == 'duenio') {
                     mysqli_query($link, "INSERT INTO dueño_local (cod_usuario, estado) VALUES ('$vCodUsuario', 'pendiente')");
                     $mensaje = "<div class='alert alert-warning'>Se registro como dueño de local. Pendiente de aprobación.</div>";
@@ -66,6 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             mysqli_free_result($vResultado);
         }
         mysqli_close($link);
+        
     }
 }
 

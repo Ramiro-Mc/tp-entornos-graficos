@@ -3,6 +3,8 @@ include_once("../Includes/session.php");
 include("../conexion.inc");
 include("../Includes/funciones.php");
 
+
+
 sesionIniciada();
 $mensaje = "";
 $folder = "Principal";

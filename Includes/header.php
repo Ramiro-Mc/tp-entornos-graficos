@@ -172,7 +172,7 @@ if($folder == "Administrador"){
 
         <!-- Opciones por si no esta logueado -->
 
-          <?php if($estaLogueado == "noLogueado"): ?>
+          <?php if($estaLogueado == "noLogueado" && $pestaña != "Confirmar"): ?>
 
             <li class="nav-item">
               <a href="<?= $rutaSalirCarpeta ?>/Principal/Login.php">

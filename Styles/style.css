@@ -1175,3 +1175,29 @@ textarea{
   text-align: center;
 }
 
+
+.notificacion-cuenta-confirmada{
+  text-align: center;
+  flex-wrap: wrap;
+  background-color: #00ff3c;
+  color: white;
+  border: #000 solid 1px;
+  border-radius: 2rem;
+  padding: 20px;
+  width: 40%;
+  margin: auto;
+  margin-top: 2rem;
+}
+
+.notificacion-cuenta-no-confirmada{
+  text-align: center;
+  flex-wrap: wrap;
+  color: white;
+  background-color: #ff0c1c;
+  border: #000 solid 1px;
+  border-radius: 2rem;
+  padding: 20px;
+  width: 40%;
+  margin: auto;
+  margin-top: 2rem;
+}
