@@ -29,9 +29,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
   $vPassword = $_POST['password'];
   $vTipoUsuario = $_POST['tipoUsuario'];
   $vNombreUsuario = $_POST['nombre'];
-  if ($vTipoUsuario == 'cliente') {
-    $vCategoriaCliente = "Inicial";
-  }
+
+  /* validaciones */
 
   if ($vEmail === '' || $vPassword === '' || $vTipoUsuario === '' || $vNombreUsuario === '') {
     $mensaje = "<div class='alert alert-danger'>Completa todos los campos.</div>";
@@ -46,83 +45,88 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $mensaje = "<div class='alert alert-danger'>Tipo de usuario inválido.</div>";
   }
 
-    if ($mensaje === "") {
-        include("../conexion.inc");
-        // Verificar si el usuario ya existe
-        $vResultado = mysqli_query($link, "SELECT COUNT(*) as cantidad FROM usuario WHERE email='$vEmail'");
-        $vCantUsuario = mysqli_fetch_assoc($vResultado);
-        if ($vCantUsuario['cantidad'] != 0) {
-            $mensaje = "<div class='alert alert-danger'>El usuario ya existe.</div>";
-        } else {
-            // Hashear la contraseña antes de guardar
-            //$hashedPassword = password_hash($vPassword, PASSWORD_DEFAULT);
+  /* registro en base de datos */
 
-            // Insertar usuario en la tabla usuario
-            $insertUsuario = mysqli_query($link, "INSERT INTO usuario (email, clave, nombre_usuario) VALUES ('$vEmail', '$vPassword', '$vNombreUsuario')");
-            if ($insertUsuario) {
-                $vCodUsuario = mysqli_insert_id($link);
-                if ($vTipoUsuario == 'cliente') {
-                  $vCategoriaCliente = "Inicial";
-                  mysqli_query($link, "INSERT INTO cliente (cod_usuario, categoria_cliente, confirmado, token_confirmacion) VALUES ('$vCodUsuario', '$vCategoriaCliente', 0, '$token')");
-                  
-                  //Mandamos mail de confirmacion 
-                  $enlace = "http://localhost/Repositorio/tp-entornos-graficos/Principal/Confirmar.php?token=$token";
-                  $asunto = "Confirma tu cuenta";
-                  $mensajeMail = "
-                    Hola $vNombreUsuario,\n\nPor favor confirma tu cuenta haciendo clic en el siguiente enlace:\n
-                    <a href='$enlace'>Confirmar cuenta</a>
-                  ";
+  if ($mensaje === "") {
+    include("../conexion.inc");
 
-                  $mail = new PHPMailer(true);
+    $vResultado = mysqli_query($link, "SELECT COUNT(*) as cantidad FROM usuario WHERE email='$vEmail'");
+    $vCantUsuario = mysqli_fetch_assoc($vResultado);
 
-                  try {
-                    //Server settings
-                    $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
-                    $mail->isSMTP();                                            //Send using SMTP
-                    $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
-                    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-                    $mail->Username   = 'matiasgarcia1577@gmail.com';                     //SMTP username
-                    $mail->Password   = 'epiz buun utcp bgxc';                               //SMTP password
-                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-                    $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+    if ($vCantUsuario['cantidad'] != 0) {
+      $mensaje = "<div class='alert alert-danger'>El usuario ya existe.</div>";
+    } else {
+      // Hashear la contraseña antes de guardar
+      $hashedPassword = password_hash($vPassword, PASSWORD_DEFAULT);
 
-                    //Recipients
-                    $mail->setFrom('matiasgarcia1577@gmail.com', 'Viventa Store');
-                    $mail->addAddress($vEmail, $vNombreUsuario);     //Add a recipient
-                    $mail->addReplyTo('matiasgarcia1577@gmail.com', 'Information');
-                    
-                    /* 
-                    //Attachments
-                    $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
-                    $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name */
+      // Insertar usuario en la tabla usuario
+      $insertUsuario = mysqli_query($link, "INSERT INTO usuario (email, clave, nombre_usuario) VALUES ('$vEmail', '$hashedPassword', '$vNombreUsuario')");
+      if ($insertUsuario) {
+        $vCodUsuario = mysqli_insert_id($link);
+        if ($vTipoUsuario == 'cliente') {
+          $vCategoriaCliente = "Inicial";
+          mysqli_query($link, "INSERT INTO cliente (cod_usuario, categoria_cliente, confirmado, token_confirmacion) VALUES ('$vCodUsuario', '$vCategoriaCliente', 0, '$token')");
+          
+          //Mandamos mail de confirmacion 
+          
+          /* $enlace = "http://localhost/Repositorio/tp-entornos-graficos/Principal/Confirmar.php?token=$token"; */
+          $enlace = "http://localhost/paginas/tp-entornos-graficos/Principal/Confirmar.php?token=$token";
+          $asunto = "Confirma tu cuenta";
+          $mensajeMail = "
+            Hola $vNombreUsuario,\n\nPor favor confirma tu cuenta haciendo clic en el siguiente enlace:\n
+            <a href='$enlace'>Confirmar cuenta</a>
+          ";
 
-                    //Content
-                    $mail->isHTML(true);                                  //Set email format to HTML
-                    $mail->Subject = $asunto;
-                    $mail->Body    = $mensajeMail;
-                    $mail->AltBody = $mensajeMail;
+          $mail = new PHPMailer(true);
 
-                    $mail->send();
-                     $mensaje = "<div class='alert alert-success'>Su solicitud de registro fue enviada. Esperando confirmación por correo.</div>";
-                  } catch (Exception $e) {
-                      $mensaje = "<div class='alert alert-danger'>No se pudo enviar el correo de confirmación. Error: {$mail->ErrorInfo}</div>";
+          try {
+            //Server settings
+            /* $mail->SMTPDebug = SMTP::DEBUG_SERVER;  */                     //Enable verbose debug output
+            $mail->isSMTP();                                            //Send using SMTP
+            $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+            $mail->Username   = 'matiasgarcia1577@gmail.com';                     //SMTP username
+            $mail->Password   = 'epiz buun utcp bgxc';                               //SMTP password
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+            $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
-                  }
+            //Recipients
+            $mail->setFrom('matiasgarcia1577@gmail.com', 'Viventa Store');
+            $mail->addAddress($vEmail, $vNombreUsuario);     //Add a recipient
+            $mail->addReplyTo('matiasgarcia1577@gmail.com', 'Information');
+            
+            /* 
+            //Attachments
+            $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
+            $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name */
 
-                } elseif ($vTipoUsuario == 'duenio') {
-                    mysqli_query($link, "INSERT INTO dueño_local (cod_usuario, estado) VALUES ('$vCodUsuario', 'pendiente')");
-                    $mensaje = "<div class='alert alert-warning'>Se registro como dueño de local. Pendiente de aprobación.</div>";
-                }
-            } else {
-                $mensaje = "<div class='alert alert-danger'>Error al registrar usuario.</div>";
-            }
+            //Content
+            $mail->isHTML(true);                                  //Set email format to HTML
+            $mail->Subject = $asunto;
+            $mail->Body    = $mensajeMail;
+            $mail->AltBody = $mensajeMail;
+
+            $mail->send();
+            $mensaje = "<div class='alert alert-success'>Su solicitud de registro fue enviada. Esperando confirmación por correo.</div>";
+          
+          } catch (Exception $e) {
+            $mensaje = "<div class='alert alert-danger'>No se pudo enviar el correo de confirmación. Error: {$mail->ErrorInfo}</div>";
+          }
+
+        } elseif ($vTipoUsuario == 'duenio') {
+          mysqli_query($link, "INSERT INTO dueño_local (cod_usuario, estado) VALUES ('$vCodUsuario', 'pendiente')");
+          $mensaje = "<div class='alert alert-warning'>Se registro como dueño de local. Pendiente de aprobación.</div>";
         }
-        if ($vResultado) {
-            mysqli_free_result($vResultado);
-        }
-        mysqli_close($link);
-        
+      } else {
+        $mensaje = "<div class='alert alert-danger'>Error al registrar usuario.</div>";
+      }
     }
+    if ($vResultado) {
+      mysqli_free_result($vResultado);
+    }
+    mysqli_close($link);
+      
+  }
 }
 
 
@@ -190,22 +194,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
 
-  <script>
-  document.getElementById('togglePassword').addEventListener('click', function () {
-  const passwordInput = document.getElementById('password');
-  const icon = document.getElementById('iconEye');
-  if (passwordInput.type === 'password') {
-    passwordInput.type = 'text'; //La pasa a texto y se ve
-    icon.classList.remove('bi-eye');
-    icon.classList.add('bi-eye-slash');
-  } else {
-    passwordInput.type = 'password'; //La pasa a password y no se ve
-    icon.classList.remove('bi-eye-slash');
-    icon.classList.add('bi-eye');
-  }
-});
-</script>
-
+    <script>
+      document.getElementById('togglePassword').addEventListener('click', function () {
+        const passwordInput = document.getElementById('password');
+        const icon = document.getElementById('iconEye');
+        if (passwordInput.type === 'password') {
+          passwordInput.type = 'text'; //La pasa a texto y se ve
+          icon.classList.remove('bi-eye');
+          icon.classList.add('bi-eye-slash');
+        } else {
+          passwordInput.type = 'password'; //La pasa a password y no se ve
+          icon.classList.remove('bi-eye-slash');
+          icon.classList.add('bi-eye');
+        }
+      });
+    </script>
 
   </body>
 

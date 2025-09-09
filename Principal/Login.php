@@ -21,64 +21,67 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   } else {
     $vResultado = consultaSQL("SELECT cod_usuario, clave  FROM usuario WHERE email='$vEmail'");
     if ($vResultado && mysqli_num_rows($vResultado) > 0) {
-        $usuario = mysqli_fetch_assoc($vResultado);
-        if ($usuario['clave'] === $vPassword ) {
-          // if (password_verify($vPassword, $usuario['clave'])) { IMPLEMENTARLO DESPUES (ES PARA HASHEAR LAS CONTRASEÑAS)
-          $cod_usuario = $usuario['cod_usuario'];
-          $_SESSION['cod_usuario'] = $cod_usuario; 
-            
+      $usuario = mysqli_fetch_assoc($vResultado);
+      $contraseñaBD = $usuario['clave'];
+      if (password_verify($vPassword, $contraseñaBD)) {
+        $cod_usuario = $usuario['cod_usuario'];
+        $_SESSION['cod_usuario'] = $cod_usuario; 
+          
 
-          $tipo = "desconocido";
+        $tipo = "desconocido";
 
-          $resAdmin = consultaSQL("SELECT cod_usuario FROM administrador WHERE cod_usuario=$cod_usuario");
-          if ($resAdmin && mysqli_num_rows($resAdmin) > 0) {
-            $tipo = "administrador";
-          }
-          $resDueno = consultaSQL("SELECT cod_usuario FROM dueño_local WHERE cod_usuario=$cod_usuario");
-          //and estado='aprobado'
+        $resAdmin = consultaSQL("SELECT cod_usuario FROM administrador WHERE cod_usuario=$cod_usuario");
+        if ($resAdmin && mysqli_num_rows($resAdmin) > 0) {
+          $tipo = "administrador";
+        }
+        $resDueno = consultaSQL("SELECT cod_usuario FROM dueño_local WHERE cod_usuario=$cod_usuario");
+        //and estado='aprobado'
+        if($resDueno && mysqli_num_rows($resDueno) > 0){
           $estadoDueno = mysqli_fetch_assoc($resDueno)['estado'];
           if($estadoDueno == 'rechazado'){
             $mensaje = "<div class='alert alert-warning'>El Administrador rechazó tu solicitud. Porfavor comuniquese con soporte</div>";
           }
           if ($resDueno && mysqli_num_rows($resDueno) > 0) {
-              $tipo = "dueño";
+            $tipo = "dueño";
           }
-          $resCliente = consultaSQL("SELECT cod_usuario FROM cliente WHERE cod_usuario=$cod_usuario");
-          //and confirmado= '1'
-          if ($resCliente && mysqli_num_rows($resCliente) > 0) {
-              $tipo = "cliente";  
-          }
-
-          if(isset($_POST['mantenerSesionIniciada']) && $_POST['mantenerSesionIniciada'] === 'si'){
-            setcookie('usuario_recordado',$cod_usuario,time()+(60*60*24*365), "/");
-            setcookie('tipo_usuario_recordado', $tipo, time()+(60*60*24*365), "/");
-          }
-
-          $_SESSION['tipo_usuario'] = $tipo; 
-
-          if ($tipo == "administrador") {
-            header("Location: ../Administrador/SeccionAdministrador.php");
-            exit();
-          } elseif ($tipo == "dueño") {
-            header("Location: ../Dueño/SeccionDueñoLocal.php");
-            exit();
-          } elseif ($tipo == "cliente") {
-            header("Location: ../Principal/Index.php");
-            exit();
-          } else {
-            $mensaje = "<div class='alert alert-warning'>Tipo de usuario no reconocido o pendiente de confirmacion.</div>";
-          }
-        } else {
-          $mensaje = "<div class='alert alert-danger'>Contraseña incorrecta.</div>";
         }
-        mysqli_free_result($vResultado);
+
+        $resCliente = consultaSQL("SELECT cod_usuario FROM cliente WHERE cod_usuario=$cod_usuario AND confirmado= '1'");
+        if ($resCliente && mysqli_num_rows($resCliente) > 0) {
+          $tipo = "cliente";  
+        }
+
+        if(isset($_POST['mantenerSesionIniciada']) && $_POST['mantenerSesionIniciada'] === 'si'){
+          setcookie('usuario_recordado',$cod_usuario,time()+(60*60*24*365), "/");
+          setcookie('tipo_usuario_recordado', $tipo, time()+(60*60*24*365), "/");
+        }
+
+        $_SESSION['tipo_usuario'] = $tipo; 
+
+        if ($tipo == "administrador") {
+          header("Location: ../Administrador/SeccionAdministrador.php");
+          exit();
+        } elseif ($tipo == "dueño") {
+          header("Location: ../Dueño/SeccionDueñoLocal.php");
+          exit();
+        } elseif ($tipo == "cliente") {
+          header("Location: ../Principal/Index.php");
+          exit();
+        } else {
+          $mensaje = "<div class='alert alert-warning'>Tipo de usuario no reconocido o pendiente de confirmacion.</div>";
+        }
       } else {
-        $mensaje = "<div class='alert alert-danger'>Usuario no encontrado.</div>";
-        if ($vResultado) mysqli_free_result($vResultado);
+        $mensaje = "<div class='alert alert-danger'>Contraseña incorrecta.</div>";
       }
-  
-  mysqli_close($link);
-}
+      mysqli_free_result($vResultado);
+    } else {
+      $mensaje = "<div class='alert alert-danger'>Usuario no encontrado.</div>";
+      if ($vResultado) mysqli_free_result($vResultado);
+    }
+
+    mysqli_close($link);
+    
+  }
 }
 ?>
 
