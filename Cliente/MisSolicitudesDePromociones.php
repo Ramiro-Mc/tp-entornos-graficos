@@ -67,7 +67,7 @@ $result = consultaSQL(
             <div class="row">
 
               <div class="col-4 col-md-3 col-lg-4 col-xl-3">
-                <img src="data:image/jpeg;base64,<?= $foto_promocion ?>" />
+                <img src="data:image/jpeg;base64,<?= $foto_promocion ?>"  alt="Foto promocion <?= $texto_promocion ?>/>
               </div>
               <div class="col-8 col-md-9 col-lg-8 col-xl-9 d-flex justify-content-between align-items-center">
 
@@ -125,7 +125,7 @@ $result = consultaSQL(
                         <h1 class="modal-title fs-5" id="staticBackdropLabel" style="margin: auto; font-size: 1.6rem;">Eliminar solicitud</h1>
                       </div>
                       <div class="modal-body text-center">
-                        <p style="font-size: 1.2rem;">Seguro que quiere eliminar esta solicitud?</p>
+                        <p style="font-size: 1.2rem;">¿Seguro que quiere eliminar esta solicitud?</p>
                         <p class="informacion"><i class="bi bi-info-circle"></i> Eliminar esta solicitud no te permitira gerenar una nueva solicitud para la misma promocion</p>
                       </div>
                       <div class="modal-footer d-flex justify-content-around">

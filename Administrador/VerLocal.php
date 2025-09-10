@@ -60,7 +60,7 @@ $stmt->close();
             <p><strong>Codigo Dueño:</strong> <?php echo htmlspecialchars($local['cod_usuario']); ?></p>
             <?php if (!empty($local['Multimedia'])): ?>
               <p><strong>Multimedia:</strong></p>
-              <img src="<?php echo htmlspecialchars($local['Multimedia']); ?>" alt="Imagen del local" style="max-width: 300px; height: auto;">
+              <img src="<?php echo htmlspecialchars($local['Multimedia']); ?>" alt="Imagen del local <?php echo htmlspecialchars($local['nombre_local']); ?>" style="max-width: 300px; height: auto;">
             <?php else: ?>
               <p><strong>Multimedia:</strong> No hay imagen disponible</p>
             <?php endif; ?>

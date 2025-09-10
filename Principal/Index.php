@@ -38,13 +38,13 @@ $res = consultaSQL("SELECT foto_novedad, texto_novedad FROM novedades");
       <div id="carouselExampleAutoplaying" class="carousel slide presentacion-carrousel" data-bs-ride="carousel" data-bs-pause="false">
         <div class="carousel-inner">
           <div class="carousel-item carousel-item-presentacion active">
-            <img src="../Images/Carrusel1.png" class="d-block w-100" alt="..." />
+            <img src="../Imagenes/Carrusel1.png" class="d-block w-100" alt="Imagen del shopping 1" />
           </div>
           <div class="carousel-item carousel-item-presentacion">
-            <img src="../Images/Carrusel2.png" class="d-block w-100" alt="..." />
+            <img src="../Imagenes/Carrusel2.png" class="d-block w-100" alt="Imagen del shopping 2" />
           </div>
           <div class="carousel-item carousel-item-presentacion">
-            <img src="../Images/Carrusel3.png" class="d-block w-100" alt="..." />
+            <img src="../Imagenes/Carrusel3.png" class="d-block w-100" alt="Imagen del shopping 3" />
           </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button>
@@ -105,38 +105,38 @@ $res = consultaSQL("SELECT foto_novedad, texto_novedad FROM novedades");
 
 
           fetch(this.action, {
-            method: 'POST',
-            body: formData
-          })
-          .then(response => response.text())
-          .then(data => {
-            document.getElementById("respuesta").innerHTML = data;
-            document.getElementById("locales-iniciales").style.display = "none";
-          });
+              method: 'POST',
+              body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+              document.getElementById("respuesta").innerHTML = data;
+              document.getElementById("locales-iniciales").style.display = "none";
+            });
         });
       </script>
 
       <div class="container-fluid">
         <div id="locales-iniciales">
-          <?php  
+          <?php
           $result =  consultaSQL("SELECT foto_local, nombre_local, rubro_local, ubicacion_local FROM locales");
 
-          if ($result->num_rows > 0): 
-            while ($row = $result->fetch_assoc()): 
-            $imagenLocal = $row['foto_local']; 
-            $nombre_local = $row['nombre_local']; ?>
+          if ($result->num_rows > 0):
+            while ($row = $result->fetch_assoc()):
+              $imagenLocal = $row['foto_local'];
+              $nombre_local = $row['nombre_local']; ?>
 
-          <div class="container-fluid">
-            <div class="col-12 col-md-6 col-lg-4 ">
-            <div class="promocion-index">
-              <img src="data:image/jpeg;base64<?= $imagenLocal ?>" alt="<?= $nombre_local ?>" />
-              <div class="overlay">
-              <p><?= $nombre_local ?></p>
+              <div class="container-fluid">
+                <div class="col-12 col-md-6 col-lg-4 ">
+                  <div class="promocion-index">
+                    <img src="data:image/jpeg;base64<?= $imagenLocal ?>" alt="Imagen <?= $nombre_local ?>" />
+                    <div class="overlay">
+                      <p><?= $nombre_local ?></p>
+                    </div>
+
+                  </div>
+                </div>
               </div>
-
-            </div>
-            </div>
-          </div>
 
             <?php endwhile; ?>
 
@@ -145,14 +145,14 @@ $res = consultaSQL("SELECT foto_novedad, texto_novedad FROM novedades");
               <h3>¡Vaya!</h3>
               <p style="margin: 0;">Aun no hay locales para esta categoria</p>
             </div>
-          <?php endif; ?> 
+          <?php endif; ?>
 
         </div>
-        
-        
+
+
         <div id="respuesta"></div>
-        
-        
+
+
       </div>
 
     </section>
@@ -172,13 +172,13 @@ $res = consultaSQL("SELECT foto_novedad, texto_novedad FROM novedades");
 
             <?php while ($row = $res->fetch_assoc()): ?>
 
-              <?php 
-                $foto_novedad = $row['foto_novedad']; 
-                $texto_novedad = $row['texto_novedad'];
+              <?php
+              $foto_novedad = $row['foto_novedad'];
+              $texto_novedad = $row['texto_novedad'];
               ?>
 
               <div class="carousel-item active carousel-item-novedades">
-                <img src="data:image/jpeg;base64,<?= $foto_promocion ?>" class="d-block w-100" alt="<?= $texto_novedad ?>"/>
+                <img src="data:image/jpeg;base64,<?= $foto_novedad ?>" class="d-block w-100" alt="Foto <?= $texto_novedad ?>" />
               </div>
 
             <?php endwhile; ?>
@@ -199,39 +199,39 @@ $res = consultaSQL("SELECT foto_novedad, texto_novedad FROM novedades");
       <div class="container text-center proyectos-contenedor">
         <div class="row">
 
-            <?php
-              if(isset($_SESSION['categoria_cliente'])){
-                $result =  consultaSQL("SELECT texto_promocion, foto_promocion, cod_local FROM promociones where categoria_cliente='{$_SESSION['categoria_cliente']}'");
-              }else{
-                $result =  consultaSQL("SELECT texto_promocion, foto_promocion, cod_local FROM promociones ");
-              }
-              
-              $cantidad = 0;?>
+          <?php
+          if (isset($_SESSION['categoria_cliente'])) {
+            $result =  consultaSQL("SELECT texto_promocion, foto_promocion, cod_local FROM promociones where categoria_cliente='{$_SESSION['categoria_cliente']}'");
+          } else {
+            $result =  consultaSQL("SELECT texto_promocion, foto_promocion, cod_local FROM promociones ");
+          }
 
-              <?php if ($result->num_rows > 0 ): ?>
-                
-                <?php while ($row = $result->fetch_assoc()):  ?>
+          $cantidad = 0; ?>
 
-                  <?php if($cantidad < 6): ?>
+          <?php if ($result->num_rows > 0): ?>
 
-                    <?php $texto_promocion = $row['texto_promocion'];
-                    $foto_promocion = $row['foto_promocion']; 
-                    $cantidad = $cantidad + 1;?>
-                    <div class="col-12 col-md-6 col-lg-4">
-                      <div class="promocion-index"><img src="data:image/jpeg;base64,<?= $foto_promocion ?>" />
-                        <div class="overlay">
-                          <p><?= $texto_promocion ?></p>
-                        </div>
-                      </div>
+            <?php while ($row = $result->fetch_assoc()):  ?>
+
+              <?php if ($cantidad < 6): ?>
+
+                <?php $texto_promocion = $row['texto_promocion'];
+                $foto_promocion = $row['foto_promocion'];
+                $cantidad = $cantidad + 1; ?>
+                <div class="col-12 col-md-6 col-lg-4">
+                  <div class="promocion-index"><img src="data:image/jpeg;base64,<?= $foto_promocion ?>" alt="Foto <?= $texto_promocion ?>"/>
+                    <div class="overlay">
+                      <p><?= $texto_promocion ?></p>
                     </div>
+                  </div>
+                </div>
 
-                  <?php endif; ?>
-
-                <?php endwhile; ?>
-
-              <?php else: ?>
-                <p>No hay promociones registradas.</p>
               <?php endif; ?>
+
+            <?php endwhile; ?>
+
+          <?php else: ?>
+            <p>No hay promociones registradas.</p>
+          <?php endif; ?>
 
         </div>
       </div>

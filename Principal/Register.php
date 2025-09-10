@@ -24,7 +24,7 @@ $mail = new PHPMailer(true);
 
 
 
-if ($_SERVER["REQUEST_METHOD"] == "POST"){
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $vEmail = $_POST['email'];
   $vPassword = $_POST['password'];
   $vTipoUsuario = $_POST['tipoUsuario'];
@@ -66,9 +66,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         if ($vTipoUsuario == 'cliente') {
           $vCategoriaCliente = "Inicial";
           mysqli_query($link, "INSERT INTO cliente (cod_usuario, categoria_cliente, confirmado, token_confirmacion) VALUES ('$vCodUsuario', '$vCategoriaCliente', 0, '$token')");
-          
+
           //Mandamos mail de confirmacion 
-          
+
           /* $enlace = "http://localhost/Repositorio/tp-entornos-graficos/Principal/Confirmar.php?token=$token"; */
           $enlace = "http://localhost/paginas/tp-entornos-graficos/Principal/Confirmar.php?token=$token";
           $asunto = "Confirma tu cuenta";
@@ -94,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             $mail->setFrom('matiasgarcia1577@gmail.com', 'Viventa Store');
             $mail->addAddress($vEmail, $vNombreUsuario);     //Add a recipient
             $mail->addReplyTo('matiasgarcia1577@gmail.com', 'Information');
-            
+
             /* 
             //Attachments
             $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
@@ -108,11 +108,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
             $mail->send();
             $mensaje = "<div class='alert alert-success'>Su solicitud de registro fue enviada. Esperando confirmación por correo.</div>";
-          
           } catch (Exception $e) {
             $mensaje = "<div class='alert alert-danger'>No se pudo enviar el correo de confirmación. Error: {$mail->ErrorInfo}</div>";
           }
-
         } elseif ($vTipoUsuario == 'duenio') {
           mysqli_query($link, "INSERT INTO dueño_local (cod_usuario, estado) VALUES ('$vCodUsuario', 'pendiente')");
           $mensaje = "<div class='alert alert-warning'>Se registro como dueño de local. Pendiente de aprobación.</div>";
@@ -125,7 +123,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
       mysqli_free_result($vResultado);
     }
     mysqli_close($link);
-      
   }
 }
 
@@ -135,36 +132,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
+<head>
 
-    <?php include("../Includes/head.php"); ?>
+  <?php include("../Includes/head.php"); ?>
 
-    <title>Register</title>
-    
-  </head>
+  <title>Register</title>
 
-  <body>
+</head>
 
-    <header>
+<body>
 
-      <?php include("../Includes/header.php"); ?>
+  <header>
 
-    </header>
+    <?php include("../Includes/header.php"); ?>
 
-    <main style="background-image: url('../Images/Fondo Sobrio.jfif')" class="fondo-loginRegister">
-      <section class="loginRegister-box">
-        <h1>Crear una nueva cuenta</h1>
-        <h2>Es rápido y fácil.</h2>
-        <?php echo $mensaje; ?>
-        <form class="formulario-transparente" action="Register.php" method="POST" name="formRegister">
+  </header>
 
-          <p>Nombre</p>
-          <input type="text" name="nombre" size="100" placeholder="Nombre" required />
+  <main style="background-image: url('../Imagenes/Fondo.jpg')" class="fondo-loginRegister">
+    <section class="loginRegister-box">
+      <h1>Crear una nueva cuenta</h1>
+      <h2>Es rápido y fácil.</h2>
+      <?php echo $mensaje; ?>
+      <form class="formulario-transparente" action="Register.php" method="POST" name="formRegister">
 
-          <p>Mail</p>
-          <input type="email" name="email" size="100" placeholder="Correo electrónico" required />
+        <p>Nombre</p>
+        <input type="text" name="nombre" size="100" placeholder="Nombre" required />
 
-          <p>Contraseña</p>
+        <p>Mail</p>
+        <input type="email" name="email" size="100" placeholder="Correo electrónico" required />
+
+        <p>Contraseña</p>
         <div style="position:relative;">
           <input type="password" name="password" id="password" size="8" placeholder="Contraseña" required />
           <span id="togglePassword" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer;">
@@ -172,44 +169,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
           </span>
         </div>
 
-          <p style="text-align: center" class="mb-2">Tipo de usuario</p>
-          <div class="d-flex justify-content-center gap-3">
-            <input type="radio" class="btn-check" name="tipoUsuario" id="cliente" value="cliente" autocomplete="off" required />
-            <label class="btn-radio" for="cliente">Cliente</label>
-            <input type="radio" class="btn-check" name="tipoUsuario" id="duenio" value="duenio" autocomplete="off" />
-            <label class="btn-radio" for="duenio">Dueño</label>
-          </div>
+        <p style="text-align: center" class="mb-2">Tipo de usuario</p>
+        <div class="d-flex justify-content-center gap-3">
+          <input type="radio" class="btn-check" name="tipoUsuario" id="cliente" value="cliente" autocomplete="off" required />
+          <label class="btn-radio" for="cliente">Cliente</label>
+          <input type="radio" class="btn-check" name="tipoUsuario" id="duenio" value="duenio" autocomplete="off" />
+          <label class="btn-radio" for="duenio">Dueño</label>
+        </div>
 
-          <input type="submit" name="Login" value="Únete" />
-          <a href="Login.php">¿Ya tienes una cuenta?</a>
-        </form>
-      </section>
-    </main>
+        <input type="submit" name="Login" value="Únete" />
+        <a href="Login.php">¿Ya tienes una cuenta?</a>
+      </form>
+    </section>
+  </main>
 
-    <footer class="seccion-footer d-flex flex-column justify-content-center align-items-center pt-3">
+  <footer class="seccion-footer d-flex flex-column justify-content-center align-items-center pt-3">
 
-      <?php include("../Includes/footer.php") ?>
+    <?php include("../Includes/footer.php") ?>
 
-    </footer>
+  </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
 
-    <script>
-      document.getElementById('togglePassword').addEventListener('click', function () {
-        const passwordInput = document.getElementById('password');
-        const icon = document.getElementById('iconEye');
-        if (passwordInput.type === 'password') {
-          passwordInput.type = 'text'; //La pasa a texto y se ve
-          icon.classList.remove('bi-eye');
-          icon.classList.add('bi-eye-slash');
-        } else {
-          passwordInput.type = 'password'; //La pasa a password y no se ve
-          icon.classList.remove('bi-eye-slash');
-          icon.classList.add('bi-eye');
-        }
-      });
-    </script>
+  <script>
+    document.getElementById('togglePassword').addEventListener('click', function() {
+      const passwordInput = document.getElementById('password');
+      const icon = document.getElementById('iconEye');
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text'; //La pasa a texto y se ve
+        icon.classList.remove('bi-eye');
+        icon.classList.add('bi-eye-slash');
+      } else {
+        passwordInput.type = 'password'; //La pasa a password y no se ve
+        icon.classList.remove('bi-eye-slash');
+        icon.classList.add('bi-eye');
+      }
+    });
+  </script>
 
-  </body>
+</body>
 
 </html>

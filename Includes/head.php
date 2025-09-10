@@ -14,4 +14,4 @@
 
   <link rel="stylesheet" href="../styles/style.css" />
   <link rel="stylesheet" href="../Styles/style-general.css" />
-  <link rel="icon" type="image/x-icon" href="../Images/logo.png" />
+  <link rel="icon" type="image/x-icon" href="../Imagenes/logo.png" />

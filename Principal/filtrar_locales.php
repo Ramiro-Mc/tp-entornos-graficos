@@ -22,7 +22,7 @@
     <div class="container-fluid">
       <div class="col-12 col-md-6 col-lg-4 ">
         <div class="promocion-index">
-          <img src="data:image/jpeg;base64<?= $imagenLocal ?>" alt="<?= $nombre_local ?>" />
+          <img src="data:image/jpeg;base64<?= $imagenLocal ?>" alt="Imagen <?= $nombre_local ?>" />
           <div class="overlay">
             <p><?= $nombre_local ?></p>
           </div>

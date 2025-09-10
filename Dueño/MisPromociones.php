@@ -138,7 +138,7 @@ $usoPromociones = consultaSQL($sqlUsoPromociones);
         <div class="infoTarjeta">
           <h3><?php echo htmlspecialchars($promo['texto_promocion']); ?></h3>
           <?php if (!empty($promo['foto_promocion'])): ?>
-            <img src="data:image/png;base64,<?php echo $promo['foto_promocion']; ?>" alt="Imagen promoción" style="max-width:150px;max-height:150px;">
+            <img src="data:image/png;base64,<?php echo $promo['foto_promocion']; ?>" alt="Imagen promoción <?php echo $promo['cod_promocion']; ?>" style="max-width:150px;max-height:150px;">
           <?php endif; ?>
           <p><b>Codigo:</b> <?php echo $promo['cod_promocion']; ?></p>
           <p><b>Vigencia:</b> <?php echo htmlspecialchars($promo['fecha_desde_promocion']); ?> al <?php echo htmlspecialchars($promo['fecha_hasta_promocion']); ?></p>
