@@ -31,9 +31,6 @@ if (isset($_SESSION['tipo_usuario']) && isset($_SESSION['cod_usuario'])) {
   $estaLogueado = "noLogueado";
 }
 
-if ($pestaña == "Login" or $pestaña == "Register") {
-  $estaLogueado = "logueandose";
-}
 
 if ($folder == "Administrador" or $folder == "Cliente" or $folder == "Dueño" or $folder == "Principal") {
   $rutaSalirCarpeta = "..";
@@ -74,9 +71,9 @@ if ($folder == "Administrador") {
 
       <ul class="navbar-nav">
 
-        <!-- Opciones para Index -->
+        <!-- Opciones para principal y clientes -->
 
-        <?php if ($pestaña == "Index"): ?>
+        <?php if ($folder == "Principal" || $folder == "Cliente"): ?>
 
           <?php if ($rutaExtra != ""): ?>
             <li class="nav-item">
@@ -87,13 +84,13 @@ if ($folder == "Administrador") {
           <?php endif; ?>
 
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="#novedades">
+            <a class="nav-link" aria-current="page" href="<?= $rutaSalirCarpeta ?>/Principal/Index.php#novedades">
               <p>Novedades</p>
             </a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="#locales">
+            <a class="nav-link" aria-current="page" href="<?= $rutaSalirCarpeta ?>/Principal/Index.php#locales">
               <p>Locales</p>
             </a>
           </li>
@@ -110,13 +107,13 @@ if ($folder == "Administrador") {
             </a>
           </li>
 
-          <?php if ($estaLogueado == "noLogueado"): ?>
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="#promociones">
-                <p>Promociones</p>
-              </a>
-            </li>
-          <?php endif; ?>
+          
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="<?= $rutaSalirCarpeta ?>/Cliente/BuscarPromociones.php">
+              <p>Promociones</p>
+            </a>
+          </li>
+          
         <?php endif; ?>
 
 
@@ -132,18 +129,13 @@ if ($folder == "Administrador") {
           <?php if ($tipo_usuario == "cliente"): ?>
 
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="<?= $rutaSalirCarpeta ?>/Cliente/BuscarPromociones.php">
-                <p>¡Usar Promociones!</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="<?= $rutaSalirCarpeta ?>/Cliente/MisSolicitudesDePromociones.php">
-                <p>Mis Solicitudes De Promociones</p>
+              <a class="nav-link" aria-current="page" href="<?= $rutaSalirCarpeta ?>/Cliente/MisCupones.php">
+                <p>Mis Cupones</p>
               </a>
             </li>
 
             <li class="nav-item">
-              <p style="color:white">Bienvenido! <a href="<?= $rutaSalirCarpeta ?>/Cliente/MiPerfil.php"><?= $vnombre_usuario ?></a></p>
+              <p style="color:white; margin-right:1rem;">¡Bienvenido <a style="margin: 0;" href="<?= $rutaSalirCarpeta ?>/Cliente/MiPerfil.php"><?= $vnombre_usuario ?></a>!</p>
             </li>
 
             <li class="nav-item">
@@ -153,7 +145,7 @@ if ($folder == "Administrador") {
           <?php else: ?>
 
             <li class="nav-item">
-              <p style="color:white">Bienvenido! <b><?= $vnombre_usuario ?></b></p>
+              <p style="color:white">¡Bienvenido <b><?= $vnombre_usuario ?></b>!</p>
             </li>
 
           <?php endif; ?>
@@ -198,20 +190,25 @@ if ($folder == "Administrador") {
 
         <?php if ($estaLogueado == "noLogueado" && $pestaña != "Confirmar"): ?>
 
-          <li class="nav-item">
-            <a href="<?= $rutaSalirCarpeta ?>/Principal/Login.php">
-              <button type="button" class="boton-nav btn btn-light">
-                Iniciar sesion
-              </button>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="<?= $rutaSalirCarpeta ?>/Principal/Register.php">
-              <button type="button" class="boton-nav btn btn-light">
-                Registrar
-              </button>
-            </a>
-          </li>
+          <?php if($pestaña != "InicioSesion"): ?>
+            <li class="nav-item">
+              <a href="<?= $rutaSalirCarpeta ?>/Principal/InicioSesion.php">
+                <button type="button" class="boton-nav btn btn-light">
+                  Iniciar sesion
+                </button>
+              </a>
+            </li>
+          <?php endif; ?>
+
+          <?php if($pestaña != "Registrar"): ?>
+            <li class="nav-item">
+              <a href="<?= $rutaSalirCarpeta ?>/Principal/Registrar.php">
+                <button type="button" class="boton-nav btn btn-light">
+                  Registrar
+                </button>
+              </a>
+            </li>
+          <?php endif; ?>
 
         <?php endif; ?>
 

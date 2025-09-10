@@ -191,7 +191,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
 
         <input type="submit" name="Login" value="Únete" />
-        <a href="Login.php">¿Ya tienes una cuenta?</a>
+        <a href="InicioSesion.php">¿Ya tienes una cuenta?</a>
       </form>
     </section>
   </main>

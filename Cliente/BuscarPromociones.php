@@ -329,8 +329,8 @@ $totalPaginas = ceil($totalPromos / $cantPagina);
                               </div>
                               <div class="modal-body text-center">
                                 <p style="font-size: 1.2rem;">Le notificaremos a su direccion de correo electronico cuando el estado de su solicitud se actualice</p>
-                                <p style="margin: 0;">Puede ver el estado de sus solicitudes aqui:</p>
-                                <a href="../Cliente/MisSolicitudesDePromociones.php">Mis solicitudes</a>
+                                <p style="margin: 0;">Puede ver el estado de sus cupones:</p>
+                                <a href="../Cliente/MisCupones.php">Mis cupones</a>
                               </div>
                               
                               <div class="modal-footer">

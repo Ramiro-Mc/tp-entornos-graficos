@@ -4,7 +4,7 @@ include_once("../Includes/funciones.php");
 sesionIniciada();
 
 $folder = "Principal";
-$pestaña = "Index";
+$pestaña = "Inicio";
 
 $res = consultaSQL("SELECT foto_novedad, texto_novedad FROM novedades");
 
@@ -77,7 +77,7 @@ $res = consultaSQL("SELECT foto_novedad, texto_novedad FROM novedades");
       <h2 class="seccion-titulo"><strong>Nuestros Locales</strong></h2>
 
       <div class="container categoria-botones text-center">
-        <form id="categorias" method="POST" action="filtrar_locales.php" class="d-inline">
+        <form id="categorias" method="POST" action="filtrarLocales.php" class="d-inline">
           <button type="submit" name="categoria" value="Todos" class="btn btn-secondary">Todos</button>
           <button type="submit" name="categoria" value="Accesorios" class="btn btn-secondary">Accesorios</button>
           <button type="submit" name="categoria" value="Deportes" class="btn btn-secondary">Deportes</button>

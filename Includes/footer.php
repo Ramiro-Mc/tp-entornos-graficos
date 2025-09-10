@@ -6,7 +6,7 @@ if($folder == "Administrador"){
 }elseif($folder == "Dueño"){
   $opciones = ["Seccion Dueño Local", "Crear Promocion", "Mis Promociones", "Administrar Solicitudes"];
 }elseif($folder == "Principal" || $folder == "Cliente"){
-  $opciones = ["Index", "Contacto", "Sobre Nosotros"];
+  $opciones = ["Inicio", "Contacto", "Sobre Nosotros"];
 }
 
 $opciones_filtradas = array_filter($opciones, function($item) use ($pestaña) {
@@ -20,7 +20,7 @@ $opciones_sin_espacios = array_map(function($item) {
 
 if(isset($_SESSION['tipo_usuario'])){
   if($_SESSION['tipo_usuario'] == "cliente"){
-    $opciones_extra = ["Mi Perfil", "Buscar Promociones", "Buscar Locales","Mis Solicitudes De Promociones"];
+    $opciones_extra = ["Mi Perfil", "Mis Cupones", "Buscar Promociones"];
     
     $opciones_extra_filtradas = array_filter($opciones_extra, function($item) use ($pestaña) {
       return $item !== $pestaña;
@@ -80,11 +80,19 @@ if(isset($_SESSION['tipo_usuario'])){
           echo "<li><a href='../Cliente/" . $opciones_extra_sin_espacios[$key] .".php'>". $item ."</a></li>";
         }
         foreach ($opciones_filtradas as $key => $item) {
-          echo "<li><a href='../Principal/" . $opciones_sin_espacios[$key] .".php'>". $item ."</a></li>";
+          if($opciones_sin_espacios[$key] == "Inicio"){
+            echo "<li><a href='../Principal/Index.php'>Inicio</a></li>";
+          }else{
+            echo "<li><a href='../Principal/" . $opciones_sin_espacios[$key] .".php'>". $item ."</a></li>";
+          }
         }
       }else{
         foreach ($opciones_filtradas as $key => $item) {
-        echo "<li><a href='./" . $opciones_sin_espacios[$key] .".php'>". $item ."</a></li>";
+          if($opciones_sin_espacios[$key] == "Inicio"){
+            echo "<li><a href='../Principal/Index.php'>Inicio</a></li>";
+          }else{
+            echo "<li><a href='../Principal/" . $opciones_sin_espacios[$key] .".php'>". $item ."</a></li>";
+          }
         }
       }
       ?>
