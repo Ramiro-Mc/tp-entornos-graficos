@@ -38,82 +38,81 @@ if(isset($_SESSION['tipo_usuario'])){
 
 ?>
 
+<h5 style="font-family: Math_Italic; font-size:2.5rem; color: #B9C3CD">Viventa Store</h5>
 
-<footer class="seccion-footer d-flex flex-column justify-content-center align-items-center pt-3">
-  <div class="container d-flex flex-wrap justify-content-center gap-5 px-0">
+<div class="container d-flex flex-wrap justify-content-center gap-5 px-0">
 
-    <!-- Redes sociales -->
+  <!-- Redes sociales -->
 
-      <?php if($folder != "Administrador" && $folder != "Dueño"): ?>
+    <?php if($folder != "Administrador" && $folder != "Dueño"): ?>
 
-        <div class="iconos-redes-sociales d-flex flex-column gap-2 texto-footer">
-          <h5 class="text-center">Redes Sociales</h5>
-          <div class="d-flex gap-3">
-            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
-              <i class="bi bi-instagram fs-4"></i>
-            </a>
-            <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
-              <i class="bi bi-facebook fs-4"></i>
-            </a>
-            <a href="https://www.whatsapp.com/" target="_blank" rel="noopener noreferrer">
-              <i class="bi bi-whatsapp fs-4"></i>
-            </a>
-            <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">
-              <i class="bi bi-youtube fs-4"></i>
-            </a>
-          </div>
+      <div class="iconos-redes-sociales d-flex flex-column gap-2 texto-footer">
+        <h5 class="text-center">Redes Sociales</h5>
+        <div class="d-flex gap-3">
+          <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+            <i class="bi bi-instagram fs-4"></i>
+          </a>
+          <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
+            <i class="bi bi-facebook fs-4"></i>
+          </a>
+          <a href="https://www.whatsapp.com/" target="_blank" rel="noopener noreferrer">
+            <i class="bi bi-whatsapp fs-4"></i>
+          </a>
+          <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">
+            <i class="bi bi-youtube fs-4"></i>
+          </a>
         </div>
+      </div>
 
-      <?php endif; ?>
+    <?php endif; ?>
 
-    <!-- Fin redes sociales -->
+  <!-- Fin redes sociales -->
 
-    <nav class="texto-footer">
+  <nav class="texto-footer">
 
-      <h5>Mapa del sitio</h5>
+    <h5>Mapa del sitio</h5>
 
-      <ul>
-        <?php 
+    <ul>
+      <?php 
 
-        if(isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == "cliente"){
-          foreach ($opciones_extra_filtradas as $key => $item) {
-            echo "<li><a href='../Cliente/" . $opciones_extra_sin_espacios[$key] .".php'>". $item ."</a></li>";
-          }
-          foreach ($opciones_filtradas as $key => $item) {
-            echo "<li><a href='../Principal/" . $opciones_sin_espacios[$key] .".php'>". $item ."</a></li>";
-          }
-        }else{
-          foreach ($opciones_filtradas as $key => $item) {
-          echo "<li><a href='./" . $opciones_sin_espacios[$key] .".php'>". $item ."</a></li>";
-          }
+      if(isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == "cliente"){
+        foreach ($opciones_extra_filtradas as $key => $item) {
+          echo "<li><a href='../Cliente/" . $opciones_extra_sin_espacios[$key] .".php'>". $item ."</a></li>";
         }
-        ?>
-      </ul>
+        foreach ($opciones_filtradas as $key => $item) {
+          echo "<li><a href='../Principal/" . $opciones_sin_espacios[$key] .".php'>". $item ."</a></li>";
+        }
+      }else{
+        foreach ($opciones_filtradas as $key => $item) {
+        echo "<li><a href='./" . $opciones_sin_espacios[$key] .".php'>". $item ."</a></li>";
+        }
+      }
+      ?>
+    </ul>
 
-    </nav>
+  </nav>
 
-    <!-- Contacto -->
+  <!-- Contacto -->
 
-      <?php if($folder != "Administrador"): ?>
+    <?php if($folder != "Administrador"): ?>
 
-        <section class="texto-footer">
-          <h5>Contacto</h5>
-          <p>
-            Email:
-            <a href="#">contacto@viventastore.com</a>
-          </p>
-          <p>
-            Teléfono:
-            <a href="#">+54 9 11 2345-6789</a>
-          </p>
-          <p>Dirección: Calle 123, Ciudad</p>
-        </section>
+      <section class="texto-footer">
+        <h5>Contacto</h5>
+        <p>
+          Email:
+          <a href="mailto:viventastore@gmail.com?subject=Consulta%20Viventa%20Store">viventastore@gmail.com</a>
+        </p>
+        <p>
+          Teléfono:
+          +54 9 55 5555-5555
+        </p>
+        <p>Dirección: Calle 123, Ciudad</p>
+      </section>
 
-      <?php endif; ?>
+    <?php endif; ?>
 
-    <!-- Fin contacto -->
+  <!-- Fin contacto -->
 
-  </div>
+</div>
 
-  <p class="texto-footer text-center">© 2025 Viventa Store. Todos los derechos reservados.</p>
-</footer>
+<p class="texto-footer text-center">© 2025 Viventa Store. Todos los derechos reservados.</p>

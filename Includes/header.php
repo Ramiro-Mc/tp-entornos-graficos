@@ -60,7 +60,7 @@ if ($folder == "Administrador") {
     <!-- Logo y boton de desplegado de menu (igual para todas las pestañas) -->
 
     <a class="navbar-brand" href="<?= $rutaSalirCarpeta ?><?= $rutaLogo ?>">
-      <img class="logo" src="<?= $rutaSalirCarpeta ?>/Imagenes/Logo.png" alt="Logo de la pagina web" />
+      <img class="logo" src="<?= $rutaSalirCarpeta ?>/Imagenes/Logo-titulo.png" alt="Logo de la pagina web" />
     </a>
 
     <button class="navbar-toggler boton-menu" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

@@ -20,7 +20,6 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
 
-$mail = new PHPMailer(true);
 
 
 
@@ -73,8 +72,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           $enlace = "http://localhost/paginas/tp-entornos-graficos/Principal/Confirmar.php?token=$token";
           $asunto = "Confirma tu cuenta";
           $mensajeMail = "
-            Hola $vNombreUsuario,\n\nPor favor confirma tu cuenta haciendo clic en el siguiente enlace:\n
-            <a href='$enlace'>Confirmar cuenta</a>
+            <div style='font-family: Arial, sans-serif; background: #f9f9f9; padding: 24px; border-radius: 8px; color: #222;'>
+              <h2 style='color: #2c3e50;'>¡Bienvenido a Viventa Store, $vNombreUsuario!</h2>
+              <hr style='border: none; border-top: 1px solid #eee; margin: 16px 0;'/>
+              <p>Gracias por registrarte. Para activar tu cuenta, por favor haz clic en el siguiente botón:</p>
+              <div style='margin: 24px 0;'>
+                <a href='$enlace' style='display: inline-block; background: #2c3e50; color: #fff; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold;'>
+                  Confirmar cuenta
+                </a>
+              </div>
+              <p>Si el botón no funciona, copia y pega el siguiente enlace en tu navegador:</p>
+              <div style='background: #fff; border: 1px solid #eee; padding: 10px; border-radius: 6px; color: #444; word-break: break-all;'>
+                $enlace
+              </div>
+              <hr style='border: none; border-top: 1px solid #eee; margin: 24px 0 8px 0;'/>
+              <p style='font-size: 0.95em; color: #888;'>Este mensaje fue enviado automáticamente desde Viventa Store.</p>
+            </div>
           ";
 
           $mail = new PHPMailer(true);
@@ -85,15 +98,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->isSMTP();                                            //Send using SMTP
             $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
             $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $mail->Username   = 'matiasgarcia1577@gmail.com';                     //SMTP username
-            $mail->Password   = 'epiz buun utcp bgxc';                               //SMTP password
+            $mail->Username   = 'viventastore@gmail.com';                     //SMTP username
+            $mail->Password   = 'vfpm zaxi qbws oyub';                               //SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
             $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
             //Recipients
-            $mail->setFrom('matiasgarcia1577@gmail.com', 'Viventa Store');
+            $mail->setFrom('viventastore@gmail.com', 'Viventa Store');
             $mail->addAddress($vEmail, $vNombreUsuario);     //Add a recipient
-            $mail->addReplyTo('matiasgarcia1577@gmail.com', 'Information');
+            $mail->addReplyTo('viventastore@gmail.com', 'Information');
 
             /* 
             //Attachments
