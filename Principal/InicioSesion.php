@@ -106,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <h1>Inicio Sesión </h1>
       <?php echo $mensaje; ?>
 
-      <form class="formulario-transparente" action="Login.php" method="POST" name="FormLogin">
+      <form class="formulario-transparente" action="InicioSesion.php" method="POST" name="FormLogin">
 
         <p>Mail</p>
         <input type="text" name="email" size="100" placeholder="ejemplo@correo.com" required />

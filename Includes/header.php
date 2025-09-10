@@ -107,6 +107,12 @@ if ($folder == "Administrador") {
             </a>
           </li>
 
+          <li class="nav-item">
+            <a class="nav-link" href="<?= $rutaSalirCarpeta ?>/Principal/PreguntasFrecuentes.php">
+              <p>Preguntas Frecuentes</p>
+            </a>
+          </li>
+
           
           <li class="nav-item">
             <a class="nav-link" aria-current="page" href="<?= $rutaSalirCarpeta ?>/Cliente/BuscarPromociones.php">
@@ -155,7 +161,7 @@ if ($folder == "Administrador") {
 
           <li class="nav-item">
 
-            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cerrar-sesion">cerrar sesion</button>
+            <button type="button" style="margin-left: 10px;" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cerrar-sesion">Cerrar sesion</button>
 
           </li>
 
