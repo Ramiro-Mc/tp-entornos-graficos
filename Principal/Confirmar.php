@@ -37,7 +37,7 @@ if ($token) {
       <?php if (mysqli_query($link, $updateQuery) && mysqli_affected_rows($link) > 0): ?>
         <div class="notificacion-cuenta-confirmada">
           <h3>¡Cuenta confirmada!</h3>
-          <a href="../Principal/Login.php">Haga click aqui para iniciar sesion</a>
+          <a href="../Principal/InicioSesion.php">Haga click aqui para iniciar sesion</a>
         </div>
       <?php else: ?>
         <div class="notificacion-cuenta-no-confirmada">

@@ -8,7 +8,7 @@ include_once("../Includes/funciones.php");
 sesionIniciada();
 
 if (!isset($_SESSION['cod_usuario'])) {
-  header("Location: ../principal/login.php");
+  header("Location: ../principal/InicioSesion.php");
   exit;
 }
 

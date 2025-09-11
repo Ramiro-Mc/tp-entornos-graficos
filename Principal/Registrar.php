@@ -67,8 +67,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
           //Mandamos mail de confirmacion 
 
-          /* $enlace = "http://localhost/Repositorio/tp-entornos-graficos/Principal/Confirmar.php?token=$token"; */
-          $enlace = "http://localhost/paginas/tp-entornos-graficos/Principal/Confirmar.php?token=$token";
+           $enlace = "http://localhost:8012/Repositorio/tp-entornos-graficos/Principal/Confirmar.php?token=$token"; 
+          // $enlace = "http://localhost/paginas/tp-entornos-graficos/Principal/Confirmar.php?token=$token";
           $asunto = "Confirma tu cuenta";
           $mensajeMail = "
             <div style='font-family: Arial, sans-serif; background: #f9f9f9; padding: 24px; border-radius: 8px; color: #222;'>
@@ -165,7 +165,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <h1>Crear una nueva cuenta</h1>
       <h2>Es rápido y fácil.</h2>
       <?php echo $mensaje; ?>
-      <form class="formulario-transparente" action="Register.php" method="POST" name="formRegister">
+      <form class="formulario-transparente" action="Registrar.php" method="POST" name="formRegister">
 
         <p>Nombre</p>
         <input type="text" name="nombre" size="100" placeholder="Nombre" required />
