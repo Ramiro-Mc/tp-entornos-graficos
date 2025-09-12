@@ -100,34 +100,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   </header>
 
-  <main style="background-image: url('../Imagenes/Fondo.jpg')" class="fondo-loginRegister pb-5 pt-5">
+  <main style="background-image: url('../Imagenes/Fondo.jpg')" class="fondo-loginRegister pb-5 pt-5" aria-label="Página de inicio de sesión">
 
-    <section class="loginRegister-box">
+    <section class="loginRegister-box" aria-label="Formulario de inicio de sesión">
       <h1>Inicio Sesión </h1>
       <?php echo $mensaje; ?>
 
-      <form class="formulario-transparente" action="InicioSesion.php" method="POST" name="FormLogin">
+      <form class="formulario-transparente" action="InicioSesion.php" method="POST" name="FormLogin" aria-label="Formulario para iniciar sesión">
 
-        <p>Mail</p>
-        <input type="text" name="email" size="100" placeholder="ejemplo@correo.com" required />
+        <label for="email" style="display:block;">Mail</label>
+        <input type="text" id="email" name="email" size="100" placeholder="ejemplo@correo.com" required aria-label="Correo electrónico" />
 
-        <p>Contraseña</p>
+        <label for="password" style="display:block;">Contraseña</label>
         <div style="position:relative;">
-          <input type="password" name="password" id="password" size="8" placeholder="********" required />
-          <span id="togglePassword" style="position:absolute; right:8px; top:40%; transform:translateY(-50%); cursor:pointer;">
+          <input type="password" name="password" id="password" size="8" placeholder="********" required aria-label="Contraseña" />
+          <span id="togglePassword" style="position:absolute; right:8px; top:40%; transform:translateY(-50%); cursor:pointer;" aria-label="Mostrar u ocultar contraseña" tabindex="0" role="button">
             <i class="bi bi-eye" id="iconEye"></i>
           </span>
         </div>
 
         <div class="contenedor-recuerdame">
-          <label style="font-size: 0.9rem; user-select: none;" class="form-check-label" for="mantenerSesionIniciada">Recuerdame</label>
-          <input type="checkbox" class="checkbox-recordar" id="mantenerSesionIniciada" name="mantenerSesionIniciada" value="si">
+          <label style="font-size: 0.9rem; user-select: none;" class="form-check-label" for="mantenerSesionIniciada">Recuérdame</label>
+          <input type="checkbox" class="checkbox-recordar" id="mantenerSesionIniciada" name="mantenerSesionIniciada" value="si" aria-label="Mantener sesión iniciada">
         </div>
 
-        <input type="submit" name="Login" value="Login" />
-        <a href="Registrar.php"><button type="button" style="color: black">Registrarse</button></a>
+        <input type="submit" name="Login" value="Login" aria-label="Iniciar sesión" />
+        <a href="Registrar.php"><button type="button" style="color: black" aria-label="Ir a registro">Registrarse</button></a>
 
-        <a href="#">¿Olvido su contraseña?</a>
+        <a href="#" aria-label="Recuperar contraseña">¿Olvidó su contraseña?</a>
       </form>
 
     </section>

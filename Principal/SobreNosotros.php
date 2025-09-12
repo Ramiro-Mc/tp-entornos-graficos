@@ -23,67 +23,32 @@ $pestaña = "Sobre Nosotros";
 
   </header>
 
-  <main>
-    <div class="contenedor">
+  <main aria-label="Página Sobre Nosotros">
+    <div class="contenedor" aria-label="Sección principal Sobre Nosotros">
       <div class="fondoSobreNosotros">
-        <img src="../Imagenes/sobreNosotros.jpg" alt="Fondo" />
+        <img src="../Imagenes/sobreNosotros.jpg" alt="Imagen de fondo Sobre Nosotros" aria-label="Imagen institucional de Viventa Shopping" />
       </div>
-      <div class="contenido">
+      <div class="contenido" aria-label="Contenido informativo Sobre Nosotros">
         <br />
-        <div class="sobreNosotros container mt-5">
+        <div class="sobreNosotros container mt-5" aria-label="Información sobre Viventa Shopping">
           <h2>Sobre Nosotros</h2>
-          <p>
-            Bienvenido a Viventa Shopping, el lugar donde la innovación, la
-            variedad y la experiencia de compra se combinan para ofrecerte lo
-            mejor.
-          </p>
-          <p>
-            Desde nuestros inicios, nos propusimos ser más que un simple
-            centro comercial: queremos ser un espacio de encuentro, de
-            inspiración y de disfrute para toda la familia. Por eso, en
-            nuestras tiendas encontrarás productos de marcas líderes,
-            tecnología de vanguardia, moda para todas las edades, gastronomía
-            variada y opciones de entretenimiento para grandes y chicos.
-          </p>
-          <p>
-            Nuestro compromiso con la calidad y el servicio nos ha permitido
-            consolidarnos como el shopping preferido de la ciudad. Contamos
-            con un equipo de profesionales capacitados para brindarte una
-            atención personalizada, asegurando que cada visita sea una
-            experiencia única y satisfactoria.
-          </p>
-          <p>
-            En Viventa Shopping, la comodidad de nuestros clientes es nuestra
-            prioridad. Contamos con amplios estacionamientos, zonas de
-            descanso, conexión Wi-Fi gratuita y un servicio de atención
-            personalizada que nos distingue.
-          </p>
-          <p>
-            Te invitamos a visitarnos y descubrir por qué somos el shopping
-            preferido de la ciudad. ¡En Viventa Shopping, siempre hay algo
-            nuevo para vos!
-          </p>
+          <label>Bienvenido a Viventa Shopping, el lugar donde la innovación, la variedad y la experiencia de compra se combinan para ofrecerte lo mejor.</label>
+          <label>Desde nuestros inicios, nos propusimos ser más que un simple centro comercial: queremos ser un espacio de encuentro, de inspiración y de disfrute para toda la familia. Por eso, en nuestras tiendas encontrarás productos de marcas líderes, tecnología de vanguardia, moda para todas las edades, gastronomía variada y opciones de entretenimiento para grandes y chicos.</label>
+          <label>Nuestro compromiso con la calidad y el servicio nos ha permitido consolidarnos como el shopping preferido de la ciudad. Contamos con un equipo de profesionales capacitados para brindarte una atención personalizada, asegurando que cada visita sea una experiencia única y satisfactoria.</label>
+          <label>En Viventa Shopping, la comodidad de nuestros clientes es nuestra prioridad. Contamos con amplios estacionamientos, zonas de descanso, conexión Wi-Fi gratuita y un servicio de atención personalizada que nos distingue.</label>
+          <label>Te invitamos a visitarnos y descubrir por qué somos el shopping preferido de la ciudad. ¡En Viventa Shopping, siempre hay algo nuevo para vos!</label>
           <br />
           <h2>Datos de Contacto</h2>
-          <p>
-            Dirección: Av. Central 456, Ciudad Shopping, Buenos Aires,
-            Argentina
-          </p>
-          <p> Teléfono: +54 9 11 2345 6789</p>
-          <p> Email: contacto@viventashopping.com</p>
-          <p> Horarios de atención:</p>
-          <p> 🕘 Lunes a Sábado: 10:00 a 21:00 hs</p>
-          <p> 🕘 Domingo y feriados: 11:00 a 20:00 hs</p>
-          <p>
-            Estacionamiento: 2 niveles cubiertos y descubiertos gratuitos.
-          </p>
+          <label>Dirección: Av. Central 456, Ciudad Shopping, Buenos Aires, Argentina</label>
+          <label>Teléfono: +54 9 11 2345 6789</label>
+          <label>Email: contacto@viventashopping.com</label>
+          <label>Horarios de atención:</label>
+          <label>🕘 Lunes a Sábado: 10:00 a 21:00 hs</label>
+          <label>🕘 Domingo y feriados: 11:00 a 20:00 hs</label>
+          <label>Estacionamiento: 2 niveles cubiertos y descubiertos gratuitos.</label>
           <br />
-          <p> Wi-Fi: Libre y gratuito en todo el predio.</p>
-          <p>
-            Servicios adicionales: Zona de juegos infantiles, patio de
-            comidas, salas de cine 4D, cajeros automáticos, atención al
-            cliente.
-          </p>
+          <label>Wi-Fi: Libre y gratuito en todo el predio.</label>
+          <label>Servicios adicionales: Zona de juegos infantiles, patio de comidas, salas de cine 4D, cajeros automáticos, atención al cliente.</label>
           <br />
         </div>
       </div>

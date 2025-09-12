@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
           //Mandamos mail de confirmacion 
 
-           $enlace = "http://localhost:8012/Repositorio/tp-entornos-graficos/Principal/Confirmar.php?token=$token"; 
+          $enlace = "http://localhost:8012/Repositorio/tp-entornos-graficos/Principal/Confirmar.php?token=$token";
           // $enlace = "http://localhost/paginas/tp-entornos-graficos/Principal/Confirmar.php?token=$token";
           $asunto = "Confirma tu cuenta";
           $mensajeMail = "
@@ -160,37 +160,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   </header>
 
-  <main style="background-image: url('../Imagenes/Fondo.jpg')" class="fondo-loginRegister">
-    <section class="loginRegister-box">
+  <main style="background-image: url('../Imagenes/Fondo.jpg')" class="fondo-loginRegister" aria-label="Página de registro">
+    <section class="loginRegister-box" aria-label="Formulario de registro">
       <h1>Crear una nueva cuenta</h1>
       <h2>Es rápido y fácil.</h2>
       <?php echo $mensaje; ?>
-      <form class="formulario-transparente" action="Registrar.php" method="POST" name="formRegister">
+      <form class="formulario-transparente" action="Registrar.php" method="POST" name="formRegister" aria-label="Formulario para crear una cuenta">
 
-        <p>Nombre</p>
-        <input type="text" name="nombre" size="100" placeholder="Nombre" required />
+        <label for="nombre" style="display:block;">Nombre</label>
+        <input type="text" id="nombre" name="nombre" size="100" placeholder="Nombre" required aria-label="Nombre" />
 
-        <p>Mail</p>
-        <input type="email" name="email" size="100" placeholder="Correo electrónico" required />
+        <label for="email" style="display:block;">Mail</label>
+        <input type="email" id="email" name="email" size="100" placeholder="Correo electrónico" required aria-label="Correo electrónico" />
 
-        <p>Contraseña</p>
+        <label for="password" style="display:block;">Contraseña</label>
         <div style="position:relative;">
-          <input type="password" name="password" id="password" size="8" placeholder="Contraseña" required />
-          <span id="togglePassword" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer;">
+          <input type="password" name="password" id="password" size="8" placeholder="Contraseña" required aria-label="Contraseña" />
+          <span id="togglePassword" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer;" aria-label="Mostrar u ocultar contraseña" tabindex="0" role="button">
             <i class="bi bi-eye" id="iconEye"></i>
           </span>
         </div>
 
         <p style="text-align: center" class="mb-2">Tipo de usuario</p>
-        <div class="d-flex justify-content-center gap-3">
-          <input type="radio" class="btn-check" name="tipoUsuario" id="cliente" value="cliente" autocomplete="off" required />
+        <div class="d-flex justify-content-center gap-3" aria-label="Selecciona el tipo de usuario">
+          <input type="radio" class="btn-check" name="tipoUsuario" id="cliente" value="cliente" autocomplete="off" required aria-label="Cliente" />
           <label class="btn-radio" for="cliente">Cliente</label>
-          <input type="radio" class="btn-check" name="tipoUsuario" id="duenio" value="duenio" autocomplete="off" />
+          <input type="radio" class="btn-check" name="tipoUsuario" id="duenio" value="duenio" autocomplete="off" aria-label="Dueño" />
           <label class="btn-radio" for="duenio">Dueño</label>
         </div>
 
-        <input type="submit" name="Login" value="Únete" />
-        <a href="InicioSesion.php">¿Ya tienes una cuenta?</a>
+        <input type="submit" style="margin-top: 1rem;" name="Login" value="Únete" aria-label="Crear cuenta" />
+        <a href="InicioSesion.php" aria-label="Ir a inicio de sesión">¿Ya tienes una cuenta?</a>
       </form>
     </section>
   </main>

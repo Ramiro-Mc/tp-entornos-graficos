@@ -1,37 +1,35 @@
-<?php 
+<?php
 include_once("session.php");
 
-if($folder == "Administrador"){
+if ($folder == "Administrador") {
   $opciones = ["Seccion Administrador", "Administrar Promociones", "Administrar Novedades", "Administrar Locales", "Solicitudes De Registro", "Reporte Promociones"];
-}elseif($folder == "Dueño"){
+} elseif ($folder == "Dueño") {
   $opciones = ["Seccion Dueño Local", "Crear Promocion", "Mis Promociones", "Administrar Solicitudes"];
-}elseif($folder == "Principal" || $folder == "Cliente"){
+} elseif ($folder == "Principal" || $folder == "Cliente") {
   $opciones = ["Inicio", "Contacto", "Sobre Nosotros"];
 }
 
-$opciones_filtradas = array_filter($opciones, function($item) use ($pestaña) {
+$opciones_filtradas = array_filter($opciones, function ($item) use ($pestaña) {
   return $item !== $pestaña;
 });
 $opciones_filtradas = array_values($opciones_filtradas); // Reindexa el array
 
-$opciones_sin_espacios = array_map(function($item) {
+$opciones_sin_espacios = array_map(function ($item) {
   return str_replace(' ', '', $item);
 }, $opciones_filtradas); //Saca los espacios
 
-if(isset($_SESSION['tipo_usuario'])){
-  if($_SESSION['tipo_usuario'] == "cliente"){
+if (isset($_SESSION['tipo_usuario'])) {
+  if ($_SESSION['tipo_usuario'] == "cliente") {
     $opciones_extra = ["Mi Perfil", "Mis Cupones", "Buscar Promociones"];
-    
-    $opciones_extra_filtradas = array_filter($opciones_extra, function($item) use ($pestaña) {
+
+    $opciones_extra_filtradas = array_filter($opciones_extra, function ($item) use ($pestaña) {
       return $item !== $pestaña;
     });
     $opciones_extra_filtradas = array_values($opciones_extra_filtradas); // Reindexa el array
 
-    $opciones_extra_sin_espacios = array_map(function($item) {
+    $opciones_extra_sin_espacios = array_map(function ($item) {
       return str_replace(' ', '', $item);
     }, $opciones_extra_filtradas);
-
-
   }
 }
 
@@ -44,54 +42,52 @@ if(isset($_SESSION['tipo_usuario'])){
 
   <!-- Redes sociales -->
 
-    <?php if($folder != "Administrador" && $folder != "Dueño"): ?>
+  <?php if ($folder != "Administrador" && $folder != "Dueño"): ?>
 
-      <div class="iconos-redes-sociales d-flex flex-column gap-2 texto-footer">
-        <h5 class="text-center">Redes Sociales</h5>
-        <div class="d-flex gap-3">
-          <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
-            <i class="bi bi-instagram fs-4"></i>
-          </a>
-          <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
-            <i class="bi bi-facebook fs-4"></i>
-          </a>
-          <a href="https://www.whatsapp.com/" target="_blank" rel="noopener noreferrer">
-            <i class="bi bi-whatsapp fs-4"></i>
-          </a>
-          <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">
-            <i class="bi bi-youtube fs-4"></i>
-          </a>
-        </div>
+    <div class="iconos-redes-sociales d-flex flex-column gap-2 texto-footer">
+      <h5 class="text-center">Redes Sociales</h5>
+      <div class="d-flex gap-3">
+        <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <i class="bi bi-instagram fs-4"></i>
+        </a>
+        <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+          <i class="bi bi-facebook fs-4"></i>
+        </a>
+        <a href="https://www.whatsapp.com/" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+          <i class="bi bi-whatsapp fs-4"></i>
+        </a>
+        <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+          <i class="bi bi-youtube fs-4"></i>
+        </a>
       </div>
+    </div>
 
-    <?php endif; ?>
+  <?php endif; ?>
 
   <!-- Fin redes sociales -->
 
-  <nav class="texto-footer">
-
+  <nav class="texto-footer" aria-label="Mapa del sitio">
     <h5>Mapa del sitio</h5>
-
     <ul>
-      <?php 
+      <?php
 
-      if(isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == "cliente"){
+      if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == "cliente") {
         foreach ($opciones_extra_filtradas as $key => $item) {
-          echo "<li><a href='../Cliente/" . $opciones_extra_sin_espacios[$key] .".php'>". $item ."</a></li>";
+          echo "<li><a href='../Cliente/" . $opciones_extra_sin_espacios[$key] . ".php'>" . $item . "</a></li>";
         }
         foreach ($opciones_filtradas as $key => $item) {
-          if($opciones_sin_espacios[$key] == "Inicio"){
+          if ($opciones_sin_espacios[$key] == "Inicio") {
             echo "<li><a href='../Principal/Index.php'>Inicio</a></li>";
-          }else{
-            echo "<li><a href='../Principal/" . $opciones_sin_espacios[$key] .".php'>". $item ."</a></li>";
+          } else {
+            echo "<li><a href='../Principal/" . $opciones_sin_espacios[$key] . ".php'>" . $item . "</a></li>";
           }
         }
-      }else{
+      } else {
         foreach ($opciones_filtradas as $key => $item) {
-          if($opciones_sin_espacios[$key] == "Inicio"){
+          if ($opciones_sin_espacios[$key] == "Inicio") {
             echo "<li><a href='../Principal/Index.php'>Inicio</a></li>";
-          }else{
-            echo "<li><a href='../Principal/" . $opciones_sin_espacios[$key] .".php'>". $item ."</a></li>";
+          } else {
+            echo "<li><a href='../Principal/" . $opciones_sin_espacios[$key] . ".php'>" . $item . "</a></li>";
           }
         }
       }
@@ -102,22 +98,22 @@ if(isset($_SESSION['tipo_usuario'])){
 
   <!-- Contacto -->
 
-    <?php if($folder != "Administrador"): ?>
+  <?php if ($folder != "Administrador"): ?>
 
-      <section class="texto-footer">
-        <h5>Contacto</h5>
-        <p>
-          Email:
-          <a href="mailto:viventastore@gmail.com?subject=Consulta%20Viventa%20Store">viventastore@gmail.com</a>
-        </p>
-        <p>
-          Teléfono:
-          +54 9 55 5555-5555
-        </p>
-        <p>Dirección: Calle 123, Ciudad</p>
-      </section>
+    <section class="texto-footer" aria-label="Contacto">
+      <h5>Contacto</h5>
+      <p>
+        Email:
+        <a href="mailto:viventastore@gmail.com?subject=Consulta%20Viventa%20Store">viventastore@gmail.com</a>
+      </p>
+      <p>
+        Teléfono:
+        +54 9 55 5555-5555
+      </p>
+      <p>Dirección: Calle 123, Ciudad</p>
+    </section>
 
-    <?php endif; ?>
+  <?php endif; ?>
 
   <!-- Fin contacto -->
 

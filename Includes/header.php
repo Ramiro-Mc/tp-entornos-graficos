@@ -51,16 +51,16 @@ if ($folder == "Administrador") {
 
 
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-body-tertiary" aria-label="Barra de navegación principal">
   <div class="container-fluid top-bar">
 
     <!-- Logo y boton de desplegado de menu (igual para todas las pestañas) -->
 
     <a class="navbar-brand" href="<?= $rutaSalirCarpeta ?><?= $rutaLogo ?>">
-      <img class="logo" src="<?= $rutaSalirCarpeta ?>/Imagenes/Logo-titulo.png" alt="Logo de la pagina web" />
+      <img class="logo" src="<?= $rutaSalirCarpeta ?>/Imagenes/Logo-titulo.png" alt="Logo Viventa Store" />
     </a>
 
-    <button class="navbar-toggler boton-menu" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler boton-menu" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Abrir menú de navegación">
       <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -69,7 +69,7 @@ if ($folder == "Administrador") {
 
     <div class="collapse navbar-collapse flex-direction-row justify-content-end colapsado" id="navbarNav">
 
-      <ul class="navbar-nav">
+      <ul class="navbar-nav" aria-label="Opciones de navegación">
 
         <!-- Opciones para principal y clientes -->
 
@@ -96,30 +96,30 @@ if ($folder == "Administrador") {
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="<?= $rutaSalirCarpeta ?>/Principal/Contacto.php">
+            <a class="nav-link <?= ($pestaña == 'Contacto') ? 'active' : '' ?>" aria-current="page" href="<?= $rutaSalirCarpeta ?>/Principal/Contacto.php">
               <p>Contacto</p>
             </a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="<?= $rutaSalirCarpeta ?>/Principal/SobreNosotros.php">
+            <a class="nav-link <?= ($pestaña == 'Sobre Nosotros') ? 'active' : '' ?>" href="<?= $rutaSalirCarpeta ?>/Principal/SobreNosotros.php">
               <p>Sobre Nosotros</p>
             </a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="<?= $rutaSalirCarpeta ?>/Principal/PreguntasFrecuentes.php">
+            <a class="nav-link <?= ($pestaña == 'Preguntas Frecuentes') ? 'active' : '' ?>" href="<?= $rutaSalirCarpeta ?>/Principal/PreguntasFrecuentes.php">
               <p>Preguntas Frecuentes</p>
             </a>
           </li>
 
-          
+
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="<?= $rutaSalirCarpeta ?>/Cliente/BuscarPromociones.php">
+            <a class="nav-link <?= ($pestaña == 'Buscar Promociones') ? 'active' : '' ?>" aria-current="page" href="<?= $rutaSalirCarpeta ?>/Cliente/BuscarPromociones.php">
               <p>Promociones</p>
             </a>
           </li>
-          
+
         <?php endif; ?>
 
 
@@ -135,7 +135,7 @@ if ($folder == "Administrador") {
           <?php if ($tipo_usuario == "cliente"): ?>
 
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="<?= $rutaSalirCarpeta ?>/Cliente/MisCupones.php">
+              <a class="nav-link <?= ($pestaña == 'Mis Cupones') ? 'active' : '' ?>" aria-current="page" href="<?= $rutaSalirCarpeta ?>/Cliente/MisCupones.php">
                 <p>Mis Cupones</p>
               </a>
             </li>
@@ -145,7 +145,7 @@ if ($folder == "Administrador") {
             </li>
 
             <li class="nav-item">
-              <img style="" class="imagen_categoria_cliente" src="<?= $rutaSalirCarpeta ?>/Imagenes/categoria-<?= $categoria_cliente ?>.png" alt="Categoria cliente <?= $categoria_cliente ?>">
+              <img style="" class="imagen_categoria_cliente" src="<?= $rutaSalirCarpeta ?>/Imagenes/categoria-<?= $categoria_cliente ?>.png" alt="Categoría cliente <?= $categoria_cliente ?>">
             </li>
 
           <?php else: ?>
@@ -167,9 +167,9 @@ if ($folder == "Administrador") {
 
         <?php endif; ?>
 
-        <!-- Modal de eliminacion -->
+        <!-- Modal de cierre de sesion -->
 
-        <div class="modal fade " id="cerrar-sesion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal fade " id="cerrar-sesion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" aria-modal="true" role="dialog">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header ">
@@ -188,7 +188,7 @@ if ($folder == "Administrador") {
           </div>
         </div>
 
-        <!-- Fin del Modal de eliminacion -->
+        <!-- Fin del Modal de cierre de sesion -->
 
         <!-- Fin de opciones por si esta logueado -->
 
@@ -196,7 +196,7 @@ if ($folder == "Administrador") {
 
         <?php if ($estaLogueado == "noLogueado" && $pestaña != "Confirmar"): ?>
 
-          <?php if($pestaña != "InicioSesion"): ?>
+          <?php if ($pestaña != "InicioSesion"): ?>
             <li class="nav-item">
               <a href="<?= $rutaSalirCarpeta ?>/Principal/InicioSesion.php">
                 <button type="button" class="boton-nav btn btn-light">
@@ -206,7 +206,7 @@ if ($folder == "Administrador") {
             </li>
           <?php endif; ?>
 
-          <?php if($pestaña != "Registrar"): ?>
+          <?php if ($pestaña != "Registrar"): ?>
             <li class="nav-item">
               <a href="<?= $rutaSalirCarpeta ?>/Principal/Registrar.php">
                 <button type="button" class="boton-nav btn btn-light">

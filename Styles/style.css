@@ -287,7 +287,7 @@
   width: 10px;
 }
 
-.loginRegister-box p {
+.loginRegister-box label {
   margin: 0;
   padding: 0;
   font-weight: bold;
@@ -417,11 +417,13 @@ input[type="radio"]:checked + .btn-radio {
   filter: brightness(70%);
 }
 
-.sobreNosotros p {
+.sobreNosotros label {
   font-size: 18px;
   text-align: center;
   color: #fff;
   text-shadow: 1px 1px 5px black;
+  display: block;
+  margin-bottom: 0.5em;
 }
 
 .sobreNosotros h2 {
@@ -731,10 +733,12 @@ textarea {
   width: 100%;
 }
 
-.form-register p {
+.form-register label {
   height: 40px;
   font-size: 18px;
   line-height: 40px;
+  display: block;
+  font-weight: bold;
 }
 
 .form-register a {
@@ -1154,4 +1158,3 @@ textarea {
   margin: auto;
   margin-top: 2rem;
 }
-

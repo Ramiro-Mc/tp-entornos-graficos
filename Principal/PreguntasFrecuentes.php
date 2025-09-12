@@ -23,10 +23,10 @@ $pestaña = "Preguntas Frecuentes";
 
   </header>
 
-  <main>
-    <div class="contenedor">
-      <div class="">
-        <img src="../Imagenes/sobreNosotros.jpg" alt="Fondo" />
+  <main aria-label="Preguntas frecuentes">
+    <div class="contenedor" aria-label="Sección de preguntas frecuentes">
+      <div>
+        <img src="../Imagenes/sobreNosotros.jpg" alt="Imagen sobre nosotros" />
       </div>
       <div class="contenido">
         <br />

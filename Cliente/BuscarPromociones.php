@@ -12,16 +12,16 @@ $pestaña = "Buscar Promociones";
 date_default_timezone_set('America/Argentina/Buenos_Aires');
 $numeroDiaHoy = date('N');
 
-if(isset($_SESSION['cod_usuario'])){
+if (isset($_SESSION['cod_usuario'])) {
   $cod_usuario = $_SESSION['cod_usuario'];
   $res = consultaSQL("SELECT categoria_cliente FROM cliente WHERE cod_usuario = '$cod_usuario'");
-  $row = mysqli_fetch_assoc($res); 
-  $categoria_cliente_log = $row['categoria_cliente'] ?? ''; 
+  $row = mysqli_fetch_assoc($res);
+  $categoria_cliente_log = $row['categoria_cliente'] ?? '';
 }
 
-if(!isset($_GET['rubro']) and isset($_GET['rubroAnterior'])){
+if (!isset($_GET['rubro']) and isset($_GET['rubroAnterior'])) {
   $rubro = $_GET['rubroAnterior'];
-}elseif(isset($_GET['rubro'])){
+} elseif (isset($_GET['rubro'])) {
   $rubro = $_GET['rubro'];
 }
 
@@ -30,20 +30,20 @@ $vlocales_responsive = consultaSQL("SELECT nombre_local FROM locales");
 
 $where = [];
 if (isset($rubro) && $rubro != "Todos") {
-    $where[] = "l.rubro_local = '{$rubro}'";
+  $where[] = "l.rubro_local = '{$rubro}'";
 }
 if (isset($_GET['categoria']) && $_GET['categoria'] != "Cualquiera") {
-    $where[] = "p.categoria_cliente = '{$_GET['categoria']}'";
+  $where[] = "p.categoria_cliente = '{$_GET['categoria']}'";
 }
 if (isset($_GET['local']) && $_GET['local'] != "Cualquiera") {
-    $where[] = "l.nombre_local = '{$_GET['local']}'";
+  $where[] = "l.nombre_local = '{$_GET['local']}'";
 }
 
 $where_sql = count($where) ? "WHERE " . implode(" AND ", $where) : "";
 
 $cantPagina = 2;
-$pagina = isset($_GET["pagina"]) ?  max(1, intval($_GET["pagina"])): 1;
-$principio = ($pagina-1) * $cantPagina;
+$pagina = isset($_GET["pagina"]) ?  max(1, intval($_GET["pagina"])) : 1;
+$principio = ($pagina - 1) * $cantPagina;
 
 
 $sql = "SELECT 
@@ -66,7 +66,7 @@ $result = consultaSQL($sql);
 ?>
 
 
-<?php 
+<?php
 
 $sqlTotal = "SELECT COUNT(DISTINCT p.cod_promocion) as total
 FROM promociones p
@@ -77,300 +77,302 @@ AND pd.cod_dia = '$numeroDiaHoy'";
 
 $total = consultaSQL($sqlTotal);
 $totalPromos = mysqli_fetch_assoc($total)['total'];
-$totalPaginas = ceil($totalPromos / $cantPagina); 
+$totalPaginas = ceil($totalPromos / $cantPagina);
 
 
-  // Guardo los filtros activos en variables
-  $rubroParam = isset($rubro) ? '&rubro=' . urlencode($rubro) : '';
-  $categoriaParam = isset($_GET['categoria']) ? '&categoria=' . urlencode($_GET['categoria']) : '';
-  $localParam = isset($_GET['local']) ? '&local=' . urlencode($_GET['local']) : '';
-  $rubroAnteriorParam = isset($rubroAnterior) ? '&rubroAnterior=' . urlencode($rubroAnterior) : '';
-  $filtrosURL = $rubroParam . $categoriaParam . $localParam . $rubroAnteriorParam;
+// Guardo los filtros activos en variables
+$rubroParam = isset($rubro) ? '&rubro=' . urlencode($rubro) : '';
+$categoriaParam = isset($_GET['categoria']) ? '&categoria=' . urlencode($_GET['categoria']) : '';
+$localParam = isset($_GET['local']) ? '&local=' . urlencode($_GET['local']) : '';
+$rubroAnteriorParam = isset($rubroAnterior) ? '&rubroAnterior=' . urlencode($rubroAnterior) : '';
+$filtrosURL = $rubroParam . $categoriaParam . $localParam . $rubroAnteriorParam;
 
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 
-  <head>
+<head>
 
-    <?php include("../Includes/head.php"); ?>
+  <?php include("../Includes/head.php"); ?>
 
-    <title>Buscar Promociones</title>
+  <title>Buscar Promociones</title>
 
-  </head>
+</head>
 
-  <body>
+<body>
 
-    <header>
+  <header>
 
-      <?php include("../Includes/header.php"); ?>
+    <?php include("../Includes/header.php"); ?>
 
-    </header>
+  </header>
 
-    <main class="main-no-center">
-      <div class="container-fluid">
-        <div class="row ">
-          <div class="col-3 filtros d-none d-lg-block">
-            <h3>Filtros</h3>
-
-            <hr/>
-
-            <form id="filtros-promociones" method="GET" action="">
-              <p style="padding-top: 0;">Local </p>
-
-              <select class="select-filtros" name="local">
-
-                <option name="local" value="Cualquiera">Cualquiera</option>
-
-                <?php if ($vlocales->num_rows > 0): ?>
-
-                  <?php while ($row = $vlocales->fetch_assoc()): ?>
-
-                    <?php $nombre_local = $row['nombre_local']; ?>
-
-                    <option name="local" value="<?= $nombre_local ?>" <?= (isset($_GET['local']) && $_GET['local'] == $nombre_local) ? "selected" : ""?>><?= $nombre_local ?></option>
-
-                  <?php endwhile; ?>
-
-                <?php else: ?>
-                  No hay locales registrados.
-                <?php endif; ?>
-              </select>
-
-              <p style="padding-top: 0;">Tipo cliente</p>
-
-              <select class="select-filtros" name="categoria" id="">
-                <option name="categoria" value="Cualquiera">Cualquiera</option>
-                <option name="categoria" value="Premium" <?= (isset($_GET['categoria']) && $_GET['categoria'] == "Premium") ? "selected" : ""?>>Premium</option>
-                <option name="categoria" value="Medium" <?= (isset($_GET['categoria']) && $_GET['categoria'] == "Medium") ? "selected" : ""?>>Medium</option>
-                <option name="categoria" value="Inicial" <?= (isset($_GET['categoria']) && $_GET['categoria'] == "Inicial") ? "selected" : ""?>>Inicial</option>
-              </select>
-              
-              <div class="d-flex justify-content-end">
-                <button type="submit" class="btn btn-outline-success" >Filtrar</button>
-              </div>
-              
-              <hr/>
-
-              <p>Filtrar por categoria</p>
-
-              <ul>
-                <li><button type="submit" name="rubro" value="Todos" class="btn <?= (isset($rubro) && $rubro == "Todos") ? "rubro_seleccionado" : ""?><?= (!isset($rubro)) ? "rubro_seleccionado" : ""?>">Todos</button></li>
-                <li><button type="submit" name="rubro" value="Accesorios" class="btn <?= (isset($rubro) && $rubro == "Accesorios") ? "rubro_seleccionado" : ""?>">Accesorios</button></li>
-                <li><button type="submit" name="rubro" value="Deportes" class="btn <?= (isset($rubro) && $rubro == "Deportes") ? "rubro_seleccionado" : ""?>">Deportes</button></li>
-                <li><button type="submit" name="rubro" value="Electro" class="btn <?= (isset($rubro) && $rubro == "Electro") ? "rubro_seleccionado" : ""?>">Electro</button></li>
-                <li><button type="submit" name="rubro" value="Estetica" class="btn <?= (isset($rubro) && $rubro == "Estetica") ? "rubro_seleccionado" : ""?>">Estetica</button></li>
-                <li><button type="submit" name="rubro" value="Gastronomía" class="btn <?= (isset($rubro) && $rubro == "Gastronomía") ? "rubro_seleccionado" : ""?>">Gastronomía</button></li>
-                <li><button type="submit" name="rubro" value="Calzado" class="btn <?= (isset($rubro) && $rubro == "Calzado") ? "rubro_seleccionado" : ""?>">Calzado</button></li>
-                <li><button type="submit" name="rubro" value="Indumentaria" class="btn <?= (isset($rubro) && $rubro == "Indumentaria") ? "rubro_seleccionado" : ""?>">Indumentaria</button></li>
-                <li><button type="submit" name="rubro" value="Varios" class="btn <?= (isset($rubro) && $rubro == "Varios") ? "rubro_seleccionado" : ""?>">Varios</button></li>
-              </ul>
-
-              <?php 
-              
-              if(isset($_GET['rubro'])){
-                $rubroAnterior = $_GET['rubro'];
-              }elseif(isset($_GET['rubroAnterior'])){
-                $rubroAnterior = $_GET['rubroAnterior'];
-              }else{
-                $rubroAnterior = "Todos";
-              }
-              
-              ?>
-
-              <input type="hidden" name="rubroAnterior" value="<?= $rubroAnterior ?>">
-            </form>
-
+  <main class="main-no-center">
+    <div class="container-fluid">
+      <div class="row ">
+        <div class="col-3 filtros d-none d-lg-block">
+          <div style="margin-top: 1.2rem" class="d-flex justify-content-between align-items-center">
+            <h3 style="margin: 0;">Filtros</h3>
+            <a style="height: 2rem; width: 2rem; border-radius: 50%; border-color: #f5f1ea; display: flex; align-items: center; justify-content: center; padding: 0;" tabindex="0" class="btn btn-outline-info" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="¿Cómo solicitar codigo de promoción?" data-bs-content="Desde esta pestaña puedes solicitar los codigos de las promociones que quieras. Luego, acercate al personal del respectivo local y pide que tu solicitud sea aceptada para poder generar tu codigo!"><i class="bi bi-info-circle" style="font-size: 1.2rem;"></i></a>
           </div>
+          <hr />
 
-          <div class="col-lg-9 col-12 listado-promociones ">
-            <button class="btn btn-light boton-filtros d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop"><i class="bi bi-funnel"></i> Filtros</button>
+          <form id="filtros-promociones" method="GET" action="" aria-label="Formulario de filtros de promociones">
+            <p style="padding-top: 0;" aria-label="Filtrar por local">Local </p>
 
-            <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
-              <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="staticBackdropLabel">
-                  Filtros
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-              </div>
+            <select class="select-filtros" name="local" aria-label="Seleccionar local">
 
-              <hr/>
+              <option name="local" value="Cualquiera">Cualquiera</option>
 
-              <div class="offcanvas-body filtros-desp">
-                <div>
+              <?php if ($vlocales->num_rows > 0): ?>
 
-                  <!-- ACA ESTA EL OFFCANVAS DE FILTROS -->
-                  <form id="filtros-promociones" method="GET" action="">
-                    <p>Local</p>
+                <?php while ($row = $vlocales->fetch_assoc()): ?>
 
-                    <select class="select-filtros" name="local">
+                  <?php $nombre_local = $row['nombre_local']; ?>
 
-                      <option name="local" value="Cualquiera">Cualquiera</option>
+                  <option name="local" value="<?= $nombre_local ?>" <?= (isset($_GET['local']) && $_GET['local'] == $nombre_local) ? "selected" : "" ?>><?= $nombre_local ?></option>
 
-                      <?php if ($vlocales_responsive->num_rows > 0): ?>
+                <?php endwhile; ?>
 
-                        <?php while ($row = $vlocales_responsive->fetch_assoc()): ?>
+              <?php else: ?>
+                No hay locales registrados.
+              <?php endif; ?>
+            </select>
 
-                          <?php $nombre_local = $row['nombre_local']; ?>
+            <p style="padding-top: 0;" aria-label="Filtrar por tipo de cliente">Tipo cliente</p>
 
-                          <option name="local" value="<?= $nombre_local ?>" <?= (isset($_GET['local']) && $_GET['local'] == $nombre_local) ? "selected" : ""?>><?= $nombre_local ?></option>
+            <select class="select-filtros" name="categoria" aria-label="Seleccionar tipo de cliente">
+              <option name="categoria" value="Cualquiera">Cualquiera</option>
+              <option name="categoria" value="Premium" <?= (isset($_GET['categoria']) && $_GET['categoria'] == "Premium") ? "selected" : "" ?>>Premium</option>
+              <option name="categoria" value="Medium" <?= (isset($_GET['categoria']) && $_GET['categoria'] == "Medium") ? "selected" : "" ?>>Medium</option>
+              <option name="categoria" value="Inicial" <?= (isset($_GET['categoria']) && $_GET['categoria'] == "Inicial") ? "selected" : "" ?>>Inicial</option>
+            </select>
 
-                        <?php endwhile; ?>
-
-                      <?php else: ?>
-                        No hay locales registrados.
-                      <?php endif; ?>
-                    </select>
-
-                    <p>Tipo cliente</p>
-
-                    <select class="select-filtros" name="categoria" id="">
-                      <option name="categoria" value="Cualquiera">Cualquiera</option>
-                      <option name="categoria" value="Premium" <?= (isset($_GET['categoria']) && $_GET['categoria'] == "Premium") ? "selected" : ""?>>Premium</option>
-                      <option name="categoria" value="Medium" <?= (isset($_GET['categoria']) && $_GET['categoria'] == "Medium") ? "selected" : ""?>>Medium</option>
-                      <option name="categoria" value="Inicial" <?= (isset($_GET['categoria']) && $_GET['categoria'] == "Inicial") ? "selected" : ""?>>Inicial</option>
-                    </select>
-                
-                    <div class="d-flex justify-content-end">
-                      <button type="submit" class="btn btn-outline-success" >Filtrar</button>
-                    </div>
-                    
-                    <hr/>
-
-                    <p>Filtrar por categoria</p>
-
-                    <ul>
-                      <li><button type="submit" name="rubro" value="Todos" class="btn <?= (isset($rubro) && $rubro == "Todos") ? "rubro_seleccionado" : ""?><?= (!isset($rubro)) ? "rubro_seleccionado" : ""?>">Todos</button></li>
-                      <li><button type="submit" name="rubro" value="Accesorios" class="btn <?= (isset($rubro) && $rubro == "Accesorios") ? "rubro_seleccionado" : ""?>">Accesorios</button></li>
-                      <li><button type="submit" name="rubro" value="Deportes" class="btn <?= (isset($rubro) && $rubro == "Deportes") ? "rubro_seleccionado" : ""?>">Deportes</button></li>
-                      <li><button type="submit" name="rubro" value="Electro" class="btn <?= (isset($rubro) && $rubro == "Electro") ? "rubro_seleccionado" : ""?>">Electro</button></li>
-                      <li><button type="submit" name="rubro" value="Estetica" class="btn <?= (isset($rubro) && $rubro == "Estetica") ? "rubro_seleccionado" : ""?>">Estetica</button></li>
-                      <li><button type="submit" name="rubro" value="Gastronomía" class="btn <?= (isset($rubro) && $rubro == "Gastronomía") ? "rubro_seleccionado" : ""?>">Gastronomía</button></li>
-                      <li><button type="submit" name="rubro" value="Calzado" class="btn <?= (isset($rubro) && $rubro == "Calzado") ? "rubro_seleccionado" : ""?>">Calzado</button></li>
-                      <li><button type="submit" name="rubro" value="Indumentaria" class="btn <?= (isset($rubro) && $rubro == "Indumentaria") ? "rubro_seleccionado" : ""?>">Indumentaria</button></li>
-                      <li><button type="submit" name="rubro" value="Varios" class="btn <?= (isset($rubro) && $rubro == "Varios") ? "rubro_seleccionado" : ""?>">Varios</button></li>
-                    </ul>
-
-
-                  
-                  </form>
-
-                  
-                </div>
-              </div>
+            <div class="d-flex justify-content-end">
+              <button type="submit" class="btn btn-outline-success" aria-label="Filtrar promociones">Filtrar</button>
             </div>
 
-            <!-- Promociones -->
+            <hr />
 
-            <?php if ($result->num_rows > 0): ?>
+            <p aria-label="Filtrar por categoría de rubro">Filtrar por categoria</p>
 
-              <?php while ($row = $result->fetch_assoc()): ?> 
+            <ul>
+              <li><button type="submit" name="rubro" value="Todos" class="btn <?= (isset($rubro) && $rubro == "Todos") ? "rubro_seleccionado" : "" ?><?= (!isset($rubro)) ? "rubro_seleccionado" : "" ?>" aria-label="Mostrar todas las promociones">Todos</button></li>
+              <li><button type="submit" name="rubro" value="Accesorios" class="btn <?= (isset($rubro) && $rubro == "Accesorios") ? "rubro_seleccionado" : "" ?>" aria-label="Filtrar por Accesorios">Accesorios</button></li>
+              <li><button type="submit" name="rubro" value="Deportes" class="btn <?= (isset($rubro) && $rubro == "Deportes") ? "rubro_seleccionado" : "" ?>" aria-label="Filtrar por Deportes">Deportes</button></li>
+              <li><button type="submit" name="rubro" value="Electro" class="btn <?= (isset($rubro) && $rubro == "Electro") ? "rubro_seleccionado" : "" ?>" aria-label="Filtrar por Electro">Electro</button></li>
+              <li><button type="submit" name="rubro" value="Estetica" class="btn <?= (isset($rubro) && $rubro == "Estetica") ? "rubro_seleccionado" : "" ?>" aria-label="Filtrar por Estética">Estetica</button></li>
+              <li><button type="submit" name="rubro" value="Gastronomía" class="btn <?= (isset($rubro) && $rubro == "Gastronomía") ? "rubro_seleccionado" : "" ?>" aria-label="Filtrar por Gastronomía">Gastronomía</button></li>
+              <li><button type="submit" name="rubro" value="Calzado" class="btn <?= (isset($rubro) && $rubro == "Calzado") ? "rubro_seleccionado" : "" ?>" aria-label="Filtrar por Calzado">Calzado</button></li>
+              <li><button type="submit" name="rubro" value="Indumentaria" class="btn <?= (isset($rubro) && $rubro == "Indumentaria") ? "rubro_seleccionado" : "" ?>" aria-label="Filtrar por Indumentaria">Indumentaria</button></li>
+              <li><button type="submit" name="rubro" value="Varios" class="btn <?= (isset($rubro) && $rubro == "Varios") ? "rubro_seleccionado" : "" ?>" aria-label="Filtrar por Varios">Varios</button></li>
+            </ul>
 
-                <?php $texto_promocion = $row['texto_promocion'];
-                $categoria_cliente = $row['categoria_cliente']; 
-                $foto_promocion = $row['foto_promocion']; 
-                $nombre_local = $row['nombre_local'];
-                $cod_promocion = $row['cod_promocion'];
-                             
-                $modalId = 'modal_' . md5($texto_promocion . $nombre_local); ?> 
+            <?php
 
-                <div class="promocion-cli container-fluid">
-                  <div class="row">
-                    
-                    <div class="col-4 col-md-3 col-lg-4 col-xl-3">
-                      <img src="data:image/jpeg;base64,<?= $foto_promocion ?>" alt="Foto promocion <?= $texto_promocion ?>"/>
-                    </div>
-                    <div class="col-8 col-md-9 col-lg-8 col-xl-9 d-flex justify-content-between align-items-center">
+            if (isset($_GET['rubro'])) {
+              $rubroAnterior = $_GET['rubro'];
+            } elseif (isset($_GET['rubroAnterior'])) {
+              $rubroAnterior = $_GET['rubroAnterior'];
+            } else {
+              $rubroAnterior = "Todos";
+            }
 
-                      <div class="info">
-                        <h3><?= $texto_promocion ?></h3>
-                        <p>Local: <?= $nombre_local ?></p>
-                        <p>Categoria cliente: <?= $categoria_cliente ?></p>
-                      </div>
+            ?>
 
-                      <?php if(isset($_SESSION['cod_usuario'])): ?>
-                        <?php  
-                          $res = consultaSQL("SELECT * FROM uso_promociones WHERE cod_usuario = '$cod_usuario' AND cod_promocion = '$cod_promocion'");
-                          if ($res->num_rows > 0): ?>
+            <input type="hidden" name="rubroAnterior" value="<?= $rubroAnterior ?>">
+          </form>
 
-                          <div class="text-center">
-                            <p>Ya utilizaste <br> esta promocion </p>
-                          </div>
-
-                        <?php else: ?>
-                          <?php if(($categoria_cliente_log === "Inicial" && ($categoria_cliente === "medium" || $categoria_cliente === "premium")) || ($categoria_cliente_log === "Medium" && $categoria_cliente === "premium")): ?>
-                            <div class="text-center">
-                              <p>No disponible para <br> su categoria actual </p>
-                            </div>
-                          <?php else: ?>
-                            <button type="button " class="boton-codigo btn btn-secondary btn-lg" 
-                            onclick="solicitarPromocion('<?= $cod_promocion ?>', '<?= $cod_usuario ?>', '<?= $modalId ?>')"
-                            data-bs-toggle="modal" data-bs-target="#<?= $modalId ?>">
-                            Solicitar <br />Descuento</button>
-                            
-                            <button type="button" class="boton-codigo-chico"><i class="bi bi-qr-code"></i></button>
-                          <?php endif ?>
-                        <?php endif; ?>
-                      <?php else: ?>
-                        <div class="text-center">
-                          <p>Inicie sesion para <br> usar promociones </p>
-                        </div>
-                      <?php endif; ?>
-                    
-                      <!-- Modal -->
-
-                      <div class="modal fade " id="<?= $modalId ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                                            
-                            <div class="modal-content">
-                              <div class="modal-header ">
-                                <h1 class="modal-title fs-5" id="staticBackdropLabel" style="margin: auto;">¡Promocion Solicitada!</h1>
-                              </div>
-                              <div class="modal-body text-center">
-                                <p style="font-size: 1.2rem;">Le notificaremos a su direccion de correo electronico cuando el estado de su solicitud se actualice</p>
-                                <p style="margin: 0;">Puede ver el estado de sus cupones:</p>
-                                <a href="../Cliente/MisCupones.php">Mis cupones</a>
-                              </div>
-                              
-                              <div class="modal-footer">
-                                <button style="margin: auto;" onclick="location.reload();" class="btn btn-secondary" data-bs-dismiss="modal">¡De acuerdo!</button>
-                              </div>
-                              
-                            </div>
-                        </div>
-                      </div>
-                    
-                    </div>
-                    
-                  </div>
-                </div>
-
-              <?php endwhile; ?>
-
-            <?php else: ?>
-              <div class="notificacion-no-promociones">
-                <h3>¡Lo sentimos!</h3>
-                <p>No hay promociones registradas para los filtros ingresados</p>
-              </div>
-            <?php endif; ?>
-
-          </div>
         </div>
 
-        <div class="row">
-          <div class="col-3"></div>
-          <div class="col-9">
-              <div class="paginacion" aria-label="Page navigation example">
+        <div class="col-lg-9 col-12 listado-promociones ">
+          <button class="btn btn-light boton-filtros d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop" aria-label="Abrir filtros"><i class="bi bi-funnel"></i> Filtros</button>
+
+          <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel" aria-label="Panel de filtros">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="staticBackdropLabel">
+                Filtros
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar panel de filtros"></button>
+              <a tabindex="0" class="btn btn-lg btn-danger" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="Dismissible popover" data-bs-content="And here’s some amazing content. It’s very engaging. Right?">Dismissible popover</a>
+            </div>
+
+            <hr />
+
+            <div class="offcanvas-body filtros-desp">
+              <div>
+
+                <!-- ACA ESTA EL OFFCANVAS DE FILTROS -->
+                <form id="filtros-promociones" method="GET" action="">
+                  <p>Local</p>
+
+                  <select class="select-filtros" name="local">
+
+                    <option name="local" value="Cualquiera">Cualquiera</option>
+
+                    <?php if ($vlocales_responsive->num_rows > 0): ?>
+
+                      <?php while ($row = $vlocales_responsive->fetch_assoc()): ?>
+
+                        <?php $nombre_local = $row['nombre_local']; ?>
+
+                        <option name="local" value="<?= $nombre_local ?>" <?= (isset($_GET['local']) && $_GET['local'] == $nombre_local) ? "selected" : "" ?>><?= $nombre_local ?></option>
+
+                      <?php endwhile; ?>
+
+                    <?php else: ?>
+                      No hay locales registrados.
+                    <?php endif; ?>
+                  </select>
+
+                  <p>Tipo cliente</p>
+
+                  <select class="select-filtros" name="categoria" id="">
+                    <option name="categoria" value="Cualquiera">Cualquiera</option>
+                    <option name="categoria" value="Premium" <?= (isset($_GET['categoria']) && $_GET['categoria'] == "Premium") ? "selected" : "" ?>>Premium</option>
+                    <option name="categoria" value="Medium" <?= (isset($_GET['categoria']) && $_GET['categoria'] == "Medium") ? "selected" : "" ?>>Medium</option>
+                    <option name="categoria" value="Inicial" <?= (isset($_GET['categoria']) && $_GET['categoria'] == "Inicial") ? "selected" : "" ?>>Inicial</option>
+                  </select>
+
+                  <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-outline-success">Filtrar</button>
+                  </div>
+
+                  <hr />
+
+                  <p>Filtrar por categoria</p>
+
+                  <ul>
+                    <li><button type="submit" name="rubro" value="Todos" class="btn <?= (isset($rubro) && $rubro == "Todos") ? "rubro_seleccionado" : "" ?><?= (!isset($rubro)) ? "rubro_seleccionado" : "" ?>">Todos</button></li>
+                    <li><button type="submit" name="rubro" value="Accesorios" class="btn <?= (isset($rubro) && $rubro == "Accesorios") ? "rubro_seleccionado" : "" ?>">Accesorios</button></li>
+                    <li><button type="submit" name="rubro" value="Deportes" class="btn <?= (isset($rubro) && $rubro == "Deportes") ? "rubro_seleccionado" : "" ?>">Deportes</button></li>
+                    <li><button type="submit" name="rubro" value="Electro" class="btn <?= (isset($rubro) && $rubro == "Electro") ? "rubro_seleccionado" : "" ?>">Electro</button></li>
+                    <li><button type="submit" name="rubro" value="Estetica" class="btn <?= (isset($rubro) && $rubro == "Estetica") ? "rubro_seleccionado" : "" ?>">Estetica</button></li>
+                    <li><button type="submit" name="rubro" value="Gastronomía" class="btn <?= (isset($rubro) && $rubro == "Gastronomía") ? "rubro_seleccionado" : "" ?>">Gastronomía</button></li>
+                    <li><button type="submit" name="rubro" value="Calzado" class="btn <?= (isset($rubro) && $rubro == "Calzado") ? "rubro_seleccionado" : "" ?>">Calzado</button></li>
+                    <li><button type="submit" name="rubro" value="Indumentaria" class="btn <?= (isset($rubro) && $rubro == "Indumentaria") ? "rubro_seleccionado" : "" ?>">Indumentaria</button></li>
+                    <li><button type="submit" name="rubro" value="Varios" class="btn <?= (isset($rubro) && $rubro == "Varios") ? "rubro_seleccionado" : "" ?>">Varios</button></li>
+                  </ul>
+
+
+
+                </form>
+
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Promociones -->
+
+          <?php if ($result->num_rows > 0): ?>
+
+            <?php while ($row = $result->fetch_assoc()): ?>
+
+              <?php $texto_promocion = $row['texto_promocion'];
+              $categoria_cliente = $row['categoria_cliente'];
+              $foto_promocion = $row['foto_promocion'];
+              $nombre_local = $row['nombre_local'];
+              $cod_promocion = $row['cod_promocion'];
+
+              $modalId = 'modal_' . md5($texto_promocion . $nombre_local); ?>
+
+              <div class="promocion-cli container-fluid" aria-label="Promoción disponible">
+                <div class="row">
+
+                  <div class="col-4 col-md-3 col-lg-4 col-xl-3">
+                    <img src="data:image/jpeg;base64,<?= $foto_promocion ?>" alt="Foto promocion <?= $texto_promocion ?>" />
+                  </div>
+                  <div class="col-8 col-md-9 col-lg-8 col-xl-9 d-flex justify-content-between align-items-center">
+
+                    <div class="info" aria-label="Información de la promoción">
+                      <h3><?= $texto_promocion ?></h3>
+                      <p>Local: <?= $nombre_local ?></p>
+                      <p>Categoria cliente: <?= $categoria_cliente ?></p>
+                    </div>
+
+                    <?php if (isset($_SESSION['cod_usuario'])): ?>
+                      <?php
+                      $res = consultaSQL("SELECT * FROM uso_promociones WHERE cod_usuario = '$cod_usuario' AND cod_promocion = '$cod_promocion'");
+                      if ($res->num_rows > 0): ?>
+
+                        <div class="text-center" aria-label="Promoción ya utilizada">
+                          <p>Ya utilizaste <br> esta promocion </p>
+                        </div>
+
+                      <?php else: ?>
+                        <?php if (($categoria_cliente_log === "Inicial" && ($categoria_cliente === "medium" || $categoria_cliente === "premium")) || ($categoria_cliente_log === "Medium" && $categoria_cliente === "premium")): ?>
+                          <div class="text-center" aria-label="Promoción no disponible para su categoría">
+                            <p>No disponible para <br> su categoria actual </p>
+                          </div>
+                        <?php else: ?>
+                          <button type="button " class="boton-codigo btn btn-secondary btn-lg"
+                            onclick="solicitarPromocion('<?= $cod_promocion ?>', '<?= $cod_usuario ?>', '<?= $modalId ?>')"
+                            data-bs-toggle="modal" data-bs-target="#<?= $modalId ?>" aria-label="Solicitar descuento">
+                            Solicitar <br />Descuento</button>
+                          <button type="button" class="boton-codigo-chico" aria-label="Ver código QR"><i class="bi bi-qr-code"></i></button>
+                        <?php endif ?>
+                      <?php endif; ?>
+                    <?php else: ?>
+                      <div class="text-center" aria-label="Debe iniciar sesión para usar promociones">
+                        <p>Inicie sesion para <br> usar promociones </p>
+                      </div>
+                    <?php endif; ?>
+
+                    <!-- Modal -->
+
+                    <div class="modal fade " id="<?= $modalId ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" aria-label="Modal de confirmación de solicitud de promoción">
+                      <div class="modal-dialog modal-dialog-centered">
+
+                        <div class="modal-content">
+                          <div class="modal-header ">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel" style="margin: auto;">¡Promocion Solicitada!</h1>
+                          </div>
+                          <div class="modal-body text-center">
+                            <p style="font-size: 1.2rem;">Le notificaremos a su direccion de correo electronico cuando el estado de su solicitud se actualice</p>
+                            <p style="margin: 0;">Puede ver el estado de sus cupones:</p>
+                            <a href="../Cliente/MisCupones.php" aria-label="Ir a Mis cupones">Mis cupones</a>
+                          </div>
+
+                          <div class="modal-footer">
+                            <button style="margin: auto;" onclick="location.reload();" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Cerrar modal">¡De acuerdo!</button>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+
+            <?php endwhile; ?>
+
+          <?php else: ?>
+            <div class="notificacion-no-promociones" aria-label="Sin promociones disponibles">
+              <h3>¡Lo sentimos!</h3>
+              <p>No hay promociones registradas para los filtros ingresados</p>
+            </div>
+          <?php endif; ?>
+
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-3"></div>
+        <div class="col-9">
+          <div class="paginacion" aria-label="Navegación de páginas">
             <ul class="pagination">
               <?php if ($pagina > 1): ?>
                 <li class="page-item">
-                  <a class="page-link" href="?pagina=<?= $pagina-1 . $filtrosURL ?>"><i class="bi bi-arrow-left-short"></i></a>
+                  <a class="page-link" href="?pagina=<?= $pagina - 1 . $filtrosURL ?>"><i class="bi bi-arrow-left-short"></i></a>
                 </li>
               <?php endif; ?>
 
-              <?php for($i = 1; $i <= $totalPaginas; $i++): ?>
-                <li class="page-item <?= $i == $pagina ? 'active' : ''?>">
+              <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
+                <li class="page-item <?= $i == $pagina ? 'active' : '' ?>">
                   <a class="page-link" href="?pagina=<?= $i . $filtrosURL ?>"><?= $i ?></a>
                 </li>
               <?php endfor; ?>
@@ -382,29 +384,38 @@ $totalPaginas = ceil($totalPromos / $cantPagina);
               <?php endif; ?>
             </ul>
           </div>
-          </div>
         </div>
       </div>
-    </main>
+    </div>
+  </main>
 
-    <footer class="seccion-footer d-flex flex-column justify-content-center align-items-center pt-3">
+  <footer class="seccion-footer d-flex flex-column justify-content-center align-items-center pt-3">
 
-      <?php include("../Includes/footer.php") ?>
+    <?php include("../Includes/footer.php") ?>
 
-    </footer>
+  </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
 
-    <script>
-      function solicitarPromocion(codigoPromocion, codigoUsuario, modalId){
-        const url = `SolicitarPromocion.php?cod_promocion=${encodeURIComponent(codigoPromocion)}&cod_usuario=${encodeURIComponent(codigoUsuario)}`;
-        fetch(url, {
+  <script>
+    function solicitarPromocion(codigoPromocion, codigoUsuario, modalId) {
+      const url = `SolicitarPromocion.php?cod_promocion=${encodeURIComponent(codigoPromocion)}&cod_usuario=${encodeURIComponent(codigoUsuario)}`;
+      fetch(url, {
           method: 'GET'
         })
         .then(response => response.json())
-      }
-    </script>
+    }
+    // Inicialización de popovers Bootstrap
+    document.addEventListener('DOMContentLoaded', function() {
+      var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+      popoverTriggerList.forEach(function(popoverTriggerEl) {
+        new bootstrap.Popover(popoverTriggerEl, {
+          container: 'body'
+        });
+      });
+    });
+  </script>
 
-  </body>
+</body>
 
 </html>

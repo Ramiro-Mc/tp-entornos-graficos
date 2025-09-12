@@ -38,6 +38,18 @@ main {
   padding: 0;
 }
 
+
+
+
+.nav-link.active p {
+  background-color: #204070;
+  color: #fff !important;
+  border-radius: 12px;
+  font-weight: bold;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35), 0 2px 8px rgba(32,64,112,0.35);
+  transition: box-shadow 0.2s;
+}
+
 .logo {
   width: 12rem;
   height: 5rem;

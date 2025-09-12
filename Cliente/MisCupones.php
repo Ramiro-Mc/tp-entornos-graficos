@@ -27,7 +27,7 @@ $result = consultaSQL(
   INNER JOIN promociones pro ON sol.cod_promocion = pro.cod_promocion
   INNER JOIN locales loc ON pro.cod_local = loc.cod_local
   WHERE sol.cod_usuario = '{$cod_usuario}' 
-  AND sol.mostrar = 1" 
+  AND sol.mostrar = 1"
 );
 ?>
 
@@ -49,9 +49,8 @@ $result = consultaSQL(
 
   </header>
 
-  <main style="min-height: 60vh;" class="fondo-formulario-contacto">
-
-    <div class="contenedor_solicitudes">
+  <main style="min-height: 60vh;" class="fondo-formulario-contacto" aria-label="Panel de cupones y solicitudes de promociones">
+    <div class="contenedor_solicitudes" aria-label="Listado de cupones y solicitudes">
       <?php if ($result->num_rows > 0): ?>
         <?php while ($row = $result->fetch_assoc()): ?>
 
@@ -63,13 +62,13 @@ $result = consultaSQL(
           $modalId = 'modal_' . md5($texto_promocion . $nombre_local); ?>
 
 
-          <div class="promocion-cli container-fluid">
+          <div class="promocion-cli container-fluid" aria-label="Tarjeta de cupón">
             <div class="row">
 
               <div class="col-4 col-md-3 col-lg-4 col-xl-3">
-                <img src="data:image/jpeg;base64,<?= $foto_promocion ?>"  alt="Foto promocion <?= $texto_promocion ?>/>
+                <img src="data:image/jpeg;base64,<?= $foto_promocion ?>" alt="Foto promocion <?= $texto_promocion ?>/>
               </div>
-              <div class="col-8 col-md-9 col-lg-8 col-xl-9 d-flex justify-content-between align-items-center">
+              <div class=" col-8 col-md-9 col-lg-8 col-xl-9 d-flex justify-content-between align-items-center">
 
                 <div class="info info-promocion">
                   <h3><?= $texto_promocion ?></h3>
@@ -82,17 +81,17 @@ $result = consultaSQL(
                 </div>
 
                 <?php if ($estado == "aceptada"): ?>
-                  <button type="button " class="boton-codigo btn btn-secondary btn-lg" data-bs-toggle="modal" data-bs-target="#<?= $modalId ?>" onclick="generarCodigo('<?= $modalId ?>')">Generar <br />Código</button>
-                  <button type="button" class="boton-codigo-chico"><i class="bi bi-qr-code"></i></button>
+                  <button type="button" class="boton-codigo btn btn-secondary btn-lg" data-bs-toggle="modal" data-bs-target="#<?= $modalId ?>" onclick="generarCodigo('<?= $modalId ?>')" aria-label="Generar código de cupón">Generar <br />Código</button>
+                  <button type="button" class="boton-codigo-chico" aria-label="Ver código QR"><i class="bi bi-qr-code"></i></button>
                 <?php else: ?>
-                  
-                  <button type="button" class="btn btn-danger cuadrado" data-bs-toggle="modal" data-bs-target="#eliminar-<?= $modalId ?>"><i class="bi bi-x-lg"></i></button>
-                  
+
+                  <button type="button" class="btn btn-danger cuadrado" data-bs-toggle="modal" data-bs-target="#eliminar-<?= $modalId ?>" aria-label="Eliminar solicitud"><i class="bi bi-x-lg"></i></button>
+
                 <?php endif; ?>
-                
+
                 <!-- Modal -->
 
-                <div class="modal fade " id="<?= $modalId ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal fade " id="<?= $modalId ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" aria-modal="true" role="dialog">
                   <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                       <div class="modal-header ">
@@ -101,24 +100,24 @@ $result = consultaSQL(
                       <div class="modal-body">
                         <div class="campo-codigo">
                           <p id="codigo-<?= $modalId ?>"></p>
-                          <button type="button" class="btn boton-copiado" onclick="copiarCodigo('codigo-<?= $modalId ?>')">
+                          <button type="button" class="btn boton-copiado" onclick="copiarCodigo('codigo-<?= $modalId ?>')" aria-label="Copiar código">
                             <i id="boton-no-apretado-codigo-<?= $modalId ?>" class="bi bi-clipboard"></i>
                             <i id="boton-apretado-codigo-<?= $modalId ?>" style="display: none;" class="bi bi-clipboard-check"></i></button>
                         </div>
-                        <p class="advertencia"><i class="bi bi-exclamation-triangle-fill"></i> Una vez cerrada esta ventana emergente no se podra volver a abrir. Asegurese de copiar su codigo</p>
+                        <p class="advertencia" aria-label="Advertencia sobre el código"><i class="bi bi-exclamation-triangle-fill"></i> Una vez cerrada esta ventana emergente no se podrá volver a abrir. Asegúrese de copiar su código</p>
                       </div>
                       <div class="modal-footer">
-                        <form  action="MisSolicitudesDePromociones.php" method="POST" name="Eliminar solicitud">
-                          <button style="margin: auto;" type="submit" name="eliminar" value="<?= $cod_promocion ?>" class="btn btn-secondary" data-bs-dismiss="modal">¡Listo!</button>
+                        <form action="MisSolicitudesDePromociones.php" method="POST" name="Eliminar solicitud">
+                          <button style="margin: auto;" type="submit" name="eliminar" value="<?= $cod_promocion ?>" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Cerrar modal y finalizar">¡Listo!</button>
                         </form>
                       </div>
                     </div>
                   </div>
                 </div>
-                
+
                 <!-- Modal de eliminacion -->
 
-                <div class="modal fade " id="eliminar-<?= $modalId ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal fade " id="eliminar-<?= $modalId ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" aria-modal="true" role="dialog">
                   <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                       <div class="modal-header ">
@@ -129,10 +128,10 @@ $result = consultaSQL(
                         <p class="informacion"><i class="bi bi-info-circle"></i> Eliminar esta solicitud no te permitira gerenar una nueva solicitud para la misma promocion</p>
                       </div>
                       <div class="modal-footer d-flex justify-content-around">
-                        <form  action="MisSolicitudesDePromociones.php" method="POST" name="Eliminar solicitud">
-                          <button  type="submit" name="eliminar" value="<?= $cod_promocion ?>" class="btn btn-danger" data-bs-dismiss="modal">Eliminar</button>
+                        <form action="MisSolicitudesDePromociones.php" method="POST" name="Eliminar solicitud">
+                          <button type="submit" name="eliminar" value="<?= $cod_promocion ?>" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Eliminar solicitud">Eliminar</button>
                         </form>
-                          <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Cancelar">Cancelar</button>
                       </div>
                     </div>
                   </div>
@@ -145,7 +144,7 @@ $result = consultaSQL(
         <?php endwhile; ?>
 
       <?php else: ?>
-        <div class="notificacion-no-promociones">
+        <div class="notificacion-no-promociones" aria-label="Sin solicitudes pendientes">
           <h3>¡Todo en orden!</h3>
           <p style="margin: 0;">No tienes solicitudes de promocion pendientes</p>
           <a href="../Cliente/BuscarPromociones.php">Usar una promocion</a>
