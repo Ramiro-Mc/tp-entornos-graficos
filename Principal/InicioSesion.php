@@ -126,8 +126,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <input type="submit" name="Login" value="Login" aria-label="Iniciar sesión" />
         <a href="Registrar.php"><button type="button" style="color: black" aria-label="Ir a registro">Registrarse</button></a>
-
-        <a href="#" aria-label="Recuperar contraseña">¿Olvidó su contraseña?</a>
       </form>
 
     </section>

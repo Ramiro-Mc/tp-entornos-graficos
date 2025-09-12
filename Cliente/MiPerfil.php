@@ -59,7 +59,6 @@ $result = consultaSQL(
         <p><strong>Nombre:</strong> <?= $vnombre_usuario ?></p>
         <p><strong>Email:</strong> <?= $vemail ?></p>
         <p><strong>Tipo de Cliente:</strong> <?= $vcategoria_cliente ?></p>
-        <button class="btn btn-success me-2 boton-enviar" aria-label="Editar perfil">Editar Perfil</button>
       </div>
     </div>
     <section aria-label="Historial de promociones usadas">

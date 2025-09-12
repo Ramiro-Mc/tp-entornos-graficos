@@ -311,7 +311,7 @@ $filtrosURL = $rubroParam . $categoriaParam . $localParam . $rubroAnteriorParam;
                             onclick="solicitarPromocion('<?= $cod_promocion ?>', '<?= $cod_usuario ?>', '<?= $modalId ?>')"
                             data-bs-toggle="modal" data-bs-target="#<?= $modalId ?>" aria-label="Solicitar descuento">
                             Solicitar <br />Descuento</button>
-                          <button type="button" class="boton-codigo-chico" aria-label="Ver código QR"><i class="bi bi-qr-code"></i></button>
+                          <button type="button" class="boton-codigo-chico" aria-label="Solicitar descuento"><i class="bi bi-journal-code"></i></button>
                         <?php endif ?>
                       <?php endif; ?>
                     <?php else: ?>

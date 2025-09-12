@@ -82,7 +82,7 @@ $result = consultaSQL(
 
                 <?php if ($estado == "aceptada"): ?>
                   <button type="button" class="boton-codigo btn btn-secondary btn-lg" data-bs-toggle="modal" data-bs-target="#<?= $modalId ?>" onclick="generarCodigo('<?= $modalId ?>')" aria-label="Generar código de cupón">Generar <br />Código</button>
-                  <button type="button" class="boton-codigo-chico" aria-label="Ver código QR"><i class="bi bi-qr-code"></i></button>
+                  <button type="button" class="boton-codigo-chico" aria-label="Generar codigo"><i class="bi bi-journal-code"></i></button>
                 <?php else: ?>
 
                   <button type="button" class="btn btn-danger cuadrado" data-bs-toggle="modal" data-bs-target="#eliminar-<?= $modalId ?>" aria-label="Eliminar solicitud"><i class="bi bi-x-lg"></i></button>
