@@ -39,8 +39,8 @@ if (isset($_GET['cod_promocion']) && isset($_GET['accion'])) {
   }
 }
 
-$sql = "SELECT cod_promocion, texto_promocion,  FROM promociones ORDER BY $order";
-// $result = $link->query($sql);
+$sql = "SELECT cod_promocion, texto_promocion FROM promociones ORDER BY $order";
+$result = $link->query($sql);
 ?>
 
 <!DOCTYPE html>

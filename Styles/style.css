@@ -700,16 +700,17 @@ textarea {
 /* Crear Promocion*/
 
 .form-register {
+  width: 400px;
+  margin: 100px auto;
   height: auto;
   background: #0e3757ff;
   padding: 30px;
-  margin: auto;
-  margin: 100px;
   border-radius: 4px;
   font-family: "calibri";
   color: white;
   box-shadow: 7px 13px 37px #000;
 }
+
 
 .form-register h4 {
   font-size: 22px;

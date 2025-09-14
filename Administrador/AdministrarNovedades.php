@@ -42,7 +42,7 @@ $result = $link->query("SELECT * FROM novedades ORDER BY fecha_desde_novedad DES
           <?php while ($n = $result->fetch_assoc()): ?>
             <div class="promocion">
               <div class="infoTarjeta">
-                <h3><?= htmlspecialchars($n['textoNovedad']) ?></h3>
+                <h3><?= htmlspecialchars($n['texto_novedad']) ?></h3>
                 <p>#<?= $n['cod_novedad'] ?></p>
                 <p><small>Desde: <?= $n['fecha_desde_novedad'] ?> | Hasta: <?= $n['fecha_hasta_novedad'] ?></small></p>
               </div>

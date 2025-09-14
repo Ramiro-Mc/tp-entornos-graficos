@@ -6,22 +6,23 @@ include_once("../Includes/funciones.php");
 include("../conexion.inc");
 sesionIniciada();
 $mensaje = "";
-
-// Traigo usuarios para el combo
-$sqlUsuarios = "SELECT cod_usuario, nombre_usuario, tipo_usuario FROM usuarios";
-$resUsuarios = mysqli_query($link, $sqlUsuarios) or die(mysqli_error($link));
+$error = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $texto = $_POST['textoNovedad'];
   $desde = $_POST['fecha_desde_novedad'];
   $hasta = $_POST['fecha_hasta_novedad'];
-  $tipoUsuario = $_POST['tipo_usuario'];
-  $codUsuario = $_POST['cod_usuario'];
+  $catCliente = $_POST['categoria_cliente'];
 
-  $sql = "INSERT INTO novedades (textoNovedad, fecha_desde_novedad, fecha_hasta_novedad, tipo_usuario, cod_usuario)
-          VALUES (?, ?, ?, ?, ?)";
+  
+    if ($hasta < $desde) {
+        $error = "La fecha de fin no puede ser menor que la fecha de inicio.";
+    } else {
+        $sql = "INSERT INTO novedades (texto_novedad, fecha_desde_novedad, fecha_hasta_novedad, categoria_cliente)
+                VALUES (?, ?, ?, ?)";
+
   $stmt = $link->prepare($sql);
-  $stmt->bind_param("ssssi", $texto, $desde, $hasta, $tipoUsuario, $codUsuario);
+  $stmt->bind_param("ssss", $texto, $desde, $hasta, $catCliente);
 
   if ($stmt->execute()) {
     $mensaje = "La novedad fue registrada correctamente.";
@@ -29,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mensaje = "Error al registrar: " . $link->error;
   }
   $stmt->close();
+}
 }
 ?>
 
@@ -38,7 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
 
   <?php include("../Includes/head.php"); ?>
-
+  <link rel="stylesheet" href="../Styles/style-general.css">
+  <link rel="stylesheet" href="../Styles/style.css">
   <title>Crear Nueva Novedad</title>
 
 </head>
@@ -54,13 +57,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <section class="form-register">
       <h4>Formulario Novedad</h4>
 
-      <?php if ($mensaje): ?>
-        <div class="alert alert-info"><?= htmlspecialchars($mensaje) ?></div>
+      <?php if ($error): ?>
+          <div class="alert <?= ($hasta < $desde) ? 'alert-danger' : 'alert-success' ?>">
+              <?= htmlspecialchars($error) ?>
+          </div>
       <?php endif; ?>
 
       <form method="post">
         <p>Descripción</p>
-        <textarea class="controls" name="textoNovedad" rows="3" maxlength="200" style="resize: none; overflow-y: hidden" required></textarea>
+        <textarea class="controls" name="textoNovedad" rows="3" maxlength="200" required></textarea>
 
         <p>Vigencia de la promoción</p>
         <label for="fechaini">Fecha de inicio</label>
@@ -68,25 +73,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label for="fechafin">Fecha de fin</label>
         <input class="controls" type="date" id="fechafin" name="fecha_hasta_novedad" required />
 
-        <p>Tipo Usuario</p>
-        <select class="form-control controls" name="tipo_usuario" required>
-          <option value="dueño">Dueño</option>
-          <option value="cliente">Cliente</option>
-          <option value="administrador">Administrador</option>
+        <p>Categoria Cliente</p>
+        <select class="form-control controls" name="categoria_cliente" required>
+          <option value="inicial">Inicial</option>
+          <option value="medium">Medium</option>
+          <option value="premium">Premium</option>
         </select>
-
-        <p>Usuario</p>
-        <div class="position-relative">
-          <select class="form-control controls" name="cod_usuario" required>
-            <option value="">Seleccione un usuario</option>
-            <?php while ($u = mysqli_fetch_assoc($resUsuarios)): ?>
-              <option value="<?= $u['cod_usuario'] ?>"><?= htmlspecialchars($u['nombre_usuario']) ?> (<?= $u['tipo_usuario'] ?>)</option>
-            <?php endwhile; ?>
-          </select>
-          <i class="bi bi-chevron-down position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; color: white;"></i>
-        </div>
-
-        <div class="d-flex justify-content-between mt-3">
+        <p>Podemos poner foto</p>
+        <div class="text-center mt-3">
           <button class="btn btn-success boton-enviar" type="submit">Guardar</button>
           <a href="AdministrarNovedades.php" class="btn btn-secondary">Volver</a>
         </div>

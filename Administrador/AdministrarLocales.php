@@ -84,7 +84,7 @@ $result = $link->query($sql);
             </div>
           <?php endwhile; ?>
         <?php else: ?>
-          <p>No hay locales registrados.</p>
+          <p class="text-center">No hay locales registrados.</p>
         <?php endif; ?>
       </div>
 
