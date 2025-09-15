@@ -177,7 +177,8 @@ CREATE TABLE `promocion_dia` (
 CREATE TABLE `solicitudes` (
   `cod_solicitud` int(11) NOT NULL,
   `fecha_solicitud` date NOT NULL,
-  `cod_usuario` int(11) NOT NULL
+  `cod_usuario` int(11) NOT NULL,
+  'estado' varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
