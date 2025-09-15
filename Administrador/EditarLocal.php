@@ -13,112 +13,102 @@ if (!isset($_GET['cod_local']) || !is_numeric($_GET['cod_local'])) {
 
 $id = intval($_GET['cod_local']);
 $error = '';
+$exito = '';
 
-// Procesar formulario si es POST
+$sql = $link->prepare("SELECT * FROM locales WHERE cod_local = ?");
+$sql->bind_param("i", $id);
+$sql->execute();
+$local = $sql->get_result()->fetch_assoc();
+$sql->close();
+
+if (!$local) {
+    header("Location: AdministrarLocales.php?mensaje=no_encontrado");
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $nombreLocal = trim($_POST['nombre_local'] ?? '');
-  $rubroLocal = trim($_POST['rubro_local'] ?? '');
-  $ubicacion_local = trim($_POST['ubicacion_local'] ?? '');
+  $nombreLocal = $_POST['nombre_local'] ?? '';
+  $rubroLocal = $_POST['rubro_local'] ?? '';
+  $ubicacionLocal = $_POST['ubicacion_local'] ?? '';
+  $rutaMultimedia = $local['foto_local'];
 
-  // Validaciones simples
-  if (empty($nombreLocal)) {
-    $error = "El nombre del local no puede estar vacío.";
-  } elseif (empty($rubroLocal)) {
-    $error = "El rubro del local no puede estar vacío.";
-  } elseif (empty($ubicacion_local)) {
-    $error = "La ubicación del local no puede estar vacía.";
+  if (isset($_FILES['archivoMultimedia']) && $_FILES['archivoMultimedia']['error'] === UPLOAD_ERR_OK) {
+      if (!empty($_FILES['archivoMultimedia']['name'])) {
+          $ext = strtolower(pathinfo($_FILES['archivoMultimedia']['name'], PATHINFO_EXTENSION));
+          $permitidos = ['jpg', 'jpeg', 'png', 'gif', 'mp4', 'pdf'];
+
+          if (in_array($ext, $permitidos)) {
+              $nuevoNombre = "local_" . uniqid() . "." . $ext;
+              $destino = "../uploads/" . $nuevoNombre;
+              if (move_uploaded_file($_FILES['archivoMultimedia']['tmp_name'], $destino)) {
+                  $rutaMultimedia = "uploads/" . $nuevoNombre;
+              } else {
+                  $error = "Error al mover el archivo.";
+              }
+          } else {
+              $error = "Formato de archivo no permitido.";
+          }
+      }
   }
 
-  if (!$error) {
-    $stmt = $link->prepare("UPDATE locales SET nombre_local = ?, rubro_local = ?, ubicacion_local = ? WHERE cod_local = ?");
-    $stmt->bind_param("sssi", $nombreLocal, $rubroLocal, $ubicacion_local, $id);
-
-    if ($stmt->execute()) {
-      $stmt->close();
-      $link->close();
-      header("Location: AdministrarLocales.php?mensaje=editado");
-      exit;
-    } else {
-      $error = "Error al actualizar: " . $link->error;
+  if (empty($error)) {
+    $sql = "UPDATE locales SET nombre_local = ?, rubro_local = ?, ubicacion_local = ?, foto_local = ? WHERE cod_local = ?";
+    if ($sql = $link->prepare($sql)) {
+    $sql->bind_param("ssssi", $nombreLocal, $rubroLocal, $ubicacionLocal, $rutaMultimedia, $id);
+    if ($sql->execute()) {
+                $exito = "El local se actualizó satisfactoriamente.";
+            } else {
+                $error = "Error al actualizar: " . $sql->error;
+            }
+            $sql->close();
+        } else {
+            $error = "Error en la preparación de la consulta: " . $link->error;
+        }
     }
-  }
 }
-
-// Si no es POST o hay error, cargamos datos actuales
-$stmt = $link->prepare("SELECT nombre_local, rubro_local, ubicacion_local FROM locales WHERE cod_local = ?");
-$stmt->bind_param("i", $id);
-$stmt->execute();
-$result = $stmt->get_result();
-
-if ($result->num_rows === 0) {
-  $stmt->close();
-  $link->close();
-  header("Location: AdministrarLocales.php?mensaje=no_encontrado");
-  exit;
-}
-
-$local = $result->fetch_assoc();
-$stmt->close();
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
+
   <head>
-
     <?php include("../Includes/head.php"); ?>
-
     <title>Editar Local</title>
-
   </head>
+
   <body>
-
     <header>
-
       <?php include("../Includes/header.php"); ?>
-
     </header>
 
     <main>
+      <div class="form-register">
+            <?php if ($error): ?>
+                <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
+            <?php endif; ?>
+            <?php if ($exito): ?>
+                <div class="alert alert-success" id="mensaje-exito"><?= htmlspecialchars($exito) ?></div>
+                <script>
+                    setTimeout(() => {
+                        window.location.href = "AdministrarLocales.php";
+                    }, 1000);
+                </script>
+            <?php endif; ?>
 
-      <div class="container mt-4">
-        <h1>Editar Local</h1>
-
-        <?php if ($error): ?>
-          <div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
-        <?php endif; ?>
-
-        <form method="post" action="">
-          <div class="mb-3">
-            <label for="nombre_local" class="form-label">Nombre del Local</label>
-            <input type="text" class="form-control" id="nombre_local" name="nombre_local" 
-              value="<?php echo htmlspecialchars($local['nombre_local']); ?>" required />
-          </div>
-
+        <form method="post" action="?cod_local=<?= $id ?>" enctype="multipart/form-data">
+        <p>Nombre</p>             
+        <textarea class="controls" name="nombre_local" required><?= htmlspecialchars($local['nombre_local']) ?></textarea>
           <p>Ubicación</p>
-          <div class="position-relative mb-3">
             <select class="form-control controls" name="ubicacion_local" required>
-              <option value="Ala A" <?php if(isset($local['ubicacion_local']) && $local['ubicacion_local'] == 'Ala A') echo 'selected'; ?>>Ala A</option>
-              <option value="Ala B" <?php if(isset($local['ubicacion_local']) && $local['ubicacion_local'] == 'Ala B') echo 'selected'; ?>>Ala B</option>
-              <option value="Ala C" <?php if(isset($local['ubicacion_local']) && $local['ubicacion_local'] == 'Ala C') echo 'selected'; ?>>Ala C</option>
-              <option value="Ala D" <?php if(isset($local['ubicacion_local']) && $local['ubicacion_local'] == 'Ala D') echo 'selected'; ?>>Ala D</option>
-              <option value="Ala E" <?php if(isset($local['ubicacion_local']) && $local['ubicacion_local'] == 'Ala E') echo 'selected'; ?>>Ala E</option>
+              <option value="Ala A" <?= $local['rubro_local'] === 'Ala A' ? 'selected' : '' ?>>Ala A</option>
+              <option value="Ala B" <?= $local['rubro_local'] === 'Ala B' ? 'selected' : '' ?>>Ala B</option>
+              <option value="Ala C" <?= $local['rubro_local'] === 'Ala C' ? 'selected' : '' ?>>Ala C</option>
+              <option value="Ala D" <?= $local['rubro_local'] === 'Ala D' ? 'selected' : '' ?>>Ala D</option>
+              <option value="Ala E" <?= $local['rubro_local'] === 'Ala E' ? 'selected' : '' ?>>Ala E</option>
             </select>
-            <i
-              class="bi bi-chevron-down position-absolute"
-              style="
-                right: 10px;
-                top: 50%;
-                transform: translateY(-50%);
-                pointer-events: none;
-                color: white;
-              "
-            ></i>
-          </div>
-
           <p>Rubro del local</p>
-          <div class="position-relative mb-3">
             <select class="form-control controls" name="rubro_local" required>
-              <option value="Accesorios" <?php if(isset($local['rubro_local']) && $local['rubro_local'] == 'Accesorios') echo 'selected'; ?>>Accesorios</option>
+              <option value="Accesorios" <?= $local['rubro_local'] === 'Accesorios' ? 'selected' : ''?>>Accesorios</option>
               <option value="Deportes" <?php if(isset($local['rubro_local']) && $local['rubro_local'] == 'Deportes') echo 'selected'; ?>>Deportes</option>
               <option value="Electro" <?php if(isset($local['rubro_local']) && $local['rubro_local'] == 'Electro') echo 'selected'; ?>>Electro</option>
               <option value="Estetica" <?php if(isset($local['rubro_local']) && $local['rubro_local'] == 'Estetica') echo 'selected'; ?>>Estetica</option>

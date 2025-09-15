@@ -37,7 +37,7 @@ sesionIniciada();
         <a href="SolicitudRegistro.php">
           <button>Solicitudes De Registro</button>
         </a>
-        <a href="ReportePromocionesAdm.php">
+        <a href="ReportePromociones.php">
           <button>Reportes De Uso Promociones</button>
         </a>
       </div>

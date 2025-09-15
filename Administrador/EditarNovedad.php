@@ -15,11 +15,11 @@ $id = intval($_GET['cod_novedad']);
 $error = '';
 $exito = '';
 
-$stmt = $link->prepare("SELECT * FROM novedades WHERE cod_novedad = ?");
-$stmt->bind_param("i", $id);
-$stmt->execute();
-$novedad = $stmt->get_result()->fetch_assoc();
-$stmt->close();
+$sql = $link->prepare("SELECT * FROM novedades WHERE cod_novedad = ?");
+$sql->bind_param("i", $id);
+$sql->execute();
+$novedad = $sql->get_result()->fetch_assoc();
+$sql->close();
 
 if (!$novedad) {
     header("Location: AdministrarNovedades.php?mensaje=no_encontrado");
@@ -54,14 +54,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($hasta < $desde) $error = "La fecha de fin no puede ser menor que la de inicio.";
     if (empty($error)) {
         $sql = "UPDATE novedades SET texto_novedad = ?, fecha_desde_novedad = ?, fecha_hasta_novedad = ?, categoria_cliente = ?, foto_novedad = ? WHERE cod_novedad = ?";
-        if ($stmt = $link->prepare($sql)) {
-            $stmt->bind_param("sssssi", $texto, $desde, $hasta, $catCliente, $rutaMultimedia, $id);
-            if ($stmt->execute()) {
+        if ($sql = $link->prepare($sql)) {
+            $sql->bind_param("sssssi", $texto, $desde, $hasta, $catCliente, $rutaMultimedia, $id);
+            if ($sql->execute()) {
                 $exito = "La novedad se actualizó satisfactoriamente.";
             } else {
-                $error = "Error al actualizar: " . $stmt->error;
+                $error = "Error al actualizar: " . $sql->error;
             }
-            $stmt->close();
+            $sql->close();
         } else {
             $error = "Error en la preparación de la consulta: " . $link->error;
         }
@@ -95,7 +95,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         window.location.href = "AdministrarNovedades.php";
                     }, 1000);
                 </script>
-
             <?php endif; ?>
             <form method="post" action="?cod_novedad=<?= $id ?>" enctype="multipart/form-data">
                 <p>Descripción</p>

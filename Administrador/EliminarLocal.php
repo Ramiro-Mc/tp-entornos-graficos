@@ -1,32 +1,38 @@
+
 <?php
-// Conexión a la base de datos
-require "../conexion.inc"; // Asegúrate de que la ruta sea correcta
+require "../conexion.inc";
 include_once("../Includes/funciones.php");
 sesionIniciada();
-// Validar ID recibido
-if (isset($_GET['cod_local']) && is_numeric($_GET['cod_local'])) {
-    $id = intval($_GET['cod_local']);
 
-    // Preparar DELETE seguro
-    $stmt = $link->prepare("DELETE FROM locales WHERE cod_local= ?");
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cod_local']) && is_numeric($_POST['cod_local'])) {
+    $id = intval($_POST['cod_local']);
+
+    $stmt = $link->prepare("SELECT foto_local FROM locales WHERE cod_local = ?");
     $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $foto = null;
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $foto = $row['foto_local'];
+    }
+    $stmt->close();
 
-    if ($stmt->execute()) {
-        // Redirigir con mensaje de éxito
-        header("Location: AdministrarLocales.php?mensaje=eliminado");
-        exit;
-    } else {
-        // Redirigir con mensaje de error
-        header("Location: AdministrarLocales.php?mensaje=error");
-        exit;
+    $stmt = $link->prepare("DELETE FROM locales WHERE cod_local = ?");
+    $stmt->bind_param("i", $id);
+    $mensaje = $stmt->execute() ? "eliminado" : "error";
+    $stmt->close();
+
+    if ($mensaje === "eliminado" && !empty($foto)) {
+        $rutaArchivo = "../" . $foto; // Ajusta según la ruta real de tus uploads
+        if (file_exists($rutaArchivo)) {
+            unlink($rutaArchivo);
+        }
     }
 
-    $stmt->close();
-} else {
-    // ID no válido
-    header("Location: AdministrarLocales.php?mensaje=id_invalido");
+    header("Location: AdministrarLocales.php?mensaje=$mensaje");
     exit;
 }
 
-$link->close();
-?>
+header("Location: AdministrarLocales.php?mensaje=id_invalido");
+exit;
