@@ -600,13 +600,6 @@ textarea {
   margin: 0;
 }
 
-/* No vi que se use */
-/* .promocion-container {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-} */
-
 .promocion {
   background-color: #fff;
   color: #000;
@@ -630,9 +623,10 @@ textarea {
 }
 
 .infoTarjeta {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    width: 1400px;
 }
 
 .info h3 {
@@ -776,9 +770,8 @@ textarea {
   padding-bottom: 2rem;
   box-shadow: #777 0px 0px 5px;
   flex: 1;
-  height: 100%; /* ← Resta la altura del header */
-  overflow-y: auto; /* ← Scroll si es necesario */
-  /* position: sticky;              ← Se mantiene fijo */
+  height: 100%;
+  overflow-y: auto;
   top: 0;
 }
 
@@ -858,16 +851,6 @@ textarea {
     display: none;
   }
 }
-
-/* @media (max-width: 768px) {
-  .boton-codigo-chico{
-    height: 3.4rem;
-    width: 3.4rem;
-    font-size: 1rem;
-  }
-} */
-
-/* Menu desplegable de filtros */
 
 .filtros-desp {
   margin-top: -2rem;

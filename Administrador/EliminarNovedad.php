@@ -1,32 +1,37 @@
 <?php
-// Conexión a la base de datos
-require "../conexion.inc"; // Asegúrate de que la ruta sea correcta
+require "../conexion.inc";
 include_once("../Includes/funciones.php");
 sesionIniciada();
-// Validar ID recibido
-if (isset($_GET['cod_novedad']) && is_numeric($_GET['cod_novedad'])) {
-    $id = intval($_GET['cod_novedad']);
 
-    // Preparar DELETE seguro
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cod_novedad']) && is_numeric($_POST['cod_novedad'])) {
+    $id = intval($_POST['cod_novedad']);
+
+    $stmt = $link->prepare("SELECT foto_novedad FROM novedades WHERE cod_novedad = ?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $foto = null;
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $foto = $row['foto_novedad'];
+    }
+    $stmt->close();
+
     $stmt = $link->prepare("DELETE FROM novedades WHERE cod_novedad = ?");
     $stmt->bind_param("i", $id);
+    $mensaje = $stmt->execute() ? "eliminado" : "error";
+    $stmt->close();
 
-    if ($stmt->execute()) {
-        // Redirigir con mensaje de éxito
-        header("Location: AdministrarNovedades.php?mensaje=eliminado");
-        exit;
-    } else {
-        // Redirigir con mensaje de error
-        header("Location: AdministrarNovedades.php?mensaje=error");
-        exit;
+    if ($mensaje === "eliminado" && !empty($foto)) {
+        $rutaArchivo = "../" . $foto; // Ajusta según la ruta real de tus uploads
+        if (file_exists($rutaArchivo)) {
+            unlink($rutaArchivo);
+        }
     }
 
-    $stmt->close();
-} else {
-    // ID no válido
-    header("Location: AdministrarNovedades.php?mensaje=id_invalido");
+    header("Location: AdministrarNovedades.php?mensaje=$mensaje");
     exit;
 }
 
-$link->close();
-?>
+header("Location: AdministrarNovedades.php?mensaje=id_invalido");
+exit;
