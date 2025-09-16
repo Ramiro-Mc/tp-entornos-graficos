@@ -62,7 +62,7 @@ $total_paginas = ceil($total_novedades / $novedades_por_pagina);
 
   <main class="FondoDueñoAdministrador">
     <div class="container-fluid filtraderos justify-content-end">
-      <a href="CrearNovedad.php">
+      <a href="Crear.php?tipo=novedad">
         <button class="btn btn-success">
           <i class="bi bi-plus-circle"></i> Crear
         </button>
@@ -90,10 +90,11 @@ $total_paginas = ceil($total_novedades / $novedades_por_pagina);
               <p><small>Desde: <?= $n['fecha_desde_novedad'] ?> | Hasta: <?= $n['fecha_hasta_novedad'] ?></small></p>
             </div>
             <div class="acciones">
-              <a href="VerNovedad.php?cod_novedad=<?= $n['cod_novedad'] ?>" class="btn btn-primary btn-sm">VER DETALLES</a>
-              <a href="EditarNovedad.php?cod_novedad=<?= $n['cod_novedad'] ?>" class="btn btn-secondary btn-sm">EDITAR</a>
-              <form action="EliminarNovedad.php" method="POST" onsubmit="return confirm('¿Seguro que quieres eliminar esta novedad?');">
-                <input type="hidden" name="cod_novedad" value="<?= $n['cod_novedad'] ?>">
+              <a href="verDetalle.php?tipo=novedad&cod=<?= $n['cod_novedad'] ?>" class="btn btn-primary btn-sm">VER DETALLES</a>
+              <a href="editar.php?tipo=novedad&cod=<?= $n['cod_novedad'] ?>" class="btn btn-secondary btn-sm">EDITAR</a>
+              <form method="post" action="eliminar.php" onsubmit="return confirm('¿Seguro que quieres eliminar?');">
+                <input type="hidden" name="tipo" value="novedad">
+                <input type="hidden" name="cod" value="<?= $n['cod_novedad'] ?>">
                 <button type="submit" class="btn btn-danger btn-sm">ELIMINAR</button>
               </form>
             </div>

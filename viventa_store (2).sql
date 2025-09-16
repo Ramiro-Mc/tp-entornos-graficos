@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-09-2025 a las 20:06:44
+-- Tiempo de generación: 16-09-2025 a las 18:59:53
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -101,12 +101,8 @@ CREATE TABLE `locales` (
 --
 
 INSERT INTO `locales` (`cod_local`, `nombre_local`, `ubicacion_local`, `rubro_local`, `cod_usuario`, `foto_local`) VALUES
-(1, 'nike', 'Ala B', 'Deportes', 12, ''),
-(2, 'jordan', 'Ala A', 'Estetica', 14, ''),
-(3, 'le esquina triste', 'Ala C', 'Electro', 12, ''),
-(4, 'le esquina', 'Ala E', 'Deportes', 9, NULL),
-(5, 'jordann', 'Ala E', 'Estetica', 14, ''),
-(6, 'gdfgdfg', 'Ala C', 'Electro', 12, '');
+(11, 'Nike', 'Ala A', 'Accesorios', 14, NULL),
+(12, 'Nikes', 'Ala A', 'Accesorios', 14, NULL);
 
 -- --------------------------------------------------------
 
@@ -128,17 +124,8 @@ CREATE TABLE `novedades` (
 --
 
 INSERT INTO `novedades` (`cod_novedad`, `texto_novedad`, `fecha_desde_novedad`, `fecha_hasta_novedad`, `foto_novedad`, `categoria_cliente`) VALUES
-(22, '333', '2025-09-02', '2025-09-23', NULL, 'inicial'),
-(23, 'gfdgdfg', '2025-09-09', '2025-09-23', NULL, 'inicial'),
-(24, 'hfdgfdgfd', '2025-09-02', '2025-10-06', NULL, 'inicial'),
-(25, 'elias', '2025-09-03', '2025-09-30', NULL, 'inicial'),
-(26, 'GDFGFD', '2025-09-11', '2025-10-01', NULL, 'premium'),
-(27, 'htfhtf', '2025-09-02', '2025-09-24', NULL, 'medium'),
-(28, 'hfthg', '2025-09-03', '2025-10-02', NULL, 'inicial'),
-(29, 'htfhtfh', '2025-09-11', '2025-09-30', NULL, 'premium'),
-(30, 'htfhtfhtf', '2025-09-03', '2025-09-30', NULL, 'medium'),
-(31, 'hfhfg', '2025-09-22', '2025-10-07', NULL, 'inicial'),
-(32, 'hfghgf', '2025-09-01', '2025-09-23', NULL, 'inicial');
+(36, 'hola', '2025-09-01', '2025-09-01', NULL, 'inicial'),
+(37, 'hola', '2025-09-05', '2025-09-30', 'uploads/novedad_68c997337d309.png', 'inicial');
 
 -- --------------------------------------------------------
 
@@ -308,19 +295,19 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `locales`
 --
 ALTER TABLE `locales`
-  MODIFY `cod_local` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `cod_local` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `novedades`
 --
 ALTER TABLE `novedades`
-  MODIFY `cod_novedad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `cod_novedad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT de la tabla `promociones`
 --
 ALTER TABLE `promociones`
-  MODIFY `cod_promocion` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cod_promocion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `solicitudes`

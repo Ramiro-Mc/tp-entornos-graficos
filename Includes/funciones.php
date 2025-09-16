@@ -37,3 +37,45 @@ function paginacion($pagina, $total_paginas, $params = [])
     }
     echo '</ul></nav>';
 }
+
+function getIntParam($name, $redirect)
+{
+    if (!isset($_GET[$name]) || !is_numeric($_GET[$name])) {
+        header("Location: $redirect?mensaje={$name}_invalido");
+        exit;
+    }
+    return intval($_GET[$name]);
+}
+
+function fetchOne($link, $sql, $types, ...$params)
+{
+    $sql = $link->prepare($sql);
+    $sql->bind_param($types, ...$params);
+    $sql->execute();
+    $result = $sql->get_result();
+    $row = $result->fetch_assoc();
+    $sql->close();
+    return $row;
+}
+
+function e($str)
+{
+    return htmlspecialchars($str ?? '', ENT_QUOTES, 'UTF-8');
+}
+
+function subirArchivo($file, $prefijo)
+{
+    if (!isset($file) || $file['error'] !== UPLOAD_ERR_OK || empty($file['name'])) return null;
+
+    $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+    $permitidos = ['jpg', 'jpeg', 'png', 'gif', 'mp4', 'pdf'];
+    if (!in_array($ext, $permitidos)) return "Formato de archivo no permitido.";
+
+    $nuevoNombre = $prefijo . "_" . uniqid() . "." . $ext;
+    $destino = "../uploads/" . $nuevoNombre;
+    if (move_uploaded_file($file['tmp_name'], $destino)) {
+        return "uploads/" . $nuevoNombre;
+    } else {
+        return "Error al mover el archivo.";
+    }
+}

@@ -62,7 +62,7 @@ $total_paginas = ceil($total_locales / $locales_por_pagina);
 
   <main class="FondoDueñoAdministrador">
     <div class="container-fluid filtraderos justify-content-end">
-      <a href="CrearLocal.php">
+      <a href="Crear.php?tipo=local">
         <button class="btn btn-success">
           <i class="bi bi-plus-circle"></i> Crear
         </button>
@@ -91,10 +91,11 @@ $total_paginas = ceil($total_locales / $locales_por_pagina);
               <p>Ubicación: <?= htmlspecialchars($n['ubicacion_local']) ?></p>
             </div>
             <div class="acciones">
-              <a href="VerLocal.php?cod_local=<?= $n['cod_local'] ?>" class="btn btn-primary btn-sm">VER DETALLES</a>
-              <a href="EditarLocal.php?cod_local=<?= $n['cod_local'] ?>" class="btn btn-secondary btn-sm">EDITAR</a>
-              <form action="EliminarLocal.php" method="POST" onsubmit="return confirm('¿Seguro que quieres eliminar este local?');">
-                <input type="hidden" name="cod_local" value="<?= $n['cod_local'] ?>">
+              <a href="verDetalle.php?tipo=local&cod=<?= $n['cod_local'] ?>" class="btn btn-primary btn-sm">VER DETALLES</a>
+              <a href="editar.php?tipo=local&cod=<?= $n['cod_local'] ?>" class="btn btn-secondary btn-sm">EDITAR</a>
+              <form method="post" action="eliminar.php" onsubmit="return confirm('¿Seguro que quieres eliminar?');">
+                <input type="hidden" name="tipo" value="local">
+                <input type="hidden" name="cod" value="<?= $n['cod_local'] ?>">
                 <button type="submit" class="btn btn-danger btn-sm">ELIMINAR</button>
               </form>
             </div>

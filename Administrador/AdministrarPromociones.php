@@ -48,6 +48,8 @@ if (isset($_GET['cod_promocion']) && isset($_GET['accion'])) {
   }
 }
 
+$sql = "SELECT cod_promocion, texto_promocion, estado_promo FROM promociones ORDER BY $order";
+$result = $link->query($sql);
 $result = $link->query("SELECT p.cod_promocion, p.texto_promocion, p.estado_promo, p.fecha_desde_promocion, p.fecha_hasta_promocion, l.nombre_local FROM promociones p INNER JOIN locales l ON p.cod_local = l.cod_local WHERE p.estado_promo = 'pendiente' ORDER BY $order LIMIT $promociones_por_pagina OFFSET $offset");
 
 $total_promociones_result = $link->query("SELECT COUNT(*) AS total FROM promociones WHERE estado_promo = 'pendiente'");
@@ -96,7 +98,7 @@ $total_paginas = ceil($total_promociones / $promociones_por_pagina);
               <p><small>Desde: <?= $n['fecha_desde_promocion'] ?> | Hasta: <?= $n['fecha_hasta_promocion'] ?></small></p>
             </div>
             <div class="acciones">
-              <a href="VerPromocion.php?cod_promocion=<?= $n['cod_promocion'] ?>" class="btn btn-primary btn-sm">VER DETALLES</a>
+              <a href="verDetalle.php?tipo=promocion&cod=<?= $n['cod_promocion'] ?>" class="btn btn-primary btn-sm">VER DETALLES</a>
               <a href="AdministrarPromociones.php?cod_promocion=<?= $n['cod_promocion'] ?>&accion=aceptar"
                 class="btn btn-success"
                 onclick="return confirm('¿Seguro que quieres ACEPTAR esta promoción?');">
