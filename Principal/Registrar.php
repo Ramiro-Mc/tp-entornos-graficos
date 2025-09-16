@@ -124,7 +124,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mensaje = "<div class='alert alert-danger'>No se pudo enviar el correo de confirmación. Error: {$mail->ErrorInfo}</div>";
           }
         } elseif ($vTipoUsuario == 'duenio') {
-          mysqli_query($link, "INSERT INTO dueño_local (cod_usuario, estado) VALUES ('$vCodUsuario', 'pendiente')");
+          mysqli_query($link, "INSERT INTO solicitudes (cod_usuario, estado, fecha_solicitud) VALUES ('$vCodUsuario', 'Pendiente', NOW())");
           $mensaje = "<div class='alert alert-warning'>Se registro como dueño de local. Pendiente de aprobación.</div>";
         }
       } else {

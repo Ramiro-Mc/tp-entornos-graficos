@@ -1,6 +1,6 @@
 <?php
 $folder = "Administrador";
-$pestaña = "Administrar Solicitudes";
+$pestaña = "Solicitudes de Registro";
 include_once("../Includes/funciones.php");
 sesionIniciada();
 
@@ -13,11 +13,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cod_solicitud'], $_PO
 
     if ($accion === "aprobar") {
         $link->query("UPDATE solicitudes SET estado = 'Aprobada' WHERE cod_solicitud = $cod");
+        $sol = $link->query("SELECT cod_usuario FROM solicitudes WHERE cod_solicitud = $cod")->fetch_assoc();
+        $cod_usuario = $sol['cod_usuario'];
+        $existe = $link->query("SELECT 1 FROM dueño_local WHERE cod_usuario = $cod_usuario");
+        if ($existe->num_rows == 0) {
+            $link->query("INSERT INTO dueño_local (cod_usuario, estado) VALUES ($cod_usuario, 'aprobado')");
+        }
     } elseif ($accion === "rechazar") {
         $link->query("UPDATE solicitudes SET estado = 'Rechazada' WHERE cod_solicitud = $cod");
     }
 
-    header("Location: AdministrarSolicitudes.php");
+    header("Location: SolicitudesRegistro.php");
     exit;
 }
 
@@ -26,14 +32,17 @@ $pagina = isset($_GET['pagina']) && is_numeric($_GET['pagina']) ? intval($_GET['
 $solicitudes_por_pagina = 5;
 $offset = ($pagina - 1) * $solicitudes_por_pagina;
 
+// Solo solicitudes pendientes
 $result = $link->query("
   SELECT cod_solicitud, fecha_solicitud, cod_usuario, estado
   FROM solicitudes
+  WHERE estado = 'Pendiente'
   ORDER BY fecha_solicitud DESC
   LIMIT $solicitudes_por_pagina OFFSET $offset
 ");
 
-$total_result = $link->query("SELECT COUNT(*) AS total FROM solicitudes");
+// Contar solo solicitudes pendientes
+$total_result = $link->query("SELECT COUNT(*) AS total FROM solicitudes WHERE estado = 'Pendiente'");
 $total_row = $total_result->fetch_assoc();
 $total_solicitudes = $total_row['total'];
 $total_paginas = ceil($total_solicitudes / $solicitudes_por_pagina);
@@ -65,23 +74,20 @@ $total_paginas = ceil($total_solicitudes / $solicitudes_por_pagina);
               <h4 class="text-break">Solicitud #<?= $s['cod_solicitud'] ?></h4>
               <p><b>Usuario:</b> <?= $s['cod_usuario'] ?></p>
               <p><small>Fecha: <?= $s['fecha_solicitud'] ?></small></p>
-              <p><small>Estado: <?= $s['estado'] ?? 'Pendiente' ?></small></p>
+              <p><small>Estado: <?= $s['estado'] ?></small></p>
             </div>
             <div class="acciones d-flex flex-column gap-2">
-              <?php if ($s['estado'] === NULL || $s['estado'] === 'Pendiente'): ?>
-                <form method="POST" onsubmit="return confirm('¿Aprobar esta solicitud?');">
-                  <input type="hidden" name="cod_solicitud" value="<?= $s['cod_solicitud'] ?>">
-                  <input type="hidden" name="accion" value="aprobar">
-                  <button type="submit" class="btn btn-success btn-sm">APROBAR</button>
-                </form>
-                <form method="POST" onsubmit="return confirm('¿Rechazar esta solicitud?');">
-                  <input type="hidden" name="cod_solicitud" value="<?= $s['cod_solicitud'] ?>">
-                  <input type="hidden" name="accion" value="rechazar">
-                  <button type="submit" class="btn btn-danger btn-sm">RECHAZAR</button>
-                </form>
-              <?php else: ?>
-                <span class="badge bg-secondary">Ya revisada</span>
-              <?php endif; ?>
+              <!-- Solo mostrar los botones de aprobar/rechazar -->
+              <form method="POST" onsubmit="return confirm('¿Aprobar esta solicitud?');">
+                <input type="hidden" name="cod_solicitud" value="<?= $s['cod_solicitud'] ?>">
+                <input type="hidden" name="accion" value="aprobar">
+                <button type="submit" class="btn btn-success btn-sm">APROBAR</button>
+              </form>
+              <form method="POST" onsubmit="return confirm('¿Rechazar esta solicitud?');">
+                <input type="hidden" name="cod_solicitud" value="<?= $s['cod_solicitud'] ?>">
+                <input type="hidden" name="accion" value="rechazar">
+                <button type="submit" class="btn btn-danger btn-sm">RECHAZAR</button>
+              </form>
             </div>
           </div>
         <?php endwhile; ?>
