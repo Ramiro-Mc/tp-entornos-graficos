@@ -4,24 +4,32 @@ $folder = "Administrador";
 $pestaña = "Administrar Promociones";
 include_once("../Includes/funciones.php");
 sesionIniciada();
-require '../conexion.inc';
-// Orden por defecto
+
+include('../conexion.inc');
+
+$params = [];
+if (isset($_GET['order'])) {
+  $params['order'] = $_GET['order'];
+}
+
+$pagina = isset($_GET['pagina']) && is_numeric($_GET['pagina']) ? intval($_GET['pagina']) : 1;
+$promociones_por_pagina = 5;
+$offset = ($pagina - 1) * $promociones_por_pagina;
 $order = 'cod_promocion ASC';
 
-// Chequeo parámetro GET para ordenar
 if (isset($_GET['order'])) {
   switch ($_GET['order']) {
-    case 'nombre_asc':
+    case 'cod_promocion_asc':
       $order = 'cod_promocion ASC';
       break;
-    case 'nombre_desc':
+    case 'cod_promocion_desc':
       $order = 'cod_promocion DESC';
       break;
   }
 }
 
 if (isset($_GET['cod_promocion']) && isset($_GET['accion'])) {
-  $cod_promocion = intval($_GET['cod_promocion']); // seguridad
+  $cod_promocion = intval($_GET['cod_promocion']);
   $accion = $_GET['accion'];
 
   if ($accion === 'aceptar') {
@@ -31,16 +39,21 @@ if (isset($_GET['cod_promocion']) && isset($_GET['accion'])) {
   }
 
   if (isset($nuevo_estado)) {
-    $sql_update = "UPDATE promociones SET estado_promo = '$nuevo_estado' WHERE cod_promocion = $cod_promocion";
-    $link->query($sql_update);
-    // Redirigir para evitar reenvío al refrescar
+    $sql_update = $link->prepare("UPDATE promociones SET estado_promo = ? WHERE cod_promocion = ?");
+    $sql_update->bind_param("si", $nuevo_estado, $cod_promocion);
+    $sql_update->execute();
+    $sql_update->close();
     header("Location: AdministrarPromociones.php");
     exit();
   }
 }
 
-$sql = "SELECT cod_promocion, texto_promocion FROM promociones ORDER BY $order";
-$result = $link->query($sql);
+$result = $link->query("SELECT p.cod_promocion, p.texto_promocion, p.estado_promo, p.fecha_desde_promocion, p.fecha_hasta_promocion, l.nombre_local FROM promociones p INNER JOIN locales l ON p.cod_local = l.cod_local WHERE p.estado_promo = 'pendiente' ORDER BY $order LIMIT $promociones_por_pagina OFFSET $offset");
+
+$total_promociones_result = $link->query("SELECT COUNT(*) AS total FROM promociones WHERE estado_promo = 'pendiente'");
+$total_promociones_row = $total_promociones_result->fetch_assoc();
+$total_promociones = $total_promociones_row['total'];
+$total_paginas = ceil($total_promociones / $promociones_por_pagina);
 ?>
 
 <!DOCTYPE html>
@@ -56,9 +69,7 @@ $result = $link->query($sql);
 
 <body>
   <header>
-
     <?php include("../Includes/header.php"); ?>
-
   </header>
 
   <main class="FondoDueñoAdministrador">
@@ -75,25 +86,40 @@ $result = $link->query($sql);
     </div>
 
     <div class="promociones">
-      <?php if ($result->num_rows > 0): ?>
-        <?php while ($row = $result->fetch_assoc()): ?>
-          <div class="promocion">
-            <div class="infoTarjeta">
-              <h3><?php echo htmlspecialchars($row['texto_promocion']); ?></h3>
-              <p>#<?php echo $row['cod_promocion']; ?></p>
-              <p>Estado: <?php echo htmlspecialchars($row['estado_promo']); ?></p>
+      <?php if ($result->num_rows): ?>
+        <?php while ($n = $result->fetch_assoc()): ?>
+          <div class="promocion d-flex justify-content-between align-items-start mb-3 p-3 border rounded">
+            <div class="infoTarjeta flex-grow-1 me-3">
+              <h3><?= htmlspecialchars($n['texto_promocion']) ?></h3>
+              <p>#<?= htmlspecialchars($n['cod_promocion']); ?></p>
+              <p>Local: <?= htmlspecialchars($n['nombre_local']); ?></p>
+              <p><small>Desde: <?= $n['fecha_desde_promocion'] ?> | Hasta: <?= $n['fecha_hasta_promocion'] ?></small></p>
             </div>
             <div class="acciones">
-              <a href="VerPromocion.php?cod_promocion=<?php echo $row['cod_promocion']; ?>" class="btn btn-primary">VER DETALLES</a>
-              <a href="AdministrarPromociones.php?cod_promocion=<?php echo $row['cod_promocion']; ?>&accion=aceptar" class="btn btn-success">ACEPTAR</a>
-              <a href="AdministrarPromociones.php?cod_promocion=<?php echo $row['cod_promocion']; ?>&accion=rechazar" class="btn btn-danger">RECHAZAR</a>
+              <a href="VerPromocion.php?cod_promocion=<?= $n['cod_promocion'] ?>" class="btn btn-primary btn-sm">VER DETALLES</a>
+              <a href="AdministrarPromociones.php?cod_promocion=<?= $n['cod_promocion'] ?>&accion=aceptar"
+                class="btn btn-success"
+                onclick="return confirm('¿Seguro que quieres ACEPTAR esta promoción?');">
+                ACEPTAR
+              </a>
+
+              <a href="AdministrarPromociones.php?cod_promocion=<?= $n['cod_promocion'] ?>&accion=rechazar"
+                class="btn btn-danger"
+                onclick="return confirm('¿Seguro que quieres RECHAZAR esta promoción?');">
+                RECHAZAR
+              </a>
             </div>
           </div>
         <?php endwhile; ?>
       <?php else: ?>
-        <p>No hay promociones existentes.</p>
+        <p class="text-center">No hay promociones cargadas.</p>
       <?php endif; ?>
     </div>
+
+    <div class="mt-4">
+      <?php paginacion($pagina, $total_paginas, $params); ?>
+    </div>
+
   </main>
 
   <footer class="seccion-footer d-flex flex-column justify-content-center align-items-center pt-4">
@@ -101,7 +127,8 @@ $result = $link->query($sql);
     <?php include("../Includes/footer.php") ?>
 
   </footer>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
