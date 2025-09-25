@@ -108,10 +108,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
       <form class="formulario-transparente" action="InicioSesion.php" method="POST" name="FormLogin" aria-label="Formulario para iniciar sesión">
 
-        <label for="email" style="display:block;">Mail</label>
+        <label for="email" style="display:block;">Mail <span class="campo-obligatorio">*</span></label>
         <input type="text" id="email" name="email" size="100" placeholder="ejemplo@correo.com" required aria-label="Correo electrónico" />
 
-        <label for="password" style="display:block;">Contraseña</label>
+        <label for="password" style="display:block;">Contraseña <span class="campo-obligatorio">*</span></label>
         <div style="position:relative;">
           <input type="password" name="password" id="password" size="8" placeholder="********" required aria-label="Contraseña" />
           <span id="togglePassword" style="position:absolute; right:8px; top:40%; transform:translateY(-50%); cursor:pointer;" aria-label="Mostrar u ocultar contraseña" tabindex="0" role="button">
@@ -141,6 +141,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
 
   <script>
+
     document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('togglePassword').addEventListener('click', function() {
         const passwordInput = document.getElementById('password');
@@ -156,6 +157,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
       });
     });
+
+      
   </script>
 </body>
 

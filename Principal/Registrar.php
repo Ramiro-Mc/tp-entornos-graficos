@@ -167,13 +167,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <?php echo $mensaje; ?>
       <form class="formulario-transparente" action="Registrar.php" method="POST" name="formRegister" aria-label="Formulario para crear una cuenta">
 
-        <label for="nombre" style="display:block;">Nombre</label>
+        <label for="nombre" style="display:block;">Nombre <span class="campo-obligatorio">*</span></label>
         <input type="text" id="nombre" name="nombre" size="100" placeholder="Nombre" required aria-label="Nombre" />
 
-        <label for="email" style="display:block;">Mail</label>
+        <label for="email" style="display:block;">Mail <span class="campo-obligatorio">*</span></label>
         <input type="email" id="email" name="email" size="100" placeholder="Correo electrónico" required aria-label="Correo electrónico" />
 
-        <label for="password" style="display:block;">Contraseña</label>
+        <label for="password" style="display:block;">Contraseña <span class="campo-obligatorio">*</span></label>
         <div style="position:relative;">
           <input type="password" name="password" id="password" size="8" placeholder="Contraseña" required aria-label="Contraseña" />
           <span id="togglePassword" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer;" aria-label="Mostrar u ocultar contraseña" tabindex="0" role="button">
