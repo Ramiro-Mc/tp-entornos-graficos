@@ -1,6 +1,8 @@
 <?php
 include_once("../Includes/session.php");
 include("../Includes/funciones.php");
+require_once("../Includes/env.php");
+load_env(dirname(__DIR__) . '/.env');
 sesionIniciada();
 $folder = "Principal";
 $pestaña = "Register";
@@ -23,6 +25,25 @@ use PHPMailer\PHPMailer\SMTP;
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $smtpHost = env('SMTP_HOST', 'smtp.gmail.com');
+  $smtpPort = (int) env('SMTP_PORT', '465');
+  $smtpUser = env('SMTP_USERNAME', '');
+  $smtpPass = env('SMTP_PASSWORD', '');
+  $smtpFromName = env('SMTP_FROM_NAME', 'Viventa Store');
+  $appUrl = rtrim(env('APP_URL', ''), '/');
+  $smtpEncryption = strtolower(env('SMTP_ENCRYPTION', 'smtps'));
+  $smtpSecure = $smtpEncryption === 'starttls'
+    ? PHPMailer::ENCRYPTION_STARTTLS
+    : PHPMailer::ENCRYPTION_SMTPS;
+
+  if ($appUrl === '') {
+    $isHttps = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
+    $scheme = $isHttps ? 'https' : 'http';
+    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+    $projectBasePath = rtrim(str_replace('\\', '/', dirname(dirname($_SERVER['SCRIPT_NAME'] ?? ''))), '/');
+    $appUrl = $scheme . '://' . $host . $projectBasePath;
+  }
+
   $vEmail = $_POST['email'];
   $vPassword = $_POST['password'];
   $vTipoUsuario = $_POST['tipoUsuario'];
@@ -67,8 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
           //Mandamos mail de confirmacion 
 
-          $enlace = "http://localhost:8012/Repositorio/tp-entornos-graficos/Principal/Confirmar.php?token=$token";
-          // $enlace = "http://localhost/paginas/tp-entornos-graficos/Principal/Confirmar.php?token=$token";
+          $enlace = $appUrl . "/Principal/Confirmar.php?token=" . urlencode($token);
           $asunto = "Confirma tu cuenta";
           $mensajeMail = "
             <div style='font-family: Arial, sans-serif; background: #f9f9f9; padding: 24px; border-radius: 8px; color: #222;'>
@@ -92,20 +112,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           $mail = new PHPMailer(true);
 
           try {
+            if ($smtpUser === '' || $smtpPass === '') {
+              throw new Exception('Faltan credenciales SMTP en variables de entorno.');
+            }
+
             //Server settings
             /* $mail->SMTPDebug = SMTP::DEBUG_SERVER;  */                     //Enable verbose debug output
             $mail->isSMTP();                                            //Send using SMTP
-            $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+            $mail->Host       = $smtpHost;                     //Set the SMTP server to send through
             $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $mail->Username   = 'viventastore@gmail.com';                     //SMTP username
-            $mail->Password   = 'vfpm zaxi qbws oyub';                               //SMTP password
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-            $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+            $mail->Username   = $smtpUser;                     //SMTP username
+            $mail->Password   = $smtpPass;                               //SMTP password
+            $mail->SMTPSecure = $smtpSecure;            //Enable implicit TLS encryption
+            $mail->Port       = $smtpPort;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
             //Recipients
-            $mail->setFrom('viventastore@gmail.com', 'Viventa Store');
+            $mail->setFrom($smtpUser, $smtpFromName);
             $mail->addAddress($vEmail, $vNombreUsuario);     //Add a recipient
-            $mail->addReplyTo('viventastore@gmail.com', 'Information');
+            $mail->addReplyTo($smtpUser, 'Information');
 
             /* 
             //Attachments
