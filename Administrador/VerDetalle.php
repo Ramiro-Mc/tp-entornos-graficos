@@ -27,7 +27,7 @@ switch ($tipo) {
         $titulo = "Detalle de la Novedad";
         $data = fetchOne(
             $link,
-            "SELECT texto_novedad, fecha_desde_novedad, fecha_hasta_novedad, categoria_cliente, foto_novedad 
+            "SELECT texto_novedad, fecha_desde_novedad, fecha_hasta_novedad, tipo_usuario, foto_novedad 
              FROM novedades WHERE cod_novedad = ?",
             "i",
             $cod
@@ -99,7 +99,7 @@ $link->close();
                         <h3 class="card-title"><?= e($data['texto_novedad']) ?></h3>
                         <p><strong>Fecha Desde:</strong> <?= e($data['fecha_desde_novedad']) ?></p>
                         <p><strong>Fecha Hasta:</strong> <?= e($data['fecha_hasta_novedad']) ?></p>
-                        <p><strong>Categoría:</strong> <?= e($data['categoria_cliente']) ?></p>
+                        <p><strong>Categoría:</strong> <?= e($data['tipo_usuario']) ?></p>
                         <?php if (!empty($data['foto_novedad'])): ?>
                             <p><strong>Multimedia:</strong></p>
                             <img src="../<?= e($data['foto_novedad']) ?>" alt="Foto Novedad" class="img-fluid mb-2" style="max-width:200px;">

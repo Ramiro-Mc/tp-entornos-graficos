@@ -14,7 +14,6 @@ $cod_usuario = $_SESSION['cod_usuario'];
 include("../Includes/conexion.inc");
 $mensaje = "";
 
-
 $diasSemanaNombre = [
   1 => "Lunes",
   2 => "Martes",
@@ -26,11 +25,8 @@ $diasSemanaNombre = [
 ];
 $estado = "pendiente";
 
-
 $sqlLocales = "SELECT cod_local, nombre_local FROM locales WHERE cod_usuario = '$cod_usuario'";
 $locales = consultaSQL($sqlLocales);
-
-
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $vTitulo = trim($_POST['texto_promocion'] ?? '');
@@ -40,16 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $vCodLocal = $_POST['cod_local'] ?? '';
   $diasSeleccionados = $_POST['cod_dia'] ?? [];
   $imagenBase64 = "";
-  // if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
-  //   $contenidoImagen = file_get_contents($_FILES['imagen']['tmp_name']);
-  //   if ($contenidoImagen !== false && strlen($contenidoImagen) > 0) {
-  //     $imagenBase64 = base64_encode($contenidoImagen);
-  //   } else {
-  //     $mensaje = "<div class='alert alert-success'>Imagen cargada correctamente.</div>";
-  //   }
-  // } else {
-  //   $mensaje = "<div class='alert alert-danger'>No se subió ninguna imagen.</div>";
-  // }
+
   if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
     $contenidoImagen = file_get_contents($_FILES['imagen']['tmp_name']);
     if ($contenidoImagen !== false && strlen($contenidoImagen) > 0) {
@@ -62,33 +49,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if ($vFechaInicio && $vFechaFin && $vFechaFin < $vFechaInicio) $mensaje = "<div class='alert alert-danger'>Rango de fechas inválido</div>";
   if ($vCategoria === '') $mensaje = "<div class='alert alert-danger'>Categoría requerida</div>";
   if ($vCodLocal === '') $mensaje = "<div class='alert alert-danger'>Debe seleccionar un local</div>";
-  if (empty($diasSeleccionados)) $mensaje = "<div class='alert alert-danger'>Debe seleccionar al menos un día para la promoción.</div>";
-  if ($imagenBase64 === '') $mensaje = "<div class='alert alert-danger'>Debe subir una imagen obligatoriamente.</div>";
+  if (empty($diasSeleccionados)) $mensaje = "<div class='alert alert-danger'>Debe seleccionar al menos un día.</div>";
+  if ($imagenBase64 === '') $mensaje = "<div class='alert alert-danger'>Debe subir una imagen.</div>";
 
   if (!$mensaje) {
-
     $sql = "INSERT INTO promociones ( texto_promocion, fecha_desde_promocion, fecha_hasta_promocion, categoria_cliente, estado_promo, cod_local, foto_promocion )
               VALUES ('$vTitulo', '$vFechaInicio', '$vFechaFin', '$vCategoria','$estado', '$vCodLocal', '$imagenBase64')";
+    
     if (mysqli_query($link, $sql)) {
-
-      $idPromocion = mysqli_insert_id($link); // Obtiene el id generado
+      $idPromocion = mysqli_insert_id($link);
 
       if ($idPromocion > 0) {
         $sqlDias = "INSERT INTO promocion_dia (cod_promocion, cod_dia) VALUES ";
         foreach ($diasSeleccionados as $codDia) {
-          $codDia = intval($codDia); //Lo paso a entero
-          $sqlDias .= "($idPromocion, $codDia),"; // Agrega cada día seleccionado (VALUES)
+          $codDia = intval($codDia);
+          $sqlDias .= "($idPromocion, $codDia),";
         }
-        $sqlDias = rtrim($sqlDias, ','); // Elimina la última coma
+        $sqlDias = rtrim($sqlDias, ',');
+        
         if (!consultaSQL($sqlDias)) {
-          $mensaje = "<div class='alert alert-danger'>Error al guardar los días de la promoción.</div>";
+          $mensaje = "<div class='alert alert-danger'>Error al guardar los días.</div>";
         } else {
-          $mensaje = "<div class='alert alert-success'>La promoción fue creada.</div>";
+          $mensaje = "<div class='alert alert-success'>La promoción fue creada. Redirigiendo a tus locales...</div>";
+          
+          // Instrucción PHP para esperar 3 segundos y redirigir
+          $destino = "SeccionDueñoLocal.php";
+          header("Refresh: 3; url=" . urlencode($destino));
+          
+          // Limpiamos variables
+          $vTitulo = $vCategoria = $vFechaInicio = $vFechaFin = "";
         }
-        $vTitulo = $vDescripcion = $vCategoria = "";
-        $vFechaInicio = $vFechaFin = "";
       } else {
-        $mensaje = "<div class='alert alert-danger'>Error al obtener el ID de la promoción.</div>";
+        $mensaje = "<div class='alert alert-danger'>Error al obtener el ID.</div>";
       }
     } else {
       $mensaje = "<div class='alert alert-danger'>Error BD: " . mysqli_error($link) . "</div>";
@@ -97,82 +89,67 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-
-
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
   <?php include("../Includes/head.php"); ?>
-
   <title>Crear Nueva Promocion</title>
-
 </head>
-
 <body>
   <header>
-
     <?php include("../Includes/header.php"); ?>
-
   </header>
 
-  <main class="FondoDueñoAdministrador" aria-label="Panel para crear promoción">
-    <section class="form-register" aria-label="Formulario de nueva promoción">
+  <main class="FondoDueñoAdministrador">
+    <section class="form-register">
       <h4>Formulario Promoción</h4>
       <?php echo $mensaje; ?>
-      <form method="POST" enctype="multipart/form-data" name="FormPromocion" action="CrearPromocion.php" aria-label="Formulario para crear una nueva promoción">
+      <form method="POST" enctype="multipart/form-data" action="CrearPromocion.php">
         <label for="texto_promocion">Titulo</label>
-        <input class="controls" type="text" id="texto_promocion" name="texto_promocion" placeholder="Ingrese el titulo de la nueva promocion" required aria-label="Título de la promoción" />
-        <p>Vigencia de la promoción</p>
-        <label for="fechaini">Fecha de inicio</label>
-        <input class="controls" type="date" name="fechaini" id="fechaini" required aria-label="Fecha de inicio" />
-        <label for="fechafin">Fecha de fin</label>
-        <input class="controls" type="date" id="fechafin" name="fechafin" required aria-label="Fecha de fin" />
+        <input class="controls" type="text" id="texto_promocion" name="texto_promocion" placeholder="Título de la promoción" required />
+        
+        <p>Vigencia</p>
+        <label for="fechaini">Inicio</label>
+        <input class="controls" type="date" name="fechaini" id="fechaini" required />
+        
+        <label for="fechafin">Fin</label>
+        <input class="controls" type="date" id="fechafin" name="fechafin" required />
+        
         <label for="categoria">Categoría</label>
-        <div class="position-relative">
-          <select class="form-control controls" id="categoria" required name="Categoria" aria-label="Seleccionar categoría">
-            <option>Inicial</option>
-            <option>Medium</option>
-            <option>Premium</option>
-          </select>
-          <label for="cod_local">Local asignado</label>
-          <div class="position-relative">
-            <select class="form-control controls" id="cod_local" required name="cod_local" aria-label="Seleccionar local">
-              <option value="">Seleccione un local</option>
-              <?php while ($row = mysqli_fetch_assoc($locales)): ?>
-                <option value="<?php echo $row['cod_local']; ?>"><?php echo htmlspecialchars($row['nombre_local']); ?></option>
-              <?php endwhile; ?>
-            </select>
-            <i class="bi bi-chevron-down position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; color: white;"></i>
-          </div>
-          <label>Días disponibles para la promoción</label>
-          <div class="position-relative" aria-label="Seleccionar días disponibles">
-            <?php foreach ($diasSemanaNombre as $codDia => $nombreDia): ?>
-              <div>
-                <label>
-                  <input type="checkbox" name="cod_dia[]" value="<?php echo $codDia; ?>" aria-label="<?php echo htmlspecialchars($nombreDia); ?>">
-                  <?php echo htmlspecialchars($nombreDia); ?>
-                </label>
-              </div>
-            <?php endforeach; ?>
-          </div>
-          <label for="formFile">Archivo Multimedia</label>
-          <div class="mb-3">
-            <input class="form-control controls" type="file" id="formFile" name="imagen" accept="image/*" aria-label="Seleccionar imagen para la promoción" required />
-          </div>
-          <button class="btn btn-success boton-enviar" type="submit" aria-label="Enviar promoción">Enviar</button>
+        <select class="form-control controls" id="categoria" required name="Categoria">
+          <option>Inicial</option>
+          <option>Medium</option>
+          <option>Premium</option>
+        </select>
+
+        <label for="cod_local">Local asignado</label>
+        <select class="form-control controls" id="cod_local" required name="cod_local">
+          <option value="">Seleccione un local</option>
+          <?php while ($row = mysqli_fetch_assoc($locales)): ?>
+            <option value="<?php echo $row['cod_local']; ?>"><?php echo htmlspecialchars($row['nombre_local']); ?></option>
+          <?php endwhile; ?>
+        </select>
+
+        <label>Días disponibles</label>
+        <div class="mb-3">
+          <?php foreach ($diasSemanaNombre as $codDia => $nombreDia): ?>
+            <label style="display: block; margin-bottom: 5px;">
+              <input type="checkbox" name="cod_dia[]" value="<?php echo $codDia; ?>">
+              <?php echo htmlspecialchars($nombreDia); ?>
+            </label>
+          <?php endforeach; ?>
         </div>
+
+        <label for="formFile">Imagen de la promoción</label>
+        <input class="form-control controls" type="file" id="formFile" name="imagen" accept="image/*" required />
+        
+        <button class="btn btn-success boton-enviar" type="submit">Crear Promoción</button>
       </form>
     </section>
   </main>
 
-  <footer class="seccion-footer d-flex flex-column justify-content-center align-items-center pt-4">
-
+  <footer class="seccion-footer">
     <?php include("../Includes/footer.php") ?>
-
   </footer>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
 </body>
-
 </html>
