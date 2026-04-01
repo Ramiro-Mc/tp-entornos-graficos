@@ -5,10 +5,6 @@ sesionIniciada();
 
 $folder = "Cliente";
 $pestaña = "Buscar Promociones";
-
-
-
-
 date_default_timezone_set('America/Argentina/Buenos_Aires');
 $numeroDiaHoy = date('N');
 
@@ -44,8 +40,6 @@ $where_sql = count($where) ? "WHERE " . implode(" AND ", $where) : "";
 $cantPagina = 2;
 $pagina = isset($_GET["pagina"]) ?  max(1, intval($_GET["pagina"])) : 1;
 $principio = ($pagina - 1) * $cantPagina;
-
-
 $sql = "SELECT 
     p.cod_promocion,
     p.texto_promocion, 
@@ -60,9 +54,6 @@ AND pd.cod_dia = '$numeroDiaHoy'
 LIMIT $cantPagina OFFSET $principio";
 
 $result = consultaSQL($sql);
-
-
-
 ?>
 
 

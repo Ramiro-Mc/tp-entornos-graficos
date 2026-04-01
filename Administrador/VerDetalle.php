@@ -2,7 +2,7 @@
 $folder = "Administrador";
 $pestaña = "Detalle";
 include_once("../Includes/funciones.php");
-require "../conexion.inc";
+require "../Includes/conexion.inc";
 sesionIniciada();
 
 $tipo = $_GET['tipo'] ?? '';

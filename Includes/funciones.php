@@ -3,7 +3,7 @@
 function consultaSQL($sql_consulta)
 {
 
-    include("../conexion.inc");
+    include("conexion.inc");
 
     if (!$link) {
         die("Conexión fallida: " . mysqli_connect_error());

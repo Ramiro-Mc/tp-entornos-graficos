@@ -32,8 +32,6 @@ $res = consultaSQL("SELECT foto_novedad, texto_novedad FROM novedades");
 
   <main aria-label="Contenido principal">
 
-    <!-- Seccion Presentacion -->
-
     <section class="presentacion" aria-label="Presentación Viventa Store">
       <div id="carouselExampleAutoplaying" class="carousel slide presentacion-carrousel" data-bs-ride="carousel" data-bs-pause="false" aria-label="Carrusel de imágenes de presentación">
         <div class="carousel-inner">
@@ -70,8 +68,6 @@ $res = consultaSQL("SELECT foto_novedad, texto_novedad FROM novedades");
         </p>
       </div>
     </section>
-
-    <!-- Seccion locales -->
 
     <section id="locales" class="locales seccion-oscura" aria-label="Locales">
       <h2 class="seccion-titulo"><strong>Nuestros Locales</strong></h2>
@@ -118,81 +114,91 @@ $res = consultaSQL("SELECT foto_novedad, texto_novedad FROM novedades");
 
       <div class="container-fluid">
         <div id="locales-iniciales">
-          <?php
-          $result =  consultaSQL("SELECT foto_local, nombre_local, rubro_local, ubicacion_local FROM locales");
+          <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            <?php
+            $result =  consultaSQL("SELECT foto_local, nombre_local, rubro_local, ubicacion_local FROM locales");
 
-          if ($result->num_rows > 0):
-            while ($row = $result->fetch_assoc()):
-              $imagenLocal = $row['foto_local'];
-              $nombre_local = $row['nombre_local']; ?>
+            if ($result->num_rows > 0):
+              while ($row = $result->fetch_assoc()):
+                $imagenLocal = $row['foto_local'];
+                $nombre_local = $row['nombre_local']; ?>
 
-              <div class="container-fluid">
-                <div class="col-12 col-md-6 col-lg-4 ">
+                <div class="col">
                   <div class="promocion-index">
-                    <img src="data:image/jpeg;base64<?= $imagenLocal ?>" alt="Imagen de local <?= $nombre_local ?>" />
+                    <img src="../<?= $imagenLocal ?>" alt="Imagen de local <?= $nombre_local ?>" />
                     <div class="overlay">
                       <p><?= $nombre_local ?></p>
                     </div>
-
                   </div>
                 </div>
+
+              <?php endwhile; ?>
+
+            <?php else: ?>
+              <div class="col-12">
+                <div class="notificacion-no-promociones">
+                  <h3>¡Vaya!</h3>
+                  <p style="margin: 0;">Aun no hay locales para esta categoria</p>
+                </div>
               </div>
-
-            <?php endwhile; ?>
-
-          <?php else: ?>
-            <div class="notificacion-no-promociones">
-              <h3>¡Vaya!</h3>
-              <p style="margin: 0;">Aun no hay locales para esta categoria</p>
-            </div>
-          <?php endif; ?>
-
+            <?php endif; ?>
+          </div>
         </div>
 
-
         <div id="respuesta"></div>
-
-
       </div>
 
     </section>
-
-    <!-- Seccion novedades -->
 
     <section id="novedades" class="novedades" aria-label="Novedades">
       <h2 class="seccion-titulo"><strong>¡Enterate de nuestras novedades!</strong></h2>
-      <div id="carouselExampleIndicators" class="carousel slide ">
-        <div class="carousel-indicators ">
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        </div>
-        <div class="carousel-inner">
-          <?php if ($res->num_rows > 0): ?>
 
-            <?php while ($row = $res->fetch_assoc()): ?>
+      <?php
+      $novedades = [];
+      if ($res && $res->num_rows > 0) {
+        while ($row = $res->fetch_assoc()) {
+          $novedades[] = $row;
+        }
+      }
+      ?>
 
-              <?php
-              $foto_novedad = $row['foto_novedad'];
-              $texto_novedad = $row['texto_novedad'];
-              ?>
+      <?php if (!empty($novedades)): ?>
+        <div id="carouselExampleIndicators" class="carousel slide shadow-sm" data-bs-ride="carousel">
 
-              <div class="carousel-item active carousel-item-novedades">
-                <img src="data:image/jpeg;base64,<?= $foto_novedad ?>" class="d-block w-100" alt="Imagen de novedad: <?= $texto_novedad ?>" />
+          <div class="carousel-indicators">
+            <?php foreach ($novedades as $index => $novedad): ?>
+              <button type="button"
+                data-bs-target="#carouselExampleIndicators"
+                data-bs-slide-to="<?= $index ?>"
+                class="<?= $index === 0 ? 'active' : '' ?>"
+                aria-current="<?= $index === 0 ? 'true' : 'false' ?>"
+                aria-label="Slide <?= $index + 1 ?>">
+              </button>
+            <?php endforeach; ?>
+          </div>
+
+          <div class="carousel-inner">
+            <?php foreach ($novedades as $index => $novedad): ?>
+              <div class="carousel-item <?= $index === 0 ? 'active' : '' ?> carousel-item-novedades">
+                <img src="../<?= $novedad['foto_novedad'] ?>" class="d-block w-100" alt="Imagen de novedad: <?= htmlspecialchars($novedad['texto_novedad']) ?>" />
               </div>
+            <?php endforeach; ?>
+          </div>
 
-            <?php endwhile; ?>
-
-          <?php else: ?>
-            No hay novedades vigentes.
-          <?php endif; ?>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+          </button>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span></button>
-      </div>
-    </section>
 
-    <!-- seccion promociones -->
+      <?php else: ?>
+        <p class="text-center mt-3">No hay novedades vigentes.</p>
+      <?php endif; ?>
+    </section>
 
     <section id="promociones" class="promociones seccion-oscura" aria-label="Promociones">
       <h2 class="seccion-titulo"><strong>¡Promociones para morirse!</strong></h2>
@@ -217,8 +223,10 @@ $res = consultaSQL("SELECT foto_novedad, texto_novedad FROM novedades");
                 <?php $texto_promocion = $row['texto_promocion'];
                 $foto_promocion = $row['foto_promocion'];
                 $cantidad = $cantidad + 1; ?>
-                <div class="col-12 col-md-6 col-lg-4">
-                  <div class="promocion-index"><img src="data:image/jpeg;base64,<?= $foto_promocion ?>" alt="Imagen de promoción: <?= $texto_promocion ?>" />
+
+                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                  <div class="promocion-index">
+                    <img src="data:image/jpeg;base64,<?= $foto_promocion ?>" alt="Imagen de promoción: <?= $texto_promocion ?>" />
                     <div class="overlay">
                       <p><?= $texto_promocion ?></p>
                     </div>
@@ -235,12 +243,8 @@ $res = consultaSQL("SELECT foto_novedad, texto_novedad FROM novedades");
 
         </div>
       </div>
-
-      <div class="d-flex justify-content-center boton-vermas"><a href="../Cliente/BuscarPromociones.php" rel="noopener noreferer"><button type="button" class="btn btn-dark" aria-label="Ver más promociones">Ver mas promociones <i class="bi bi-arrow-right-circle"></i></button></a></div>
     </section>
   </main>
-
-  <!-- Seccion Mapa Google Maps -->
 
   <section class="mapa-google" aria-label="Ubicación en Google Maps">
     <h2 class="seccion-titulo"><strong>Encontranos </strong></h2>

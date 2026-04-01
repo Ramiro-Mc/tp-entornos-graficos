@@ -11,9 +11,10 @@ body {
 main {
   flex: 1;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  flex-direction: column; /* Mantener esto si tienes otros elementos arriba/abajo */
+  justify-content: center; /* Centra verticalmente */
+  align-items: center; /* Centra horizontalmente */
+  min-height: 80vh; /* O 100vh para que ocupe toda la pantalla */
 }
 
 .main-no-center {
@@ -44,13 +45,14 @@ main {
   margin-left: 3px;
 }
 
-
 .nav-link.active p {
   background-color: #204070;
   color: #fff !important;
   border-radius: 12px;
   font-weight: bold;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.35), 0 2px 8px rgba(32,64,112,0.35);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.35),
+    0 2px 8px rgba(32, 64, 112, 0.35);
   transition: box-shadow 0.2s;
 }
 
@@ -73,11 +75,11 @@ nav a:hover {
 
 nav a:visited,
 .navbar a:visited {
-    color: #8e44ad; /* Violeta para enlaces visitados en navegación */
+  color: #8e44ad; /* Violeta para enlaces visitados en navegación */
 }
 
 a:visited {
-    color: #9966cc; /* Color violeta para enlaces visitados */
+  color: #9966cc; /* Color violeta para enlaces visitados */
 }
 
 .colapsado ul {
@@ -191,7 +193,7 @@ a:visited {
   text-align: left;
 }
 
-.seccion-footer ul{
+.seccion-footer ul {
   list-style: none;
   padding-left: 0;
 }

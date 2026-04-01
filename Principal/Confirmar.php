@@ -1,5 +1,5 @@
 <?php
-include("../conexion.inc");
+include("../Includes/conexion.inc");
 include("../Includes/funciones.php");
 
 $mensaje = "";

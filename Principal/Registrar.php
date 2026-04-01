@@ -7,20 +7,14 @@ $pestaña = "Register";
 $token = bin2hex(random_bytes(32));
 $mensaje = "";
 
-
 //Php mailer
-
 require '../PHPMailer-master/src/PHPMailer.php';
 require '../PHPMailer-master/src/SMTP.php';
 require '../PHPMailer-master/src/Exception.php';
 
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
-
-
-
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $vEmail = $_POST['email'];
@@ -29,46 +23,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $vNombreUsuario = $_POST['nombre'];
 
   /* validaciones */
-
   if ($vEmail === '' || $vPassword === '' || $vTipoUsuario === '' || $vNombreUsuario === '') {
     $mensaje = "<div class='alert alert-danger'>Completa todos los campos.</div>";
-  }
-  if (!filter_var($vEmail, FILTER_VALIDATE_EMAIL)) {
+  } elseif (!filter_var($vEmail, FILTER_VALIDATE_EMAIL)) {
     $mensaje = "<div class='alert alert-danger'>Email inválido.</div>";
-  }
-  if (strlen($vPassword) < 8) {
+  } elseif (strlen($vPassword) < 8) {
     $mensaje = "<div class='alert alert-danger'>La contraseña debe tener al menos 8 caracteres.</div>";
-  }
-  if (!in_array($vTipoUsuario, ['cliente', 'duenio'])) {
+  } elseif (!in_array($vTipoUsuario, ['cliente', 'duenio'])) {
     $mensaje = "<div class='alert alert-danger'>Tipo de usuario inválido.</div>";
   }
 
   /* registro en base de datos */
-
   if ($mensaje === "") {
-    include("../conexion.inc");
+    include("../Includes/conexion.inc");
 
+    // 1. Verificamos si el correo ya está registrado
     $vResultado = mysqli_query($link, "SELECT COUNT(*) as cantidad FROM usuario WHERE email='$vEmail'");
     $vCantUsuario = mysqli_fetch_assoc($vResultado);
 
     if ($vCantUsuario['cantidad'] != 0) {
-      $mensaje = "<div class='alert alert-danger'>El usuario ya existe.</div>";
+      $mensaje = "<div class='alert alert-danger'>El usuario ya existe con ese correo.</div>";
     } else {
-      // Hashear la contraseña antes de guardar
+      // 2. Hasheamos la contraseña por seguridad
       $hashedPassword = password_hash($vPassword, PASSWORD_DEFAULT);
 
-      // Insertar usuario en la tabla usuario
-      $insertUsuario = mysqli_query($link, "INSERT INTO usuario (email, clave, nombre_usuario) VALUES ('$vEmail', '$hashedPassword', '$vNombreUsuario')");
+      // 3. Insertamos SIEMPRE primero en la tabla padre: 'usuario'
+      $queryUsuario = "INSERT INTO usuario (email, clave, nombre_usuario) VALUES ('$vEmail', '$hashedPassword', '$vNombreUsuario')";
+      $insertUsuario = mysqli_query($link, $queryUsuario);
+      
       if ($insertUsuario) {
+        // Obtenemos el ID que se acaba de generar para usarlo en las tablas hijas
         $vCodUsuario = mysqli_insert_id($link);
+        
+        // --- FLUJO CLIENTE ---
         if ($vTipoUsuario == 'cliente') {
           $vCategoriaCliente = "Inicial";
-          mysqli_query($link, "INSERT INTO cliente (cod_usuario, categoria_cliente, confirmado, token_confirmacion) VALUES ('$vCodUsuario', '$vCategoriaCliente', 0, '$token')");
+          
+          // Insertamos en la tabla 'cliente' según tu diagrama
+          $queryCliente = "INSERT INTO cliente (cod_usuario, categoria_cliente, confirmado, token_confirmacion) VALUES ('$vCodUsuario', '$vCategoriaCliente', 0, '$token')";
+          mysqli_query($link, $queryCliente);
 
-          //Mandamos mail de confirmacion 
-
+          // Mandamos mail de confirmacion 
           $enlace = "http://localhost:8012/Repositorio/tp-entornos-graficos/Principal/Confirmar.php?token=$token";
-          // $enlace = "http://localhost/paginas/tp-entornos-graficos/Principal/Confirmar.php?token=$token";
           $asunto = "Confirma tu cuenta";
           $mensajeMail = "
             <div style='font-family: Arial, sans-serif; background: #f9f9f9; padding: 24px; border-radius: 8px; color: #222;'>
@@ -92,80 +88,73 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           $mail = new PHPMailer(true);
 
           try {
-            //Server settings
-            /* $mail->SMTPDebug = SMTP::DEBUG_SERVER;  */                     //Enable verbose debug output
-            $mail->isSMTP();                                            //Send using SMTP
-            $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
-            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $mail->Username   = 'viventastore@gmail.com';                     //SMTP username
-            $mail->Password   = 'vfpm zaxi qbws oyub';                               //SMTP password
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-            $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+            $mail->isSMTP();
+            $mail->Host       = 'smtp.gmail.com';
+            $mail->SMTPAuth   = true;
+            $mail->Username   = 'viventastore@gmail.com';
+            $mail->Password   = 'vfpm zaxi qbws oyub'; 
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            $mail->Port       = 465;
 
-            //Recipients
             $mail->setFrom('viventastore@gmail.com', 'Viventa Store');
-            $mail->addAddress($vEmail, $vNombreUsuario);     //Add a recipient
+            $mail->addAddress($vEmail, $vNombreUsuario);
             $mail->addReplyTo('viventastore@gmail.com', 'Information');
 
-            /* 
-            //Attachments
-            $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
-            $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name */
-
-            //Content
-            $mail->isHTML(true);                                  //Set email format to HTML
+            $mail->isHTML(true);
             $mail->Subject = $asunto;
             $mail->Body    = $mensajeMail;
             $mail->AltBody = $mensajeMail;
 
             $mail->send();
-            $mensaje = "<div class='alert alert-success'>Su solicitud de registro fue enviada. Esperando confirmación por correo.</div>";
+            $mensaje = "<div class='alert alert-success'>Su solicitud de registro fue enviada. Revisa tu correo para confirmar.</div>";
           } catch (Exception $e) {
             $mensaje = "<div class='alert alert-danger'>No se pudo enviar el correo de confirmación. Error: {$mail->ErrorInfo}</div>";
           }
+
+        // --- FLUJO DUEÑO ---
         } elseif ($vTipoUsuario == 'duenio') {
-          mysqli_query($link, "INSERT INTO solicitudes (cod_usuario, estado, fecha_solicitud) VALUES ('$vCodUsuario', 'Pendiente', NOW())");
-          $mensaje = "<div class='alert alert-warning'>Se registro como dueño de local. Pendiente de aprobación.</div>";
+          // Insertamos en la tabla 'dueño_local' con estado Pendiente (eliminamos la tabla solicitudes)
+          $queryDuenio = "INSERT INTO dueño_local (cod_usuario, estado) VALUES ('$vCodUsuario', 'Pendiente')";
+          mysqli_query($link, $queryDuenio);
+          
+          $mensaje = "<div class='alert alert-warning'>Te registraste como dueño de local. Tu cuenta está pendiente de aprobación por un administrador.</div>";
         }
+
       } else {
-        $mensaje = "<div class='alert alert-danger'>Error al registrar usuario.</div>";
+        $mensaje = "<div class='alert alert-danger'>Error al crear el usuario en la base de datos.</div>";
       }
     }
-    if ($vResultado) {
+    
+    if (isset($vResultado) && $vResultado) {
       mysqli_free_result($vResultado);
     }
     mysqli_close($link);
   }
 }
-
-
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
   <?php include("../Includes/head.php"); ?>
-
   <title>Register</title>
-
 </head>
 
 <body>
 
   <header>
-
     <?php include("../Includes/header.php"); ?>
-
   </header>
 
-  <main style="background-image: url('../Imagenes/Fondo.jpg')" class="fondo-loginRegister" aria-label="Página de registro">
+  <main style="background-image: url('../Imagenes/Fondo.jpg')" class="fondo-loginRegister pb-5 pt-5 d-flex justify-content-center align-items-center" aria-label="Página de registro">
     <section class="loginRegister-box" aria-label="Formulario de registro">
       <h1>Crear una nueva cuenta</h1>
       <h2>Es rápido y fácil.</h2>
+      
       <?php echo $mensaje; ?>
-      <form class="formulario-transparente" action="Registrar.php" method="POST" name="formRegister" aria-label="Formulario para crear una cuenta">
+      
+      <form class="formulario-transparente" action="" method="POST" name="formRegister" aria-label="Formulario para crear una cuenta">
 
         <label for="nombre" style="display:block;">Nombre <span class="campo-obligatorio">*</span></label>
         <input type="text" id="nombre" name="nombre" size="100" placeholder="Nombre" required aria-label="Nombre" />
@@ -181,7 +170,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </span>
         </div>
 
-        <p style="text-align: center" class="mb-2">Tipo de usuario</p>
+        <p style="text-align: center" class="mb-2 mt-3">Tipo de usuario</p>
         <div class="d-flex justify-content-center gap-3" aria-label="Selecciona el tipo de usuario">
           <input type="radio" class="btn-check" name="tipoUsuario" id="cliente" value="cliente" autocomplete="off" required aria-label="Cliente" />
           <label class="btn-radio" for="cliente">Cliente</label>
@@ -189,16 +178,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <label class="btn-radio" for="duenio">Dueño</label>
         </div>
 
-        <input type="submit" style="margin-top: 1rem;" name="Login" value="Únete" aria-label="Crear cuenta" />
+        <input type="submit" style="margin-top: 1.5rem;" name="Login" value="Únete" aria-label="Crear cuenta" />
         <a href="InicioSesion.php" aria-label="Ir a inicio de sesión">¿Ya tienes una cuenta?</a>
       </form>
     </section>
   </main>
 
   <footer class="seccion-footer d-flex flex-column justify-content-center align-items-center pt-3">
-
     <?php include("../Includes/footer.php") ?>
-
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
@@ -208,11 +195,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       const passwordInput = document.getElementById('password');
       const icon = document.getElementById('iconEye');
       if (passwordInput.type === 'password') {
-        passwordInput.type = 'text'; //La pasa a texto y se ve
+        passwordInput.type = 'text';
         icon.classList.remove('bi-eye');
         icon.classList.add('bi-eye-slash');
       } else {
-        passwordInput.type = 'password'; //La pasa a password y no se ve
+        passwordInput.type = 'password';
         icon.classList.remove('bi-eye-slash');
         icon.classList.add('bi-eye');
       }
@@ -220,5 +207,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   </script>
 
 </body>
-
 </html>

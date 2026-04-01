@@ -4,7 +4,7 @@ $pestaña = "Reporte de Uso de Promociones";
 include_once("../Includes/funciones.php");
 sesionIniciada();
 
-include("../conexion.inc");
+include("../Includes/conexion.inc");
 
 $params = [];
 if (isset($_GET['order'])) {
@@ -19,10 +19,10 @@ $order = 'p.cod_promocion ASC';
 if (isset($_GET['order'])) {
   switch ($_GET['order']) {
     case 'nombre_asc':
-      $order = 'p.nombre ASC';
+      $order = 'p.texto_promocion ASC';
       break;
     case 'nombre_desc':
-      $order = 'p.nombre DESC';
+      $order = 'p.texto_promocion DESC';
       break;
     case 'usos_desc':
       $order = 'usos DESC';
@@ -36,9 +36,12 @@ if (isset($_GET['order'])) {
   }
 }
 
-
 $result = $link->query("
-  SELECT p.cod_promocion, p.texto_promocion, COUNT(u.cod_promocion) AS usos
+  SELECT 
+    p.cod_promocion, 
+    p.texto_promocion, 
+    p.categoria_cliente,
+    COUNT(u.cod_promocion) AS usos
   FROM promociones p
   LEFT JOIN uso_promociones u ON p.cod_promocion = u.cod_promocion
   GROUP BY p.cod_promocion
@@ -46,7 +49,6 @@ $result = $link->query("
   LIMIT $promociones_por_pagina OFFSET $offset
 ");
 
-// Total de promociones para la paginación
 $total_result = $link->query("SELECT COUNT(*) AS total FROM promociones");
 $total_row = $total_result->fetch_assoc();
 $total_promociones = $total_row['total'];
@@ -87,12 +89,9 @@ $total_paginas = ceil($total_promociones / $promociones_por_pagina);
         <?php while ($p = $result->fetch_assoc()): ?>
           <div class="promocion d-flex justify-content-between align-items-start mb-3 p-3 border rounded">
             <div class="infoTarjeta flex-grow-1 me-3">
-              <h4 class="text-break"><?= htmlspecialchars($p['nombre']) ?></h4>
-              <p><?= htmlspecialchars($p['descripcion']) ?></p>
-              <p><small>Usos: <?= $p['usos'] ?></small></p>
-            </div>
-            <div class="acciones">
-              <a href="VerPromocion.php?cod_promocion=<?= $p['cod_promocion'] ?>" class="btn btn-primary btn-sm">VER DETALLES</a>
+              <h4 class="text-break"><?= htmlspecialchars($p['texto_promocion']) ?></h4>
+              <p><strong>Categoría:</strong> <?= htmlspecialchars($p['categoria_cliente']) ?></p>
+              <p><small class="text-muted">Total de usos: <?= $p['usos'] ?></small></p>
             </div>
           </div>
         <?php endwhile; ?>
@@ -115,5 +114,3 @@ $total_paginas = ceil($total_promociones / $promociones_por_pagina);
 </body>
 
 </html>
-
-

@@ -5,7 +5,7 @@ $pestaña = "Administrar Novedades";
 include_once("../Includes/funciones.php");
 sesionIniciada();
 
-include("../conexion.inc");
+include("../Includes/conexion.inc");
 
 $params = [];
 if (isset($_GET['order'])) {
@@ -79,7 +79,6 @@ $total_paginas = ceil($total_novedades / $novedades_por_pagina);
         </ul>
       </div>
     </div>
-
     <div class="promociones">
       <?php if ($result->num_rows): ?>
         <?php while ($n = $result->fetch_assoc()): ?>
@@ -104,11 +103,9 @@ $total_paginas = ceil($total_novedades / $novedades_por_pagina);
         <p class="text-center">No hay novedades cargadas.</p>
       <?php endif; ?>
     </div>
-
     <div class="mt-4">
       <?php paginacion($pagina, $total_paginas, $params); ?>
     </div>
-
   </main>
 
   <footer class="seccion-footer d-flex flex-column justify-content-center align-items-center pt-4">
@@ -118,6 +115,7 @@ $total_paginas = ceil($total_novedades / $novedades_por_pagina);
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 
 </html>

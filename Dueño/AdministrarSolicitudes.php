@@ -11,7 +11,7 @@ $folder = "Dueño";
 $pestaña = "Reporte Promociones";
 
 $cod_usuario = $_SESSION['cod_usuario'];
-include("../conexion.inc");
+include("../Includes/conexion.inc");
 $mensaje = "";
 
 $orden = ($_GET['orden'] ?? 'asc') === 'desc' ? 'DESC' : 'ASC';

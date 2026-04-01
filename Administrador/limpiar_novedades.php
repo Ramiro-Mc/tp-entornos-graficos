@@ -1,5 +1,5 @@
 <?php
-include("../conexion.inc");
+include("../Includes/conexion.inc");
 $hoy = date("Y-m-d");
 
 $sql = "DELETE FROM novedades WHERE fecha_hasta_novedad < ?";
@@ -8,4 +8,3 @@ $stmt->bind_param("s", $hoy);
 $stmt->execute();
 $stmt->close();
 $link->close();
-?>

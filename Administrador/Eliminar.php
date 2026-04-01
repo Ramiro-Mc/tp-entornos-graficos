@@ -1,5 +1,5 @@
 <?php
-require "../conexion.inc";
+require "../Includes/conexion.inc";
 include_once("../Includes/funciones.php");
 sesionIniciada();
 

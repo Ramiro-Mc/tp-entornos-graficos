@@ -1,6 +1,6 @@
 <?php
 include_once("session.php");
-include_once("../Includes/funciones.php");
+include_once("funciones.php");
 sesionIniciada();
 $rutaExtra = "";
 

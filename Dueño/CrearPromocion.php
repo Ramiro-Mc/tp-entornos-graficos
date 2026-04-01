@@ -11,7 +11,7 @@ $folder = "Dueño";
 $pestaña = "Crear Promocion";
 
 $cod_usuario = $_SESSION['cod_usuario'];
-include("../conexion.inc");
+include("../Includes/conexion.inc");
 $mensaje = "";
 
 
@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if ($vCategoria === '') $mensaje = "<div class='alert alert-danger'>Categoría requerida</div>";
   if ($vCodLocal === '') $mensaje = "<div class='alert alert-danger'>Debe seleccionar un local</div>";
   if (empty($diasSeleccionados)) $mensaje = "<div class='alert alert-danger'>Debe seleccionar al menos un día para la promoción.</div>";
-
+  if ($imagenBase64 === '') $mensaje = "<div class='alert alert-danger'>Debe subir una imagen obligatoriamente.</div>";
 
   if (!$mensaje) {
 
@@ -159,7 +159,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </div>
           <label for="formFile">Archivo Multimedia</label>
           <div class="mb-3">
-            <input class="form-control controls" type="file" id="formFile" name="imagen" accept="image/*" aria-label="Seleccionar imagen para la promoción" />
+            <input class="form-control controls" type="file" id="formFile" name="imagen" accept="image/*" aria-label="Seleccionar imagen para la promoción" required />
           </div>
           <button class="btn btn-success boton-enviar" type="submit" aria-label="Enviar promoción">Enviar</button>
         </div>

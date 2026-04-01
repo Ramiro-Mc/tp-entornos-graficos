@@ -5,7 +5,7 @@ $pestaña = "Administrar Promociones";
 include_once("../Includes/funciones.php");
 sesionIniciada();
 
-include('../conexion.inc');
+include("../Includes/conexion.inc");
 
 $params = [];
 if (isset($_GET['order'])) {
