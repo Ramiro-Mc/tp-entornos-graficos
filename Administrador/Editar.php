@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($hasta < $desde) $error = "La fecha de fin no puede ser menor que la de inicio.";
 
         if (!$error) {
-            $sql = "UPDATE novedades SET texto_novedad = ?, fecha_desde_novedad = ?, fecha_hasta_novedad = ?, categoria_cliente = ?, foto_novedad = ? WHERE cod_novedad = ?";
+            $sql = "UPDATE novedades SET texto_novedad = ?, fecha_desde_novedad = ?, fecha_hasta_novedad = ?, tipo_usuario = ?, foto_novedad = ? WHERE cod_novedad = ?";
             $stmt = $link->prepare($sql);
             $stmt->bind_param("sssssi", $texto, $desde, $hasta, $catCliente, $rutaMultimedia, $id);
             if ($stmt->execute()) $exito = "La novedad se actualizó satisfactoriamente.";

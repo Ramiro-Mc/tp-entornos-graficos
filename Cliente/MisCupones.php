@@ -107,7 +107,7 @@ $result = consultaSQL(
                         <p class="advertencia" aria-label="Advertencia sobre el código"><i class="bi bi-exclamation-triangle-fill"></i> Una vez cerrada esta ventana emergente no se podrá volver a abrir. Asegúrese de copiar su código</p>
                       </div>
                       <div class="modal-footer">
-                        <form action="MisSolicitudesDePromociones.php" method="POST" name="Eliminar solicitud">
+                          <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
                           <button style="margin: auto;" type="submit" name="eliminar" value="<?= $cod_promocion ?>" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Cerrar modal y finalizar">¡Listo!</button>
                         </form>
                       </div>
