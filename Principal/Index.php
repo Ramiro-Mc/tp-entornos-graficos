@@ -36,13 +36,16 @@ $res = consultaSQL("SELECT foto_novedad, texto_novedad FROM novedades");
       <div id="carouselExampleAutoplaying" class="carousel slide presentacion-carrousel" data-bs-ride="carousel" data-bs-pause="false" aria-label="Carrusel de imágenes de presentación">
         <div class="carousel-inner">
           <div class="carousel-item carousel-item-presentacion active">
-            <img src="../Imagenes/Carrusel1.png" class="d-block w-100" alt="Imagen del shopping 1" />
+            <img src="../Imagenes/Carousel4.jpg" class="d-block w-100" alt="Imagen del shopping 1" />
           </div>
           <div class="carousel-item carousel-item-presentacion">
-            <img src="../Imagenes/Carrusel2.png" class="d-block w-100" alt="Imagen del shopping 2" />
+            <img src="../Imagenes/Carousel3.jpg" class="d-block w-100" alt="Imagen del shopping 2" />
           </div>
           <div class="carousel-item carousel-item-presentacion">
-            <img src="../Imagenes/Carrusel3.png" class="d-block w-100" alt="Imagen del shopping 3" />
+            <img src="../Imagenes/Carousel2.jpg" class="d-block w-100" alt="Imagen del shopping 3" />
+          </div>
+           <div class="carousel-item carousel-item-presentacion">
+            <img src="../Imagenes/Carousel1.jpg" class="d-block w-100" alt="Imagen del shopping 3" />
           </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev" aria-label="Imagen anterior"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button>

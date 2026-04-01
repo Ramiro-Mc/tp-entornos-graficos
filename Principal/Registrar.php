@@ -1,6 +1,8 @@
 <?php
 include_once("../Includes/session.php");
 include("../Includes/funciones.php");
+require_once("../Includes/env.php");
+load_env(dirname(__DIR__) . '/.env');
 sesionIniciada();
 $folder = "Principal";
 $pestaña = "Register";
@@ -17,6 +19,25 @@ use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $smtpHost = env('SMTP_HOST', 'smtp.gmail.com');
+  $smtpPort = (int) env('SMTP_PORT', '465');
+  $smtpUser = env('SMTP_USERNAME', '');
+  $smtpPass = env('SMTP_PASSWORD', '');
+  $smtpFromName = env('SMTP_FROM_NAME', 'Viventa Store');
+  $appUrl = rtrim(env('APP_URL', ''), '/');
+  $smtpEncryption = strtolower(env('SMTP_ENCRYPTION', 'smtps'));
+  $smtpSecure = $smtpEncryption === 'starttls'
+    ? PHPMailer::ENCRYPTION_STARTTLS
+    : PHPMailer::ENCRYPTION_SMTPS;
+
+  if ($appUrl === '') {
+    $isHttps = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
+    $scheme = $isHttps ? 'https' : 'http';
+    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+    $projectBasePath = rtrim(str_replace('\\', '/', dirname(dirname($_SERVER['SCRIPT_NAME'] ?? ''))), '/');
+    $appUrl = $scheme . '://' . $host . $projectBasePath;
+  }
+
   $vEmail = $_POST['email'];
   $vPassword = $_POST['password'];
   $vTipoUsuario = $_POST['tipoUsuario'];

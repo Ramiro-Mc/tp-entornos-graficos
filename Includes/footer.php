@@ -2,7 +2,7 @@
 include_once("session.php");
 
 if ($folder == "Administrador") {
-  $opciones = ["Seccion Administrador", "Administrar Promociones", "Administrar Novedades", "Administrar Locales", "Solicitudes De Registro", "Reporte Promociones"];
+  $opciones = ["Seccion Administrador", "Administrar Promociones", "Administrar Novedades", "Administrar Locales", "SolicitudesRegistro", "Reporte Promociones"];
 } elseif ($folder == "Dueño") {
   $opciones = ["Seccion Dueño Local", "Crear Promocion", "Mis Promociones", "Administrar Solicitudes"];
 } elseif ($folder == "Principal" || $folder == "Cliente") {
@@ -87,7 +87,7 @@ if (isset($_SESSION['tipo_usuario'])) {
           if ($opciones_sin_espacios[$key] == "Inicio") {
             echo "<li><a href='../Principal/Index.php'>Inicio</a></li>";
           } else {
-            echo "<li><a href='../Principal/" . $opciones_sin_espacios[$key] . ".php'>" . $item . "</a></li>";
+            echo "<li><a href='../Administrador/" . $opciones_sin_espacios[$key] . ".php'>" . $item . "</a></li>";
           }
         }
       }
@@ -104,7 +104,7 @@ if (isset($_SESSION['tipo_usuario'])) {
       <h5>Contacto</h5>
       <p>
         Email:
-        <a href="mailto:viventastore@gmail.com?subject=Consulta%20Viventa%20Store">viventastore@gmail.com</a>
+        <a href="mailto:viventastore@gmail.com?subject=Consulta%20Viventa%20Store">viventastore1@gmail.com</a>
       </p>
       <p>
         Teléfono:
@@ -119,4 +119,4 @@ if (isset($_SESSION['tipo_usuario'])) {
 
 </div>
 
-<p class="texto-footer text-center">© 2025 Viventa Store. Todos los derechos reservados.</p>
+<p class="texto-footer text-center">© 2026 Viventa Store. Todos los derechos reservados.</p>

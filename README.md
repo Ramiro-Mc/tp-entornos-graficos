@@ -73,3 +73,19 @@ Conocimiento de la institución: Se ofrecerá información clara acerca de la ub
 Ubicación geográfica: El sitio web está destinado a residentes locales de Rosario, aunque será sencillo e intuitivo para cualquier persona que domine el idioma local.<br>
 
 Novedades de información: Una de las prioridades del sitio web es facilitar el acceso a las promociones y novedades, para lo que habrá barras de navegación y filtros que permitirán mayor eficiencia a la hora de buscarlas.
+
+## Configuración de variables de entorno (SMTP)
+
+Para enviar correos (registro y contacto), las credenciales SMTP no deben estar en el código.
+
+1. Copiar `.env.example` y renombrarlo a `.env` en la raíz del proyecto.
+2. Completar los valores reales:
+   - `SMTP_HOST`
+   - `SMTP_PORT`
+   - `SMTP_USERNAME`
+   - `SMTP_PASSWORD` (App Password de Google)
+   - `SMTP_ENCRYPTION` (`smtps` o `starttls`)
+   - `SMTP_FROM_NAME`
+   - `APP_URL` (opcional pero recomendado, por ejemplo `http://localhost/paginas/tp-entornos-graficos`)
+
+`.env` está ignorado por git en `.gitignore`, por lo que no se sube al repositorio.
