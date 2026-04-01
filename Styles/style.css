@@ -8,8 +8,21 @@
   right: 20px;
 }
 
+.acciones-reporte {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.acciones-reporte form {
+  width: 100%;
+}
+
 .acciones-reporte button {
-  height: 70%;
+  width: 100%;
+  border-radius: 0;
+  padding: 10px;
 }
 
 .advertencia {

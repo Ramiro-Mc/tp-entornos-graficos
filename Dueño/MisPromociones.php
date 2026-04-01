@@ -2,11 +2,11 @@
 include_once("../Includes/session.php");
 include("../Includes/funciones.php");
 sesionIniciada();
-
 if (!isset($_SESSION['cod_usuario'])) {
   header("Location: ../principal/InicioSesion.php");
   exit;
 }
+
 
 $diasSemanaNombre = [
   1 => "Lunes",
@@ -53,7 +53,7 @@ if (!empty($codigoslocales)) {
     $codPromoEliminar = intval($_POST['eliminar']);
     $sqlEliminar = "DELETE FROM promociones WHERE cod_promocion = $codPromoEliminar AND cod_local IN ($listaLocales)";
     if (consultaSQL($sqlEliminar)) {
-      $mensaje = "<div class='alert alert-success'>Promoción eliminada correctamente.</div>";
+      $mensaje = "<div id='mensaje-alerta' class='alert alert-success'>Promoción eliminada correctamente.</div>";
     } else {
       $mensaje = "<div class='alert alert-danger'>Error al eliminar la promoción.</div>";
     }
@@ -108,7 +108,9 @@ if (!empty($codigoslocales)) {
 
 <body>
   <header>
+
     <?php include("../Includes/header.php"); ?>
+
   </header>
 
   <main class="FondoDueñoAdministrador">
@@ -125,11 +127,23 @@ if (!empty($codigoslocales)) {
               <?php if (!empty($promo['foto_promocion'])): ?>
                 <img src="data:image/png;base64,<?php echo $promo['foto_promocion']; ?>" alt="Imagen promo" style="max-width:150px;max-height:150px;">
               <?php endif; ?>
-              <p><b>Código:</b> <?php echo $promo['cod_promocion']; ?></p>
-              <p><b>Vigencia:</b> <?php echo htmlspecialchars($promo['fecha_desde_promocion']); ?> al <?php echo htmlspecialchars($promo['fecha_hasta_promocion']); ?></p>
-              <p><b>Estado:</b> <?php echo htmlspecialchars($promo['estado_promo']); ?></p>
               <p><b>Local:</b> <?php echo htmlspecialchars($promo['nombre_local']); ?></p>
-
+              <?php
+                $hoy = date("Y-m-d");
+                if ($promo['estado_promo'] == 'rechazada') {
+                  $estado = "<span class='text-danger'>Rechazada</span>";
+                } elseif ($promo['estado_promo'] == 'pendiente') {
+                  $estado = "<span class='text-secondary'>Pendiente</span>";
+                } elseif ($promo['fecha_hasta_promocion'] < $hoy) {
+                  $estado = "<span class='text-danger'>Vencida</span>";
+                } elseif ($promo['fecha_desde_promocion'] > $hoy) {
+                  $estado = "<span class='text-warning'>Próxima</span>";
+                } else {
+                  $estado = "<span class='text-success'>Activa</span>";
+                }
+              ?>
+              <p><b>Estado:</b> <?php echo $estado; ?></p>  
+              <p><b>Vigencia:</b> <?php echo htmlspecialchars($promo['fecha_desde_promocion']); ?> al <?php echo htmlspecialchars($promo['fecha_hasta_promocion']); ?></p>
               <p><b>Días:</b>
                 <?php
                 $id = $promo['cod_promocion'];
@@ -143,13 +157,14 @@ if (!empty($codigoslocales)) {
                 }
                 ?>
               </p>
-
+              <p><b>Categoria cliente:</b> <?php echo htmlspecialchars($promo['categoria_cliente']); ?></p>
               <p><b>Usos:</b> <?php echo $conteoUsos[$id] ?? 0; ?></p>
             </div>
             <div class="acciones">
-              <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalEliminar" data-cod="<?php echo $promo['cod_promocion']; ?>">
-                ELIMINAR
-              </button>
+              <form method="POST" onsubmit="return confirm('¿Seguro que querés eliminar esta promoción?');">
+                <input type="hidden" name="eliminar" value="<?php echo $promo['cod_promocion']; ?>">
+                <button type="submit" class="btn btn-danger">ELIMINAR</button>
+              </form>
             </div>
           </div>
         <?php endwhile; ?>
@@ -176,38 +191,9 @@ if (!empty($codigoslocales)) {
   </main>
 
   <footer>
-    <?php include("../Includes/footer.php"); ?>
+    <?php include("../Includes/footer.php") ?>
   </footer>
-
-  <div class="modal fade" id="modalEliminar" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Confirmar eliminación</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <form method="POST">
-          <div class="modal-body">
-            ¿Estás seguro de que deseas eliminar esta promoción?
-            <input type="hidden" name="eliminar" id="inputEliminar">
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            <button type="submit" class="btn btn-danger">Eliminar</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    var modalEliminar = document.getElementById('modalEliminar');
-    modalEliminar.addEventListener('show.bs.modal', function(event) {
-      var button = event.relatedTarget;
-      var cod = button.getAttribute('data-cod');
-      document.getElementById('inputEliminar').value = cod;
-    });
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
 </body>
 
 </html>

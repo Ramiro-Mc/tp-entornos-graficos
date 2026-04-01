@@ -119,18 +119,18 @@ $usoPromociones = consultaSQL($sqlUsoPromociones);
               <p><b>Nombre Usuario:</b> <?php echo $usopromo['nombre_usuario']; ?></p>
               <p><b>Estado:</b> <?php echo $usopromo['estado']; ?></p>
             </div>
-            <div class="acciones-reporte align-items-center d-flex justify-content-center acciones" aria-label="Acciones de la solicitud">
-              <form method="POST" style="display:inline;" aria-label="Aceptar solicitud">
-                <input type="hidden" name="aceptar_promocion" value="<?php echo $usopromo['cod_promocion']; ?>">
-                <input type="hidden" name="aceptar_usuario" value="<?php echo $usopromo['cod_usuario']; ?>">
-                <button type="submit" class="btn btn-success" style="padding: 18px 18px;" aria-label="Aceptar solicitud">ACEPTAR</button>
-              </form>
-              <form method="POST" style="display:inline;" aria-label="Rechazar solicitud">
-                <input type="hidden" name="eliminar_promocion" value="<?php echo $usopromo['cod_promocion']; ?>">
-                <input type="hidden" name="eliminar_usuario" value="<?php echo $usopromo['cod_usuario']; ?>">
-                <button type="submit" class="btn btn-danger" style="padding: 18px 18px;" onclick="return confirm('¿Seguro que quieres Rechazar esta solicitud?');" aria-label="Rechazar solicitud">RECHAZAR</button>
-              </form>
-            </div>
+          <div class="acciones-reporte align-items-center d-flex justify-content-center acciones">
+            <form method="POST" style="display:inline;">
+              <input type="hidden" name="aceptar_promocion" value="<?php echo $usopromo['cod_promocion']; ?>">
+              <input type="hidden" name="aceptar_usuario" value="<?php echo $usopromo['cod_usuario']; ?>">
+              <button type="submit" class="btn btn-success" style="padding: 18px 18px;">ACEPTAR</button>
+            </form>
+            <form method="POST" style="display:inline;">
+              <input type="hidden" name="eliminar_promocion" value="<?php echo $usopromo['cod_promocion']; ?>">
+              <input type="hidden" name="eliminar_usuario" value="<?php echo $usopromo['cod_usuario']; ?>">
+              <button type="submit" class="btn btn-danger">RECHAZAR</button>
+            </form>
+          </div>
           </div>
         <?php endwhile; ?>
     </div>
