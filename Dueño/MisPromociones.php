@@ -24,7 +24,7 @@ $cod_usuario = $_SESSION['cod_usuario'];
 include("../Includes/conexion.inc");
 
 $mensaje = "";
-$cantPagina = 8;
+$cantPagina = 5;
 $pagina = isset($_GET["pagina"]) ? max(1, intval($_GET["pagina"])) : 1;
 $principio = ($pagina - 1) * $cantPagina;
 
@@ -125,7 +125,11 @@ if (!empty($codigoslocales)) {
             <div class="infoTarjeta">
               <h3><?php echo htmlspecialchars($promo['texto_promocion']); ?></h3>
               <?php if (!empty($promo['foto_promocion'])): ?>
-                <img src="data:image/png;base64,<?php echo $promo['foto_promocion']; ?>" alt="Imagen promo" style="max-width:150px;max-height:150px;">
+                <?php if (strpos($promo['foto_promocion'], 'uploads/') === 0): ?>
+                  <img src="../<?php echo $promo['foto_promocion']; ?>" alt="Imagen promo" style="max-width:150px;max-height:150px; object-fit: cover;">
+                <?php else: ?>
+                  <img src="data:image/jpeg;base64,<?php echo $promo['foto_promocion']; ?>" alt="Imagen promo" style="max-width:150px;max-height:150px; object-fit: cover;">
+                <?php endif; ?>
               <?php endif; ?>
               <p><b>Local:</b> <?php echo htmlspecialchars($promo['nombre_local']); ?></p>
               <?php
@@ -190,7 +194,7 @@ if (!empty($codigoslocales)) {
     <?php endif; ?>
   </main>
 
-  <footer>
+  <footer class="seccion-footer">
     <?php include("../Includes/footer.php") ?>
   </footer>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>

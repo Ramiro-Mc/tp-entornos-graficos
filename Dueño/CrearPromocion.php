@@ -2,6 +2,7 @@
 include_once("../Includes/session.php");
 include("../Includes/funciones.php");
 sesionIniciada();
+
 if (!isset($_SESSION['cod_usuario'])) {
   header("Location: ../principal/InicioSesion.php");
   exit;
@@ -35,26 +36,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $vCategoria = $_POST['Categoria'] ?? '';
   $vCodLocal = $_POST['cod_local'] ?? '';
   $diasSeleccionados = $_POST['cod_dia'] ?? [];
-  $imagenBase64 = "";
+  
+  $rutaMultimedia = ""; 
 
-  if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
-    $contenidoImagen = file_get_contents($_FILES['imagen']['tmp_name']);
-    if ($contenidoImagen !== false && strlen($contenidoImagen) > 0) {
-      $imagenBase64 = base64_encode($contenidoImagen);
-    }
+  // LÓGICA DE SUBIDA DE ARCHIVO UNIFICADA (Guarda en la carpeta uploads)
+  if (isset($_FILES['imagen'])) {
+      $errorSubida = $_FILES['imagen']['error'];
+      
+      if ($errorSubida === UPLOAD_ERR_OK) {
+          $ext = strtolower(pathinfo($_FILES['imagen']['name'], PATHINFO_EXTENSION));
+          $permitidos = ['jpg', 'jpeg', 'png', 'webp', 'avif', 'gif'];
+
+          if (!in_array($ext, $permitidos)) {
+              $mensaje = "<div class='alert alert-danger'>Formato de imagen no permitido. Solo JPG, PNG, GIF o WEBP.</div>";
+          } else {
+              $nuevoNombre = "promocion_" . uniqid() . "." . $ext;
+              $destino = "../uploads/" . $nuevoNombre;
+
+              if (!is_dir("../uploads/")) {
+                  $mensaje = "<div class='alert alert-danger'>La carpeta '../uploads/' no existe. Debe estar creada en la raíz del proyecto.</div>";
+              } else if (move_uploaded_file($_FILES['imagen']['tmp_name'], $destino)) {
+                  $rutaMultimedia = "uploads/" . $nuevoNombre;
+              } else {
+                  $mensaje = "<div class='alert alert-danger'>Hubo un error al guardar la imagen en el servidor. Verifique permisos.</div>";
+              }
+          }
+      } else if ($errorSubida !== UPLOAD_ERR_NO_FILE) {
+          $mensaje = "<div class='alert alert-danger'>Error al subir el archivo (Código PHP: $errorSubida).</div>";
+      }
   }
 
-  if ($vTitulo === '') $mensaje = "<div class='alert alert-danger'>Título requerido</div>";
-  if ($vFechaInicio === '' || $vFechaFin === '') $mensaje = "<div class='alert alert-danger'>Fechas requeridas</div>";
-  if ($vFechaInicio && $vFechaFin && $vFechaFin < $vFechaInicio) $mensaje = "<div class='alert alert-danger'>Rango de fechas inválido</div>";
-  if ($vCategoria === '') $mensaje = "<div class='alert alert-danger'>Categoría requerida</div>";
-  if ($vCodLocal === '') $mensaje = "<div class='alert alert-danger'>Debe seleccionar un local</div>";
-  if (empty($diasSeleccionados)) $mensaje = "<div class='alert alert-danger'>Debe seleccionar al menos un día.</div>";
-  if ($imagenBase64 === '') $mensaje = "<div class='alert alert-danger'>Debe subir una imagen.</div>";
+  // Validaciones
+  if ($vTitulo === '' && !$mensaje) $mensaje = "<div class='alert alert-danger'>Título requerido</div>";
+  if (($vFechaInicio === '' || $vFechaFin === '') && !$mensaje) $mensaje = "<div class='alert alert-danger'>Fechas requeridas</div>";
+  if ($vFechaInicio && $vFechaFin && $vFechaFin < $vFechaInicio && !$mensaje) $mensaje = "<div class='alert alert-danger'>Rango de fechas inválido</div>";
+  if ($vCategoria === '' && !$mensaje) $mensaje = "<div class='alert alert-danger'>Categoría requerida</div>";
+  if ($vCodLocal === '' && !$mensaje) $mensaje = "<div class='alert alert-danger'>Debe seleccionar un local</div>";
+  if (empty($diasSeleccionados) && !$mensaje) $mensaje = "<div class='alert alert-danger'>Debe seleccionar al menos un día.</div>";
+  if ($rutaMultimedia === '' && !$mensaje) $mensaje = "<div class='alert alert-danger'>Debe subir una imagen.</div>";
 
+  // Inserción en Base de Datos
   if (!$mensaje) {
+    // Guardamos la ruta física ($rutaMultimedia) en lugar del Base64 gigante
     $sql = "INSERT INTO promociones ( texto_promocion, fecha_desde_promocion, fecha_hasta_promocion, categoria_cliente, estado_promo, cod_local, foto_promocion )
-              VALUES ('$vTitulo', '$vFechaInicio', '$vFechaFin', '$vCategoria','$estado', '$vCodLocal', '$imagenBase64')";
+              VALUES ('$vTitulo', '$vFechaInicio', '$vFechaFin', '$vCategoria','$estado', '$vCodLocal', '$rutaMultimedia')";
     
     if (mysqli_query($link, $sql)) {
       $idPromocion = mysqli_insert_id($link);
@@ -71,16 +96,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           $mensaje = "<div class='alert alert-danger'>Error al guardar los días.</div>";
         } else {
           $mensaje = "<div class='alert alert-success'>La promoción fue creada. Redirigiendo a tus locales...</div>";
-          
-          // Instrucción PHP para esperar 3 segundos y redirigir
           $destino = "SeccionDueñoLocal.php";
           header("Refresh: 3; url=" . urlencode($destino));
-          
-          // Limpiamos variables
-          $vTitulo = $vCategoria = $vFechaInicio = $vFechaFin = "";
         }
       } else {
-        $mensaje = "<div class='alert alert-danger'>Error al obtener el ID.</div>";
+        $mensaje = "<div class='alert alert-danger'>Error al obtener el ID de la promoción.</div>";
       }
     } else {
       $mensaje = "<div class='alert alert-danger'>Error BD: " . mysqli_error($link) . "</div>";

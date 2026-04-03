@@ -1,6 +1,6 @@
 <?php
 $folder = "Administrador";
-$pestaña = "Reporte de Uso de Promociones";
+$pestaña = "Reporte Promociones";
 include_once("../Includes/funciones.php");
 sesionIniciada();
 

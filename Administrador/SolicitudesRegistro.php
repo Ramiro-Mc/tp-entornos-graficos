@@ -1,6 +1,6 @@
 <?php
 $folder = "Administrador";
-$pestaña = "Solicitudes de Registro";
+$pestaña = "Solicitudes Registro";
 include_once("../Includes/funciones.php");
 sesionIniciada();
 

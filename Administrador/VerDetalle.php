@@ -90,7 +90,7 @@ $link->close();
                         <p><strong>Código Dueño:</strong> <?= e($data['cod_usuario']) ?></p>
                         <?php if (!empty($data['foto_local'])): ?>
                             <p><strong>Multimedia:</strong></p>
-                            <img src="<?= e($data['foto_local']) ?>" alt="Imagen del local <?= e($data['nombre_local']) ?>" style="max-width: 300px; height: auto;">
+                            <img src="../<?= e($data['foto_local']) ?>" alt="Imagen del local <?= e($data['nombre_local']) ?>" class="img-fluid mb-2" style="max-width:200px;">
                         <?php else: ?>
                             <p><strong>Multimedia:</strong> No hay imagen disponible</p>
                         <?php endif; ?>
@@ -115,7 +115,7 @@ $link->close();
                         <p><strong>Fecha Hasta:</strong> <?= e($data['fecha_hasta_promocion']) ?></p>
                         <?php if (!empty($data['foto_promocion'])): ?>
                             <p><strong>Multimedia:</strong></p>
-                            <img src="<?= e($data['foto_promocion']) ?>" alt="Imagen de la promoción <?= e($data['nombre_local']) ?>" style="max-width: 300px; height: auto;">
+                            <img src="../<?= e($data['foto_promocion']) ?>" alt="Imagen de la promoción" class="img-fluid mb-2" style="max-width:200px;">
                         <?php else: ?>
                             <p><strong>Multimedia:</strong> No hay imagen disponible</p>
                         <?php endif; ?>

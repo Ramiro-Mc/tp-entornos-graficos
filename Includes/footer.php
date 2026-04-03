@@ -1,16 +1,24 @@
 <?php
 include_once("session.php");
 
+// Previene errores visuales si en alguna página olvidaste definir $pestaña
+if (!isset($pestaña)) {
+    $pestaña = "";
+}
+
 if ($folder == "Administrador") {
-  $opciones = ["Seccion Administrador", "Administrar Promociones", "Administrar Novedades", "Administrar Locales", "SolicitudesRegistro", "Reporte Promociones"];
+  $opciones = ["Seccion Administrador", "Administrar Promociones", "Administrar Novedades", "Administrar Locales", "Solicitudes Registro", "Reporte Promociones"];
 } elseif ($folder == "Dueño") {
   $opciones = ["Seccion Dueño Local", "Crear Promocion", "Mis Promociones", "Administrar Solicitudes"];
 } elseif ($folder == "Principal" || $folder == "Cliente") {
   $opciones = ["Inicio", "Contacto", "Sobre Nosotros"];
+} else {
+  $opciones = [];
 }
 
+// Filtrado mejorado: convierte a minúsculas y quita espacios para que no falle nunca
 $opciones_filtradas = array_filter($opciones, function ($item) use ($pestaña) {
-  return $item !== $pestaña;
+  return trim(strtolower($item)) !== trim(strtolower($pestaña));
 });
 $opciones_filtradas = array_values($opciones_filtradas); // Reindexa el array
 
@@ -23,7 +31,7 @@ if (isset($_SESSION['tipo_usuario'])) {
     $opciones_extra = ["Mi Perfil", "Mis Cupones", "Buscar Promociones"];
 
     $opciones_extra_filtradas = array_filter($opciones_extra, function ($item) use ($pestaña) {
-      return $item !== $pestaña;
+      return trim(strtolower($item)) !== trim(strtolower($pestaña));
     });
     $opciones_extra_filtradas = array_values($opciones_extra_filtradas); // Reindexa el array
 
@@ -33,17 +41,13 @@ if (isset($_SESSION['tipo_usuario'])) {
   }
 }
 
-
 ?>
 
 <h5 style="font-family: Math_Italic; font-size:2.5rem; color: #B9C3CD">Viventa Store</h5>
 
 <div class="container d-flex flex-wrap justify-content-center gap-5 px-0">
 
-  <!-- Redes sociales -->
-
   <?php if ($folder != "Administrador" && $folder != "Dueño"): ?>
-
     <div class="iconos-redes-sociales d-flex flex-column gap-2 texto-footer">
       <h5 class="text-center">Redes Sociales</h5>
       <div class="d-flex gap-3">
@@ -61,20 +65,19 @@ if (isset($_SESSION['tipo_usuario'])) {
         </a>
       </div>
     </div>
-
   <?php endif; ?>
-
-  <!-- Fin redes sociales -->
-
   <nav class="texto-footer" aria-label="Mapa del sitio">
     <h5>Mapa del sitio</h5>
     <ul>
       <?php
-
       if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == "cliente") {
+        
+        // Enlaces extra para el cliente
         foreach ($opciones_extra_filtradas as $key => $item) {
           echo "<li><a href='../Cliente/" . $opciones_extra_sin_espacios[$key] . ".php'>" . $item . "</a></li>";
         }
+        
+        // Enlaces generales para el cliente
         foreach ($opciones_filtradas as $key => $item) {
           if ($opciones_sin_espacios[$key] == "Inicio") {
             echo "<li><a href='../Principal/Index.php'>Inicio</a></li>";
@@ -82,29 +85,34 @@ if (isset($_SESSION['tipo_usuario'])) {
             echo "<li><a href='../Principal/" . $opciones_sin_espacios[$key] . ".php'>" . $item . "</a></li>";
           }
         }
+        
       } else {
+        
+        // Enlaces para Administrador y Dueño
         foreach ($opciones_filtradas as $key => $item) {
           if ($opciones_sin_espacios[$key] == "Inicio") {
             echo "<li><a href='../Principal/Index.php'>Inicio</a></li>";
           } else {
-            echo "<li><a href='../Administrador/" . $opciones_sin_espacios[$key] . ".php'>" . $item . "</a></li>";
+            // Redirección dinámica para que el dueño no vaya a la carpeta administrador
+            if ($folder == "Dueño") {
+              echo "<li><a href='../Dueño/" . $opciones_sin_espacios[$key] . ".php'>" . $item . "</a></li>";
+            } else {
+              echo "<li><a href='../Administrador/" . $opciones_sin_espacios[$key] . ".php'>" . $item . "</a></li>";
+            }
           }
         }
+        
       }
       ?>
     </ul>
-
   </nav>
 
-  <!-- Contacto -->
-
   <?php if ($folder != "Administrador"): ?>
-
     <section class="texto-footer" aria-label="Contacto">
       <h5>Contacto</h5>
       <p>
         Email:
-        <a href="mailto:viventastore@gmail.com?subject=Consulta%20Viventa%20Store">viventastore1@gmail.com</a>
+        <a href="mailto:viventastore1@gmail.com?subject=Consulta%20Viventa%20Store">viventastore1@gmail.com</a>
       </p>
       <p>
         Teléfono:
@@ -112,11 +120,7 @@ if (isset($_SESSION['tipo_usuario'])) {
       </p>
       <p>Dirección: Calle 123, Ciudad</p>
     </section>
-
   <?php endif; ?>
-
-  <!-- Fin contacto -->
-
-</div>
+  </div>
 
 <p class="texto-footer text-center">© 2026 Viventa Store. Todos los derechos reservados.</p>

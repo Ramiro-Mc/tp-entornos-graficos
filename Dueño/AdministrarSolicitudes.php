@@ -8,7 +8,7 @@ if (!isset($_SESSION['cod_usuario'])) {
 }
 
 $folder = "Dueño";
-$pestaña = "Reporte Promociones";
+$pestaña = "Administrar Solicitudes";
 
 $cod_usuario = $_SESSION['cod_usuario'];
 include("../Includes/conexion.inc");
