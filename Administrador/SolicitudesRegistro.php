@@ -57,9 +57,6 @@ $total_paginas = ceil($total_solicitudes / $solicitudes_por_pagina);
   </header>
 
   <main class="FondoDueñoAdministrador">
-    <div class="text-center">
-      <h2>Solicitudes de Dueños de Locales</h2>
-    </div>
     <div class="promociones">
       <?php if ($result && $result->num_rows > 0): ?>
         <?php while ($s = $result->fetch_assoc()): ?>

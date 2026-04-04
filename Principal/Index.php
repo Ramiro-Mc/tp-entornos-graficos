@@ -117,12 +117,12 @@ $res = consultaSQL("SELECT foto_novedad, texto_novedad FROM novedades");
 
       <div class="container-fluid">
         <div id="locales-iniciales">
-          <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-            <?php
-            $result =  consultaSQL("SELECT foto_local, nombre_local, rubro_local, ubicacion_local FROM locales");
+          <?php
+          $result =  consultaSQL("SELECT foto_local, nombre_local, rubro_local, ubicacion_local FROM locales");
 
-            if ($result->num_rows > 0):
-              while ($row = $result->fetch_assoc()):
+          if ($result->num_rows > 0): ?>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+              <?php while ($row = $result->fetch_assoc()):
                 $imagenLocal = $row['foto_local'];
                 $nombre_local = $row['nombre_local']; ?>
 
@@ -136,16 +136,15 @@ $res = consultaSQL("SELECT foto_novedad, texto_novedad FROM novedades");
                 </div>
 
               <?php endwhile; ?>
-
-            <?php else: ?>
-              <div class="col-12">
-                <div class="notificacion-no-promociones">
-                  <h3>¡Vaya!</h3>
-                  <p style="margin: 0;">Aun no hay locales para esta categoria</p>
-                </div>
+            </div>
+          <?php else: ?>
+            <div class="col-12 text-center mt-4">
+              <div class="notificacion-no-promociones">
+                <h3>¡Vaya!</h3>
+                <p style="margin: 0;">Aun no hay locales para esta categoria</p>
               </div>
-            <?php endif; ?>
-          </div>
+            </div>
+          <?php endif; ?>
         </div>
 
         <div id="respuesta"></div>
@@ -229,7 +228,7 @@ $res = consultaSQL("SELECT foto_novedad, texto_novedad FROM novedades");
 
                 <div class="col-12 col-md-6 col-lg-4 mb-4">
                   <div class="promocion-index">
-                    <img src="data:image/jpeg;base64,<?= $foto_promocion ?>" alt="Imagen de promoción: <?= $texto_promocion ?>" />
+                    <img src="../<?= $foto_promocion ?>" alt="Imagen de promoción: <?= $texto_promocion ?>" />
                     <div class="overlay">
                       <p><?= $texto_promocion ?></p>
                     </div>
@@ -255,9 +254,7 @@ $res = consultaSQL("SELECT foto_novedad, texto_novedad FROM novedades");
   </section>
 
   <footer class="seccion-footer d-flex flex-column justify-content-center align-items-center pt-3">
-
     <?php include("../Includes/footer.php") ?>
-
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>

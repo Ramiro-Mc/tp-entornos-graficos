@@ -108,27 +108,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
           $mail = new PHPMailer(true);
 
-          try {
-            $mail->isSMTP();
-            $mail->Host       = 'smtp.gmail.com';
-            $mail->SMTPAuth   = true;
-            $mail->Username   = 'viventastore@gmail.com';
-            $mail->Password   = 'vfpm zaxi qbws oyub'; 
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-            $mail->Port       = 465;
+            try {
+                $mail->isSMTP();
+                // Usamos las variables cargadas del .env arriba
+                $mail->Host       = $smtpHost;
+                $mail->SMTPAuth   = true;
+                $mail->Username   = $smtpUser; // Aquí tomará 'viventastore1@gmail.com'
+                $mail->Password   = $smtpPass; // Aquí tomará tu contraseña de aplicación
+                $mail->SMTPSecure = $smtpSecure;
+                $mail->Port       = $smtpPort;
 
-            $mail->setFrom('viventastore@gmail.com', 'Viventa Store');
-            $mail->addAddress($vEmail, $vNombreUsuario);
-            $mail->addReplyTo('viventastore@gmail.com', 'Information');
+                // Configuración para evitar errores de certificado en servidores locales (XAMPP)
+                $mail->SMTPOptions = array(
+                    'ssl' => array(
+                        'verify_peer' => false,
+                        'verify_peer_name' => false,
+                        'allow_self_signed' => true
+                    )
+                );
 
-            $mail->isHTML(true);
-            $mail->Subject = $asunto;
-            $mail->Body    = $mensajeMail;
-            $mail->AltBody = $mensajeMail;
+                $mail->setFrom($smtpUser, $smtpFromName);
+                $mail->addAddress($vEmail, $vNombreUsuario);
+                $mail->addReplyTo($smtpUser, 'Information');
 
-            $mail->send();
-            $mensaje = "<div class='alert alert-success'>Su solicitud de registro fue enviada. Revisa tu correo para confirmar.</div>";
-          } catch (Exception $e) {
+                $mail->isHTML(true);
+                $mail->Subject = $asunto;
+                $mail->Body    = $mensajeMail;
+                $mail->AltBody = strip_tags($mensajeMail); // Mejor usar strip_tags para el cuerpo plano
+
+                $mail->send();
+                $mensaje = "<div class='alert alert-success'>Su solicitud de registro fue enviada. Revisa tu correo para confirmar.</div>";
+            } catch (Exception $e) {
             $mensaje = "<div class='alert alert-danger'>No se pudo enviar el correo de confirmación. Error: {$mail->ErrorInfo}</div>";
           }
 

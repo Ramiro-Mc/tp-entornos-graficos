@@ -14,9 +14,26 @@ $cod_usuario = $_SESSION['cod_usuario'];
 include("../Includes/conexion.inc");
 $mensaje = "";
 
-$orden = ($_GET['orden'] ?? 'asc') === 'desc' ? 'DESC' : 'ASC';
+// 1. Lógica de ordenamiento actualizada (Estilo Administrar Locales)
+$order = 'uso.cod_promocion ASC'; // Orden por defecto
 
-
+if (isset($_GET['order'])) {
+  switch ($_GET['order']) {
+    case 'texto_asc':
+      $order = 'prom.texto_promocion ASC';
+      break;
+    case 'texto_desc':
+      $order = 'prom.texto_promocion DESC';
+      break;
+    case 'cod_desc':
+      $order = 'uso.cod_promocion DESC';
+      break;
+    case 'cod_asc':
+    default:
+      $order = 'uso.cod_promocion ASC';
+      break;
+  }
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_promocion'], $_POST['eliminar_usuario'])) {
   $codPromo = intval($_POST['eliminar_promocion']);
@@ -40,7 +57,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['aceptar_promocion'], 
   }
 
   //actualizar categoria cliente
-
   $res = consultaSQL("SELECT * From uso_promociones up WHERE cod_usuario = $codUsuario AND estado = 'aceptada'");
   if (mysqli_num_rows($res) >= 3 && mysqli_num_rows($res) < 6) {
     consultaSQL("UPDATE cliente SET categoria_cliente = 'medium' WHERE cod_usuario = $codUsuario");
@@ -48,7 +64,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['aceptar_promocion'], 
     consultaSQL("UPDATE cliente SET categoria_cliente = 'premium' WHERE cod_usuario = $codUsuario");
   }
 }
-
 
 $codigoslocales = [];
 $sqlLocal = "SELECT cod_local, nombre_local FROM locales WHERE cod_usuario = '$cod_usuario'";
@@ -59,49 +74,50 @@ if ($localResult && mysqli_num_rows($localResult) > 0) {
   }
 }
 
-
-
-//El uso de promociones enviadas de los locales
-$sqlUsoPromociones = "SELECT uso.cod_promocion, loc.nombre_local, uso.cod_usuario,  usu.nombre_usuario, uso.estado, prom.texto_promocion
-FROM uso_promociones uso
-INNER JOIN promociones prom ON uso.cod_promocion = prom.cod_promocion
-INNER JOIN usuario usu on uso.cod_usuario = usu.cod_usuario
-INNER JOIN locales loc on prom.cod_local = loc.cod_local
-WHERE prom.cod_local IN (" . implode(',', $codigoslocales) . ") and uso.estado = 'enviada'";
-$usoPromociones = consultaSQL($sqlUsoPromociones);
-
-
-
-
+if (!empty($codigoslocales)) {
+  // 2. Se aplicó el "ORDER BY $order" al final de esta consulta (antes no estaba)
+  $sqlUsoPromociones = "SELECT uso.cod_promocion, loc.nombre_local, uso.cod_usuario,  usu.nombre_usuario, uso.estado, prom.texto_promocion
+  FROM uso_promociones uso
+  INNER JOIN promociones prom ON uso.cod_promocion = prom.cod_promocion
+  INNER JOIN usuario usu on uso.cod_usuario = usu.cod_usuario
+  INNER JOIN locales loc on prom.cod_local = loc.cod_local
+  WHERE prom.cod_local IN (" . implode(',', $codigoslocales) . ") and uso.estado = 'enviada'
+  ORDER BY $order";
+  
+  $usoPromociones = consultaSQL($sqlUsoPromociones);
+} else {
+  // Si no tiene locales, la consulta es nula (no explota)
+  $usoPromociones = null;
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
-
   <?php include("../Includes/head.php"); ?>
-
   <title>Administrar solicitudes</title>
-
 </head>
 
 <body>
   <header>
-
     <?php include("../Includes/header.php"); ?>
-
   </header>
 
   <main class="FondoDueñoAdministrador" aria-label="Panel de administración de solicitudes">
     <div class="container-fluid filtraderos justify-content-end" aria-label="Acciones de filtrado y orden">
-      <form method="GET" class="d-inline" aria-label="Ordenar solicitudes">
-        <select name="orden" class="form-select bg-primary text-white d-inline w-auto mx-2" onchange="this.form.submit()" aria-label="Seleccionar orden de solicitudes">
-          <option class="text_white" value="" disabled <?php if (!isset($_GET['orden'])) echo 'selected'; ?>>Ordenar por</option>
-          <option value="asc" <?php if (($_GET['orden'] ?? '') == 'asc') echo 'selected'; ?>>Código Ascendente</option>
-          <option value="desc" <?php if (($_GET['orden'] ?? '') == 'desc') echo 'selected'; ?>>Código Descendente</option>
-        </select>
-      </form>
+      
+      <div class="dropdown mx-2">
+        <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi bi-arrow-down-up"></i> Ordenar
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="?order=texto_asc">Promoción ↑</a></li>
+          <li><a class="dropdown-item" href="?order=texto_desc">Promoción ↓</a></li>
+          <li><a class="dropdown-item" href="?order=cod_asc">Código ↑</a></li>
+          <li><a class="dropdown-item" href="?order=cod_desc">Código ↓</a></li>
+        </ul>
+      </div>
 
       <?php
       if ($mensaje) echo $mensaje;
@@ -135,15 +151,12 @@ $usoPromociones = consultaSQL($sqlUsoPromociones);
         <?php endwhile; ?>
     </div>
   <?php else: ?>
-    <h3 aria-label="Sin solicitudes pendientes">No hay solicitudes pendientes para sus locales.</h3>
+    <p class="text-center">No hay solicitudes pendientes para sus locales.</p>
   <?php endif; ?>
   </main>
 
-
   <footer class="seccion-footer d-flex flex-column justify-content-center align-items-center pt-4">
-
     <?php include("../Includes/footer.php") ?>
-
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>

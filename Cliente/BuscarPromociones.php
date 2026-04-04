@@ -4,7 +4,7 @@ include_once("../Includes/funciones.php");
 sesionIniciada();
 
 $folder = "Cliente";
-$pestaña = "Buscar Promociones";
+$pestaña = "Promociones";
 date_default_timezone_set('America/Argentina/Buenos_Aires');
 $numeroDiaHoy = date('N');
 

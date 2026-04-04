@@ -94,8 +94,9 @@ if (!empty($codigoslocales)) {
     }
   }
 } else {
-  $mensaje = "<div class='alert alert-warning'>No tienes locales registrados a tu nombre.</div>";
-}
+  $mensaje = "<p class='text-center'>No tienes locales registrados a tu nombre.</p>";
+}        
+
 ?>
 
 <!DOCTYPE html>
