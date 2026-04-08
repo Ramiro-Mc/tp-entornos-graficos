@@ -7,3 +7,4 @@ setcookie('tipo_usuario_recordado', '', time() - 3600, '/');
 header("Location: ../Principal/InicioSesion.php");
 exit;
 ?>
+
