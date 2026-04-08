@@ -73,14 +73,17 @@ nav a:hover {
   cursor: pointer;
 }
 
+/*
 nav a:visited,
 .navbar a:visited {
-  color: #8e44ad; /* Violeta para enlaces visitados en navegación */
+  color: #8e44ad; 
 }
 
 a:visited {
-  color: #9966cc; /* Color violeta para enlaces visitados */
+  color: #9966cc; 
 }
+*/
+
 
 .colapsado ul {
   display: flex;
