@@ -108,7 +108,7 @@ $total_paginas = ceil($total_solicitudes / $solicitudes_por_pagina);
 
   <?php foreach ($solicitudes as $s): ?>
     <div class="modal" id="modal-aprobar-<?= $s['cod_usuario'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalAprobarLabel-<?= $s['cod_usuario'] ?>" aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content modal-solicitud-accion modal-solicitud-aprobar">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="modalAprobarLabel-<?= $s['cod_usuario'] ?>" style="margin: auto; font-size: 1.6rem;">Aprobando solicitud</h1>
@@ -129,7 +129,7 @@ $total_paginas = ceil($total_solicitudes / $solicitudes_por_pagina);
     </div>
 
     <div class="modal" id="modal-rechazar-<?= $s['cod_usuario'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalRechazarLabel-<?= $s['cod_usuario'] ?>" aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content modal-solicitud-accion modal-solicitud-rechazar">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="modalRechazarLabel-<?= $s['cod_usuario'] ?>" style="margin: auto; font-size: 1.6rem;">Rechazando solicitud</h1>
