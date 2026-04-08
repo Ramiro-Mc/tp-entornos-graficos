@@ -160,7 +160,6 @@ if ($folder == "Administrador") {
 
 
           <li class="nav-item">
-
             <button type="button" style="margin-left: 10px;" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cerrar-sesion">Cerrar sesion</button>
 
           </li>

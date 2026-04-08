@@ -118,11 +118,26 @@ if (!empty($codigoslocales)) {
           <li><a class="dropdown-item" href="?order=cod_desc">Código ↓</a></li>
         </ul>
       </div>
-
-      <?php
-      if ($mensaje) echo $mensaje;
-      ?>
-    </div>
+    </div> 
+    <?php if (!empty($mensaje)): ?>
+      <div id="contenedor-mensaje" class="d-flex justify-content-center my-3 w-100">
+        <div class="text-center">
+          <?php echo $mensaje; ?>
+        </div>
+      </div>
+      <script>
+        setTimeout(function() {
+          let mensaje = document.getElementById('contenedor-mensaje');
+          if (mensaje) {
+            mensaje.style.transition = "opacity 0.5s ease";
+            mensaje.style.opacity = "0";
+            setTimeout(function() {
+              mensaje.style.display = "none";
+            }, 500);
+          }
+        }, 2000); // 3000 milisegundos = 3 segundos. Puedes cambiar este número.
+      </script>
+    <?php endif; ?>
     <div class="promociones" aria-label="Listado de solicitudes de promociones">
       <?php if ($usoPromociones && mysqli_num_rows($usoPromociones) > 0): ?>
         <?php while ($usopromo = mysqli_fetch_assoc($usoPromociones)): ?>
@@ -135,16 +150,20 @@ if (!empty($codigoslocales)) {
               <p><b>Nombre Usuario:</b> <?php echo $usopromo['nombre_usuario']; ?></p>
               <p><b>Estado:</b> <?php echo $usopromo['estado']; ?></p>
             </div>
-          <div class="acciones-reporte align-items-center d-flex justify-content-center acciones">
-            <form method="POST" style="display:inline;">
-              <input type="hidden" name="aceptar_promocion" value="<?php echo $usopromo['cod_promocion']; ?>">
-              <input type="hidden" name="aceptar_usuario" value="<?php echo $usopromo['cod_usuario']; ?>">
-              <button type="submit" class="btn btn-success" style="padding: 18px 18px;">ACEPTAR</button>
+          <div class="acciones">
+            <form method="POST" style="display:inline-block; margin-right: 5px;">
+              <input type="hidden" name="aceptar_promocion" value="<?php echo htmlspecialchars($usopromo['cod_promocion']); ?>">
+              <input type="hidden" name="aceptar_usuario" value="<?php echo htmlspecialchars($usopromo['cod_usuario']); ?>">
+              <button type="submit" class="btn btn-success" style="width: 110px;" onclick="return confirm('¿Seguro que quieres ACEPTAR esta solicitud?');">
+                ACEPTAR
+              </button>
             </form>
-            <form method="POST" style="display:inline;">
-              <input type="hidden" name="eliminar_promocion" value="<?php echo $usopromo['cod_promocion']; ?>">
-              <input type="hidden" name="eliminar_usuario" value="<?php echo $usopromo['cod_usuario']; ?>">
-              <button type="submit" class="btn btn-danger">RECHAZAR</button>
+            <form method="POST" style="display:inline-block;">
+              <input type="hidden" name="eliminar_promocion" value="<?php echo htmlspecialchars($usopromo['cod_promocion']); ?>">
+              <input type="hidden" name="eliminar_usuario" value="<?php echo htmlspecialchars($usopromo['cod_usuario']); ?>">
+              <button type="submit" class="btn btn-danger" style="width: 110px;" onclick="return confirm('¿Seguro que quieres RECHAZAR esta solicitud?');">
+                RECHAZAR
+              </button>
             </form>
           </div>
           </div>
