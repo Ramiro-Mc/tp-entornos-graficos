@@ -23,7 +23,7 @@ $archivosVolver = [
 
 if ($tipo === 'local') {
     $rubros = ['Accesorios', 'Deportes', 'Electro', 'Estetica', 'Gastronomia', 'Calzado', 'Indumentaria', 'Varios'];
-    $resUsuarios = mysqli_query($link, "SELECT cod_usuario, nombre_usuario FROM usuario") or die(mysqli_error($link));
+    $resUsuarios = mysqli_query($link, "SELECT * FROM usuario u INNER JOIN dueño_local dl ON u.cod_usuario = dl.cod_usuario WHERE dl.estado = 'aprobado'") or die(mysqli_error($link));
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
