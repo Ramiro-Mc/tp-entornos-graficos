@@ -153,6 +153,8 @@ a:visited {
 .seccion-footer {
   background-color: #2f2f2f;
   color: #f5f6f7;
+  box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.4);
+  position: relative;
 }
 
 .iconos-redes-sociales a {

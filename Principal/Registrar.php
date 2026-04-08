@@ -177,7 +177,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <?php include("../Includes/header.php"); ?>
   </header>
 
-  <main style="background-image: url('../Imagenes/Fondo.jpg')" class="fondo-loginRegister pb-5 pt-5 d-flex justify-content-center align-items-center" aria-label="Página de registro">
+  <main style="background-image: url('../Imagenes/fondo.jpg')" class="fondo-loginRegister pb-5 pt-5 d-flex justify-content-center align-items-center" aria-label="Página de registro">
     <section class="loginRegister-box" aria-label="Formulario de registro">
       <h1>Crear una nueva cuenta</h1>
       <h2>Es rápido y fácil.</h2>

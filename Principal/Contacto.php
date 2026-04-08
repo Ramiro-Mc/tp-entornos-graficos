@@ -16,8 +16,14 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
 
+$modalData = null;
+
 if (isset($_SESSION['consulta_enviada'])) {
-  echo "<script>alert('Consulta enviada');</script>";
+  $modalData = [
+    'title' => 'Consulta enviada',
+    'body' => 'Tu consulta se envió correctamente. Gracias por contactarnos.',
+    'type' => 'success'
+  ];
   unset($_SESSION['consulta_enviada']);
 }
 
@@ -61,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     //Server settings
-    // $mail->SMTPDebug = SMTP::DEBUG_SERVER;                    //Enable verbose debug output
+    //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                    //Enable verbose debug output
     $mail->isSMTP();                                            //Send using SMTP
     $mail->Host       = $smtpHost;                     //Set the SMTP server to send through
     $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
@@ -91,7 +97,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Location: Contacto.php");
     exit;
   } catch (Exception $e) {
-    echo "<script>alert('Error al enviar la consulta.');</script>";
+    $modalData = [
+      'title' => 'Error al enviar la consulta',
+      'body' => 'Ocurrió un problema al enviar tu consulta. Por favor, intentá nuevamente más tarde.',
+      'type' => 'danger'
+    ];
   }
 }
 ?>
@@ -150,6 +160,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
   </main>
 
+  <div class="modal fade" id="consultaModal" tabindex="-1" aria-labelledby="consultaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="consultaModalLabel"><?= htmlspecialchars($modalData['title'] ?? 'Mensaje') ?></h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <?= htmlspecialchars($modalData['body'] ?? '') ?>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <footer class="seccion-footer d-flex flex-column justify-content-center align-items-center pt-4">
 
     <?php include("../Includes/footer.php") ?>
@@ -157,7 +184,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
-
+  <?php if (!empty($modalData)): ?>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        var consultaModal = new bootstrap.Modal(document.getElementById('consultaModal'));
+        consultaModal.show();
+      });
+    </script>
+  <?php endif; ?>
 </body>
 
 </html>

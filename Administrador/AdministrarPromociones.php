@@ -1,5 +1,4 @@
 <?php
-
 $folder = "Administrador";
 $pestaña = "Administrar Promociones";
 include_once("../Includes/funciones.php");
@@ -48,9 +47,13 @@ if (isset($_GET['cod_promocion']) && isset($_GET['accion'])) {
   }
 }
 
-$sql = "SELECT cod_promocion, texto_promocion, estado_promo FROM promociones ORDER BY $order";
-$result = $link->query($sql);
+// Para que los modales funcionen, necesitamos volcar el resultado a un array
 $result = $link->query("SELECT p.cod_promocion, p.texto_promocion, p.estado_promo, p.fecha_desde_promocion, p.fecha_hasta_promocion, l.nombre_local FROM promociones p INNER JOIN locales l ON p.cod_local = l.cod_local WHERE p.estado_promo = 'pendiente' ORDER BY $order LIMIT $promociones_por_pagina OFFSET $offset");
+
+$promociones = [];
+while ($fila = $result->fetch_assoc()) {
+    $promociones[] = $fila;
+}
 
 $total_promociones_result = $link->query("SELECT COUNT(*) AS total FROM promociones WHERE estado_promo = 'pendiente'");
 $total_promociones_row = $total_promociones_result->fetch_assoc();
@@ -62,11 +65,8 @@ $total_paginas = ceil($total_promociones / $promociones_por_pagina);
 <html lang="es ">
 
 <head>
-
   <?php include("../Includes/head.php"); ?>
-
   <title>Administrar Promociones</title>
-
 </head>
 
 <body>
@@ -88,8 +88,8 @@ $total_paginas = ceil($total_promociones / $promociones_por_pagina);
     </div>
 
     <div class="promociones">
-      <?php if ($result->num_rows): ?>
-        <?php while ($n = $result->fetch_assoc()): ?>
+      <?php if (!empty($promociones)): ?>
+        <?php foreach ($promociones as $n): ?>
           <div class="promocion d-flex justify-content-between align-items-start mb-3 p-3 border rounded">
             <div class="infoTarjeta flex-grow-1 me-3">
               <h3><?= htmlspecialchars($n['texto_promocion']) ?></h3>
@@ -97,22 +97,19 @@ $total_paginas = ceil($total_promociones / $promociones_por_pagina);
               <p>Local: <?= htmlspecialchars($n['nombre_local']); ?></p>
               <p><small>Desde: <?= $n['fecha_desde_promocion'] ?> | Hasta: <?= $n['fecha_hasta_promocion'] ?></small></p>
             </div>
-            <div class="acciones">
+            <div class="acciones d-flex flex-column gap-2">
               <a href="verDetalle.php?tipo=promocion&cod=<?= $n['cod_promocion'] ?>" class="btn btn-primary btn-sm">VER DETALLES</a>
-              <a href="AdministrarPromociones.php?cod_promocion=<?= $n['cod_promocion'] ?>&accion=aceptar"
-                class="btn btn-success"
-                onclick="return confirm('¿Seguro que quieres ACEPTAR esta promoción?');">
+              
+              <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#modal-aceptar-<?= $n['cod_promocion'] ?>">
                 ACEPTAR
-              </a>
+              </button>
 
-              <a href="AdministrarPromociones.php?cod_promocion=<?= $n['cod_promocion'] ?>&accion=rechazar"
-                class="btn btn-danger"
-                onclick="return confirm('¿Seguro que quieres RECHAZAR esta promoción?');">
+              <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modal-rechazar-<?= $n['cod_promocion'] ?>">
                 RECHAZAR
-              </a>
+              </button>
             </div>
           </div>
-        <?php endwhile; ?>
+        <?php endforeach; ?>
       <?php else: ?>
         <p class="text-center">No hay promociones cargadas.</p>
       <?php endif; ?>
@@ -121,16 +118,48 @@ $total_paginas = ceil($total_promociones / $promociones_por_pagina);
     <div class="mt-4">
       <?php paginacion($pagina, $total_paginas, $params); ?>
     </div>
-
   </main>
 
   <footer class="seccion-footer d-flex flex-column justify-content-center align-items-center pt-4">
-
     <?php include("../Includes/footer.php") ?>
-
   </footer>
+
+  <?php foreach ($promociones as $n): ?>
+    <div class="modal fade" id="modal-aceptar-<?= $n['cod_promocion'] ?>" data-bs-backdrop="static" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content modal-solicitud-accion modal-solicitud-aprobar">
+          <div class="modal-header text-center">
+            <h1 class="modal-title fs-5" style="margin: auto;">Aprobando solicitud</h1>
+          </div>
+          <div class="modal-body text-center">
+            <p style="font-size: 1.2rem; color:black;">¿Seguro que quieres ACEPTAR esta promoción?</p>
+          </div>
+          <div class="modal-footer d-flex justify-content-around">
+            <a href="AdministrarPromociones.php?cod_promocion=<?= $n['cod_promocion'] ?>&accion=aceptar" class="btn btn-success">Aceptar promoción</a>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modal-rechazar-<?= $n['cod_promocion'] ?>" data-bs-backdrop="static" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content modal-solicitud-accion modal-solicitud-rechazar">
+          <div class="modal-header text-center">
+            <h1 class="modal-title fs-5" style="margin: auto;">Rechazando solicitud</h1>
+          </div>
+          <div class="modal-body text-center">
+            <p style="font-size: 1.2rem; color:black;">¿Seguro que quieres RECHAZAR esta promoción?</p>
+          </div>
+          <div class="modal-footer d-flex justify-content-around">
+            <a href="AdministrarPromociones.php?cod_promocion=<?= $n['cod_promocion'] ?>&accion=rechazar" class="btn btn-danger">Rechazar promoción</a>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <?php endforeach; ?>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
