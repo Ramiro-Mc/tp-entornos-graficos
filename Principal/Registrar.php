@@ -168,6 +168,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <head>
   <?php include("../Includes/head.php"); ?>
+  <style>
+  .btn-check:checked + .btn-radio {
+    text-shadow: none !important;
+  }
+</style>
   <title>Register</title>
 </head>
 

@@ -55,20 +55,16 @@
 .botonesDueñoAdministrador {
   display: flex;
   flex-direction: column;
+  align-items: center; /* Esto centra los enlaces horizontalmente */
   gap: 20px;
   padding: 3rem;
   width: 100%;
 }
 
 .botonesDueñoAdministrador a {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   text-decoration: none;
+  /* Eliminamos el width 100% y el display flex de aquí */
+  width: auto;
 }
 
 .botonesDueñoAdministrador button {
@@ -78,8 +74,9 @@
   color: #000;
   cursor: pointer;
   font-size: 16px;
-  width: 300px;
+  width: 300px; /* Tu botón sigue midiendo 300px */
   transition: background 0.3s;
+  display: block; /* Asegura que se comporte bien dentro del <a> */
 }
 
 .botonesDueñoAdministrador button:hover {
@@ -539,10 +536,6 @@
   font-size: 0.8rem;
   margin-top: 0.8rem;
   text-align: center;
-}
-
-.input[type="radio"]:checked + .btn-radio {
-  background: #17a44b;
 }
 
 .locales {

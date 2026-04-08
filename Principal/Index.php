@@ -208,24 +208,28 @@ $res = consultaSQL("SELECT foto_novedad, texto_novedad FROM novedades");
         <div class="row">
 
           <?php
+          $hoy = date('Y-m-d');
+
+          $sql = "SELECT texto_promocion, foto_promocion, cod_local 
+                  FROM promociones 
+                  WHERE estado_promo = 'aceptada' 
+                  AND '$hoy' BETWEEN fecha_desde_promocion AND fecha_hasta_promocion";
+
           if (isset($_SESSION['categoria_cliente'])) {
-            $result =  consultaSQL("SELECT texto_promocion, foto_promocion, cod_local FROM promociones where categoria_cliente='{$_SESSION['categoria_cliente']}'");
-          } else {
-            $result =  consultaSQL("SELECT texto_promocion, foto_promocion, cod_local FROM promociones ");
+              $categoria = $_SESSION['categoria_cliente'];
+              $sql .= " AND categoria_cliente = '$categoria'";
           }
 
-          $cantidad = 0; ?>
-
-          <?php if ($result->num_rows > 0): ?>
-
-            <?php while ($row = $result->fetch_assoc()):  ?>
-
-              <?php if ($cantidad < 6): ?>
-
-                <?php $texto_promocion = $row['texto_promocion'];
+          $result = consultaSQL($sql);
+          $cantidad = 0; 
+          ?>
+          <?php if ($result && $result->num_rows > 0): ?>
+            <?php while ($row = $result->fetch_assoc()): ?>
+              <?php if ($cantidad < 6): 
+                $texto_promocion = $row['texto_promocion'];
                 $foto_promocion = $row['foto_promocion'];
-                $cantidad = $cantidad + 1; ?>
-
+                $cantidad++; 
+              ?>
                 <div class="col-12 col-md-6 col-lg-4 mb-4">
                   <div class="promocion-index">
                     <img src="../<?= $foto_promocion ?>" alt="Imagen de promoción: <?= $texto_promocion ?>" />
@@ -234,13 +238,14 @@ $res = consultaSQL("SELECT foto_novedad, texto_novedad FROM novedades");
                     </div>
                   </div>
                 </div>
-
               <?php endif; ?>
 
             <?php endwhile; ?>
 
           <?php else: ?>
-            <p>No hay promociones registradas.</p>
+            <div class="col-12">
+              <p>No hay promociones activas en este momento.</p>
+            </div>
           <?php endif; ?>
 
         </div>
