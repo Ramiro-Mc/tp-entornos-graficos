@@ -37,6 +37,14 @@ if (isset($_GET['order'])) {
 
 $result = $link->query("SELECT cod_local, nombre_local, rubro_local, ubicacion_local FROM locales ORDER BY $order LIMIT $locales_por_pagina OFFSET $offset");
 
+// Volcamos a un array para usar en el listado y en los modales
+$locales = [];
+if ($result) {
+    while ($fila = $result->fetch_assoc()) {
+        $locales[] = $fila;
+    }
+}
+
 $total_locales_result = $link->query("SELECT COUNT(*) AS total FROM locales");
 $total_locales_row = $total_locales_result->fetch_assoc();
 $total_locales = $total_locales_row['total'];
@@ -48,15 +56,11 @@ $total_paginas = ceil($total_locales / $locales_por_pagina);
 <html lang="es">
 
 <head>
-
   <?php include("../Includes/head.php"); ?>
-
   <title>Administrar Locales</title>
-
 </head>
 
 <body>
-
   <header>
     <?php include("../Includes/header.php"); ?>
   </header>
@@ -80,9 +84,10 @@ $total_paginas = ceil($total_locales / $locales_por_pagina);
         </ul>
       </div>
     </div>
+    
     <div class="promociones">
-      <?php if ($result->num_rows): ?>
-        <?php while ($n = $result->fetch_assoc()): ?>
+      <?php if (!empty($locales)): ?>
+        <?php foreach ($locales as $n): ?>
           <div class="promocion d-flex justify-content-between align-items-start mb-3 p-3 border rounded">
             <div class="infoTarjeta flex-grow-1 me-3">
               <h3 class="text-break"><?= htmlspecialchars($n['nombre_local']) ?></h3>
@@ -90,21 +95,21 @@ $total_paginas = ceil($total_locales / $locales_por_pagina);
               <p>Rubro: <?= htmlspecialchars($n['rubro_local']) ?></p>
               <p>Ubicación: <?= htmlspecialchars($n['ubicacion_local']) ?></p>
             </div>
-            <div class="acciones">
+            <div class="acciones d-flex flex-column gap-2">
               <a href="verDetalle.php?tipo=local&cod=<?= $n['cod_local'] ?>" class="btn btn-primary btn-sm">VER DETALLES</a>
               <a href="editar.php?tipo=local&cod=<?= $n['cod_local'] ?>" class="btn btn-secondary btn-sm">EDITAR</a>
-              <form method="post" action="eliminar.php" onsubmit="return confirm('¿Seguro que quieres eliminar?');">
-                <input type="hidden" name="tipo" value="local">
-                <input type="hidden" name="cod" value="<?= $n['cod_local'] ?>">
-                <button type="submit" class="btn btn-danger btn-sm">ELIMINAR</button>
-              </form>
+              
+              <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modal-eliminar-<?= $n['cod_local'] ?>">
+                ELIMINAR
+              </button>
             </div>
           </div>
-        <?php endwhile; ?>
+        <?php endforeach; ?>
       <?php else: ?>
         <p class="text-center">No hay locales cargados.</p>
       <?php endif; ?>
     </div>
+
     <div class="mt-4">
       <?php paginacion($pagina, $total_paginas, $params); ?>
     </div>
@@ -114,12 +119,32 @@ $total_paginas = ceil($total_locales / $locales_por_pagina);
     <?php include("../Includes/footer.php") ?>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
-    crossorigin="anonymous"></script>
+  <?php foreach ($locales as $n): ?>
+    <div class="modal fade" id="modal-eliminar-<?= $n['cod_local'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content modal-solicitud-accion modal-solicitud-rechazar">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" style="margin: auto;">Eliminando Local</h1>
+          </div>
+          <div class="modal-body text-center">
+            <p style="font-size: 1.2rem; color:black;">¿Seguro que quieres eliminar el local <b><?= htmlspecialchars($n['nombre_local']) ?></b>?</p>
+          </div>
+          <div class="modal-footer d-flex justify-content-around">
+            <form method="post" action="eliminar.php" class="m-0">
+              <input type="hidden" name="tipo" value="local">
+              <input type="hidden" name="cod" value="<?= $n['cod_local'] ?>">
+              <button type="submit" class="btn btn-danger">Eliminar Local</button>
+            </form>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <?php endforeach; ?>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
-
 </html>
 <?php
 $link->close();

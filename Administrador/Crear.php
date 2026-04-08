@@ -198,6 +198,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <footer class="seccion-footer d-flex flex-column justify-content-center align-items-center pt-4">
         <?php include("../Includes/footer.php"); ?>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
