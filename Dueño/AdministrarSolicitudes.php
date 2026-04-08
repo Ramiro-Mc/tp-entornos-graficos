@@ -1,6 +1,16 @@
 <?php
 include_once("../Includes/session.php");
 include("../Includes/funciones.php");
+require_once("../Includes/env.php");
+load_env(dirname(__DIR__) . '/.env');
+
+require '../PHPMailer-master/src/PHPMailer.php';
+require '../PHPMailer-master/src/SMTP.php';
+require '../PHPMailer-master/src/Exception.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 sesionIniciada();
 if (!isset($_SESSION['cod_usuario'])) {
   header("Location: ../principal/InicioSesion.php");
@@ -41,6 +51,82 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_promocion'],
   $sqlEliminar = "UPDATE uso_promociones SET estado = 'rechazada' WHERE cod_promocion = $codPromo AND cod_usuario = $codUsuario";
   if (consultaSQL($sqlEliminar)) {
     $mensaje = "<div class='alert alert-success'>Solicitud rechazada correctamente.</div>";
+
+    //notificar por mail al cliente
+    $sqlDatosMail = "SELECT u.email, u.nombre_usuario, p.texto_promocion, l.nombre_local
+    FROM uso_promociones up
+    INNER JOIN usuario u ON up.cod_usuario = u.cod_usuario
+    INNER JOIN promociones p ON up.cod_promocion = p.cod_promocion
+    INNER JOIN locales l ON p.cod_local = l.cod_local
+    WHERE up.cod_promocion = $codPromo AND up.cod_usuario = $codUsuario
+    LIMIT 1";
+    $resDatosMail = consultaSQL($sqlDatosMail);
+
+    if ($resDatosMail && mysqli_num_rows($resDatosMail) > 0) {
+      $datosMail = mysqli_fetch_assoc($resDatosMail);
+      $emailCliente = $datosMail['email'] ?? '';
+
+      if ($emailCliente !== '') {
+        $smtpHost = env('SMTP_HOST', 'smtp.gmail.com');
+        $smtpPort = (int) env('SMTP_PORT', '465');
+        $smtpUser = env('SMTP_USERNAME', '');
+        $smtpPass = env('SMTP_PASSWORD', '');
+        $smtpFromName = env('SMTP_FROM_NAME', 'Viventa Store');
+        $smtpEncryption = strtolower(env('SMTP_ENCRYPTION', 'smtps'));
+        $smtpSecure = $smtpEncryption === 'starttls'
+          ? PHPMailer::ENCRYPTION_STARTTLS
+          : PHPMailer::ENCRYPTION_SMTPS;
+
+        $nombreCliente = htmlspecialchars($datosMail['nombre_usuario'] ?? 'Cliente', ENT_QUOTES, 'UTF-8');
+        $textoPromocion = htmlspecialchars($datosMail['texto_promocion'] ?? 'Promocion', ENT_QUOTES, 'UTF-8');
+        $nombreLocal = htmlspecialchars($datosMail['nombre_local'] ?? 'Viventa Store', ENT_QUOTES, 'UTF-8');
+
+        $mail = new PHPMailer(true);
+
+        try {
+          if ($smtpUser === '' || $smtpPass === '') {
+            throw new Exception('Faltan credenciales SMTP en variables de entorno.');
+          }
+
+          $mail->isSMTP();
+          $mail->Host = $smtpHost;
+          $mail->SMTPAuth = true;
+          $mail->Username = $smtpUser;
+          $mail->Password = $smtpPass;
+          $mail->SMTPSecure = $smtpSecure;
+          $mail->Port = $smtpPort;
+
+          $mail->SMTPOptions = array(
+            'ssl' => array(
+              'verify_peer' => false,
+              'verify_peer_name' => false,
+              'allow_self_signed' => true
+            )
+          );
+
+          $mail->setFrom($smtpUser, $smtpFromName);
+          $mail->addAddress($emailCliente, $datosMail['nombre_usuario']);
+          $mail->isHTML(true);
+          $mail->Subject = "Tu solicitud de promocion fue rechazada";
+          $mail->Body = "
+            <div style='font-family: Arial, sans-serif; background: #f9f9f9; padding: 20px; border-radius: 8px; color: #222;'>
+              <h2 style='color: #2c3e50;'>Hola {$nombreCliente}</h2>
+              <p>Tu solicitud para usar la promocion no fue aprobada en esta oportunidad.</p>
+              <p><strong>Promocion:</strong> {$textoPromocion}</p>
+              <p><strong>Local:</strong> {$nombreLocal}</p>
+              <p>Podes seguir explorando otras promociones disponibles en Viventa Store.</p>
+              <hr style='border: none; border-top: 1px solid #eee; margin: 20px 0 8px 0;'/>
+              <p style='font-size: 0.95em; color: #888;'>Este mensaje fue enviado automaticamente desde Viventa Store.</p>
+            </div>
+          ";
+          $mail->AltBody = "Hola " . ($datosMail['nombre_usuario'] ?? 'Cliente') . ", tu solicitud para usar la promocion fue rechazada.";
+
+          $mail->send();
+        } catch (Exception $e) {
+          $mensaje .= "<div class='alert alert-warning'>Solicitud rechazada, pero no se pudo enviar el correo al cliente.</div>";
+        }
+      }
+    }
   } else {
     $mensaje = "<div class='alert alert-danger'>Error al rechazar la solicitud.</div>";
   }
@@ -52,16 +138,92 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['aceptar_promocion'], 
   $sqlEliminar = "UPDATE uso_promociones SET estado = 'aceptada' WHERE cod_promocion = $codPromo AND cod_usuario = $codUsuario";
   if (consultaSQL($sqlEliminar)) {
     $mensaje = "<div class='alert alert-success'>Solicitud aceptada correctamente.</div>";
+
+    //actualizar categoria cliente
+    $res = consultaSQL("SELECT * From uso_promociones up WHERE cod_usuario = $codUsuario AND estado = 'aceptada'");
+    if ($res && mysqli_num_rows($res) >= 3 && mysqli_num_rows($res) < 6) {
+      consultaSQL("UPDATE cliente SET categoria_cliente = 'medium' WHERE cod_usuario = $codUsuario");
+    } elseif ($res && mysqli_num_rows($res) >= 6) {
+      consultaSQL("UPDATE cliente SET categoria_cliente = 'premium' WHERE cod_usuario = $codUsuario");
+    }
+
+    //notificar por mail al cliente
+    $sqlDatosMail = "SELECT u.email, u.nombre_usuario, p.texto_promocion, l.nombre_local
+    FROM uso_promociones up
+    INNER JOIN usuario u ON up.cod_usuario = u.cod_usuario
+    INNER JOIN promociones p ON up.cod_promocion = p.cod_promocion
+    INNER JOIN locales l ON p.cod_local = l.cod_local
+    WHERE up.cod_promocion = $codPromo AND up.cod_usuario = $codUsuario
+    LIMIT 1";
+    $resDatosMail = consultaSQL($sqlDatosMail);
+
+    if ($resDatosMail && mysqli_num_rows($resDatosMail) > 0) {
+      $datosMail = mysqli_fetch_assoc($resDatosMail);
+      $emailCliente = $datosMail['email'] ?? '';
+
+      if ($emailCliente !== '') {
+        $smtpHost = env('SMTP_HOST', 'smtp.gmail.com');
+        $smtpPort = (int) env('SMTP_PORT', '465');
+        $smtpUser = env('SMTP_USERNAME', '');
+        $smtpPass = env('SMTP_PASSWORD', '');
+        $smtpFromName = env('SMTP_FROM_NAME', 'Viventa Store');
+        $smtpEncryption = strtolower(env('SMTP_ENCRYPTION', 'smtps'));
+        $smtpSecure = $smtpEncryption === 'starttls'
+          ? PHPMailer::ENCRYPTION_STARTTLS
+          : PHPMailer::ENCRYPTION_SMTPS;
+
+        $nombreCliente = htmlspecialchars($datosMail['nombre_usuario'] ?? 'Cliente', ENT_QUOTES, 'UTF-8');
+        $textoPromocion = htmlspecialchars($datosMail['texto_promocion'] ?? 'Promocion', ENT_QUOTES, 'UTF-8');
+        $nombreLocal = htmlspecialchars($datosMail['nombre_local'] ?? 'Viventa Store', ENT_QUOTES, 'UTF-8');
+
+        $mail = new PHPMailer(true);
+
+        try {
+          if ($smtpUser === '' || $smtpPass === '') {
+            throw new Exception('Faltan credenciales SMTP en variables de entorno.');
+          }
+
+          $mail->isSMTP();
+          $mail->Host = $smtpHost;
+          $mail->SMTPAuth = true;
+          $mail->Username = $smtpUser;
+          $mail->Password = $smtpPass;
+          $mail->SMTPSecure = $smtpSecure;
+          $mail->Port = $smtpPort;
+
+          $mail->SMTPOptions = array(
+            'ssl' => array(
+              'verify_peer' => false,
+              'verify_peer_name' => false,
+              'allow_self_signed' => true
+            )
+          );
+
+          $mail->setFrom($smtpUser, $smtpFromName);
+          $mail->addAddress($emailCliente, $datosMail['nombre_usuario']);
+          $mail->isHTML(true);
+          $mail->Subject = "Tu promocion fue aprobada";
+          $mail->Body = "
+            <div style='font-family: Arial, sans-serif; background: #f9f9f9; padding: 20px; border-radius: 8px; color: #222;'>
+              <h2 style='color: #2c3e50;'>Hola {$nombreCliente}</h2>
+              <p>Tu solicitud para usar la promocion ya fue aprobada.</p>
+              <p><strong>Promocion:</strong> {$textoPromocion}</p>
+              <p><strong>Local:</strong> {$nombreLocal}</p>
+              <p>Ya podes usarla. Te esperamos.</p>
+              <hr style='border: none; border-top: 1px solid #eee; margin: 20px 0 8px 0;'/>
+              <p style='font-size: 0.95em; color: #888;'>Este mensaje fue enviado automaticamente desde Viventa Store.</p>
+            </div>
+          ";
+          $mail->AltBody = "Hola " . ($datosMail['nombre_usuario'] ?? 'Cliente') . ", tu solicitud para usar la promocion fue aprobada. Ya podes usarla.";
+
+          $mail->send();
+        } catch (Exception $e) {
+          $mensaje .= "<div class='alert alert-warning'>Solicitud aceptada, pero no se pudo enviar el correo al cliente.</div>";
+        }
+      }
+    }
   } else {
     $mensaje = "<div class='alert alert-danger'>Error al aceptar la solicitud.</div>";
-  }
-
-  //actualizar categoria cliente
-  $res = consultaSQL("SELECT * From uso_promociones up WHERE cod_usuario = $codUsuario AND estado = 'aceptada'");
-  if (mysqli_num_rows($res) >= 3 && mysqli_num_rows($res) < 6) {
-    consultaSQL("UPDATE cliente SET categoria_cliente = 'medium' WHERE cod_usuario = $codUsuario");
-  } elseif (mysqli_num_rows($res) >= 6) {
-    consultaSQL("UPDATE cliente SET categoria_cliente = 'premium' WHERE cod_usuario = $codUsuario");
   }
 }
 
