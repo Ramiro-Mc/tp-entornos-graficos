@@ -71,21 +71,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       // 3. Insertamos SIEMPRE primero en la tabla padre: 'usuario'
       $queryUsuario = "INSERT INTO usuario (email, clave, nombre_usuario) VALUES ('$vEmail', '$hashedPassword', '$vNombreUsuario')";
       $insertUsuario = mysqli_query($link, $queryUsuario);
-      
+
       if ($insertUsuario) {
         // Obtenemos el ID que se acaba de generar para usarlo en las tablas hijas
         $vCodUsuario = mysqli_insert_id($link);
-        
+
         // --- FLUJO CLIENTE ---
         if ($vTipoUsuario == 'cliente') {
           $vCategoriaCliente = "Inicial";
-          
+
           // Insertamos en la tabla 'cliente' según tu diagrama
           $queryCliente = "INSERT INTO cliente (cod_usuario, categoria_cliente, confirmado, token_confirmacion) VALUES ('$vCodUsuario', '$vCategoriaCliente', 0, '$token')";
           mysqli_query($link, $queryCliente);
 
           // Mandamos mail de confirmacion 
-          $enlace = "http://localhost:8012/Repositorio/tp-entornos-graficos/Principal/Confirmar.php?token=$token";
+          $enlace = $appUrl . "/Principal/Confirmar.php?token=" . rawurlencode($token);
           $asunto = "Confirma tu cuenta";
           $mensajeMail = "
             <div style='font-family: Arial, sans-serif; background: #f9f9f9; padding: 24px; border-radius: 8px; color: #222;'>
@@ -108,54 +108,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
           $mail = new PHPMailer(true);
 
-            try {
-                $mail->isSMTP();
-                // Usamos las variables cargadas del .env arriba
-                $mail->Host       = $smtpHost;
-                $mail->SMTPAuth   = true;
-                $mail->Username   = $smtpUser; // Aquí tomará 'viventastore1@gmail.com'
-                $mail->Password   = $smtpPass; // Aquí tomará tu contraseña de aplicación
-                $mail->SMTPSecure = $smtpSecure;
-                $mail->Port       = $smtpPort;
+          try {
+            $mail->isSMTP();
+            // Usamos las variables cargadas del .env arriba
+            $mail->Host       = $smtpHost;
+            $mail->SMTPAuth   = true;
+            $mail->Username   = $smtpUser; // Aquí tomará 'viventastore1@gmail.com'
+            $mail->Password   = $smtpPass; // Aquí tomará tu contraseña de aplicación
+            $mail->SMTPSecure = $smtpSecure;
+            $mail->Port       = $smtpPort;
 
-                // Configuración para evitar errores de certificado en servidores locales (XAMPP)
-                $mail->SMTPOptions = array(
-                    'ssl' => array(
-                        'verify_peer' => false,
-                        'verify_peer_name' => false,
-                        'allow_self_signed' => true
-                    )
-                );
+            // Configuración para evitar errores de certificado en servidores locales (XAMPP)
+            $mail->SMTPOptions = array(
+              'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+              )
+            );
 
-                $mail->setFrom($smtpUser, $smtpFromName);
-                $mail->addAddress($vEmail, $vNombreUsuario);
-                $mail->addReplyTo($smtpUser, 'Information');
+            $mail->setFrom($smtpUser, $smtpFromName);
+            $mail->addAddress($vEmail, $vNombreUsuario);
+            $mail->addReplyTo($smtpUser, 'Information');
 
-                $mail->isHTML(true);
-                $mail->Subject = $asunto;
-                $mail->Body    = $mensajeMail;
-                $mail->AltBody = strip_tags($mensajeMail); // Mejor usar strip_tags para el cuerpo plano
+            $mail->isHTML(true);
+            $mail->Subject = $asunto;
+            $mail->Body    = $mensajeMail;
+            $mail->AltBody = strip_tags($mensajeMail); // Mejor usar strip_tags para el cuerpo plano
 
-                $mail->send();
-                $mensaje = "<div class='alert alert-success'>Su solicitud de registro fue enviada. Revisa tu correo para confirmar.</div>";
-            } catch (Exception $e) {
+            $mail->send();
+            $mensaje = "<div class='alert alert-success'>Su solicitud de registro fue enviada. Revisa tu correo para confirmar.</div>";
+          } catch (Exception $e) {
             $mensaje = "<div class='alert alert-danger'>No se pudo enviar el correo de confirmación. Error: {$mail->ErrorInfo}</div>";
           }
 
-        // --- FLUJO DUEÑO ---
+          // --- FLUJO DUEÑO ---
         } elseif ($vTipoUsuario == 'duenio') {
           // Insertamos en la tabla 'dueño_local' con estado Pendiente (eliminamos la tabla solicitudes)
           $queryDuenio = "INSERT INTO dueño_local (cod_usuario, estado) VALUES ('$vCodUsuario', 'Pendiente')";
           mysqli_query($link, $queryDuenio);
-          
+
           $mensaje = "<div class='alert alert-warning'>Te registraste como dueño de local. Tu cuenta está pendiente de aprobación por un administrador.</div>";
         }
-
       } else {
         $mensaje = "<div class='alert alert-danger'>Error al crear el usuario en la base de datos.</div>";
       }
     }
-    
+
     if (isset($vResultado) && $vResultado) {
       mysqli_free_result($vResultado);
     }
@@ -182,9 +181,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <section class="loginRegister-box" aria-label="Formulario de registro">
       <h1>Crear una nueva cuenta</h1>
       <h2>Es rápido y fácil.</h2>
-      
+
       <?php echo $mensaje; ?>
-      
+
       <form class="formulario-transparente" action="" method="POST" name="formRegister" aria-label="Formulario para crear una cuenta">
 
         <label for="nombre" style="display:block;">Nombre <span class="campo-obligatorio">*</span></label>
@@ -238,4 +237,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   </script>
 
 </body>
+
 </html>

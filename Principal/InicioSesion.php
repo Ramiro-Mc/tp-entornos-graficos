@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // $resCliente = consultaSQL("SELECT cod_usuario FROM cliente WHERE cod_usuario=$cod_usuario AND confirmado= '1'");
-          $resCliente = consultaSQL("SELECT cod_usuario FROM cliente WHERE cod_usuario=$cod_usuario"); // --- CÓDIGO PARA PRUEBAS (Pasa directo) ---
+          $resCliente = consultaSQL("SELECT cod_usuario FROM cliente WHERE cod_usuario=$cod_usuario AND confirmado= '1'"); // --- CÓDIGO PARA PRUEBAS (Pasa directo) ---
         if ($resCliente && mysqli_num_rows($resCliente) > 0) {
           $tipo = "cliente";
         }
