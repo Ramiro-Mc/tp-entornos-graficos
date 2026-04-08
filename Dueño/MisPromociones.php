@@ -43,6 +43,7 @@ $promociones = null;
 $totalPaginas = 0;
 $diasPorPromo = [];
 $conteoUsos = [];
+$promos_array = [];
 
 // 2. Solo procedemos si existen locales para evitar errores de SQL
 if (!empty($codigoslocales)) {
@@ -66,6 +67,13 @@ if (!empty($codigoslocales)) {
                        ORDER BY p.cod_promocion ASC
                        LIMIT $cantPagina OFFSET $principio";
   $promociones = consultaSQL($sqlPromociones);
+
+  // Guardar resultados en array para reutilizar
+  if ($promociones && mysqli_num_rows($promociones) > 0) {
+    while ($fila = mysqli_fetch_assoc($promociones)) {
+      $promos_array[] = $fila;
+    }
+  }
 
   // Total para paginación
   $sqlTotal = "SELECT COUNT(*) as total FROM promociones WHERE cod_local IN ($listaLocales)";
@@ -95,7 +103,7 @@ if (!empty($codigoslocales)) {
   }
 } else {
   $mensaje = "<p class='text-center'>No tienes locales registrados a tu nombre.</p>";
-}        
+}
 
 ?>
 
@@ -120,8 +128,8 @@ if (!empty($codigoslocales)) {
     </div>
 
     <div class="promociones">
-      <?php if ($promociones && mysqli_num_rows($promociones) > 0): ?>
-        <?php while ($promo = mysqli_fetch_assoc($promociones)): ?>
+      <?php if (!empty($promos_array)): ?>
+        <?php foreach ($promos_array as $promo): ?>
           <div class="promocion">
             <div class="infoTarjeta">
               <h3><?php echo htmlspecialchars($promo['texto_promocion']); ?></h3>
@@ -134,20 +142,20 @@ if (!empty($codigoslocales)) {
               <?php endif; ?>
               <p><b>Local:</b> <?php echo htmlspecialchars($promo['nombre_local']); ?></p>
               <?php
-                $hoy = date("Y-m-d");
-                if ($promo['estado_promo'] == 'rechazada') {
-                  $estado = "<span class='text-danger'>Rechazada</span>";
-                } elseif ($promo['estado_promo'] == 'pendiente') {
-                  $estado = "<span class='text-secondary'>Pendiente</span>";
-                } elseif ($promo['fecha_hasta_promocion'] < $hoy) {
-                  $estado = "<span class='text-danger'>Vencida</span>";
-                } elseif ($promo['fecha_desde_promocion'] > $hoy) {
-                  $estado = "<span class='text-warning'>Próxima</span>";
-                } else {
-                  $estado = "<span class='text-success'>Activa</span>";
-                }
+              $hoy = date("Y-m-d");
+              if ($promo['estado_promo'] == 'rechazada') {
+                $estado = "<span class='text-danger'>Rechazada</span>";
+              } elseif ($promo['estado_promo'] == 'pendiente') {
+                $estado = "<span class='text-secondary'>Pendiente</span>";
+              } elseif ($promo['fecha_hasta_promocion'] < $hoy) {
+                $estado = "<span class='text-danger'>Vencida</span>";
+              } elseif ($promo['fecha_desde_promocion'] > $hoy) {
+                $estado = "<span class='text-warning'>Próxima</span>";
+              } else {
+                $estado = "<span class='text-success'>Activa</span>";
+              }
               ?>
-              <p><b>Estado:</b> <?php echo $estado; ?></p>  
+              <p><b>Estado:</b> <?php echo $estado; ?></p>
               <p><b>Vigencia:</b> <?php echo htmlspecialchars($promo['fecha_desde_promocion']); ?> al <?php echo htmlspecialchars($promo['fecha_hasta_promocion']); ?></p>
               <p><b>Días:</b>
                 <?php
@@ -166,13 +174,16 @@ if (!empty($codigoslocales)) {
               <p><b>Usos:</b> <?php echo $conteoUsos[$id] ?? 0; ?></p>
             </div>
             <div class="acciones">
-              <form method="POST" onsubmit="return confirm('¿Seguro que querés eliminar esta promoción?');">
-                <input type="hidden" name="eliminar" value="<?php echo $promo['cod_promocion']; ?>">
-                <button type="submit" class="btn btn-danger">ELIMINAR</button>
-              </form>
+              <button
+                type="button"
+                class="btn btn-danger"
+                data-bs-toggle="modal"
+                data-bs-target="#modal-eliminar-<?php echo $promo['cod_promocion']; ?>">
+                ELIMINAR
+              </button>
             </div>
           </div>
-        <?php endwhile; ?>
+        <?php endforeach; ?>
       <?php elseif (!empty($codigoslocales)): ?>
         <p class="text-center mt-4">No se encontraron promociones.</p>
       <?php endif; ?>
@@ -198,6 +209,31 @@ if (!empty($codigoslocales)) {
   <footer class="seccion-footer">
     <?php include("../Includes/footer.php") ?>
   </footer>
+
+  <?php if (!empty($promos_array)): ?>
+    <?php foreach ($promos_array as $promo): ?>
+      <div class="modal" id="modal-eliminar-<?php echo $promo['cod_promocion']; ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalEliminarLabel-<?php echo $promo['cod_promocion']; ?>" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content modal-eliminar-promo">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="modalEliminarLabel-<?php echo $promo['cod_promocion']; ?>" style="margin: auto; font-size: 1.6rem;">Eliminar promoción</h1>
+            </div>
+            <div class="modal-body text-center">
+              <p style="font-size: 1.2rem; color:black;">¿Seguro que querés eliminar esta promoción?</p>
+            </div>
+            <div class="modal-footer d-flex justify-content-around">
+              <form method="POST" class="m-0">
+                <input type="hidden" name="eliminar" value="<?php echo $promo['cod_promocion']; ?>">
+                <button type="submit" class="btn btn-danger">Eliminar</button>
+              </form>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <?php endforeach; ?>
+  <?php endif; ?>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
 </body>
 
