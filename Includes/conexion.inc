@@ -1,5 +1,3 @@
 <?php
-$link = mysqli_connect("localhost", "root") or die("Problemas de conexión a la base de 
-datos");
-mysqli_select_db($link, "viventa_store");
-?>
+$link = mysqli_connect("sql303.infinityfree.com", "if0_41799802", "viventastore157") or die("Problemas de conexión a la base de datos");
+mysqli_select_db($link, "if0_41799802_viventa_store"); 
