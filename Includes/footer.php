@@ -39,7 +39,10 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == "cliente") 
 }
 ?>
 
-<h5 style="font-family: Math_Italic; font-size:2.5rem; color: #B9C3CD">Viventa Store</h5>
+<div class="w-100 text-center mb-4 mt-2">
+  <h2 class="footer-title">Viventa Store</h2>
+  <hr class="footer-divider">
+</div>
 
 <div class="container d-flex flex-wrap justify-content-center gap-5 px-0">
 

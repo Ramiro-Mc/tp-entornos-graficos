@@ -130,57 +130,73 @@ if (!empty($codigoslocales)) {
     <div class="promociones">
       <?php if (!empty($promos_array)): ?>
         <?php foreach ($promos_array as $promo): ?>
-          <div class="promocion">
-            <div class="infoTarjeta">
-              <h3><?php echo htmlspecialchars($promo['texto_promocion']); ?></h3>
-              <?php if (!empty($promo['foto_promocion'])): ?>
-                <?php if (strpos($promo['foto_promocion'], 'uploads/') === 0): ?>
-                  <img src="../<?php echo $promo['foto_promocion']; ?>" alt="Imagen promo" style="max-width:150px;max-height:150px; object-fit: cover;">
+          <div class="promocion-cli container-fluid bg-white rounded-4 shadow-sm mb-4 p-3 dueño-promo-card">
+            <div class="row align-items-center">
+              <div class="col-4 col-md-3 col-lg-2 text-center">
+                <?php if (!empty($promo['foto_promocion'])): ?>
+                  <?php if (strpos($promo['foto_promocion'], 'uploads/') === 0): ?>
+                    <img src="../<?php echo $promo['foto_promocion']; ?>" alt="Imagen promo" class="img-fluid rounded-3 shadow-sm dueño-promo-img">
+                  <?php else: ?>
+                    <img src="data:image/jpeg;base64,<?php echo $promo['foto_promocion']; ?>" alt="Imagen promo" class="img-fluid rounded-3 shadow-sm dueño-promo-img">
+                  <?php endif; ?>
                 <?php else: ?>
-                  <img src="data:image/jpeg;base64,<?php echo $promo['foto_promocion']; ?>" alt="Imagen promo" style="max-width:150px;max-height:150px; object-fit: cover;">
+                  <div class="bg-light rounded-3 d-flex align-items-center justify-content-center mx-auto dueño-promo-placeholder">
+                    <i class="bi bi-image dueño-promo-placeholder-icon"></i>
+                  </div>
                 <?php endif; ?>
-              <?php endif; ?>
-              <p><b>Local:</b> <?php echo htmlspecialchars($promo['nombre_local']); ?></p>
-              <?php
-              $hoy = date("Y-m-d");
-              if ($promo['estado_promo'] == 'rechazada') {
-                $estado = "<span class='text-danger'>Rechazada</span>";
-              } elseif ($promo['estado_promo'] == 'pendiente') {
-                $estado = "<span class='text-secondary'>Pendiente</span>";
-              } elseif ($promo['fecha_hasta_promocion'] < $hoy) {
-                $estado = "<span class='text-danger'>Vencida</span>";
-              } elseif ($promo['fecha_desde_promocion'] > $hoy) {
-                $estado = "<span class='text-warning'>Próxima</span>";
-              } else {
-                $estado = "<span class='text-success'>Activa</span>";
-              }
-              ?>
-              <p><b>Estado:</b> <?php echo $estado; ?></p>
-              <p><b>Vigencia:</b> <?php echo htmlspecialchars($promo['fecha_desde_promocion']); ?> al <?php echo htmlspecialchars($promo['fecha_hasta_promocion']); ?></p>
-              <p><b>Días:</b>
-                <?php
-                $id = $promo['cod_promocion'];
-                if (isset($diasPorPromo[$id])) {
-                  $nombres = array_map(function ($d) use ($diasSemanaNombre) {
-                    return $diasSemanaNombre[$d];
-                  }, $diasPorPromo[$id]);
-                  echo implode(', ', $nombres);
-                } else {
-                  echo "No asignados";
-                }
-                ?>
-              </p>
-              <p><b>Categoria cliente:</b> <?php echo htmlspecialchars($promo['categoria_cliente']); ?></p>
-              <p><b>Usos:</b> <?php echo $conteoUsos[$id] ?? 0; ?></p>
-            </div>
-            <div class="acciones">
-              <button
-                type="button"
-                class="btn btn-danger"
-                data-bs-toggle="modal"
-                data-bs-target="#modal-eliminar-<?php echo $promo['cod_promocion']; ?>">
-                ELIMINAR
-              </button>
+              </div>
+              <div class="col-8 col-md-9 col-lg-10 d-flex justify-content-between align-items-center">
+                <div class="info w-100 ps-2">
+                  <h4 class="dueño-promo-title"><?php echo htmlspecialchars($promo['texto_promocion']); ?></h4>
+                  
+                  <?php
+                  $hoy = date("Y-m-d");
+                  if ($promo['estado_promo'] == 'rechazada') {
+                    $estado = "<span class='badge rounded-pill badge-estado-rechazada px-3 py-1 shadow-sm'><i class='bi bi-x-circle me-1'></i>Rechazada</span>";
+                  } elseif ($promo['estado_promo'] == 'pendiente') {
+                    $estado = "<span class='badge rounded-pill bg-secondary px-3 py-1 shadow-sm text-white'><i class='bi bi-clock-history me-1'></i>Pendiente</span>";
+                  } elseif ($promo['fecha_hasta_promocion'] < $hoy) {
+                    $estado = "<span class='badge rounded-pill bg-danger px-3 py-1 shadow-sm'><i class='bi bi-calendar-x me-1'></i>Vencida</span>";
+                  } elseif ($promo['fecha_desde_promocion'] > $hoy) {
+                    $estado = "<span class='badge rounded-pill px-3 py-1 shadow-sm badge-estado-proxima'><i class='bi bi-calendar-plus me-1'></i>Próxima</span>";
+                  } else {
+                    $estado = "<span class='badge rounded-pill badge-estado-aceptada px-3 py-1 shadow-sm'><i class='bi bi-check-circle me-1'></i>Activa</span>";
+                  }
+                  ?>
+
+                  <div class="d-flex flex-wrap gap-3 mt-2 text-muted dueño-promo-details">
+                    <div class="d-flex align-items-center"><i class="bi bi-shop text-primary me-2"></i> <b><?php echo htmlspecialchars($promo['nombre_local']); ?></b></div>
+                    <div class="d-flex align-items-center"><?php echo $estado; ?></div>
+                    <div class="d-flex align-items-center"><i class="bi bi-calendar-range text-info me-2"></i> <?php echo date("d/m", strtotime($promo['fecha_desde_promocion'])); ?> al <?php echo date("d/m/Y", strtotime($promo['fecha_hasta_promocion'])); ?></div>
+                    <div class="d-flex align-items-center" title="Días activos"><i class="bi bi-calendar-week text-secondary me-2"></i> 
+                      <?php
+                      $id = $promo['cod_promocion'];
+                      if (isset($diasPorPromo[$id])) {
+                        $nombres = array_map(function ($d) use ($diasSemanaNombre) {
+                          return substr($diasSemanaNombre[$d], 0, 3);
+                        }, $diasPorPromo[$id]);
+                        echo implode(', ', $nombres);
+                      } else {
+                        echo "Ninguno";
+                      }
+                      ?>
+                    </div>
+                    <div class="d-flex align-items-center"><i class="bi bi-person-badge text-warning me-2"></i> <?php echo htmlspecialchars($promo['categoria_cliente']); ?></div>
+                    <div class="d-flex align-items-center"><i class="bi bi-bar-chart-line text-success me-2"></i> Usos: <b class="ms-1"><?php echo $conteoUsos[$id] ?? 0; ?></b></div>
+                  </div>
+                </div>
+
+                <div class="acciones ms-3">
+                  <button
+                    type="button"
+                    class="btn btn-outline-danger d-flex align-items-center justify-content-center rounded-circle shadow-sm btn-dueño-delete"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modal-eliminar-<?php echo $promo['cod_promocion']; ?>"
+                    title="Eliminar promoción">
+                    <i class="bi bi-trash3-fill btn-dueño-delete-icon"></i>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         <?php endforeach; ?>

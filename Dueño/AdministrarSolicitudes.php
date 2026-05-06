@@ -303,31 +303,31 @@ if (!empty($codigoslocales)) {
     <div class="promociones" aria-label="Listado de solicitudes de promociones">
       <?php if ($usoPromociones && mysqli_num_rows($usoPromociones) > 0): ?>
         <?php while ($usopromo = mysqli_fetch_assoc($usoPromociones)): ?>
-          <div class="promocion" aria-label="Tarjeta de solicitud de promoción">
-            <div class="infoTarjeta">
-              <h3><?php echo htmlspecialchars($usopromo['texto_promocion']); ?></h3>
-              <p><b>Codigo Promocion:</b> <?php echo $usopromo['cod_promocion']; ?></p>
-              <p><b>Local:</b> <?php echo $usopromo['nombre_local']; ?></p>
-              <p><b>Codigo Usuario:</b> <?php echo $usopromo['cod_usuario']; ?></p>
-              <p><b>Nombre Usuario:</b> <?php echo $usopromo['nombre_usuario']; ?></p>
-              <p><b>Estado:</b> <?php echo $usopromo['estado']; ?></p>
+          <div class="promocion-cli container-fluid bg-white rounded-4 shadow-sm mb-4 p-3 dueño-promo-card" aria-label="Tarjeta de solicitud de promoción">
+            <div class="row align-items-center">
+              
+              <div class="col-8 col-md-9 col-lg-10 d-flex justify-content-between align-items-center w-100">
+                <div class="info ps-2">
+                  <h4 class="dueño-promo-title mb-1"><?php echo htmlspecialchars($usopromo['texto_promocion']); ?></h4>
+                  
+                  <div class="d-flex flex-wrap gap-3 mt-2 text-muted dueño-solicitud-detalles">
+                    <div class="d-flex align-items-center"><i class="bi bi-hash text-secondary me-2"></i> <b>Promo #<?php echo $usopromo['cod_promocion']; ?></b></div>
+                    <div class="d-flex align-items-center"><i class="bi bi-shop text-primary me-2"></i> <?php echo htmlspecialchars($usopromo['nombre_local']); ?></div>
+                    <div class="d-flex align-items-center"><i class="bi bi-person-circle text-info me-2"></i> <?php echo htmlspecialchars($usopromo['nombre_usuario']); ?> <small class="ms-1 text-secondary">(Id: <?php echo $usopromo['cod_usuario']; ?>)</small></div>
+                    <div class="d-flex align-items-center"><span class="badge rounded-pill badge-estado-en-espera px-3 py-1 shadow-sm"><i class="bi bi-hourglass-split me-1"></i>En Espera</span></div>
+                  </div>
+                </div>
+
+                <div class="acciones ms-3 d-flex gap-2">
+                  <button type="button" class="btn btn-outline-success d-flex align-items-center justify-content-center rounded-circle shadow-sm btn-dueño-action" title="Aceptar Solicitud" data-bs-toggle="modal" data-bs-target="#modal-aceptar-<?php echo htmlspecialchars($usopromo['cod_promocion'].$usopromo['cod_usuario']); ?>">
+                    <i class="bi bi-check-lg btn-dueño-delete-icon"></i>
+                  </button>
+                  <button type="button" class="btn btn-outline-danger d-flex align-items-center justify-content-center rounded-circle shadow-sm btn-dueño-action" title="Rechazar Solicitud" data-bs-toggle="modal" data-bs-target="#modal-rechazar-<?php echo htmlspecialchars($usopromo['cod_promocion'].$usopromo['cod_usuario']); ?>">
+                    <i class="bi bi-x-lg btn-dueño-delete-icon"></i>
+                  </button>
+                </div>
+              </div>
             </div>
-          <div class="acciones">
-            <form method="POST" style="display:inline-block; margin-right: 5px;">
-              <input type="hidden" name="aceptar_promocion" value="<?php echo htmlspecialchars($usopromo['cod_promocion']); ?>">
-              <input type="hidden" name="aceptar_usuario" value="<?php echo htmlspecialchars($usopromo['cod_usuario']); ?>">
-              <button type="submit" class="btn btn-success" style="width: 110px;" onclick="return confirm('¿Seguro que quieres ACEPTAR esta solicitud?');">
-                ACEPTAR
-              </button>
-            </form>
-            <form method="POST" style="display:inline-block;">
-              <input type="hidden" name="eliminar_promocion" value="<?php echo htmlspecialchars($usopromo['cod_promocion']); ?>">
-              <input type="hidden" name="eliminar_usuario" value="<?php echo htmlspecialchars($usopromo['cod_usuario']); ?>">
-              <button type="submit" class="btn btn-danger" style="width: 110px;" onclick="return confirm('¿Seguro que quieres RECHAZAR esta solicitud?');">
-                RECHAZAR
-              </button>
-            </form>
-          </div>
           </div>
         <?php endwhile; ?>
     </div>
@@ -335,6 +335,59 @@ if (!empty($codigoslocales)) {
     <p class="text-center">No hay solicitudes pendientes para sus locales.</p>
   <?php endif; ?>
   </main>
+
+  <!-- MODALES FUERA DEL MAIN PARA EVITAR PROBLEMAS DE Z-INDEX/PANTALLA OSCURA -->
+  <?php if ($usoPromociones && mysqli_num_rows($usoPromociones) > 0): ?>
+    <?php mysqli_data_seek($usoPromociones, 0); ?>
+    <?php while ($usopromo = mysqli_fetch_assoc($usoPromociones)): ?>
+      
+      <!-- Modal Aceptar -->
+      <div class="modal fade" id="modal-aceptar-<?php echo htmlspecialchars($usopromo['cod_promocion'].$usopromo['cod_usuario']); ?>" tabindex="-1" aria-hidden="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" style="margin: auto; font-size: 1.6rem;">Aceptar solicitud</h1>
+            </div>
+            <div class="modal-body text-center">
+              <p style="font-size: 1.2rem;">¿Seguro que quiere aceptar esta solicitud?</p>
+            </div>
+            <div class="modal-footer d-flex justify-content-around">
+              <form method="POST" class="m-0">
+                <input type="hidden" name="aceptar_promocion" value="<?php echo htmlspecialchars($usopromo['cod_promocion']); ?>">
+                <input type="hidden" name="aceptar_usuario" value="<?php echo htmlspecialchars($usopromo['cod_usuario']); ?>">
+                <button type="submit" class="btn btn-success">¡Aceptar!</button>
+              </form>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Rechazar -->
+      <div class="modal fade" id="modal-rechazar-<?php echo htmlspecialchars($usopromo['cod_promocion'].$usopromo['cod_usuario']); ?>" tabindex="-1" aria-hidden="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" style="margin: auto; font-size: 1.6rem;">Rechazar solicitud</h1>
+            </div>
+            <div class="modal-body text-center">
+              <p style="font-size: 1.2rem;">¿Seguro que quiere rechazar esta solicitud?</p>
+              <p class="informacion"><i class="bi bi-info-circle"></i> Al rechazar, notificaremos al usuario de la decisión</p>
+            </div>
+            <div class="modal-footer d-flex justify-content-around">
+              <form method="POST" class="m-0">
+                <input type="hidden" name="eliminar_promocion" value="<?php echo htmlspecialchars($usopromo['cod_promocion']); ?>">
+                <input type="hidden" name="eliminar_usuario" value="<?php echo htmlspecialchars($usopromo['cod_usuario']); ?>">
+                <button type="submit" class="btn btn-danger">Rechazar</button>
+              </form>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    <?php endwhile; ?>
+  <?php endif; ?>
 
   <footer class="seccion-footer d-flex flex-column justify-content-center align-items-center pt-4">
     <?php include("../Includes/footer.php") ?>

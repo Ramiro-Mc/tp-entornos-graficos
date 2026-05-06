@@ -33,7 +33,7 @@ $res = consultaSQL("SELECT foto_novedad, texto_novedad FROM novedades");
   <main aria-label="Contenido principal">
 
     <section class="presentacion" aria-label="Presentación Viventa Store">
-      <div id="carouselExampleAutoplaying" class="carousel slide presentacion-carrousel" data-bs-ride="carousel" data-bs-pause="false" aria-label="Carrusel de imágenes de presentación">
+      <div id="carouselExampleAutoplaying" class="carousel slide presentacion-carrousel rounded-4 overflow-hidden shadow" data-bs-ride="carousel" data-bs-pause="false" aria-label="Carrusel de imágenes de presentación">
         <div class="carousel-inner">
           <div class="carousel-item carousel-item-presentacion active">
             <img src="../Imagenes/Carousel4.jpg" class="d-block w-100" alt="Imagen del shopping 1" />
@@ -72,7 +72,7 @@ $res = consultaSQL("SELECT foto_novedad, texto_novedad FROM novedades");
       </div>
     </section>
 
-    <section id="locales" class="locales seccion-oscura" aria-label="Locales">
+    <section id="locales" class="rounded-4 locales seccion-oscura" aria-label="Locales">
       <h2 class="seccion-titulo"><strong>Nuestros Locales</strong></h2>
 
       <div class="container categoria-botones text-center">
@@ -127,7 +127,7 @@ $res = consultaSQL("SELECT foto_novedad, texto_novedad FROM novedades");
                 $nombre_local = $row['nombre_local']; ?>
 
                 <div class="col">
-                  <div class="promocion-index">
+                  <div class="promocion-index rounded-4 overflow-hidden shadow-sm">
                     <img src="../<?= $imagenLocal ?>" alt="Imagen de local <?= $nombre_local ?>" />
                     <div class="overlay">
                       <p><?= $nombre_local ?></p>
@@ -165,7 +165,7 @@ $res = consultaSQL("SELECT foto_novedad, texto_novedad FROM novedades");
       ?>
 
       <?php if (!empty($novedades)): ?>
-        <div id="carouselExampleIndicators" class="carousel slide shadow-sm" data-bs-ride="carousel">
+        <div id="carouselExampleIndicators" class="carousel slide shadow-sm rounded-4 overflow-hidden" data-bs-ride="carousel">
 
           <div class="carousel-indicators">
             <?php foreach ($novedades as $index => $novedad): ?>
@@ -212,7 +212,7 @@ $res = consultaSQL("SELECT foto_novedad, texto_novedad FROM novedades");
 
           $sql = "SELECT texto_promocion, foto_promocion, cod_local 
                   FROM promociones 
-                  WHERE estado_promo = 'aceptada' 
+                  WHERE estado_promo = 'activa' 
                   AND '$hoy' BETWEEN fecha_desde_promocion AND fecha_hasta_promocion";
 
           if (isset($_SESSION['categoria_cliente'])) {
@@ -231,12 +231,14 @@ $res = consultaSQL("SELECT foto_novedad, texto_novedad FROM novedades");
                 $cantidad++; 
               ?>
                 <div class="col-12 col-md-6 col-lg-4 mb-4">
-                  <div class="promocion-index">
-                    <img src="../<?= $foto_promocion ?>" alt="Imagen de promoción: <?= $texto_promocion ?>" />
-                    <div class="overlay">
-                      <p><?= $texto_promocion ?></p>
+                  <a href="../Cliente/BuscarPromociones.php" style="text-decoration: none; color: inherit;">
+                    <div class="promocion-index rounded-4 overflow-hidden shadow-sm">
+                      <img src="../<?= $foto_promocion ?>" alt="Imagen de promoción: <?= $texto_promocion ?>" />
+                      <div class="overlay">
+                        <p><?= $texto_promocion ?></p>
+                      </div>
                     </div>
-                  </div>
+                  </a>
                 </div>
               <?php endif; ?>
 

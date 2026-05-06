@@ -25,6 +25,34 @@
   padding: 10px;
 }
 
+.alert {
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-weight: 500;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  text-shadow: none;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.alert-warning {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeeba;
+}
+
 .advertencia {
   color: red;
   font-size: 0.9rem;
@@ -92,10 +120,23 @@
   font-size: 16px;
   border-radius: 20px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.btn-radio:hover {
+  background: #17b04c;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.btn-check:checked + .btn-radio {
+  background: #0f6c2c;
+  border: 2px solid #fff;
+  transform: scale(0.95);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 .cabecera-perfil img {
@@ -138,6 +179,163 @@
   backdrop-filter: contrast(200%) blur(2px);
   transition: opacity 0.4s ease;
   padding: 10px;
+}
+
+.confirmar-box {
+  min-height: 350px;
+  text-shadow: none;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.confirmar-icon-success {
+  font-size: 4.5rem;
+  filter: drop-shadow(0 0 15px rgba(25, 135, 84, 0.8));
+}
+
+.confirmar-icon-danger {
+  font-size: 4.5rem;
+  filter: drop-shadow(0 0 15px rgba(220, 53, 69, 0.8));
+}
+
+.confirmar-title {
+  font-weight: 700;
+}
+
+.confirmar-text {
+  color: #e2e8f0;
+  font-size: 1.1rem;
+}
+
+.confirmar-btn {
+  font-size: 1.1rem;
+  text-shadow: none;
+  transition: transform 0.2s;
+}
+
+.confirmar-btn-light {
+  color: #333;
+}
+
+.badge-promo {
+  border-radius: 10px;
+  padding: 10px;
+  margin: 0;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 500;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.badge-promo:hover {
+  transform: scale(1.05);
+  text-decoration: none;
+}
+
+.badge-promo-warning {
+  background-color: #f8b653;
+  color: #333;
+}
+
+.badge-promo-success {
+  background-color: #a5d6a7; /* Verde tranquilon */
+  color: #155724;
+  box-shadow: 0 4px 6px rgba(165, 214, 167, 0.4);
+}
+
+.badge-promo-success:hover {
+  color: #155724;
+}
+
+.badge-estado-enviada {
+  background-color: #e0f3ff;
+  color: #0d6efd;
+  border: 1px solid #b6d4fe;
+}
+
+.badge-estado-aceptada {
+  background-color: #d1e7dd;
+  color: #0f5132;
+  border: 1px solid #badbcc;
+}
+
+.badge-estado-rechazada {
+  background-color: #f8d7da;
+  color: #842029;
+  border: 1px solid #f5c2c7;
+}
+
+.dueño-promo-card {
+  border: 1px solid #e2e8f0;
+  transition: transform 0.2s ease;
+}
+
+.dueño-promo-img {
+  max-height: 120px;
+  object-fit: cover;
+}
+
+.dueño-promo-placeholder {
+  height: 120px;
+  width: 120px;
+  color: #adb5bd;
+}
+
+.dueño-promo-placeholder-icon {
+  font-size: 2.5rem;
+}
+
+.dueño-promo-title {
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.badge-estado-proxima {
+  background-color: #fff3cd;
+  color: #664d03;
+  border: 1px solid #ffecb5;
+}
+
+.dueño-promo-details {
+  font-size: 0.95rem;
+}
+
+.btn-dueño-delete {
+  width: 50px;
+  height: 50px;
+  border-width: 2px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-dueño-delete:hover {
+  transform: scale(1.1);
+}
+
+.btn-dueño-delete-icon {
+  font-size: 1.3rem;
+}
+
+.dueño-solicitud-detalles {
+  font-size: 0.95rem;
+}
+
+.badge-estado-en-espera {
+  background-color: #e2e3e5;
+  color: #383d41;
+  border: 1px solid #d6d8db;
+}
+
+.btn-dueño-action {
+  width: 50px;
+  height: 50px;
+  border-width: 2px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-dueño-action:hover {
+  transform: scale(1.1);
 }
 
 .card-hover-msg p {
@@ -560,7 +758,7 @@
 .loginRegister-box a {
   text-decoration: none;
   font-size: 14px;
-  color: #fff;
+  color: #000000;
 }
 
 .loginRegister-box button {
@@ -922,18 +1120,25 @@
   color: black;
 }
 
-.sobreNosotros h2 {
-  color: #fff;
-  text-align: center;
+.seccion-texto-blanco,
+.seccion-texto-blanco h3,
+.seccion-texto-blanco p {
+  color: #ffffff;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
 }
 
-.sobreNosotros label {
-  font-size: 18px;
-  text-align: center;
-  color: #fff;
-  text-shadow: 1px 1px 5px black;
-  display: block;
-  margin-bottom: 0.5em;
+.titulo-blanco {
+  color: #ffffff;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
+}
+
+.borde-separador {
+  border-left-color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.linea-separadora {
+  border-color: #ffffff;
+  opacity: 0.6;
 }
 
 textarea {

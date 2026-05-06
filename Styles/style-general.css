@@ -212,3 +212,20 @@ a:visited {
 .seccion-footer ul li {
   margin-bottom: 8px;
 }
+
+.footer-title {
+  font-family: 'Georgia', Math_Italic, serif;
+  font-size: 2.5rem;
+  color: #E2E8F0;
+  letter-spacing: 3px;
+  font-weight: bold;
+  text-shadow: 1px 1px 5px rgba(0,0,0,0.4);
+  margin-bottom: 0;
+}
+
+.footer-divider {
+  width: 100px;
+  margin: 15px auto 0;
+  border: 1px solid #B9C3CD;
+  opacity: 0.5;
+}

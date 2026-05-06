@@ -70,22 +70,22 @@ $result = consultaSQL(
               </div>
               <div class=" col-8 col-md-9 col-lg-8 col-xl-9 d-flex justify-content-between align-items-center">
 
-                <div class="info info-promocion">
-                  <h3><?= $texto_promocion ?></h3>
-                  <p>Local: <?= $nombre_local ?></p>
+                <div class="info info-promocion" style="flex: 1;">
+                  <h3 style="font-weight: 600; margin-bottom: 0.5rem;"><?= $texto_promocion ?></h3>
+                  <p class="mb-0 text-muted"><i class="bi bi-shop me-2"></i>Local: <?= $nombre_local ?></p>
                 </div>
 
-                <div class="info contenedor-estado estado-<?= $estado ?>">
-                  <p>Estado:</p><br>
-                  <p><strong><?= $estado ?></strong></p>
+                <div class="info text-center mx-4">
+                  <span class="d-block text-secondary mb-1" style="font-size: 0.85rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px;">Estado</span>
+                  <span class="badge rounded-pill badge-estado-<?= $estado ?> px-3 py-2 shadow-sm" style="font-size: 0.95rem; font-weight: 600; letter-spacing: 0.5px;"><?= ucfirst($estado) ?></span>
                 </div>
 
                 <?php if ($estado == "aceptada"): ?>
-                  <button type="button" class="boton-codigo btn btn-secondary btn-lg" data-bs-toggle="modal" data-bs-target="#<?= $modalId ?>" onclick="generarCodigo('<?= $modalId ?>')" aria-label="Generar código de cupón">Generar <br />Código</button>
-                  <button type="button" class="boton-codigo-chico" aria-label="Generar codigo"><i class="bi bi-journal-code"></i></button>
+                  <button type="button" class="boton-codigo btn btn-success rounded-pill px-4 py-2 shadow-sm ms-3" data-bs-toggle="modal" data-bs-target="#<?= $modalId ?>" onclick="generarCodigo('<?= $modalId ?>')" aria-label="Generar código de cupón"><i class="bi bi-upc-scan me-2"></i>Generar Código</button>
+                  <button type="button" class="boton-codigo-chico btn btn-success rounded-circle shadow-sm" aria-label="Generar codigo" data-bs-toggle="modal" data-bs-target="#<?= $modalId ?>" onclick="generarCodigo('<?= $modalId ?>')"><i class="bi bi-upc-scan"></i></button>
                 <?php else: ?>
 
-                  <button type="button" class="btn btn-danger cuadrado" data-bs-toggle="modal" data-bs-target="#eliminar-<?= $modalId ?>" aria-label="Eliminar solicitud"><i class="bi bi-x-lg"></i></button>
+                  <button type="button" class="btn btn-outline-danger d-flex align-items-center justify-content-center rounded-circle shadow-sm ms-3" style="width: 50px; height: 50px; border-width: 2px; transition: transform 0.2s ease, box-shadow 0.2s ease;" data-bs-toggle="modal" data-bs-target="#eliminar-<?= $modalId ?>" aria-label="Eliminar solicitud" title="Eliminar solicitud" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'"><i class="bi bi-x-lg" style="font-size: 1.4rem;"></i></button>
 
                 <?php endif; ?>
 

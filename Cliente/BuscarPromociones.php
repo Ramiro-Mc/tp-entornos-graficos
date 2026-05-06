@@ -288,7 +288,7 @@ $filtrosURL = $rubroParam . $categoriaParam . $localParam . $rubroAnteriorParam;
                       if ($res->num_rows > 0): ?>
 
                         <div class="text-center" aria-label="Promoción ya utilizada">
-                          <p>Ya utilizaste <br> esta promocion </p>
+                          <a href="../Cliente/MisCupones.php" class="badge-promo badge-promo-success">Ya utilizaste <br> esta promocion </a>
                         </div>
 
                       <?php else: ?>
@@ -306,7 +306,7 @@ $filtrosURL = $rubroParam . $categoriaParam . $localParam . $rubroAnteriorParam;
                       <?php endif; ?>
                     <?php else: ?>
                       <div class="text-center" aria-label="Debe iniciar sesión para usar promociones">
-                        <p>Inicie sesion para <br> usar promociones </p>
+                        <p class="badge-promo badge-promo-warning">Inicie sesion para <br> usar promociones </p>
                       </div>
                     <?php endif; ?>
 
@@ -346,34 +346,33 @@ $filtrosURL = $rubroParam . $categoriaParam . $localParam . $rubroAnteriorParam;
               <p>No hay promociones registradas para los filtros ingresados</p>
             </div>
           <?php endif; ?>
+          
+          <div class="row">
+            <div class="col-12 mt-4">
+              <div class="paginacion" aria-label="Navegación de páginas">
+                <ul class="pagination justify-content-center">
+                  <?php if ($pagina > 1): ?>
+                    <li class="page-item">
+                      <a class="page-link" href="?pagina=<?= $pagina - 1 . $filtrosURL ?>"><i class="bi bi-arrow-left-short"></i></a>
+                    </li>
+                  <?php endif; ?>
 
-        </div>
-      </div>
+                  <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
+                    <li class="page-item <?= $i == $pagina ? 'active' : '' ?>">
+                      <a class="page-link" href="?pagina=<?= $i . $filtrosURL ?>"><?= $i ?></a>
+                    </li>
+                  <?php endfor; ?>
 
-      <div class="row">
-        <div class="col-3"></div>
-        <div class="col-9">
-          <div class="paginacion" aria-label="Navegación de páginas">
-            <ul class="pagination">
-              <?php if ($pagina > 1): ?>
-                <li class="page-item">
-                  <a class="page-link" href="?pagina=<?= $pagina - 1 . $filtrosURL ?>"><i class="bi bi-arrow-left-short"></i></a>
-                </li>
-              <?php endif; ?>
-
-              <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
-                <li class="page-item <?= $i == $pagina ? 'active' : '' ?>">
-                  <a class="page-link" href="?pagina=<?= $i . $filtrosURL ?>"><?= $i ?></a>
-                </li>
-              <?php endfor; ?>
-
-              <?php if ($pagina < $totalPaginas): ?>
-                <li class="page-item">
-                  <a class="page-link" href="?pagina=<?= $pagina + 1 . $filtrosURL ?>"><i class="bi bi-arrow-right-short"></i></a>
-                </li>
-              <?php endif; ?>
-            </ul>
+                  <?php if ($pagina < $totalPaginas): ?>
+                    <li class="page-item">
+                      <a class="page-link" href="?pagina=<?= $pagina + 1 . $filtrosURL ?>"><i class="bi bi-arrow-right-short"></i></a>
+                    </li>
+                  <?php endif; ?>
+                </ul>
+              </div>
+            </div>
           </div>
+
         </div>
       </div>
     </div>

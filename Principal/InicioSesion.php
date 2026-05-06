@@ -128,7 +128,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <input type="checkbox" class="checkbox-recordar" id="mantenerSesionIniciada" name="mantenerSesionIniciada" value="si" aria-label="Mantener sesión iniciada">
         </div>
 
-        <input type="submit" name="Login" value="Login" aria-label="Iniciar sesión" />
+        <input type="submit" name="Login" value="Ingresar" aria-label="Iniciar sesión" />
         <a href="Registrar.php"><button type="button" style="color: black" aria-label="Ir a registro">Registrarse</button></a>
       </form>
 

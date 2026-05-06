@@ -34,15 +34,19 @@ if ($token) {
 
     <main style="background-image: url('../Imagenes/Fondo.jpg')" class="fondo-loginRegister">
 
-      <?php if (mysqli_query($link, $updateQuery) && mysqli_affected_rows($link) > 0): ?>
-        <div class="notificacion-cuenta-confirmada">
-          <h3>¡Cuenta confirmada!</h3>
-          <a href="../Principal/InicioSesion.php">Haga click aqui para iniciar sesion</a>
+      <?php if (!empty($updateQuery) && mysqli_query($link, $updateQuery) && mysqli_affected_rows($link) > 0): ?>
+        <div class="loginRegister-box text-center d-flex flex-column justify-content-center align-items-center confirmar-box">
+          <i class="bi bi-check-circle-fill text-success mb-3 confirmar-icon-success"></i>
+          <h2 class="mb-3 confirmar-title">¡Cuenta confirmada!</h2>
+          <p class="mb-4 confirmar-text">Tu cuenta ha sido verificada exitosamente. Ya puedes acceder al sistema.</p>
+          <a href="../Principal/InicioSesion.php" class="btn btn-success w-100 rounded-pill py-2 confirmar-btn">Iniciar sesión</a>
         </div>
       <?php else: ?>
-        <div class="notificacion-cuenta-no-confirmada">
-          <h3>Token inválido o cuenta ya confirmada.</h3>
-          <a href="../Principal/Index.php">Haga click aqui para volver a la pagina principal</a>
+        <div class="loginRegister-box text-center d-flex flex-column justify-content-center align-items-center confirmar-box">
+          <i class="bi bi-x-circle-fill text-danger mb-3 confirmar-icon-danger"></i>
+          <h2 class="mb-3 confirmar-title">¡Algo salió mal!</h2>
+          <p class="mb-4 confirmar-text">El enlace es inválido o tu cuenta ya se encuentra confirmada.</p>
+          <a href="../Principal/Index.php" class="btn btn-light w-100 rounded-pill py-2 confirmar-btn confirmar-btn-light">Volver al inicio</a>
         </div>
       <?php endif; ?>
 
