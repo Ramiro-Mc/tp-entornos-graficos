@@ -88,20 +88,26 @@ $total_paginas = ceil($total_locales / $locales_por_pagina);
     <div class="promociones">
       <?php if (!empty($locales)): ?>
         <?php foreach ($locales as $n): ?>
-          <div class="promocion d-flex justify-content-between align-items-start mb-3 p-3 border rounded">
-            <div class="infoTarjeta flex-grow-1 me-3">
-              <h3 class="text-break"><?= htmlspecialchars($n['nombre_local']) ?></h3>
-              <p>#<?= $n['cod_local'] ?></p>
-              <p>Rubro: <?= htmlspecialchars($n['rubro_local']) ?></p>
-              <p>Ubicación: <?= htmlspecialchars($n['ubicacion_local']) ?></p>
-            </div>
-            <div class="acciones d-flex flex-column gap-2">
-              <a href="verDetalle.php?tipo=local&cod=<?= $n['cod_local'] ?>" class="btn btn-primary btn-sm">VER DETALLES</a>
-              <a href="editar.php?tipo=local&cod=<?= $n['cod_local'] ?>" class="btn btn-secondary btn-sm">EDITAR</a>
-              
-              <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modal-eliminar-<?= $n['cod_local'] ?>">
-                ELIMINAR
-              </button>
+          <div class="promocion-cli container-fluid bg-white rounded-4 shadow-sm mb-4 p-3 dueño-promo-card">
+            <div class="row align-items-center">
+              <div class="col-12 d-flex justify-content-between align-items-center">
+                <div class="info w-100 ps-2">
+                  <h3 class="dueño-promo-title text-break"><?= htmlspecialchars($n['nombre_local']) ?></h3>
+                  <div class="d-flex flex-wrap gap-3 mt-2 text-muted dueño-promo-details">
+                    <div class="d-flex align-items-center"><i class="bi bi-hash text-secondary me-1"></i> <?= $n['cod_local'] ?></div>
+                    <div class="d-flex align-items-center"><i class="bi bi-tags text-primary me-2"></i> Rubro: <?= htmlspecialchars($n['rubro_local']) ?></div>
+                    <div class="d-flex align-items-center"><i class="bi bi-geo-alt text-danger me-2"></i> Ubicación: <?= htmlspecialchars($n['ubicacion_local']) ?></div>
+                  </div>
+                </div>
+                <div class="acciones d-flex flex-column gap-2 ms-3" style="min-width: 130px;">
+                  <a href="verDetalle.php?tipo=local&cod=<?= $n['cod_local'] ?>" class="btn btn-primary btn-sm w-100 d-flex align-items-center justify-content-center" style="height: 32px;">VER DETALLES</a>
+                  <a href="editar.php?tipo=local&cod=<?= $n['cod_local'] ?>" class="btn btn-secondary btn-sm w-100 d-flex align-items-center justify-content-center" style="height: 32px;">EDITAR</a>
+                  
+                  <button type="button" class="btn btn-danger btn-sm w-100 d-flex align-items-center justify-content-center" data-bs-toggle="modal" data-bs-target="#modal-eliminar-<?= $n['cod_local'] ?>" style="height: 32px; padding: 0;">
+                    ELIMINAR
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         <?php endforeach; ?>

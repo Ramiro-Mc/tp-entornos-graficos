@@ -85,19 +85,25 @@ $total_paginas = ceil($total_novedades / $novedades_por_pagina);
     <div class="promociones">
       <?php if (!empty($novedades)): ?>
         <?php foreach ($novedades as $n): ?>
-          <div class="promocion d-flex justify-content-between align-items-start mb-3 p-3 border rounded">
-            <div class="infoTarjeta flex-grow-1 me-3">
-              <h4 class="text-break"><?= htmlspecialchars($n['texto_novedad']) ?></h4>
-              <p>#<?= $n['cod_novedad'] ?></p>
-              <p><small>Desde: <?= $n['fecha_desde_novedad'] ?> | Hasta: <?= $n['fecha_hasta_novedad'] ?></small></p>
-            </div>
-            <div class="acciones d-flex flex-column gap-2">
-              <a href="verDetalle.php?tipo=novedad&cod=<?= $n['cod_novedad'] ?>" class="btn btn-primary btn-sm">VER DETALLES</a>
-              <a href="editar.php?tipo=novedad&cod=<?= $n['cod_novedad'] ?>" class="btn btn-secondary btn-sm">EDITAR</a>
-              
-              <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modal-eliminar-<?= $n['cod_novedad'] ?>">
-                ELIMINAR
-              </button>
+          <div class="promocion-cli container-fluid bg-white rounded-4 shadow-sm mb-4 p-3 dueño-promo-card">
+            <div class="row align-items-center">
+              <div class="col-12 d-flex justify-content-between align-items-center">
+                <div class="info w-100 ps-2">
+                  <h4 class="dueño-promo-title text-break"><?= htmlspecialchars($n['texto_novedad']) ?></h4>
+                  <div class="d-flex flex-wrap gap-3 mt-2 text-muted dueño-promo-details">
+                    <div class="d-flex align-items-center"><i class="bi bi-hash text-secondary me-1"></i> <?= $n['cod_novedad'] ?></div>
+                    <div class="d-flex align-items-center"><i class="bi bi-calendar-range text-info me-2"></i> Desde: <?= $n['fecha_desde_novedad'] ?> | Hasta: <?= $n['fecha_hasta_novedad'] ?></div>
+                  </div>
+                </div>
+                <div class="acciones d-flex flex-column gap-2 ms-3" style="min-width: 130px;">
+                  <a href="verDetalle.php?tipo=novedad&cod=<?= $n['cod_novedad'] ?>" class="btn btn-primary btn-sm w-100 d-flex align-items-center justify-content-center" style="height: 32px;">VER DETALLES</a>
+                  <a href="editar.php?tipo=novedad&cod=<?= $n['cod_novedad'] ?>" class="btn btn-secondary btn-sm w-100 d-flex align-items-center justify-content-center" style="height: 32px;">EDITAR</a>
+                  
+                  <button type="button" class="btn btn-danger btn-sm w-100 d-flex align-items-center justify-content-center" data-bs-toggle="modal" data-bs-target="#modal-eliminar-<?= $n['cod_novedad'] ?>" style="height: 32px; padding: 0;">
+                    ELIMINAR
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         <?php endforeach; ?>

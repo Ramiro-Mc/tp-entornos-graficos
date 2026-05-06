@@ -87,11 +87,17 @@ $total_paginas = ceil($total_promociones / $promociones_por_pagina);
     <div class="promociones">
       <?php if ($result->num_rows): ?>
         <?php while ($p = $result->fetch_assoc()): ?>
-          <div class="promocion d-flex justify-content-between align-items-start mb-3 p-3 border rounded">
-            <div class="infoTarjeta flex-grow-1 me-3">
-              <h4 class="text-break"><?= htmlspecialchars($p['texto_promocion']) ?></h4>
-              <p><strong>Categoría:</strong> <?= htmlspecialchars($p['categoria_cliente']) ?></p>
-              <p><small class="text-muted">Total de usos: <?= $p['usos'] ?></small></p>
+          <div class="promocion-cli container-fluid bg-white rounded-4 shadow-sm mb-4 p-3 dueño-promo-card">
+            <div class="row align-items-center">
+              <div class="col-12 d-flex justify-content-between align-items-center">
+                <div class="info w-100 ps-2">
+                  <h4 class="dueño-promo-title"><?= htmlspecialchars($p['texto_promocion']) ?></h4>
+                  <div class="d-flex flex-wrap gap-3 mt-2 text-muted dueño-promo-details">
+                    <div class="d-flex align-items-center"><i class="bi bi-person-badge text-warning me-2"></i> <?= htmlspecialchars($p['categoria_cliente']) ?></div>
+                    <div class="d-flex align-items-center"><i class="bi bi-bar-chart-line text-success me-2"></i> Usos: <b class="ms-1"><?= $p['usos'] ?></b></div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         <?php endwhile; ?>

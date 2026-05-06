@@ -90,23 +90,29 @@ $total_paginas = ceil($total_promociones / $promociones_por_pagina);
     <div class="promociones">
       <?php if (!empty($promociones)): ?>
         <?php foreach ($promociones as $n): ?>
-          <div class="promocion d-flex justify-content-between align-items-start mb-3 p-3 border rounded">
-            <div class="infoTarjeta flex-grow-1 me-3">
-              <h3><?= htmlspecialchars($n['texto_promocion']) ?></h3>
-              <p>#<?= htmlspecialchars($n['cod_promocion']); ?></p>
-              <p>Local: <?= htmlspecialchars($n['nombre_local']); ?></p>
-              <p><small>Desde: <?= $n['fecha_desde_promocion'] ?> | Hasta: <?= $n['fecha_hasta_promocion'] ?></small></p>
-            </div>
-            <div class="acciones d-flex flex-column gap-2">
-              <a href="verDetalle.php?tipo=promocion&cod=<?= $n['cod_promocion'] ?>" class="btn btn-primary btn-sm">VER DETALLES</a>
-              
-              <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#modal-aceptar-<?= $n['cod_promocion'] ?>">
-                ACEPTAR
-              </button>
+          <div class="promocion-cli container-fluid bg-white rounded-4 shadow-sm mb-4 p-3 dueño-promo-card">
+            <div class="row align-items-center">
+              <div class="col-12 d-flex justify-content-between align-items-center">
+                <div class="info w-100 ps-2">
+                  <h3 class="dueño-promo-title"><?= htmlspecialchars($n['texto_promocion']) ?></h3>
+                  <div class="d-flex flex-wrap gap-3 mt-2 text-muted dueño-promo-details">
+                    <div class="d-flex align-items-center"><i class="bi bi-hash text-secondary me-1"></i> <?= htmlspecialchars($n['cod_promocion']); ?></div>
+                    <div class="d-flex align-items-center"><i class="bi bi-shop text-primary me-2"></i> Local: <?= htmlspecialchars($n['nombre_local']); ?></div>
+                    <div class="d-flex align-items-center"><i class="bi bi-calendar-range text-info me-2"></i> Desde: <?= $n['fecha_desde_promocion'] ?> | Hasta: <?= $n['fecha_hasta_promocion'] ?></div>
+                  </div>
+                </div>
+                <div class="acciones d-flex flex-column gap-2 ms-3" style="min-width: 130px;">
+                  <a href="verDetalle.php?tipo=promocion&cod=<?= $n['cod_promocion'] ?>" class="btn btn-primary btn-sm w-100 d-flex align-items-center justify-content-center" style="height: 32px;">VER DETALLES</a>
+                  
+                  <button type="button" class="btn btn-success btn-sm w-100 d-flex align-items-center justify-content-center" data-bs-toggle="modal" data-bs-target="#modal-aceptar-<?= $n['cod_promocion'] ?>" style="height: 32px; padding: 0;">
+                    ACEPTAR
+                  </button>
 
-              <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modal-rechazar-<?= $n['cod_promocion'] ?>">
-                RECHAZAR
-              </button>
+                  <button type="button" class="btn btn-danger btn-sm w-100 d-flex align-items-center justify-content-center" data-bs-toggle="modal" data-bs-target="#modal-rechazar-<?= $n['cod_promocion'] ?>" style="height: 32px; padding: 0;">
+                    RECHAZAR
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         <?php endforeach; ?>

@@ -77,56 +77,96 @@ $link->close();
         <?php include("../Includes/header.php"); ?>
     </header>
 
-    <main>
-        <div class="container mt-4">
-            <h1><?= e($titulo) ?></h1>
+    <main class="FondoDueñoAdministrador d-flex align-items-center py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-10">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h1 class="m-0 fw-bold" style="color: #2c3e50;"><i class="bi bi-card-checklist me-2"></i><?= e($titulo) ?></h1>
+                        <a href="<?= $volver ?>" class="btn btn-outline-dark px-4 rounded-pill fw-bold shadow-sm d-flex align-items-center">
+                            <i class="bi bi-arrow-left me-2"></i> Volver a la lista
+                        </a>
+                    </div>
 
-            <div class="card">
-                <div class="card-body">
-                    <?php if ($tipo === 'local'): ?>
-                        <h3 class="card-title"><?= e($data['nombre_local']) ?></h3>
-                        <p><strong>Rubro:</strong> <?= e($data['rubro_local']) ?></p>
-                        <p><strong>Ubicación:</strong> <?= e($data['ubicacion_local']) ?></p>
-                        <p><strong>Código Dueño:</strong> <?= e($data['cod_usuario']) ?></p>
-                        <?php if (!empty($data['foto_local'])): ?>
-                            <p><strong>Multimedia:</strong></p>
-                            <img src="../<?= e($data['foto_local']) ?>" alt="Imagen del local <?= e($data['nombre_local']) ?>" class="img-fluid mb-2" style="max-width:200px;">
-                        <?php else: ?>
-                            <p><strong>Multimedia:</strong> No hay imagen disponible</p>
-                        <?php endif; ?>
+                    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+                        <div class="card-body p-4 p-md-5">
+                            <?php if ($tipo === 'local'): ?>
+                                <div class="row">
+                                    <div class="col-md-7 mb-4 mb-md-0">
+                                        <h2 class="fw-bold text-dark mb-4 text-break"><?= e($data['nombre_local']) ?></h2>
+                                        <p class="fs-5 mb-3"><i class="bi bi-tags text-primary me-2"></i><strong>Rubro:</strong> <?= e($data['rubro_local']) ?></p>
+                                        <p class="fs-5 mb-3"><i class="bi bi-geo-alt text-danger me-2"></i><strong>Ubicación:</strong> <?= e($data['ubicacion_local']) ?></p>
+                                        <p class="fs-5 mb-3"><i class="bi bi-person-badge text-secondary me-2"></i><strong>Código Dueño:</strong> <?= e($data['cod_usuario']) ?></p>
+                                    </div>
+                                    <div class="col-md-5 text-center d-flex flex-column justify-content-center">
+                                        <?php if (!empty($data['foto_local'])): ?>
+                                            <img src="../<?= e($data['foto_local']) ?>" alt="Imagen del local" class="img-fluid rounded-4 shadow" style="max-height: 250px; object-fit: cover;">
+                                        <?php else: ?>
+                                            <div class="bg-light rounded-4 d-flex align-items-center justify-content-center mx-auto w-100 shadow-sm" style="height: 200px;">
+                                                <i class="bi bi-image text-muted" style="font-size: 4rem;"></i>
+                                            </div>
+                                            <p class="text-muted mt-2 mb-0"><small>Sin imagen disponible</small></p>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
 
-                    <?php elseif ($tipo === 'novedad'): ?>
-                        <h3 class="card-title"><?= e($data['texto_novedad']) ?></h3>
-                        <p><strong>Fecha Desde:</strong> <?= e($data['fecha_desde_novedad']) ?></p>
-                        <p><strong>Fecha Hasta:</strong> <?= e($data['fecha_hasta_novedad']) ?></p>
-                        <p><strong>Categoría:</strong> <?= e($data['tipo_usuario']) ?></p>
-                        <?php if (!empty($data['foto_novedad'])): ?>
-                            <p><strong>Multimedia:</strong></p>
-                            <img src="../<?= e($data['foto_novedad']) ?>" alt="Foto Novedad" class="img-fluid mb-2" style="max-width:200px;">
-                        <?php else: ?>
-                            <p><strong>Multimedia:</strong> No hay imagen disponible</p>
-                        <?php endif; ?>
+                            <?php elseif ($tipo === 'novedad'): ?>
+                                <div class="row">
+                                    <div class="col-md-7 mb-4 mb-md-0">
+                                        <h2 class="fw-bold text-dark mb-4 text-break"><?= e($data['texto_novedad']) ?></h2>
+                                        <p class="fs-5 mb-3"><i class="bi bi-calendar-event text-info me-2"></i><strong>Fecha Desde:</strong> <?= date("d/m/Y", strtotime($data['fecha_desde_novedad'])) ?></p>
+                                        <p class="fs-5 mb-3"><i class="bi bi-calendar-check text-info me-2"></i><strong>Fecha Hasta:</strong> <?= date("d/m/Y", strtotime($data['fecha_hasta_novedad'])) ?></p>
+                                        <p class="fs-5 mb-3"><i class="bi bi-people text-warning me-2"></i><strong>Categoría:</strong> <?= e($data['tipo_usuario']) ?></p>
+                                    </div>
+                                    <div class="col-md-5 text-center d-flex flex-column justify-content-center">
+                                        <?php if (!empty($data['foto_novedad'])): ?>
+                                            <img src="../<?= e($data['foto_novedad']) ?>" alt="Foto Novedad" class="img-fluid rounded-4 shadow" style="max-height: 250px; object-fit: cover;">
+                                        <?php else: ?>
+                                            <div class="bg-light rounded-4 d-flex align-items-center justify-content-center mx-auto w-100 shadow-sm" style="height: 200px;">
+                                                <i class="bi bi-image text-muted" style="font-size: 4rem;"></i>
+                                            </div>
+                                            <p class="text-muted mt-2 mb-0"><small>Sin imagen disponible</small></p>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
 
-                    <?php elseif ($tipo === 'promocion'): ?>
-                        <h3 class="card-title"><?= e($data['texto_promocion']) ?></h3>
-                        <p><strong>#</strong> <?= e($data['cod_promocion']) ?></p>
-                        <p><strong>Estado:</strong> <?= e($data['estado_promo']) ?></p>
-                        <p><strong>Fecha Desde:</strong> <?= e($data['fecha_desde_promocion']) ?></p>
-                        <p><strong>Fecha Hasta:</strong> <?= e($data['fecha_hasta_promocion']) ?></p>
-                        <?php if (!empty($data['foto_promocion'])): ?>
-                            <p><strong>Multimedia:</strong></p>
-                            <img src="../<?= e($data['foto_promocion']) ?>" alt="Imagen de la promoción" class="img-fluid mb-2" style="max-width:200px;">
-                        <?php else: ?>
-                            <p><strong>Multimedia:</strong> No hay imagen disponible</p>
-                        <?php endif; ?>
-                        <p><strong>Nombre local:</strong> <?= e($data['nombre_local']) ?></p>
-                        <p><strong>Rubro Local:</strong> <?= e($data['rubro_local']) ?></p>
-                        <p><strong>Ubicación Local:</strong> <?= e($data['ubicacion_local']) ?></p>
-                    <?php endif; ?>
+                            <?php elseif ($tipo === 'promocion'): ?>
+                                <div class="row">
+                                    <div class="col-md-7 mb-4 mb-md-0">
+                                        <h2 class="fw-bold text-dark mb-4 text-break"><?= e($data['texto_promocion']) ?></h2>
+                                        <p class="fs-5 mb-3"><i class="bi bi-hash text-secondary me-2"></i><strong>Código:</strong> <?= e($data['cod_promocion']) ?></p>
+                                        <p class="fs-5 mb-3"><i class="bi bi-info-circle text-primary me-2"></i><strong>Estado:</strong> 
+                                            <?php
+                                                $est = strtolower($data['estado_promo']);
+                                                if($est == 'aceptada' || $est == 'aprobada') echo '<span class="badge bg-success rounded-pill px-3 shadow-sm">Aceptada</span>';
+                                                elseif($est == 'rechazada') echo '<span class="badge bg-danger rounded-pill px-3 shadow-sm">Rechazada</span>';
+                                                else echo '<span class="badge bg-secondary rounded-pill px-3 shadow-sm">Pendiente</span>';
+                                            ?>
+                                        </p>
+                                        <p class="fs-5 mb-3"><i class="bi bi-calendar-range text-info me-2"></i><strong>Vigencia:</strong> <?= date("d/m/Y", strtotime($data['fecha_desde_promocion'])) ?> al <?= date("d/m/Y", strtotime($data['fecha_hasta_promocion'])) ?></p>
+                                        
+                                        <hr class="my-4 text-muted">
+                                        <h4 class="fw-bold mb-3"><i class="bi bi-shop text-dark me-2"></i>Datos del Local</h4>
+                                        <p class="mb-2 fs-6"><i class="bi bi-caret-right-fill text-muted"></i> <strong>Nombre:</strong> <?= e($data['nombre_local']) ?></p>
+                                        <p class="mb-2 fs-6"><i class="bi bi-caret-right-fill text-muted"></i> <strong>Rubro:</strong> <?= e($data['rubro_local']) ?></p>
+                                        <p class="mb-2 fs-6"><i class="bi bi-caret-right-fill text-muted"></i> <strong>Ubicación:</strong> <?= e($data['ubicacion_local']) ?></p>
+                                    </div>
+                                    <div class="col-md-5 text-center d-flex flex-column justify-content-center">
+                                        <?php if (!empty($data['foto_promocion'])): ?>
+                                            <img src="../<?= e($data['foto_promocion']) ?>" alt="Imagen de la promoción" class="img-fluid rounded-4 shadow" style="max-height: 300px; object-fit: cover;">
+                                        <?php else: ?>
+                                            <div class="bg-light rounded-4 d-flex align-items-center justify-content-center mx-auto w-100 shadow-sm" style="height: 250px;">
+                                                <i class="bi bi-image text-muted" style="font-size: 4rem;"></i>
+                                            </div>
+                                            <p class="text-muted mt-2 mb-0"><small>Sin imagen disponible</small></p>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <a href="<?= $volver ?>" class="btn btn-secondary my-3">Volver</a>
         </div>
     </main>
 

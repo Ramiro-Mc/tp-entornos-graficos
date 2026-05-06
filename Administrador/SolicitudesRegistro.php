@@ -67,28 +67,34 @@ $total_paginas = ceil($total_solicitudes / $solicitudes_por_pagina);
     <div class="promociones">
       <?php if (!empty($solicitudes)): ?>
         <?php foreach ($solicitudes as $s): ?>
-          <div class="promocion d-flex justify-content-between align-items-start mb-3 p-3 border rounded">
-            <div class="infoTarjeta flex-grow-1 me-3">
-              <h4 class="text-break">Solicitud de Dueño</h4>
-              <p><b>Usuario:</b> <?= htmlspecialchars($s['nombre_usuario']) ?> (ID: <?= $s['cod_usuario'] ?>)</p>
-              <p><small>Email: <?= htmlspecialchars($s['email']) ?></small></p>
-              <p><small>Estado: <?= ucfirst($s['estado']) ?></small></p>
-            </div>
-            <div class="acciones d-flex flex-column gap-2">
-              <button
-                type="button"
-                class="btn btn-success btn-sm"
-                data-bs-toggle="modal"
-                data-bs-target="#modal-aprobar-<?= $s['cod_usuario'] ?>">
-                APROBAR
-              </button>
-              <button
-                type="button"
-                class="btn btn-danger btn-sm"
-                data-bs-toggle="modal"
-                data-bs-target="#modal-rechazar-<?= $s['cod_usuario'] ?>">
-                RECHAZAR
-              </button>
+          <div class="promocion-cli container-fluid bg-white rounded-4 shadow-sm mb-4 p-3 dueño-promo-card">
+            <div class="row align-items-center">
+              <div class="col-12 d-flex justify-content-between align-items-center">
+                <div class="info w-100 ps-2">
+                  <h4 class="dueño-promo-title text-break">Solicitud de Dueño</h4>
+                  <div class="d-flex flex-wrap gap-3 mt-2 text-muted dueño-promo-details">
+                    <div class="d-flex align-items-center"><i class="bi bi-person text-primary me-2"></i> Usuario: <?= htmlspecialchars($s['nombre_usuario']) ?> (ID: <?= $s['cod_usuario'] ?>)</div>
+                    <div class="d-flex align-items-center"><i class="bi bi-envelope text-info me-2"></i> <?= htmlspecialchars($s['email']) ?></div>
+                    <div class="d-flex align-items-center"><i class="bi bi-info-circle text-secondary me-2"></i> Estado: <?= ucfirst($s['estado']) ?></div>
+                  </div>
+                </div>
+                <div class="acciones d-flex flex-column gap-2 ms-3" style="min-width: 130px;">
+                  <button
+                    type="button"
+                    class="btn btn-success btn-sm w-100 d-flex align-items-center justify-content-center"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modal-aprobar-<?= $s['cod_usuario'] ?>" style="height: 32px; padding: 0;">
+                    APROBAR
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-danger btn-sm w-100 d-flex align-items-center justify-content-center"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modal-rechazar-<?= $s['cod_usuario'] ?>" style="height: 32px; padding: 0;">
+                    RECHAZAR
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         <?php endforeach; ?>
