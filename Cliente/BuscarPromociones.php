@@ -186,7 +186,6 @@ $filtrosURL = $rubroParam . $categoriaParam . $localParam . $rubroAnteriorParam;
                 Filtros
               </h5>
               <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar panel de filtros"></button>
-              <a tabindex="0" class="btn btn-lg btn-danger" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="Dismissible popover" data-bs-content="And here’s some amazing content. It’s very engaging. Right?">Dismissible popover</a>
             </div>
 
             <hr />
