@@ -48,7 +48,7 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == "cliente") 
 
   <?php if ($folder != "Administrador" && $folder != "Dueño"): ?>
     <div class="iconos-redes-sociales d-flex flex-column gap-2 texto-footer">
-      <h5 class="text-center">Redes Sociales</h5>
+      <h3 class="text-center h5">Redes Sociales</h3>
       <div class="d-flex gap-3">
         <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="bi bi-instagram fs-4"></i></a>
         <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="bi bi-facebook fs-4"></i></a>
@@ -59,7 +59,7 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == "cliente") 
   <?php endif; ?>
   
   <nav class="texto-footer" aria-label="Mapa del sitio">
-    <h5>Mapa del sitio</h5>
+    <h3 class="h5">Mapa del sitio</h3>
     <ul>
       <?php
       if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == "cliente") {
@@ -105,7 +105,7 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == "cliente") 
 
   <?php if ($folder != "Administrador"): ?>
     <section class="texto-footer" aria-label="Contacto">
-      <h5>Contacto</h5>
+      <h3 class="h5">Contacto</h3>
       <p>Email: <a href="mailto:viventastore1@gmail.com?subject=Consulta%20Viventa%20Store">viventastore1@gmail.com</a></p>
       <p>Teléfono: +54 9 55 5555-5555</p>
       <p>Dirección: Calle 123, Ciudad</p>

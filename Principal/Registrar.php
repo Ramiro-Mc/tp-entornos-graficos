@@ -1,6 +1,6 @@
 <?php
 include_once("../Includes/session.php");
-include("../Includes/funciones.php");
+include_once("../Includes/funciones.php");
 require_once("../Includes/env.php");
 load_env(dirname(__DIR__) . '/.env');
 sesionIniciada();
@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   /* registro en base de datos */
   if ($mensaje === "") {
-    include("../Includes/conexion.inc");
+    include_once("../Includes/conexion.inc");
 
     // 1. Verificamos si el correo ya está registrado
     $vResultado = mysqli_query($link, "SELECT COUNT(*) as cantidad FROM usuario WHERE email='$vEmail'");

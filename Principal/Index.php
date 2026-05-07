@@ -33,7 +33,7 @@ $res = consultaSQL("SELECT foto_novedad, texto_novedad FROM novedades");
   <main aria-label="Contenido principal">
 
     <section class="presentacion" aria-label="Presentación Viventa Store">
-      <div id="carouselExampleAutoplaying" class="carousel slide presentacion-carrousel rounded-4 overflow-hidden shadow" data-bs-ride="carousel" data-bs-pause="false" aria-label="Carrusel de imágenes de presentación">
+      <div id="carouselExampleAutoplaying" class="carousel slide presentacion-carrousel rounded-4 overflow-hidden shadow" data-bs-ride="carousel" data-bs-pause="false" role="region" aria-label="Carrusel de imágenes de presentación">
         <div class="carousel-inner">
           <div class="carousel-item carousel-item-presentacion active">
             <img src="../Imagenes/Carousel4.jpg" class="d-block w-100" alt="Imagen del shopping 1" />
@@ -257,7 +257,7 @@ $res = consultaSQL("SELECT foto_novedad, texto_novedad FROM novedades");
 
   <section class="mapa-google" aria-label="Ubicación en Google Maps">
     <h2 class="seccion-titulo"><strong>Encontranos </strong></h2>
-    <div class="mapa-container"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3593.617347374075!2d-80.263616524057!3d25.750164909080794!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88d9ba2ed5cfe615%3A0xad638083c8eb0c89!2sViventa%20Miami!5e0!3m2!1ses-419!2sar!4v1750373072030!5m2!1ses-419!2sar" width="100%" height="100%" style="border: 0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mapa de Viventa Store"></iframe></div>
+    <div class="mapa-container"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3593.617347374075!2d-80.263616524057!3d25.750164909080794!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88d9ba2ed5cfe615%3A0xad638083c8eb0c89!2sViventa%20Miami!5e0!3m2!1ses-419!2sar!4v1750373072030!5m2!1ses-419!2sar" style="width: 100%; height: 100%; border: 0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mapa de Viventa Store"></iframe></div>
   </section>
 
   <footer class="seccion-footer d-flex flex-column justify-content-center align-items-center pt-3">

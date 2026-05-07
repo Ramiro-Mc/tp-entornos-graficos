@@ -156,70 +156,65 @@ if ($folder == "Administrador") {
 
           <?php endif; ?>
 
-          <!-- Fin de Categoria de cliente  -->
+        <!-- Fin de Categoria de cliente  -->
 
 
+        <li class="nav-item">
+          <button type="button" style="margin-left: 10px;" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cerrar-sesion">Cerrar sesion</button>
+
+        </li>
+
+      <?php endif; ?>
+
+      <!-- Fin de opciones por si esta logueado -->
+
+      <!-- Opciones por si no esta logueado -->
+
+      <?php if ($estaLogueado == "noLogueado" && $pestaña != "Confirmar"): ?>
+
+        <?php if ($pestaña != "InicioSesion"): ?>
           <li class="nav-item">
-            <button type="button" style="margin-left: 10px;" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cerrar-sesion">Cerrar sesion</button>
-
+            <a class="boton-nav btn btn-light" href="<?= $rutaSalirCarpeta ?>/Principal/InicioSesion.php">
+              Iniciar sesion
+            </a>
           </li>
-
         <?php endif; ?>
 
-        <!-- Modal de cierre de sesion -->
+        <?php if ($pestaña != "Registrar"): ?>
+          <li class="nav-item">
+            <a class="boton-nav btn btn-light" href="<?= $rutaSalirCarpeta ?>/Principal/Registrar.php">
+              Registrar
+            </a>
+          </li>
+        <?php endif; ?>
 
-        <div class="modal fade " id="cerrar-sesion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" aria-modal="true" role="dialog">
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-              <div class="modal-header ">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel" style="margin: auto; font-size: 1.6rem;">Cerrando sesion</h1>
-              </div>
-              <div class="modal-body text-center">
-                <p style="font-size: 1.2rem; color:black;">¿Seguro que quiere cerrar sesion?</p>
-              </div>
-              <div class="modal-footer d-flex justify-content-around">
-                <a style="margin-left: 5px;" href="<?= $rutaSalirCarpeta ?>/Principal/CerrarSesion.php">
-                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar sesion</button>
-                </a>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-              </div>
+      <?php endif; ?>
+
+      <!-- Fin de Opciones por si no esta logueado -->
+
+      </ul>
+
+      <!-- Modal de cierre de sesion -->
+
+      <div class="modal fade " id="cerrar-sesion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" aria-modal="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header ">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel" style="margin: auto; font-size: 1.6rem;">Cerrando sesion</h1>
+            </div>
+            <div class="modal-body text-center">
+              <p style="font-size: 1.2rem; color:black;">¿Seguro que quiere cerrar sesion?</p>
+            </div>
+            <div class="modal-footer d-flex justify-content-around">
+              <a class="btn btn-danger" style="margin-left: 5px;" href="<?= $rutaSalirCarpeta ?>/Principal/CerrarSesion.php">Cerrar sesion</a>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Fin del Modal de cierre de sesion -->
+      <!-- Fin del Modal de cierre de sesion -->
 
-        <!-- Fin de opciones por si esta logueado -->
-
-        <!-- Opciones por si no esta logueado -->
-
-        <?php if ($estaLogueado == "noLogueado" && $pestaña != "Confirmar"): ?>
-
-          <?php if ($pestaña != "InicioSesion"): ?>
-            <li class="nav-item">
-              <a href="<?= $rutaSalirCarpeta ?>/Principal/InicioSesion.php">
-                <button type="button" class="boton-nav btn btn-light">
-                  Iniciar sesion
-                </button>
-              </a>
-            </li>
-          <?php endif; ?>
-
-          <?php if ($pestaña != "Registrar"): ?>
-            <li class="nav-item">
-              <a href="<?= $rutaSalirCarpeta ?>/Principal/Registrar.php">
-                <button type="button" class="boton-nav btn btn-light">
-                  Registrar
-                </button>
-              </a>
-            </li>
-          <?php endif; ?>
-
-        <?php endif; ?>
-
-        <!-- Fin de Opciones por si no esta logueado -->
-
-      </ul>
     </div>
   </div>
 </nav>
