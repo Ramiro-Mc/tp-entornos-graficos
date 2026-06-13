@@ -3,7 +3,7 @@ include_once("../Includes/session.php");
 require_once("../Includes/env.php");
 load_env(dirname(__DIR__) . '/.env');
 $folder = "Principal";
-$pestaña = "Contacto";
+$pestania = "Contacto";
 
 //Php mailer
 

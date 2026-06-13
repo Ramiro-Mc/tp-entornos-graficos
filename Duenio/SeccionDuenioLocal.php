@@ -7,8 +7,8 @@ if (!isset($_SESSION['cod_usuario'])) {
   exit;
 }
 
-$folder = "Dueño";
-$pestaña = "Seccion Dueño Local";
+$folder = "Duenio";
+$pestania = "Seccion Duenio Local";
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +29,7 @@ $pestaña = "Seccion Dueño Local";
 
   </header>
 
-  <main class="FondoDueñoAdministrador d-flex align-items-center py-5" aria-label="Panel principal de dueño de local">
+  <main class="FondoDuenioAdministrador d-flex align-items-center py-5" aria-label="Panel principal de dueño de local">
     <div class="container" aria-label="Acciones para dueño de local">
       <h1 class="text-center fw-bolder mb-5" style="color: #1e293b; text-shadow: 2px 2px 4px rgba(255,255,255,0.7);"><i class="bi bi-shop-window me-3"></i>Panel de Dueño</h1>
       

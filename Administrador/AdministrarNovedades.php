@@ -1,7 +1,7 @@
 <?php
 
 $folder = "Administrador";
-$pestaña = "Administrar Novedades";
+$pestania = "Administrar Novedades";
 include_once("../Includes/funciones.php");
 sesionIniciada();
 
@@ -63,7 +63,7 @@ $total_paginas = ceil($total_novedades / $novedades_por_pagina);
     <?php include("../Includes/header.php"); ?>
   </header>
 
-  <main class="FondoDueñoAdministrador">
+  <main class="FondoDuenioAdministrador">
     <div class="container-fluid filtraderos justify-content-end">
       <a href="Crear.php?tipo=novedad">
         <button class="btn btn-success">
@@ -85,12 +85,12 @@ $total_paginas = ceil($total_novedades / $novedades_por_pagina);
     <div class="promociones">
       <?php if (!empty($novedades)): ?>
         <?php foreach ($novedades as $n): ?>
-          <div class="promocion-cli container-fluid bg-white rounded-4 shadow-sm mb-4 p-3 dueño-promo-card">
+          <div class="promocion-cli container-fluid bg-white rounded-4 shadow-sm mb-4 p-3 duenio-promo-card">
             <div class="row align-items-center">
               <div class="col-12 d-flex justify-content-between align-items-center">
                 <div class="info w-100 ps-2">
-                  <h4 class="dueño-promo-title text-break"><?= htmlspecialchars($n['texto_novedad']) ?></h4>
-                  <div class="d-flex flex-wrap gap-3 mt-2 text-muted dueño-promo-details">
+                  <h4 class="duenio-promo-title text-break"><?= htmlspecialchars($n['texto_novedad']) ?></h4>
+                  <div class="d-flex flex-wrap gap-3 mt-2 text-muted duenio-promo-details">
                     <div class="d-flex align-items-center"><i class="bi bi-hash text-secondary me-1"></i> <?= $n['cod_novedad'] ?></div>
                     <div class="d-flex align-items-center"><i class="bi bi-calendar-range text-info me-2"></i> Desde: <?= $n['fecha_desde_novedad'] ?> | Hasta: <?= $n['fecha_hasta_novedad'] ?></div>
                   </div>

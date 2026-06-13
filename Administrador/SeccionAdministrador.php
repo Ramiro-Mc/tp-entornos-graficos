@@ -1,7 +1,7 @@
 <?php
 
 $folder = "Administrador";
-$pestaña = "Seccion Administrador";
+$pestania = "Seccion Administrador";
 include_once("../Includes/funciones.php");
 sesionIniciada();
 ?>
@@ -24,7 +24,7 @@ sesionIniciada();
 
   </header>
 
-  <main class="FondoDueñoAdministrador d-flex align-items-center py-5">
+  <main class="FondoDuenioAdministrador d-flex align-items-center py-5">
     <div class="container">
       <h1 class="text-center fw-bolder mb-5" style="color: #1e293b; text-shadow: 2px 2px 4px rgba(255,255,255,0.7);"><i class="bi bi-speedometer2 me-3"></i>Panel de Control</h1>
       

@@ -1,7 +1,7 @@
 <?php
 
 $folder = "Cliente";
-$pestaña = "Mis Cupones";
+$pestania = "Mis Cupones";
 
 include_once("../Includes/session.php");
 include_once("../Includes/funciones.php");

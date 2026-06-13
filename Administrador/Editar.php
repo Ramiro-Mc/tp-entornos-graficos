@@ -1,6 +1,6 @@
 <?php
 $folder = "Administrador";
-$pestaña = "Editar";
+$pestania = "Editar";
 include_once("../Includes/funciones.php");
 require "../Includes/conexion.inc";
 sesionIniciada();

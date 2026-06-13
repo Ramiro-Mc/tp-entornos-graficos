@@ -15,7 +15,7 @@ if (!in_array($tipo, ['local', 'novedad'])) {
 
 $rutaMultimedia = null;
 $folder = "Administrador";
-$pestaña = "Crear " . ucfirst($tipo);
+$pestania = "Crear " . ucfirst($tipo);
 $archivosVolver = [
     'local' => 'AdministrarLocales.php',
     'novedad' => 'AdministrarNovedades.php'
@@ -23,7 +23,7 @@ $archivosVolver = [
 
 if ($tipo === 'local') {
     $rubros = ['Accesorios', 'Deportes', 'Electro', 'Estetica', 'Gastronomia', 'Calzado', 'Indumentaria', 'Varios'];
-    $resUsuarios = mysqli_query($link, "SELECT * FROM usuario u INNER JOIN dueño_local dl ON u.cod_usuario = dl.cod_usuario WHERE dl.estado = 'aprobado'") or die(mysqli_error($link));
+    $resUsuarios = mysqli_query($link, "SELECT * FROM usuario u INNER JOIN duenio_local dl ON u.cod_usuario = dl.cod_usuario WHERE dl.estado = 'aprobado'") or die(mysqli_error($link));
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -122,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php include("../Includes/header.php"); ?>
     </header>
 
-    <main class="FondoDueñoAdministrador">
+    <main class="FondoDuenioAdministrador">
         <section class="form-register">
             <h4>Crear <?= ucfirst($tipo) ?></h4>
 

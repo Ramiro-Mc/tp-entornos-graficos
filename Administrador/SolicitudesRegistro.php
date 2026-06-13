@@ -1,6 +1,6 @@
 <?php
 $folder = "Administrador";
-$pestaña = "Solicitudes Registro";
+$pestania = "Solicitudes Registro";
 include_once("../Includes/funciones.php");
 sesionIniciada();
 
@@ -12,9 +12,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cod_usuario'], $_POST
   $accion = $_POST['accion'];
 
   if ($accion === "aprobar") {
-    $link->query("UPDATE dueño_local SET estado = 'aprobado' WHERE cod_usuario = $cod");
+    $link->query("UPDATE duenio_local SET estado = 'aprobado' WHERE cod_usuario = $cod");
   } elseif ($accion === "rechazar") {
-    $link->query("UPDATE dueño_local SET estado = 'rechazado' WHERE cod_usuario = $cod");
+    $link->query("UPDATE duenio_local SET estado = 'rechazado' WHERE cod_usuario = $cod");
   }
 
   header("Location: SolicitudesRegistro.php");
@@ -26,10 +26,10 @@ $pagina = isset($_GET['pagina']) && is_numeric($_GET['pagina']) ? intval($_GET['
 $solicitudes_por_pagina = 5;
 $offset = ($pagina - 1) * $solicitudes_por_pagina;
 
-// Solo solicitudes pendientes (Unimos dueño_local con usuario para mostrar el nombre/email)
+// Solo solicitudes pendientes (Unimos duenio_local con usuario para mostrar el nombre/email)
 $result = $link->query("
   SELECT d.cod_usuario, d.estado, u.nombre_usuario, u.email
-  FROM dueño_local d
+  FROM duenio_local d
   JOIN usuario u ON d.cod_usuario = u.cod_usuario
   WHERE d.estado = 'pendiente'
   ORDER BY d.cod_usuario DESC
@@ -44,7 +44,7 @@ if ($result && $result->num_rows > 0) {
 }
 
 // Contar solo solicitudes pendientes
-$total_result = $link->query("SELECT COUNT(*) AS total FROM dueño_local WHERE estado = 'pendiente'");
+$total_result = $link->query("SELECT COUNT(*) AS total FROM duenio_local WHERE estado = 'pendiente'");
 $total_row = $total_result->fetch_assoc();
 $total_solicitudes = $total_row['total'];
 $total_paginas = ceil($total_solicitudes / $solicitudes_por_pagina);
@@ -63,16 +63,16 @@ $total_paginas = ceil($total_solicitudes / $solicitudes_por_pagina);
     <?php include("../Includes/header.php"); ?>
   </header>
 
-  <main class="FondoDueñoAdministrador">
+  <main class="FondoDuenioAdministrador">
     <div class="promociones">
       <?php if (!empty($solicitudes)): ?>
         <?php foreach ($solicitudes as $s): ?>
-          <div class="promocion-cli container-fluid bg-white rounded-4 shadow-sm mb-4 p-3 dueño-promo-card">
+          <div class="promocion-cli container-fluid bg-white rounded-4 shadow-sm mb-4 p-3 duenio-promo-card">
             <div class="row align-items-center">
               <div class="col-12 d-flex justify-content-between align-items-center">
                 <div class="info w-100 ps-2">
-                  <h4 class="dueño-promo-title text-break">Solicitud de Dueño</h4>
-                  <div class="d-flex flex-wrap gap-3 mt-2 text-muted dueño-promo-details">
+                  <h4 class="duenio-promo-title text-break">Solicitud de Dueño</h4>
+                  <div class="d-flex flex-wrap gap-3 mt-2 text-muted duenio-promo-details">
                     <div class="d-flex align-items-center"><i class="bi bi-person text-primary me-2"></i> Usuario: <?= htmlspecialchars($s['nombre_usuario']) ?> (ID: <?= $s['cod_usuario'] ?>)</div>
                     <div class="d-flex align-items-center"><i class="bi bi-envelope text-info me-2"></i> <?= htmlspecialchars($s['email']) ?></div>
                     <div class="d-flex align-items-center"><i class="bi bi-info-circle text-secondary me-2"></i> Estado: <?= ucfirst($s['estado']) ?></div>

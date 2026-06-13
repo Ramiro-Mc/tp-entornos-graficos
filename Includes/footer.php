@@ -2,21 +2,21 @@
 include_once("session.php");
 
 // Previene errores si no definiste las variables en la vista
-if (!isset($pestaña)) { $pestaña = ""; }
+if (!isset($pestania)) { $pestania = ""; }
 if (!isset($folder)) { $folder = ""; }
 
 if ($folder == "Administrador") {
   $opciones = ["Seccion Administrador", "Administrar Promociones", "Administrar Novedades", "Administrar Locales", "Solicitudes Registro", "Reporte Promociones"];
-} elseif ($folder == "Dueño") {
-  $opciones = ["Seccion Dueño Local", "Crear Promocion", "Mis Promociones", "Administrar Solicitudes"];
+} elseif ($folder == "Duenio") {
+  $opciones = ["Seccion Duenio Local", "Crear Promocion", "Mis Promociones", "Administrar Solicitudes"];
 } elseif ($folder == "Principal" || $folder == "Cliente") {
   $opciones = ["Inicio", "Contacto", "Sobre Nosotros", "Preguntas Frecuentes", "Promociones"];
 } else {
   $opciones = [];
 }
 
-$opciones_filtradas = array_filter($opciones, function ($item) use ($pestaña) {
-  return trim(strtolower($item)) !== trim(strtolower($pestaña));
+$opciones_filtradas = array_filter($opciones, function ($item) use ($pestania) {
+  return trim(strtolower($item)) !== trim(strtolower($pestania));
 });
 $opciones_filtradas = array_values($opciones_filtradas);
 
@@ -28,8 +28,8 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == "cliente") 
   // Se quitó "Promociones" de aquí para evitar que se duplique con el array principal
   $opciones_extra = ["Mi Perfil", "Mis Cupones"];
 
-  $opciones_extra_filtradas = array_filter($opciones_extra, function ($item) use ($pestaña) {
-    return trim(strtolower($item)) !== trim(strtolower($pestaña));
+  $opciones_extra_filtradas = array_filter($opciones_extra, function ($item) use ($pestania) {
+    return trim(strtolower($item)) !== trim(strtolower($pestania));
   });
   $opciones_extra_filtradas = array_values($opciones_extra_filtradas);
 
@@ -46,7 +46,7 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == "cliente") 
 
 <div class="container d-flex flex-wrap justify-content-center gap-5 px-0">
 
-  <?php if ($folder != "Administrador" && $folder != "Dueño"): ?>
+  <?php if ($folder != "Administrador" && $folder != "Duenio"): ?>
     <div class="iconos-redes-sociales d-flex flex-column gap-2 texto-footer">
       <h3 class="text-center h5">Redes Sociales</h3>
       <div class="d-flex gap-3">
@@ -89,8 +89,8 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == "cliente") 
              // Redirección corregida para usuarios invitados
             echo "<li><a href='../Cliente/BuscarPromociones.php'>" . $item . "</a></li>";
           } else {
-            if ($folder == "Dueño") {
-              echo "<li><a href='../Dueño/" . $opciones_sin_espacios[$key] . ".php'>" . $item . "</a></li>";
+            if ($folder == "Duenio") {
+              echo "<li><a href='../Duenio/" . $opciones_sin_espacios[$key] . ".php'>" . $item . "</a></li>";
             } elseif ($folder == "Administrador") {
               echo "<li><a href='../Administrador/" . $opciones_sin_espacios[$key] . ".php'>" . $item . "</a></li>";
             } else {

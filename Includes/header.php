@@ -23,16 +23,16 @@ if (isset($_SESSION['tipo_usuario']) && isset($_SESSION['cod_usuario'])) {
     $rutaExtra = "/Administrador/SeccionAdministrador.php";
     $LinkExtra = "Seccion Administrador";
   }
-  if ($_SESSION['tipo_usuario'] == "dueño") {
-    $rutaExtra = "/Dueño/SeccionDueñoLocal.php";
-    $LinkExtra = "Seccion Dueño";
+  if ($_SESSION['tipo_usuario'] == "duenio") {
+    $rutaExtra = "/Duenio/SeccionDuenioLocal.php";
+    $LinkExtra = "Seccion Duenio";
   }
 } else {
   $estaLogueado = "noLogueado";
 }
 
 
-if ($folder == "Administrador" or $folder == "Cliente" or $folder == "Dueño" or $folder == "Principal") {
+if ($folder == "Administrador" or $folder == "Cliente" or $folder == "Duenio" or $folder == "Principal") {
   $rutaSalirCarpeta = "..";
 } else {
   $rutaSalirCarpeta = ".";
@@ -40,8 +40,8 @@ if ($folder == "Administrador" or $folder == "Cliente" or $folder == "Dueño" or
 
 if ($folder == "Administrador") {
   $rutaLogo = "/Administrador/SeccionAdministrador.php";
-} elseif ($folder == "Dueño") {
-  $rutaLogo = "/Dueño/SeccionDueñoLocal.php";
+} elseif ($folder == "Duenio") {
+  $rutaLogo = "/Duenio/SeccionDuenioLocal.php";
 } else {
   $rutaLogo = "/Principal/Index.php";
 }
@@ -54,7 +54,7 @@ if ($folder == "Administrador") {
 <nav class="navbar navbar-expand-lg bg-body-tertiary" aria-label="Barra de navegación principal">
   <div class="container-fluid top-bar">
 
-    <!-- Logo y boton de desplegado de menu (igual para todas las pestañas) -->
+    <!-- Logo y boton de desplegado de menu (igual para todas las pestanias) -->
 
     <a class="navbar-brand" href="<?= $rutaSalirCarpeta ?><?= $rutaLogo ?>">
       <img class="logo" src="<?= $rutaSalirCarpeta ?>/Imagenes/Logo-titulo1.png" alt="Logo Viventa Store" />
@@ -96,26 +96,26 @@ if ($folder == "Administrador") {
           </li>
 
           <li class="nav-item">
-            <a class="nav-link <?= ($pestaña == 'Contacto') ? 'active' : '' ?>" aria-current="page" href="<?= $rutaSalirCarpeta ?>/Principal/Contacto.php">
+            <a class="nav-link <?= ($pestania == 'Contacto') ? 'active' : '' ?>" aria-current="page" href="<?= $rutaSalirCarpeta ?>/Principal/Contacto.php">
               <p>Contacto</p>
             </a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link <?= ($pestaña == 'Sobre Nosotros') ? 'active' : '' ?>" href="<?= $rutaSalirCarpeta ?>/Principal/SobreNosotros.php">
+            <a class="nav-link <?= ($pestania == 'Sobre Nosotros') ? 'active' : '' ?>" href="<?= $rutaSalirCarpeta ?>/Principal/SobreNosotros.php">
               <p>Sobre Nosotros</p>
             </a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link <?= ($pestaña == 'Preguntas Frecuentes') ? 'active' : '' ?>" href="<?= $rutaSalirCarpeta ?>/Principal/PreguntasFrecuentes.php">
+            <a class="nav-link <?= ($pestania == 'Preguntas Frecuentes') ? 'active' : '' ?>" href="<?= $rutaSalirCarpeta ?>/Principal/PreguntasFrecuentes.php">
               <p>Preguntas Frecuentes</p>
             </a>
           </li>
 
 
           <li class="nav-item">
-            <a class="nav-link <?= ($pestaña == 'Buscar Promociones') ? 'active' : '' ?>" aria-current="page" href="<?= $rutaSalirCarpeta ?>/Cliente/BuscarPromociones.php">
+            <a class="nav-link <?= ($pestania == 'Buscar Promociones') ? 'active' : '' ?>" aria-current="page" href="<?= $rutaSalirCarpeta ?>/Cliente/BuscarPromociones.php">
               <p>Promociones</p>
             </a>
           </li>
@@ -135,7 +135,7 @@ if ($folder == "Administrador") {
           <?php if ($tipo_usuario == "cliente"): ?>
 
             <li class="nav-item">
-              <a class="nav-link <?= ($pestaña == 'Mis Cupones') ? 'active' : '' ?>" aria-current="page" href="<?= $rutaSalirCarpeta ?>/Cliente/MisCupones.php">
+              <a class="nav-link <?= ($pestania == 'Mis Cupones') ? 'active' : '' ?>" aria-current="page" href="<?= $rutaSalirCarpeta ?>/Cliente/MisCupones.php">
                 <p>Mis Cupones</p>
               </a>
             </li>
@@ -170,9 +170,9 @@ if ($folder == "Administrador") {
 
       <!-- Opciones por si no esta logueado -->
 
-      <?php if ($estaLogueado == "noLogueado" && $pestaña != "Confirmar"): ?>
+      <?php if ($estaLogueado == "noLogueado" && $pestania != "Confirmar"): ?>
 
-        <?php if ($pestaña != "InicioSesion"): ?>
+        <?php if ($pestania != "InicioSesion"): ?>
           <li class="nav-item">
             <a class="boton-nav btn btn-light" href="<?= $rutaSalirCarpeta ?>/Principal/InicioSesion.php">
               Iniciar sesion
@@ -180,7 +180,7 @@ if ($folder == "Administrador") {
           </li>
         <?php endif; ?>
 
-        <?php if ($pestaña != "Registrar"): ?>
+        <?php if ($pestania != "Registrar"): ?>
           <li class="nav-item">
             <a class="boton-nav btn btn-light" href="<?= $rutaSalirCarpeta ?>/Principal/Registrar.php">
               Registrar

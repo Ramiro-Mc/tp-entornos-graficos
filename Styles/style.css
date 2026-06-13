@@ -92,7 +92,7 @@
   margin: 1.5rem 0 2rem 0;
 }
 
-.botonesDueñoAdministrador {
+.botonesDuenioAdministrador {
   display: flex;
   flex-direction: column;
   align-items: center; /* Esto centra los enlaces horizontalmente */
@@ -101,13 +101,13 @@
   width: 100%;
 }
 
-.botonesDueñoAdministrador a {
+.botonesDuenioAdministrador a {
   text-decoration: none;
   /* Eliminamos el width 100% y el display flex de aquí */
   width: auto;
 }
 
-.botonesDueñoAdministrador button {
+.botonesDuenioAdministrador button {
   padding: 15px 30px;
   border: 1px solid #000;
   border-radius: 10px;
@@ -119,7 +119,7 @@
   display: block; /* Asegura que se comporte bien dentro del <a> */
 }
 
-.botonesDueñoAdministrador button:hover {
+.botonesDuenioAdministrador button:hover {
   background-color: #ddd;
 }
 
@@ -278,27 +278,27 @@
   border: 1px solid #f5c2c7;
 }
 
-.dueño-promo-card {
+.duenio-promo-card {
   border: 1px solid #e2e8f0;
   transition: transform 0.2s ease;
 }
 
-.dueño-promo-img {
+.duenio-promo-img {
   max-height: 120px;
   object-fit: cover;
 }
 
-.dueño-promo-placeholder {
+.duenio-promo-placeholder {
   height: 120px;
   width: 120px;
   color: #adb5bd;
 }
 
-.dueño-promo-placeholder-icon {
+.duenio-promo-placeholder-icon {
   font-size: 2.5rem;
 }
 
-.dueño-promo-title {
+.duenio-promo-title {
   font-weight: 600;
   color: #2c3e50;
   margin-bottom: 0.5rem;
@@ -310,26 +310,26 @@
   border: 1px solid #ffecb5;
 }
 
-.dueño-promo-details {
+.duenio-promo-details {
   font-size: 0.95rem;
 }
 
-.btn-dueño-delete {
+.btn-duenio-delete {
   width: 50px;
   height: 50px;
   border-width: 2px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.btn-dueño-delete:hover {
+.btn-duenio-delete:hover {
   transform: scale(1.1);
 }
 
-.btn-dueño-delete-icon {
+.btn-duenio-delete-icon {
   font-size: 1.3rem;
 }
 
-.dueño-solicitud-detalles {
+.duenio-solicitud-detalles {
   font-size: 0.95rem;
 }
 
@@ -339,14 +339,14 @@
   border: 1px solid #d6d8db;
 }
 
-.btn-dueño-action {
+.btn-duenio-action {
   width: 50px;
   height: 50px;
   border-width: 2px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.btn-dueño-action:hover {
+.btn-duenio-action:hover {
   transform: scale(1.1);
 }
 
@@ -618,7 +618,7 @@
   filter: brightness(70%);
 }
 
-.FondoDueñoAdministrador {
+.FondoDuenioAdministrador {
   position: relative;
   z-index: 0;
   overflow: hidden;
@@ -628,7 +628,7 @@
   background-size: cover;
 }
 
-.FondoDueñoAdministrador::before {
+.FondoDuenioAdministrador::before {
   content: "";
   position: absolute;
   top: 0;
@@ -1241,7 +1241,7 @@ textarea {
   .presentacion {
     padding-bottom: 0px;
   }
-  .botonesDueñoAdministrador button {
+  .botonesDuenioAdministrador button {
     width: 80%;
   }
   .filtraderos button {

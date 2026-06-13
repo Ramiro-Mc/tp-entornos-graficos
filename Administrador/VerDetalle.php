@@ -1,6 +1,6 @@
 <?php
 $folder = "Administrador";
-$pestaña = "Detalle";
+$pestania = "Detalle";
 include_once("../Includes/funciones.php");
 require "../Includes/conexion.inc";
 sesionIniciada();
@@ -77,7 +77,7 @@ $link->close();
         <?php include("../Includes/header.php"); ?>
     </header>
 
-    <main class="FondoDueñoAdministrador d-flex align-items-center py-5">
+    <main class="FondoDuenioAdministrador d-flex align-items-center py-5">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-10">

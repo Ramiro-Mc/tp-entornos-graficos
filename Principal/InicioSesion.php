@@ -6,7 +6,7 @@ include_once("../Includes/funciones.php");
 sesionIniciada();
 $mensaje = "";
 $folder = "Principal";
-$pestaña = "Login";
+$pestania = "Login";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $vEmail = $_POST['email'];
@@ -20,9 +20,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     if ($vResultado && mysqli_num_rows($vResultado) > 0) {
       $usuario = mysqli_fetch_assoc($vResultado);
-      $contraseñaBD = $usuario['clave'];
+      $contraseniaBD = $usuario['clave'];
       
-      if (password_verify($vPassword, $contraseñaBD)) {
+      if (password_verify($vPassword, $contraseniaBD)) {
         $cod_usuario = $usuario['cod_usuario'];
         $tipo = "desconocido";
 
@@ -32,8 +32,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           $tipo = "administrador";
         }
 
-        // 2. Verificamos Dueño
-        $resDueno = consultaSQL("SELECT cod_usuario, estado FROM dueño_local WHERE cod_usuario=$cod_usuario");
+        // 2. Verificamos Duenio
+        $resDueno = consultaSQL("SELECT cod_usuario, estado FROM duenio_local WHERE cod_usuario=$cod_usuario");
         if ($resDueno && mysqli_num_rows($resDueno) > 0) {
           $filaDueno = mysqli_fetch_assoc($resDueno);
           $estadoDueno = strtolower($filaDueno['estado']); 
@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           } elseif ($estadoDueno == 'pendiente') {
             $mensaje = "<div class='alert alert-warning'>Tu cuenta aún está pendiente de aprobación por un administrador.</div>";
           } else {
-            $tipo = "dueño";
+            $tipo = "duenio";
           }
         }
 
@@ -66,8 +66,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           if ($tipo == "administrador") {
             header("Location: ../Administrador/SeccionAdministrador.php");
             exit();
-          } elseif ($tipo == "dueño") {
-            header("Location: ../Dueño/SeccionDueñoLocal.php");
+          } elseif ($tipo == "duenio") {
+            header("Location: ../Duenio/SeccionDuenioLocal.php");
             exit();
           } elseif ($tipo == "cliente") {
             header("Location: ../Principal/Index.php");

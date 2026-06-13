@@ -1,7 +1,7 @@
 <?php
 include_once("../Includes/session.php");
 $folder = "Principal";
-$pestaña = "Preguntas Frecuentes";
+$pestania = "Preguntas Frecuentes";
 ?>
 
 

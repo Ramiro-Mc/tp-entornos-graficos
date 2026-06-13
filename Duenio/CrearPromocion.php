@@ -8,8 +8,8 @@ if (!isset($_SESSION['cod_usuario'])) {
   exit;
 }
 
-$folder = "Dueño";
-$pestaña = "Crear Promocion";
+$folder = "Duenio";
+$pestania = "Crear Promocion";
 
 $cod_usuario = $_SESSION['cod_usuario'];
 include("../Includes/conexion.inc");
@@ -96,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           $mensaje = "<div class='alert alert-danger'>Error al guardar los días.</div>";
         } else {
           $mensaje = "<div class='alert alert-success'>La promoción fue creada. Redirigiendo a tus locales...</div>";
-          $destino = "SeccionDueñoLocal.php";
+          $destino = "SeccionDuenioLocal.php";
           header("Refresh: 3; url=" . urlencode($destino));
         }
       } else {
@@ -120,7 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <?php include("../Includes/header.php"); ?>
   </header>
 
-  <main class="FondoDueñoAdministrador">
+  <main class="FondoDuenioAdministrador">
     <section class="form-register">
       <h4>Formulario Promoción</h4>
       <?php echo $mensaje; ?>

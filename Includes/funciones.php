@@ -26,7 +26,39 @@ function sesionIniciada()
         $_SESSION['tipo_usuario'] = $_COOKIE['tipo_usuario_recordado'];
     }
 }
+/*
+function sesionIniciada()
+{
+    if (
+        !isset($_SESSION['cod_usuario']) &&
+        isset($_COOKIE['usuario_recordado']) &&
+        isset($_COOKIE['tipo_usuario_recordado'])
+    ) {
 
+        include("conexion.inc");
+
+        $id = intval($_COOKIE['usuario_recordado']);
+        $tipo = $_COOKIE['tipo_usuario_recordado'];
+
+        $stmt = $link->prepare("
+            SELECT u.cod_usuario
+            FROM usuario u
+            WHERE u.cod_usuario = ?
+        ");
+
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+
+        $resultado = $stmt->get_result();
+
+        if ($resultado->num_rows > 0) {
+            $_SESSION['cod_usuario'] = $id;
+            $_SESSION['tipo_usuario'] = $tipo;
+        }
+    }
+}
+    VER ESTE LOGIN
+*/
 function paginacion($pagina, $total_paginas, $params = [])
 {
     echo '<nav><ul class="pagination justify-content-center">';

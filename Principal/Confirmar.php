@@ -4,7 +4,7 @@ include("../Includes/funciones.php");
 
 $mensaje = "";
 $folder = "Principal";
-$pestaña = "Confirmar";
+$pestania = "Confirmar";
 
 $token = $_GET['token'] ?? '';
 if ($token) {

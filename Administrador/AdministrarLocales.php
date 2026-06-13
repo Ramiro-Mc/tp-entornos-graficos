@@ -1,7 +1,7 @@
 <?php
 
 $folder = "Administrador";
-$pestaña = "Administrar Locales";
+$pestania = "Administrar Locales";
 include_once("../Includes/funciones.php");
 sesionIniciada();
 
@@ -65,7 +65,7 @@ $total_paginas = ceil($total_locales / $locales_por_pagina);
     <?php include("../Includes/header.php"); ?>
   </header>
 
-  <main class="FondoDueñoAdministrador">
+  <main class="FondoDuenioAdministrador">
     <div class="container-fluid filtraderos justify-content-end">
       <a href="Crear.php?tipo=local">
         <button class="btn btn-success">
@@ -88,12 +88,12 @@ $total_paginas = ceil($total_locales / $locales_por_pagina);
     <div class="promociones">
       <?php if (!empty($locales)): ?>
         <?php foreach ($locales as $n): ?>
-          <div class="promocion-cli container-fluid bg-white rounded-4 shadow-sm mb-4 p-3 dueño-promo-card">
+          <div class="promocion-cli container-fluid bg-white rounded-4 shadow-sm mb-4 p-3 duenio-promo-card">
             <div class="row align-items-center">
               <div class="col-12 d-flex justify-content-between align-items-center">
                 <div class="info w-100 ps-2">
-                  <h3 class="dueño-promo-title text-break"><?= htmlspecialchars($n['nombre_local']) ?></h3>
-                  <div class="d-flex flex-wrap gap-3 mt-2 text-muted dueño-promo-details">
+                  <h3 class="duenio-promo-title text-break"><?= htmlspecialchars($n['nombre_local']) ?></h3>
+                  <div class="d-flex flex-wrap gap-3 mt-2 text-muted duenio-promo-details">
                     <div class="d-flex align-items-center"><i class="bi bi-hash text-secondary me-1"></i> <?= $n['cod_local'] ?></div>
                     <div class="d-flex align-items-center"><i class="bi bi-tags text-primary me-2"></i> Rubro: <?= htmlspecialchars($n['rubro_local']) ?></div>
                     <div class="d-flex align-items-center"><i class="bi bi-geo-alt text-danger me-2"></i> Ubicación: <?= htmlspecialchars($n['ubicacion_local']) ?></div>

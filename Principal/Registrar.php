@@ -5,7 +5,7 @@ require_once("../Includes/env.php");
 load_env(dirname(__DIR__) . '/.env');
 sesionIniciada();
 $folder = "Principal";
-$pestaña = "Register";
+$pestania = "Register";
 $token = bin2hex(random_bytes(32));
 $mensaje = "";
 
@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($vCantUsuario['cantidad'] != 0) {
       $mensaje = "<div class='alert alert-danger'>El usuario ya existe con ese correo.</div>";
     } else {
-      // 2. Hasheamos la contraseña por seguridad
+      // 2. Hasheamos la contrasenia por seguridad
       $hashedPassword = password_hash($vPassword, PASSWORD_DEFAULT);
 
       // 3. Insertamos SIEMPRE primero en la tabla padre: 'usuario'
@@ -114,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->Host       = $smtpHost;
             $mail->SMTPAuth   = true;
             $mail->Username   = $smtpUser; // Aquí tomará 'viventastore1@gmail.com'
-            $mail->Password   = $smtpPass; // Aquí tomará tu contraseña de aplicación
+            $mail->Password   = $smtpPass; // Aquí tomará tu contrasenia de aplicación
             $mail->SMTPSecure = $smtpSecure;
             $mail->Port       = $smtpPort;
 
@@ -142,10 +142,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mensaje = "<div class='alert alert-danger'>No se pudo enviar el correo de confirmación. Error: {$mail->ErrorInfo}</div>";
           }
 
-          // --- FLUJO DUEÑO ---
+          // --- FLUJO DUENIO ---
         } elseif ($vTipoUsuario == 'duenio') {
-          // Insertamos en la tabla 'dueño_local' con estado Pendiente (eliminamos la tabla solicitudes)
-          $queryDuenio = "INSERT INTO dueño_local (cod_usuario, estado) VALUES ('$vCodUsuario', 'Pendiente')";
+          // Insertamos en la tabla 'duenio_local' con estado Pendiente (eliminamos la tabla solicitudes)
+          $queryDuenio = "INSERT INTO duenio_local (cod_usuario, estado) VALUES ('$vCodUsuario', 'Pendiente')";
           mysqli_query($link, $queryDuenio);
 
           $mensaje = "<div class='alert alert-warning'>Te registraste como dueño de local. Tu cuenta está pendiente de aprobación por un administrador.</div>";

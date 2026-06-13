@@ -1,6 +1,6 @@
 <?php
 $folder = "Administrador";
-$pestaña = "Reporte Promociones";
+$pestania = "Reporte Promociones";
 include_once("../Includes/funciones.php");
 sesionIniciada();
 
@@ -69,7 +69,7 @@ $total_paginas = ceil($total_promociones / $promociones_por_pagina);
     <?php include("../Includes/header.php"); ?>
   </header>
 
-  <main class="FondoDueñoAdministrador">
+  <main class="FondoDuenioAdministrador">
     <div class="container-fluid filtraderos justify-content-end">
       <div class="dropdown">
         <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -87,12 +87,12 @@ $total_paginas = ceil($total_promociones / $promociones_por_pagina);
     <div class="promociones">
       <?php if ($result->num_rows): ?>
         <?php while ($p = $result->fetch_assoc()): ?>
-          <div class="promocion-cli container-fluid bg-white rounded-4 shadow-sm mb-4 p-3 dueño-promo-card">
+          <div class="promocion-cli container-fluid bg-white rounded-4 shadow-sm mb-4 p-3 duenio-promo-card">
             <div class="row align-items-center">
               <div class="col-12 d-flex justify-content-between align-items-center">
                 <div class="info w-100 ps-2">
-                  <h4 class="dueño-promo-title"><?= htmlspecialchars($p['texto_promocion']) ?></h4>
-                  <div class="d-flex flex-wrap gap-3 mt-2 text-muted dueño-promo-details">
+                  <h4 class="duenio-promo-title"><?= htmlspecialchars($p['texto_promocion']) ?></h4>
+                  <div class="d-flex flex-wrap gap-3 mt-2 text-muted duenio-promo-details">
                     <div class="d-flex align-items-center"><i class="bi bi-person-badge text-warning me-2"></i> <?= htmlspecialchars($p['categoria_cliente']) ?></div>
                     <div class="d-flex align-items-center"><i class="bi bi-bar-chart-line text-success me-2"></i> Usos: <b class="ms-1"><?= $p['usos'] ?></b></div>
                   </div>

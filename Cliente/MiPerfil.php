@@ -9,7 +9,7 @@ if (!isset($_SESSION['cod_usuario'])) {
 }
 
 $folder = "Cliente";
-$pestaña = "Mi Perfil";
+$pestania = "Mi Perfil";
 
 $cod_usuario = $_SESSION['cod_usuario'];
 

@@ -17,8 +17,8 @@ if (!isset($_SESSION['cod_usuario'])) {
   exit;
 }
 
-$folder = "Dueño";
-$pestaña = "Administrar Solicitudes";
+$folder = "Duenio";
+$pestania = "Administrar Solicitudes";
 
 $cod_usuario = $_SESSION['cod_usuario'];
 include("../Includes/conexion.inc");
@@ -266,7 +266,7 @@ if (!empty($codigoslocales)) {
     <?php include("../Includes/header.php"); ?>
   </header>
 
-  <main class="FondoDueñoAdministrador" aria-label="Panel de administración de solicitudes">
+  <main class="FondoDuenioAdministrador" aria-label="Panel de administración de solicitudes">
     <div class="container-fluid filtraderos justify-content-end" aria-label="Acciones de filtrado y orden">
       
       <div class="dropdown mx-2">
@@ -303,14 +303,14 @@ if (!empty($codigoslocales)) {
     <div class="promociones" aria-label="Listado de solicitudes de promociones">
       <?php if ($usoPromociones && mysqli_num_rows($usoPromociones) > 0): ?>
         <?php while ($usopromo = mysqli_fetch_assoc($usoPromociones)): ?>
-          <div class="promocion-cli container-fluid bg-white rounded-4 shadow-sm mb-4 p-3 dueño-promo-card" aria-label="Tarjeta de solicitud de promoción">
+          <div class="promocion-cli container-fluid bg-white rounded-4 shadow-sm mb-4 p-3 duenio-promo-card" aria-label="Tarjeta de solicitud de promoción">
             <div class="row align-items-center">
               
               <div class="col-8 col-md-9 col-lg-10 d-flex justify-content-between align-items-center w-100">
                 <div class="info ps-2">
-                  <h4 class="dueño-promo-title mb-1"><?php echo htmlspecialchars($usopromo['texto_promocion']); ?></h4>
+                  <h4 class="duenio-promo-title mb-1"><?php echo htmlspecialchars($usopromo['texto_promocion']); ?></h4>
                   
-                  <div class="d-flex flex-wrap gap-3 mt-2 text-muted dueño-solicitud-detalles">
+                  <div class="d-flex flex-wrap gap-3 mt-2 text-muted duenio-solicitud-detalles">
                     <div class="d-flex align-items-center"><i class="bi bi-hash text-secondary me-2"></i> <b>Promo #<?php echo $usopromo['cod_promocion']; ?></b></div>
                     <div class="d-flex align-items-center"><i class="bi bi-shop text-primary me-2"></i> <?php echo htmlspecialchars($usopromo['nombre_local']); ?></div>
                     <div class="d-flex align-items-center"><i class="bi bi-person-circle text-info me-2"></i> <?php echo htmlspecialchars($usopromo['nombre_usuario']); ?> <small class="ms-1 text-secondary">(Id: <?php echo $usopromo['cod_usuario']; ?>)</small></div>
@@ -319,11 +319,11 @@ if (!empty($codigoslocales)) {
                 </div>
 
                 <div class="acciones ms-3 d-flex gap-2">
-                  <button type="button" class="btn btn-outline-success d-flex align-items-center justify-content-center rounded-circle shadow-sm btn-dueño-action" title="Aceptar Solicitud" data-bs-toggle="modal" data-bs-target="#modal-aceptar-<?php echo htmlspecialchars($usopromo['cod_promocion'].$usopromo['cod_usuario']); ?>">
-                    <i class="bi bi-check-lg btn-dueño-delete-icon"></i>
+                  <button type="button" class="btn btn-outline-success d-flex align-items-center justify-content-center rounded-circle shadow-sm btn-duenio-action" title="Aceptar Solicitud" data-bs-toggle="modal" data-bs-target="#modal-aceptar-<?php echo htmlspecialchars($usopromo['cod_promocion'].$usopromo['cod_usuario']); ?>">
+                    <i class="bi bi-check-lg btn-duenio-delete-icon"></i>
                   </button>
-                  <button type="button" class="btn btn-outline-danger d-flex align-items-center justify-content-center rounded-circle shadow-sm btn-dueño-action" title="Rechazar Solicitud" data-bs-toggle="modal" data-bs-target="#modal-rechazar-<?php echo htmlspecialchars($usopromo['cod_promocion'].$usopromo['cod_usuario']); ?>">
-                    <i class="bi bi-x-lg btn-dueño-delete-icon"></i>
+                  <button type="button" class="btn btn-outline-danger d-flex align-items-center justify-content-center rounded-circle shadow-sm btn-duenio-action" title="Rechazar Solicitud" data-bs-toggle="modal" data-bs-target="#modal-rechazar-<?php echo htmlspecialchars($usopromo['cod_promocion'].$usopromo['cod_usuario']); ?>">
+                    <i class="bi bi-x-lg btn-duenio-delete-icon"></i>
                   </button>
                 </div>
               </div>

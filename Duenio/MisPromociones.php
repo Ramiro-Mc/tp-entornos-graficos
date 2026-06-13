@@ -18,8 +18,8 @@ $diasSemanaNombre = [
   7 => "Domingo"
 ];
 
-$folder = "Dueño";
-$pestaña = "Mis Promociones";
+$folder = "Duenio";
+$pestania = "Mis Promociones";
 $cod_usuario = $_SESSION['cod_usuario'];
 include("../Includes/conexion.inc");
 
@@ -28,7 +28,7 @@ $cantPagina = 5;
 $pagina = isset($_GET["pagina"]) ? max(1, intval($_GET["pagina"])) : 1;
 $principio = ($pagina - 1) * $cantPagina;
 
-// 1. Obtener los códigos de locales del dueño
+// 1. Obtener los códigos de locales del duenio
 $codigoslocales = [];
 $sqlLocal = "SELECT cod_local FROM locales WHERE cod_usuario = '$cod_usuario'";
 $localResult = consultaSQL($sqlLocal);
@@ -122,7 +122,7 @@ if (!empty($codigoslocales)) {
 
   </header>
 
-  <main class="FondoDueñoAdministrador">
+  <main class="FondoDuenioAdministrador">
     <div class="container mt-3">
       <?php echo $mensaje; ?>
     </div>
@@ -130,24 +130,24 @@ if (!empty($codigoslocales)) {
     <div class="promociones">
       <?php if (!empty($promos_array)): ?>
         <?php foreach ($promos_array as $promo): ?>
-          <div class="promocion-cli container-fluid bg-white rounded-4 shadow-sm mb-4 p-3 dueño-promo-card">
+          <div class="promocion-cli container-fluid bg-white rounded-4 shadow-sm mb-4 p-3 duenio-promo-card">
             <div class="row align-items-center">
               <div class="col-4 col-md-3 col-lg-2 text-center">
                 <?php if (!empty($promo['foto_promocion'])): ?>
                   <?php if (strpos($promo['foto_promocion'], 'uploads/') === 0): ?>
-                    <img src="../<?php echo $promo['foto_promocion']; ?>" alt="Imagen promo" class="img-fluid rounded-3 shadow-sm dueño-promo-img">
+                    <img src="../<?php echo $promo['foto_promocion']; ?>" alt="Imagen promo" class="img-fluid rounded-3 shadow-sm duenio-promo-img">
                   <?php else: ?>
-                    <img src="data:image/jpeg;base64,<?php echo $promo['foto_promocion']; ?>" alt="Imagen promo" class="img-fluid rounded-3 shadow-sm dueño-promo-img">
+                    <img src="data:image/jpeg;base64,<?php echo $promo['foto_promocion']; ?>" alt="Imagen promo" class="img-fluid rounded-3 shadow-sm duenio-promo-img">
                   <?php endif; ?>
                 <?php else: ?>
-                  <div class="bg-light rounded-3 d-flex align-items-center justify-content-center mx-auto dueño-promo-placeholder">
-                    <i class="bi bi-image dueño-promo-placeholder-icon"></i>
+                  <div class="bg-light rounded-3 d-flex align-items-center justify-content-center mx-auto duenio-promo-placeholder">
+                    <i class="bi bi-image duenio-promo-placeholder-icon"></i>
                   </div>
                 <?php endif; ?>
               </div>
               <div class="col-8 col-md-9 col-lg-10 d-flex justify-content-between align-items-center">
                 <div class="info w-100 ps-2">
-                  <h4 class="dueño-promo-title"><?php echo htmlspecialchars($promo['texto_promocion']); ?></h4>
+                  <h4 class="duenio-promo-title"><?php echo htmlspecialchars($promo['texto_promocion']); ?></h4>
                   
                   <?php
                   $hoy = date("Y-m-d");
@@ -164,7 +164,7 @@ if (!empty($codigoslocales)) {
                   }
                   ?>
 
-                  <div class="d-flex flex-wrap gap-3 mt-2 text-muted dueño-promo-details">
+                  <div class="d-flex flex-wrap gap-3 mt-2 text-muted duenio-promo-details">
                     <div class="d-flex align-items-center"><i class="bi bi-shop text-primary me-2"></i> <b><?php echo htmlspecialchars($promo['nombre_local']); ?></b></div>
                     <div class="d-flex align-items-center"><?php echo $estado; ?></div>
                     <div class="d-flex align-items-center"><i class="bi bi-calendar-range text-info me-2"></i> <?php echo date("d/m", strtotime($promo['fecha_desde_promocion'])); ?> al <?php echo date("d/m/Y", strtotime($promo['fecha_hasta_promocion'])); ?></div>
@@ -189,11 +189,11 @@ if (!empty($codigoslocales)) {
                 <div class="acciones ms-3">
                   <button
                     type="button"
-                    class="btn btn-outline-danger d-flex align-items-center justify-content-center rounded-circle shadow-sm btn-dueño-delete"
+                    class="btn btn-outline-danger d-flex align-items-center justify-content-center rounded-circle shadow-sm btn-duenio-delete"
                     data-bs-toggle="modal"
                     data-bs-target="#modal-eliminar-<?php echo $promo['cod_promocion']; ?>"
                     title="Eliminar promoción">
-                    <i class="bi bi-trash3-fill btn-dueño-delete-icon"></i>
+                    <i class="bi bi-trash3-fill btn-duenio-delete-icon"></i>
                   </button>
                 </div>
               </div>

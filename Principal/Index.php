@@ -4,7 +4,7 @@ include_once("../Includes/funciones.php");
 sesionIniciada();
 
 $folder = "Principal";
-$pestaña = "Inicio";
+$pestania = "Inicio";
 
 $res = consultaSQL("SELECT foto_novedad, texto_novedad FROM novedades");
 
@@ -159,7 +159,7 @@ $res = consultaSQL("SELECT foto_novedad, texto_novedad FROM novedades");
       $novedades = [];
       if ($res && $res->num_rows > 0) {
         while ($row = $res->fetch_assoc()) {
-          $novedades[] = $row;
+          $novedades[] = $row;  
         }
       }
       ?>
