@@ -3,17 +3,16 @@
 function consultaSQL($sql_consulta)
 {
 
-    include(__DIR__."/conexion.inc");
+    include(__DIR__ . "/conexion.inc");
 
     if (!$link) {
         die("Conexión fallida: " . mysqli_connect_error());
     }
 
     $resultados = mysqli_query($link, $sql_consulta);
-    
-    // Solo Cerramos El link si se establecio, esto previene la advertencia "is not a valid MySQLi resource"
+
     if ($link) {
-      mysqli_close($link);
+        mysqli_close($link);
     }
 
     return $resultados;
@@ -22,23 +21,12 @@ function consultaSQL($sql_consulta)
 
 function sesionIniciada()
 {
-    if (!isset($_SESSION['cod_usuario']) && isset($_COOKIE['usuario_recordado'])) {
-        $_SESSION['cod_usuario'] = $_COOKIE['usuario_recordado'];
-    }
-    if (!isset($_SESSION['tipo_usuario']) && isset($_COOKIE['tipo_usuario_recordado'])) {
-        $_SESSION['tipo_usuario'] = $_COOKIE['tipo_usuario_recordado'];
-    }
-}
-/*
-function sesionIniciada()
-{
     if (
         !isset($_SESSION['cod_usuario']) &&
         isset($_COOKIE['usuario_recordado']) &&
         isset($_COOKIE['tipo_usuario_recordado'])
     ) {
-
-        include("conexion.inc");
+        include(__DIR__ . "/conexion.inc");
 
         $id = intval($_COOKIE['usuario_recordado']);
         $tipo = $_COOKIE['tipo_usuario_recordado'];
@@ -58,10 +46,14 @@ function sesionIniciada()
             $_SESSION['cod_usuario'] = $id;
             $_SESSION['tipo_usuario'] = $tipo;
         }
+
+        $stmt->close();
+        mysqli_close($link);
     }
 }
-    VER ESTE LOGIN
-*/
+
+
+
 function paginacion($pagina, $total_paginas, $params = [])
 {
     echo '<nav><ul class="pagination justify-content-center">';
@@ -114,4 +106,3 @@ function subirArchivo($file, $prefijo)
         return "Error al mover el archivo.";
     }
 }
-?>
