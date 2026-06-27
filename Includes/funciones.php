@@ -19,6 +19,7 @@ function consultaSQL($sql_consulta)
 }
 
 
+
 function sesionIniciada()
 {
     if (
