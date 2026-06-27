@@ -80,10 +80,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($vTipoUsuario == 'cliente') {
           $vCategoriaCliente = "Inicial";
 
-          // Insertamos en la tabla 'cliente' según tu diagrama
-          $queryCliente = "INSERT INTO cliente (cod_usuario, categoria_cliente, confirmado, token_confirmacion) VALUES ('$vCodUsuario', '$vCategoriaCliente', 0, '$token')";
+          // Insertamos en la tabla 'cliente' forzando confirmado en 1 temporalmente para esquivar el bloqueo de mail del hosting
+          $queryCliente = "INSERT INTO cliente (cod_usuario, categoria_cliente, confirmado, token_confirmacion) VALUES ('$vCodUsuario', '$vCategoriaCliente', 1, '$token')";
           mysqli_query($link, $queryCliente);
 
+          $mensaje = "<div class='alert alert-success'>Te registraste con éxito. Ya podés ir a Iniciar Sesión.</div>";
+          
+          /* COMENTAMOS TODO EL PHPMailer PORQUE INFINITYFREE BLOQUEA EL PUERTO Y TIRA ERROR 500
           // Mandamos mail de confirmacion 
           $enlace = $appUrl . "/Principal/Confirmar.php?token=" . rawurlencode($token);
           $asunto = "Confirma tu cuenta";
@@ -141,6 +144,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           } catch (Exception $e) {
             $mensaje = "<div class='alert alert-danger'>No se pudo enviar el correo de confirmación. Error: {$mail->ErrorInfo}</div>";
           }
+          */ // FIN DEL COMENTARIO DE PHPMAILER
 
           // --- FLUJO DUEÑO ---
         } elseif ($vTipoUsuario == 'duenio') {

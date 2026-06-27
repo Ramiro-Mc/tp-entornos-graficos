@@ -27,13 +27,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $tipo = "desconocido";
 
         // 1. Verificamos Admin
-        $resAdmin = consultaSQL("SELECT cod_usuario FROM administrador WHERE cod_usuario=$cod_usuario");
+        $resAdmin = consultaSQL("SELECT cod_usuario FROM administrador WHERE cod_usuario='$cod_usuario'");
         if ($resAdmin && mysqli_num_rows($resAdmin) > 0) {
           $tipo = "administrador";
         }
 
         // 2. Verificamos Dueño
-        $resDueno = consultaSQL("SELECT cod_usuario, estado FROM dueño_local WHERE cod_usuario=$cod_usuario");
+        $resDueno = consultaSQL("SELECT cod_usuario, estado FROM dueño_local WHERE cod_usuario='$cod_usuario'");
         if ($resDueno && mysqli_num_rows($resDueno) > 0) {
           $filaDueno = mysqli_fetch_assoc($resDueno);
           $estadoDueno = strtolower($filaDueno['estado']); 
@@ -47,8 +47,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           }
         }
 
-        // $resCliente = consultaSQL("SELECT cod_usuario FROM cliente WHERE cod_usuario=$cod_usuario AND confirmado= '1'");
-          $resCliente = consultaSQL("SELECT cod_usuario FROM cliente WHERE cod_usuario=$cod_usuario AND confirmado= '1'"); // --- CÓDIGO PARA PRUEBAS (Pasa directo) ---
+        // 3. Verificamos Cliente
+        $resCliente = consultaSQL("SELECT cod_usuario FROM cliente WHERE cod_usuario='$cod_usuario' AND confirmado= '1'"); 
         if ($resCliente && mysqli_num_rows($resCliente) > 0) {
           $tipo = "cliente";
         }
