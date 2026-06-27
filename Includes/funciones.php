@@ -3,15 +3,18 @@
 function consultaSQL($sql_consulta)
 {
 
-    include("conexion.inc");
+    include(__DIR__."/conexion.inc");
 
     if (!$link) {
         die("Conexión fallida: " . mysqli_connect_error());
     }
 
     $resultados = mysqli_query($link, $sql_consulta);
-
-    mysqli_close($link);
+    
+    // Solo Cerramos El link si se establecio, esto previene la advertencia "is not a valid MySQLi resource"
+    if ($link) {
+      mysqli_close($link);
+    }
 
     return $resultados;
 }
@@ -111,3 +114,4 @@ function subirArchivo($file, $prefijo)
         return "Error al mover el archivo.";
     }
 }
+?>
